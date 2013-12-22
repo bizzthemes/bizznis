@@ -117,7 +117,7 @@ class Bizznis_BBP {
 		# Remove Bizznis post image and content
 		remove_action( 'bizznis_post_content',  'bizznis_do_post_image'     );
 		remove_action( 'bizznis_post_content',  'bizznis_do_post_content'   );
-		remove_action( 'bizznis_entry_content', 'bizznis_do_post_image',  8 );
+		remove_action( 'bizznis_entry_content', 'bizznis_do_post_image' 	);
 		remove_action( 'bizznis_entry_content', 'bizznis_do_post_content'   );
 		# Remove authorbox
 		remove_action( 'bizznis_after_entry',   'bizznis_do_author_box_single' );
