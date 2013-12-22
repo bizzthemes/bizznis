@@ -64,7 +64,7 @@ function bizznis_add_admin_submenus() {
  */
 add_action( 'bizznis_admin_title_right', 'bizznis_add_admin_menu_feedback', 15 );
 function bizznis_add_admin_menu_feedback() {
-	echo '<a href="#" class="feedback" onclick="window.open(\'http://bizzthemes.wufoo.com/forms/m7x4a3/\', null, \'height=560, width=670, toolbar=0, location=0, status=1, scrollbars=1,resizable=1\'); return false" title="'.__('Give your Feedback', 'bizzthemes').'">&nbsp;'.__('Report a Bug', 'bizznis').'&nbsp;</a>';
+	printf( __( '<a href="%s" target="_blank" class="feedback" title="Report a Bug">Report a Bug</a>', 'bizznis' ), esc_url( 'https://github.com/bizzthemes/bizznis/issues' ) );
 }
 
 /**
