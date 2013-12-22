@@ -1,0 +1,208 @@
+/* A dividing horizontal rule ----------- */
+
+hr.div {
+	background: #eee;
+	height: 1px;
+	border: none;
+	margin: 10px 0;
+}
+
+/* Bizznis menu icon ----------- */
+
+#adminmenu .toplevel_page_bizznis .wp-menu-image img {
+	height: 16px;
+	width: 16px;
+}
+
+#icon-options-bizznis {
+	background-image: url("../images/bizznis-icon-32.png");
+}
+
+/* Bizznis About ----------- */
+
+.bizznis-badge {
+	position: absolute;
+	top: 0;
+	right: 0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	background-color: #500000;
+	background-image: url("../images/about.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 160px;
+	height: 180px;
+}
+
+
+/* Fix notice placment on our admin pages ----------- */
+
+.wrap div.error,
+.wrap div.updated {
+	clear: both;
+}
+
+/* Fix Custom Header image padding ----------- */
+
+.appearance_page_custom-header h1 {
+	margin: 0 0 10px;
+}
+
+/* Bizznis Admin ----------- */
+
+.bizznis-admin {
+	padding-bottom: 20px;
+}
+
+.bizznis-admin .bottom-buttons input {
+	margin-right: 10px;
+}
+
+/* Bizznis feedback link ----------- */
+
+.bizznis-admin h2 a.feedback {
+	font-family: serif;
+	font-size: 11px;
+	text-decoration: none;
+	color: #aaa;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+
+/* Bizznis metabox styles ----------- */
+
+.bizznis-metaboxes .metabox-holder {
+	clear: both;
+	overflow: hidden;
+}
+
+.postbox-container input[type="text"],
+.postbox-container textarea {
+	max-width: 100%;
+	margin: 1px 0;
+}
+
+/* Layout options styles ----------- */
+
+.bizznis-layout-selector input {
+	display: none;
+	text-align: center;
+}
+
+.bizznis-layout-selector input#default-layout {
+	display: inline-block;
+}
+
+.bizznis-layout-selector label.box {
+	display: block;
+	float: left;
+	margin: 5px 5px 0 5px;
+	text-align: center;
+}
+
+.bizznis-layout-selector label.box img {
+	border: 4px solid transparent;
+	padding: 1px;
+	max-width: 84px;
+}
+
+.bizznis-layout-selector label.box img:hover {
+	border: 2px solid #D4D4D4;
+	margin: 2px;
+}
+
+.bizznis-layout-selector label.box.selected img {
+	border: 4px solid #2EA2CC;
+}
+
+.bizznis-layout-selector label.box.selected img:hover {
+	margin: 0;
+}
+
+/* Inpost layout box */
+
+#bizznis_inpost_layout_box .inside input#default-layout {
+	margin-left: 5px;
+}
+
+#bizznis_inpost_layout_box .bizznis-layout-selector {
+	padding-top: 5px;
+}
+
+/* Layout selector, no JS ----------- */
+
+.ie8 .bizznis-layout-selector input,
+.no-js .bizznis-layout-selector input {
+	display: inline;
+}
+
+.ie8 .bizznis-layout-selector label.box img,
+.ie8 .bizznis-layout-selector label.box img:hover,
+.ie8 .bizznis-layout-selector label.box.selected img,
+.no-js .bizznis-layout-selector label.box img,
+.no-js .bizznis-layout-selector label.box img:hover,
+.no-js .bizznis-layout-selector label.box.selected img {
+	border: 3px solid transparent;
+}
+
+/* Widgets ----------- */
+
+.bizznis-widget-column {
+	float: left;
+	width: 250px;
+}
+
+.bizznis-widget-column-right {
+	margin-left: 10px;
+}
+
+.bizznis-widget-column-box {
+	background: #f1f1f1;
+	border: 1px solid #ddd;
+	margin-top: 10px;
+	padding: 10px 10px 0;
+}
+
+.bizznis-widget-column-box-top {
+	margin-top: 0;
+}
+
+.bizznis-pagechecklist {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.bizznis-image-size-selector {
+	max-width: 205px;
+}
+
+.no-js .hide-if-no-js {
+	display: none;
+}
+
+.widget-control-actions {
+	clear: both;
+}
+
+@media only screen and (max-width: 500px){
+	.bizznis-badge {
+		position: relative;
+		margin: 1.5em 0;
+		width: 100%;
+	}
+}
+
+/**
+ * HiDPI Displays
+ */
+@media print,
+  (-o-min-device-pixel-ratio: 5/4),
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 120dpi) {
+
+	.bizznis-badge { 
+		background-image: url("../images/about@2x.png");
+		background-size: 180px auto;
+	}
+
+}
