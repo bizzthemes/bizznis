@@ -1,7 +1,7 @@
 Parent Business Theme for WordPress
 ----
 
-Developed and Owned by Žljan Topiæ, http://bizzthemes.com/
+Developed and Owned by Zeljan Topic, http://bizzthemes.com/
 
 Install
 ----
