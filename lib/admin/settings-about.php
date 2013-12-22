@@ -42,76 +42,39 @@ class Bizznis_Admin_About extends Bizznis_Admin_Basic {
 		?>
 		<div class="wrap about-wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-		<div class="about-text"><?php printf( __( 'Thank you for updating to Bizznis %s. This theme will make your business website rock solid, secure and ideal to attract new customers.', 'bizznis' ), PARENT_THEME_BRANCH ); ?></div>
+		<div class="about-text"><?php _e( 'This theme will make your website rock solid, secure and ideal to attract new customers.', 'bizznis' ); ?></div>
 		<div class="bizznis-badge"></div>
 		<div class="changelog">
-			<h2 class="about-headline-callout"><?php _e( 'Introducing a modern new&nbsp;design' ); ?></h2>
-			<img class="about-overview-img" src="<?php echo is_ssl() ? 'https://' : '//s.'; ?>wordpress.org/images/core/3.8/overview.png?1" />
+			<h2 class="about-headline-callout"><?php _e( 'Forked the best theme framework <br/><small>and made it even better.</small>', 'bizznis' ); ?></h2>
+			<img class="about-overview-img" src="<?php echo BIZZNIS_ADMIN_IMAGES_URL . '/admin-overview.png'; ?>" />
 			<div class="feature-section col three-col about-updates">
 				<div class="col-1">
-					<img src="<?php echo is_ssl() ? 'https://' : '//s.'; ?>wordpress.org/images/core/3.8/aesthetics.png?1" />
-					<h3><?php _e( 'Modern aesthetic' ); ?></h3>
-					<p><?php _e( 'The new WordPress dashboard has a fresh, uncluttered design that embraces clarity and simplicity.' ); ?></p>
+					<h3><?php _e( 'Business Oriented', 'bizznis' ); ?></h3>
+					<p><?php _e( 'Reliable and supported. Integrates best business website practices.', 'bizznis' ); ?></p>
 				</div>
 				<div class="col-2">
-					<img src="<?php echo is_ssl() ? 'https://' : '//s.'; ?>wordpress.org/images/core/3.8/typography.png?1" />
-					<h3><?php _e( 'Clean typography' ); ?></h3>
-					<p><?php _e( 'The Open Sans typeface provides simple, friendly text that is optimized for both desktop and mobile viewing. It&#8217;s even open source, just like WordPress.' ); ?></p>
+					<h3><?php _e( 'Secure and Lightning Fast', 'bizznis' ); ?></h3>
+					<p><?php _e( 'Getting your website hacked can become a nightmare. It stops here. Now.' ); ?></p>
 				</div>
 				<div class="col-3 last-feature">
-					<img src="<?php echo is_ssl() ? 'https://' : '//s.'; ?>wordpress.org/images/core/3.8/contrast.png?1" />
-					<h3><?php _e( 'Refined contrast' ); ?></h3>
-					<p><?php _e( 'We think beautiful design should never sacrifice legibility. With superior contrast and large, comfortable type, the new design is easy to read and a pleasure to navigate.' ); ?></p>
+					<h3><?php _e( 'Decisions, not Options', 'bizznis' ); ?></h3>
+					<p><?php _e( 'Truckload of options are gone and every option is carefully thought out.', 'bizznis' ); ?></p>
 				</div>
 			</div>
-		</div>
-		<div class="changelog">
-			<h3><?php _e( 'Business Oriented', 'bizznis' ); ?></h3>
-			<h4><?php _e( 'Reliable and supported. Integrates best business website practices.', 'bizznis' ); ?></h4>
-			<div class="feature-section">
-				<p></p>
-			</div>
-		</div>
-		<div class="changelog">
-			<h3><?php _e( 'Secure and Lightning Fast.', 'bizznis' ); ?></h3>
-			<h4><?php _e( 'Getting your website hacked can become a nightmare. It stops here. Now.', 'bizznis' ); ?></h4>
-			<div class="feature-section">
-				<p></p>
-			</div>
-		</div>
-		<div class="changelog">
-			<h3><?php _e( 'Decisions, not Options.', 'bizznis' ); ?></h3>
-			<h4><?php _e( 'Truckload of options are gone and every option is carefully thought out.', 'bizznis' ); ?></h4>
-			<div class="feature-section">
-				<p></p>
-			</div>
-		</div>
-		<div class="changelog">
-			<h3><?php _e( 'HTML5, Mobile Ready', 'bizznis' ); ?></h3>
-			<h4><?php _e( 'It works even better on Mobile Devices.', 'bizznis' ); ?></h4>
-			<div class="feature-section">
-				<p></p>
-			</div>
-		</div>
-		<div class="changelog">
-			<h3><?php _e( 'Powerful Plugins', 'bizznis' ); ?></h3>
-			<h4><?php _e( 'Industry standard Bookings, Reservations and Listings.', 'bizznis' ); ?></h4>
-			<div class="feature-section">
-				<p></p>
-			</div>
-		</div>
-		<div class="changelog">
-			<h3><?php _e( 'Bizznis and WordPress', 'bizznis' ); ?></h3>
-			<h4><?php _e( 'Beautifully Intergated, incredibly Powerful. Together.', 'bizznis' ); ?></h4>
-			<div class="feature-section">
-				<p></p>
-			</div>
-		</div>
-		<div class="changelog">
-			<h3><?php _e( 'Child-theme ready.', 'bizznis' ); ?></h3>
-			<h4><?php _e( 'Under no curcustances should you edit Bizznis code. Do all customizations in form of a child theme.', 'bizznis' ); ?></h4>
-			<div class="feature-section">
-				<p></p>
+			<hr/>
+			<div class="feature-section col three-col about-updates">
+				<div class="col-1">
+					<h3><?php _e( 'HTML5, Mobile Ready', 'bizznis' ); ?></h3>
+					<p><?php _e( 'It works even better on Mobile Devices. Cross-browser compatibility and app-like behaviour. ', 'bizznis' ); ?></p>
+				</div>
+				<div class="col-2">
+					<h3><?php _e( 'Bizznis and WordPress', 'bizznis' ); ?></h3>
+					<p><?php _e( 'Beautifully Integrated, incredibly Powerful. Together, they make the perfect match.' ); ?></p>
+				</div>
+				<div class="col-3 last-feature">
+					<h3><?php _e( 'Child-theme ready', 'bizznis' ); ?></h3>
+					<p><?php _e( 'Do all customizations in form of a child theme and never modify Bizznis code.', 'bizznis' ); ?></p>
+				</div>
 			</div>
 		</div>
 		<div class="return-to-dashboard">
