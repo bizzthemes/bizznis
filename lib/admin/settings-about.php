@@ -54,7 +54,7 @@ class Bizznis_Admin_About extends Bizznis_Admin_Basic {
 				</div>
 				<div class="col-2">
 					<h3><?php _e( 'Secure and Lightning Fast', 'bizznis' ); ?></h3>
-					<p><?php _e( 'Getting your website hacked can become a nightmare. It stops here. Now.' ); ?></p>
+					<p><?php _e( 'Getting your website hacked can become a nightmare. It stops here. Now.', 'bizznis' ); ?></p>
 				</div>
 				<div class="col-3 last-feature">
 					<h3><?php _e( 'Decisions, not Options', 'bizznis' ); ?></h3>
@@ -69,7 +69,7 @@ class Bizznis_Admin_About extends Bizznis_Admin_Basic {
 				</div>
 				<div class="col-2">
 					<h3><?php _e( 'Bizznis and WordPress', 'bizznis' ); ?></h3>
-					<p><?php _e( 'Beautifully Integrated, incredibly Powerful. Together, they make the perfect match.' ); ?></p>
+					<p><?php _e( 'Beautifully Integrated, incredibly Powerful. Together, they make the perfect match.', 'bizznis' ); ?></p>
 				</div>
 				<div class="col-3 last-feature">
 					<h3><?php _e( 'Child-theme ready', 'bizznis' ); ?></h3>
