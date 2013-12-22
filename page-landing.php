@@ -17,9 +17,16 @@ function bizznis_return_landing_layout() {
 	return 'full-width-content';
 }
 
-//* Remove site header and footer elements
-remove_action( 'bizznis_header', 'bizznis_do_header' );
-remove_action( 'bizznis_footer', 'bizznis_do_footer' );
+/**
+ * Remove header and footer for this page template
+ *
+ * @since 1.0.0
+ */
+add_action( 'bizznis_before', 'bizznis_page_landing_hooks' );
+function bizznis_page_landing_hooks() {
+	remove_action( 'bizznis_header', 'bizznis_do_header' );
+	remove_action( 'bizznis_footer', 'bizznis_do_footer' );
+}
 
 //* Run the Bizznis loop
 bizznis();
