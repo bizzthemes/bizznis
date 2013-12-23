@@ -53,6 +53,10 @@ function bizznis_add_admin_submenus() {
 	if ( current_theme_supports( 'bizznis-seo-settings-menu' ) && get_the_author_meta( 'bizznis_seo_settings_menu', $user->ID ) ) {
 		$_bizznis_admin_seo_settings = new Bizznis_Admin_SEO_Settings;
 	}
+	# Add "Import/Export Settings" submenu item
+	if ( current_theme_supports( 'bizznis-import-export-menu' ) && get_the_author_meta( 'bizznis_import_export_menu', $user->ID ) ) {
+		$_bizznis_admin_import_export = new Bizznis_Admin_Import_Export;
+	}
 	# Add the about page (no menu)
 	new Bizznis_Admin_About;
 }
