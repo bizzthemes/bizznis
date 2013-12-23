@@ -14,3 +14,10 @@ Support
 ----
 
 Please visit http://bizzthemes.com/support/ for theme support.
+
+Changelog
+----
+
+### 1.0.0
+
+* Initial Public Release
