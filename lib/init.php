@@ -116,9 +116,6 @@ class Bizznis_Init {
 		define( 'BIZZNIS_INT_DIR', 				BIZZNIS_LIB_DIR . 	'/integrations' );
 		define( 'BIZZNIS_INT_WC_DIR', 			BIZZNIS_INT_DIR . 	'/woocommerce' );
 		define( 'BIZZNIS_INT_BBP_DIR', 			BIZZNIS_INT_DIR . 	'/bbpress' );
-	  if ( ! defined( 'BIZZNIS_LANGUAGES_DIR' ) ) : #So we can define with a child theme
-		define( 'BIZZNIS_LANGUAGES_DIR', 		PARENT_DIR 		. 	'/languages' );
-	  endif;
 		# URL Locations
 		define( 'PARENT_URL', 					get_template_directory_uri() );
 		define( 'CHILD_URL', 					get_stylesheet_directory_uri() );
@@ -137,9 +134,6 @@ class Bizznis_Init {
 		define( 'BIZZNIS_INT_URL', 				BIZZNIS_LIB_URL . 	'/integrations' );
 		define( 'BIZZNIS_INT_WC_URL', 			BIZZNIS_INT_URL . 	'/woocommerce' );
 		define( 'BIZZNIS_INT_BBP_URL', 			BIZZNIS_INT_URL . 	'/bbpress' );
-	  if ( ! defined( 'BIZZNIS_LANGUAGES_URL' ) ) : #So we can predefine to child theme
-		define( 'BIZZNIS_LANGUAGES_URL', 		BIZZNIS_LIB_URL . 	'/languages' );
-	  endif;
 		# Settings Field (for DB storage)
 		define( 'BIZZNIS_SETTINGS_FIELD', 		apply_filters( 'bizznis_settings_field', 'bizznis-settings' ) );
 		define( 'BIZZNIS_SEO_SETTINGS_FIELD', 	apply_filters( 'bizznis_seo_settings_field', 'bizznis-seo-settings' ) );
@@ -205,6 +199,9 @@ class Bizznis_Init {
 	 * @since 1.0.0
 	 */
 	public function i18n() {
+		if ( ! defined( 'BIZZNIS_LANGUAGES_DIR' ) ) { #So we can define with a child theme
+			define( 'BIZZNIS_LANGUAGES_DIR', get_template_directory() . '/lib/languages' );
+		}
 		load_theme_textdomain( 'bizznis', BIZZNIS_LANGUAGES_DIR );
 	}
 

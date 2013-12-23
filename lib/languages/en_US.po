@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-10 11:31+0100\n"
-"PO-Revision-Date: 2013-12-10 11:31+0100\n"
+"POT-Creation-Date: 2013-12-23 11:51+0100\n"
+"PO-Revision-Date: 2013-12-23 11:51+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -34,48 +34,54 @@ msgstr ""
 msgid "Search Results for:"
 msgstr ""
 
-#: ../lib/init.php:161
+#: ../lib/init.php:167
 msgid "Primary Navigation Menu"
 msgstr ""
 
-#: ../lib/init.php:162
+#: ../lib/init.php:168
 msgid "Secondary Navigation Menu"
 msgstr ""
 
-#: ../lib/admin/admin-menu.php:45
-msgid "Give your Feedback"
+#: ../lib/admin/admin-menu.php:67
+#, php-format
+msgid ""
+"<a href=\"%s\" target=\"_blank\" class=\"feedback\" title=\"Report a Bug"
+"\">Report a Bug</a>"
 msgstr ""
 
-#: ../lib/admin/admin-menu.php:45
-msgid "Report a Bug"
-msgstr ""
-
-#: ../lib/admin/admin.php:40 ../lib/admin/settings-general.php:34
+#: ../lib/admin/admin.php:41 ../lib/admin/settings-general.php:34
 #: ../lib/admin/settings-seo.php:32
 msgid "Save Settings"
 msgstr ""
 
-#: ../lib/admin/admin.php:41 ../lib/admin/settings-general.php:35
+#: ../lib/admin/admin.php:42 ../lib/admin/settings-general.php:35
 #: ../lib/admin/settings-seo.php:33
 msgid "Reset Settings"
 msgstr ""
 
-#: ../lib/admin/admin.php:42 ../lib/admin/settings-general.php:36
+#: ../lib/admin/admin.php:43 ../lib/admin/settings-general.php:36
 #: ../lib/admin/settings-seo.php:34
 msgid "Settings saved."
 msgstr ""
 
-#: ../lib/admin/admin.php:43 ../lib/admin/settings-general.php:37
+#: ../lib/admin/admin.php:44 ../lib/admin/settings-general.php:37
 #: ../lib/admin/settings-seo.php:35
 msgid "Settings reset."
 msgstr ""
 
-#: ../lib/admin/admin.php:44 ../lib/admin/settings-general.php:38
+#: ../lib/admin/admin.php:45 ../lib/admin/settings-general.php:38
 #: ../lib/admin/settings-seo.php:36
 msgid "Error saving settings."
 msgstr ""
 
-#: ../lib/admin/admin.php:357 ../lib/admin/admin.php:477
+#: ../lib/admin/admin.php:53
+#, php-format
+msgid ""
+"You cannot use %s to create two menus in the same subclass. Please use "
+"separate subclasses for each menu."
+msgstr ""
+
+#: ../lib/admin/admin.php:304 ../lib/admin/admin.php:391
 #: ../lib/functions/load-scripts.php:68
 msgid "Are you sure you want to reset?"
 msgstr ""
@@ -85,7 +91,7 @@ msgstr ""
 msgid "Theme SEO Settings"
 msgstr ""
 
-#: ../lib/admin/meta-inpost.php:30 ../lib/admin/settings-cpt-archive.php:130
+#: ../lib/admin/meta-inpost.php:30 ../lib/admin/settings-cpt-archive.php:149
 msgid "Custom Document Title"
 msgstr ""
 
@@ -104,12 +110,12 @@ msgstr ""
 
 #: ../lib/admin/meta-inpost.php:34 ../lib/admin/meta-inpost.php:36
 #: ../lib/admin/meta-inpost.php:42 ../lib/admin/meta-inpost.php:44
-#: ../lib/admin/meta-inpost.php:46 ../lib/admin/settings-cpt-archive.php:137
-#: ../lib/admin/settings-cpt-archive.php:140
-#: ../lib/admin/settings-cpt-archive.php:143
-#: ../lib/admin/settings-general.php:293 ../lib/admin/settings-general.php:294
-#: ../lib/admin/settings-general.php:295 ../lib/admin/settings-seo.php:209
-#: ../lib/admin/settings-seo.php:210 ../lib/admin/settings-seo.php:211
+#: ../lib/admin/meta-inpost.php:46 ../lib/admin/settings-cpt-archive.php:156
+#: ../lib/admin/settings-cpt-archive.php:159
+#: ../lib/admin/settings-cpt-archive.php:162
+#: ../lib/admin/settings-general.php:584 ../lib/admin/settings-general.php:585
+#: ../lib/admin/settings-general.php:586 ../lib/admin/settings-seo.php:413
+#: ../lib/admin/settings-seo.php:414 ../lib/admin/settings-seo.php:415
 #, php-format
 msgid "%s"
 msgstr ""
@@ -118,8 +124,8 @@ msgstr ""
 msgid "Custom Redirect URI"
 msgstr ""
 
-#: ../lib/admin/meta-inpost.php:39 ../lib/admin/settings-seo.php:168
-#: ../lib/admin/settings-seo.php:198
+#: ../lib/admin/meta-inpost.php:39 ../lib/admin/settings-seo.php:372
+#: ../lib/admin/settings-seo.php:402
 msgid "Robots Meta Settings"
 msgstr ""
 
@@ -145,19 +151,19 @@ msgid ""
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:140 ../lib/admin/meta-term.php:118
-#: ../lib/admin/meta-user.php:155 ../lib/admin/settings-cpt-archive.php:102
+#: ../lib/admin/meta-user.php:155 ../lib/admin/settings-cpt-archive.php:101
 #: ../lib/admin/settings-cpt-archive.php:198
 #: ../lib/admin/settings-cpt-archive.php:213
 msgid "Layout Settings"
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:154 ../lib/admin/meta-term.php:127
-#: ../lib/admin/meta-user.php:165 ../lib/admin/settings-cpt-archive.php:157
+#: ../lib/admin/meta-user.php:165 ../lib/admin/settings-cpt-archive.php:132
 #, php-format
 msgid "Default Layout set in <a href=\"%s\">Theme Settings</a>"
 msgstr ""
 
-#: ../lib/admin/meta-inpost.php:159 ../lib/admin/settings-cpt-archive.php:162
+#: ../lib/admin/meta-inpost.php:159 ../lib/admin/settings-cpt-archive.php:137
 msgid "Custom Body Class"
 msgstr ""
 
@@ -200,7 +206,7 @@ msgid "%s Description"
 msgstr ""
 
 #: ../lib/admin/meta-term.php:84 ../lib/admin/meta-user.php:129
-#: ../lib/admin/settings-seo.php:224
+#: ../lib/admin/settings-seo.php:135
 msgid "Robots Meta"
 msgstr ""
 
@@ -283,87 +289,86 @@ msgid "About"
 msgstr ""
 
 #: ../lib/admin/settings-about.php:45
-#, php-format
 msgid ""
-"Thank you for updating to Bizznis %s. This theme will make your business "
-"website rock solid, secure and ideal to attract new customers."
+"This theme will make your website rock solid, secure and ideal to attract "
+"new customers."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:48 ../lib/admin/settings-about.php:102
-msgid "Go to &rarr; Theme Settings"
+#: ../lib/admin/settings-about.php:48
+msgid ""
+"Forked the best theme framework <br/><small>and made it even better.</small>"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:50 ../lib/admin/settings-about.php:104
-msgid "Go to &rarr; SEO Settings"
-msgstr ""
-
-#: ../lib/admin/settings-about.php:53
+#: ../lib/admin/settings-about.php:52
 msgid "Business Oriented"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:54
+#: ../lib/admin/settings-about.php:53
 msgid "Reliable and supported. Integrates best business website practices."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:60
-msgid "Secure and Lightning Fast."
+#: ../lib/admin/settings-about.php:56
+msgid "Secure and Lightning Fast"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:61
+#: ../lib/admin/settings-about.php:57
 msgid "Getting your website hacked can become a nightmare. It stops here. Now."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:67
-msgid "Decisions, not Options."
+#: ../lib/admin/settings-about.php:60
+msgid "Decisions, not Options"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:68
+#: ../lib/admin/settings-about.php:61
 msgid ""
 "Truckload of options are gone and every option is carefully thought out."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:74
+#: ../lib/admin/settings-about.php:67
 msgid "HTML5, Mobile Ready"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:75
-msgid "It works even better on Mobile Devices."
+#: ../lib/admin/settings-about.php:68
+msgid ""
+"It works even better on Mobile Devices. Cross-browser compatibility and app-"
+"like behaviour. "
 msgstr ""
 
-#: ../lib/admin/settings-about.php:81
-msgid "Powerful Plugins"
-msgstr ""
-
-#: ../lib/admin/settings-about.php:82
-msgid "Industry standard Bookings, Reservations and Listings."
-msgstr ""
-
-#: ../lib/admin/settings-about.php:88
+#: ../lib/admin/settings-about.php:71
 msgid "Bizznis and WordPress"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:89
-msgid "Beautifully Intergated, incredibly Powerful. Together."
-msgstr ""
-
-#: ../lib/admin/settings-about.php:95
-msgid "Child-theme ready."
-msgstr ""
-
-#: ../lib/admin/settings-about.php:96
+#: ../lib/admin/settings-about.php:72
 msgid ""
-"Under no curcustances should you edit Bizznis code. Do all customizations in "
-"form of a child theme."
+"Beautifully Integrated, incredibly Powerful. Together, they make the perfect "
+"match."
+msgstr ""
+
+#: ../lib/admin/settings-about.php:75
+msgid "Child-theme ready"
+msgstr ""
+
+#: ../lib/admin/settings-about.php:76
+msgid ""
+"Do all customizations in form of a child theme and never modify Bizznis code."
+msgstr ""
+
+#: ../lib/admin/settings-about.php:81
+msgid "Go to &rarr; Theme Settings"
+msgstr ""
+
+#: ../lib/admin/settings-about.php:82
+msgid "Go to &rarr; SEO Settings"
 msgstr ""
 
 #: ../lib/admin/settings-cpt-archive.php:37
 msgid "Archive"
 msgstr ""
 
-#: ../lib/admin/settings-cpt-archive.php:101
+#: ../lib/admin/settings-cpt-archive.php:102
 #: ../lib/admin/settings-cpt-archive.php:186
-#: ../lib/admin/settings-cpt-archive.php:193 ../lib/admin/settings-seo.php:26
-#: ../lib/admin/settings-seo.php:143 ../lib/admin/settings-seo.php:178
+#: ../lib/admin/settings-cpt-archive.php:193 ../lib/admin/settings-seo.php:347
+#: ../lib/admin/settings-seo.php:382
 msgid "SEO Settings"
 msgstr ""
 
@@ -372,17 +377,17 @@ msgstr ""
 msgid "View the <a href=\"%s\">%s archive</a>."
 msgstr ""
 
-#: ../lib/admin/settings-cpt-archive.php:132
+#: ../lib/admin/settings-cpt-archive.php:151
 msgid "Meta Description"
 msgstr ""
 
-#: ../lib/admin/settings-cpt-archive.php:134
+#: ../lib/admin/settings-cpt-archive.php:153
 msgid "Robots Meta Tags:"
 msgstr ""
 
-#: ../lib/admin/settings-cpt-archive.php:137
-#: ../lib/admin/settings-cpt-archive.php:140
-#: ../lib/admin/settings-cpt-archive.php:143
+#: ../lib/admin/settings-cpt-archive.php:156
+#: ../lib/admin/settings-cpt-archive.php:159
+#: ../lib/admin/settings-cpt-archive.php:162
 #, php-format
 msgid "Apply %s to this archive"
 msgstr ""
@@ -424,32 +429,32 @@ msgid ""
 msgstr ""
 
 #: ../lib/admin/settings-cpt-archive.php:201
-#: ../lib/admin/settings-general.php:194
+#: ../lib/admin/settings-general.php:490
 msgid "Content Sidebar"
 msgstr ""
 
 #: ../lib/admin/settings-cpt-archive.php:202
-#: ../lib/admin/settings-general.php:195
+#: ../lib/admin/settings-general.php:491
 msgid "Sidebar Content"
 msgstr ""
 
 #: ../lib/admin/settings-cpt-archive.php:203
-#: ../lib/admin/settings-general.php:196
+#: ../lib/admin/settings-general.php:492
 msgid "Sidebar Content Sidebar"
 msgstr ""
 
 #: ../lib/admin/settings-cpt-archive.php:204
-#: ../lib/admin/settings-general.php:197
+#: ../lib/admin/settings-general.php:493
 msgid "Content Sidebar Sidebar"
 msgstr ""
 
 #: ../lib/admin/settings-cpt-archive.php:205
-#: ../lib/admin/settings-general.php:198
+#: ../lib/admin/settings-general.php:494
 msgid "Sidebar Sidebar Content"
 msgstr ""
 
 #: ../lib/admin/settings-cpt-archive.php:206
-#: ../lib/admin/settings-general.php:199 ../lib/theme/layouts.php:40
+#: ../lib/admin/settings-general.php:495 ../lib/theme/layouts.php:40
 msgid "Full Width Content"
 msgstr ""
 
@@ -463,23 +468,293 @@ msgid ""
 "modification exclusively for this post type's archive page."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:25
-msgid "Settings"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:26
-msgid "Theme Options"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:52
-msgid "Follow me on Twitter"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:177 ../lib/admin/settings-general.php:242
+#: ../lib/admin/settings-general.php:25 ../lib/admin/settings-general.php:26
+#: ../lib/admin/settings-general.php:478 ../lib/admin/settings-general.php:538
 msgid "Theme Settings"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:178
+#: ../lib/admin/settings-general.php:51
+msgid "Follow me on Twitter"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:166 ../lib/admin/settings-general.php:487
+#: ../lib/admin/settings-general.php:548
+#: ../lib/integrations/bbpress/inc/settings.php:71
+msgid "Default Layout"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:168
+msgid "Color Style"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:170 ../lib/theme/sidebar.php:18
+msgid "Header"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:171 ../lib/admin/settings-general.php:507
+#: ../lib/admin/settings-general.php:563
+msgid "Content Archives"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:173
+msgid "Menus"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:175 ../lib/admin/settings-general.php:500
+#: ../lib/admin/settings-general.php:553
+msgid "Breadcrumbs"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:176 ../lib/admin/settings-general.php:503
+#: ../lib/admin/settings-general.php:558
+msgid "Comments and Trackbacks"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:178 ../lib/admin/settings-general.php:524
+#: ../lib/admin/settings-general.php:573
+msgid "Header and Footer Scripts"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:179 ../lib/admin/settings-general.php:481
+#: ../lib/admin/settings-general.php:543
+msgid "Information"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:222
+msgid "Color Style:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:224
+msgid "Default"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:235
+msgid ""
+"Please select the color style from the drop down list and save your settings."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:246
+msgid "Use for site title/logo:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:248
+msgid "Site Title &amp; Tagline"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:249
+msgid "Image logo"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:253
+msgid ""
+"By default, this option will pick the header image in your child theme's "
+"style.css file. The logo can be saved as logo.png to the images folder of "
+"your child theme and will be shown instead of your site title and tagline."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:254
+msgid ""
+"If you want to upload your own logo image and use more advanced options, "
+"make sure you've added <code>add_theme_support( 'custom-header' );</code> to "
+"your child theme's functions.php file."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:267
+msgid "Select one of the following:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:273
+msgid "Display post content"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:274
+msgid "Display post excerpts"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:284
+msgid "Limit content to"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:286
+msgid "characters"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:289
+msgid ""
+"Using this option will limit the text and strip all formatting from the text "
+"displayed. To use this option, choose \"Display post content\" in the select "
+"box above."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:293
+msgid "Include the Featured Image?"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:296
+msgid "Image Size:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:306
+msgid "Select Post Navigation Technique:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:308
+msgid "Previous / Next"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:309
+msgid "Numeric"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:312
+msgid ""
+"These options will affect any listings page, including archive, author, "
+"blog, category, search, and tag pages."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:324
+msgid "Primary Menu"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:325
+#, php-format
+msgid ""
+"In order to use the navigation menus, you must build a <a href=\"%s\">custom "
+"menu</a>, then assign it to the proper Menu Location."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:328
+msgid "Enable Extras on Right Side?"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:332
+msgid "Display the following:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:334
+msgid "Today's date"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:335
+msgid "Search form"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:336
+msgid "Twitter link"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:341
+msgid "Enter Twitter ID:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:345
+msgid "Twitter Link Text:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:360
+msgid "Enable on:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:364
+msgid "Front Page"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:367
+msgid "Posts Page"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:370 ../lib/admin/settings-seo.php:134
+msgid "Homepage"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:375
+msgid "Posts"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:378
+msgid "Pages"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:381 ../lib/admin/settings-seo.php:136
+msgid "Archives"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:384
+msgid "404 Page"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:387
+msgid "Attachment Page"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:389
+msgid ""
+"Breadcrumbs are a great way of letting your visitors find out where they are "
+"on your site with just a glance. You can enable/disable them on certain "
+"areas of your site."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:401
+msgid "Enable Comments"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:403 ../lib/admin/settings-general.php:411
+msgid "on posts?"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:406 ../lib/admin/settings-general.php:414
+msgid "on pages?"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:409
+msgid "Enable Trackbacks"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:416
+msgid ""
+"Comments and Trackbacks can also be disabled on a per post/page basis when "
+"creating/editing posts/pages."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:428 ../lib/admin/settings-general.php:434
+#, php-format
+msgid "Enter scripts or code you would like output to %s:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:431 ../lib/admin/settings-general.php:437
+#, php-format
+msgid ""
+"The %1$s hook executes immediately before the closing %2$s tag in the "
+"document source."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:448
+msgid "Version:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:448
+msgid "Released:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:452
+msgid "Enable Automatic Updates"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:456
+msgid "Notify by Email when update is available"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:460
+msgid "Enter Email Address:"
+msgstr ""
+
+#: ../lib/admin/settings-general.php:463
+msgid ""
+"If you provide an email address above, you will be notified via email when a "
+"new version of Bizznis is available."
+msgstr ""
+
+#: ../lib/admin/settings-general.php:479
 msgid ""
 "Your Theme Settings provides control over how the theme works. You will be "
 "able to control a lot of common and even advanced features from this menu. "
@@ -492,133 +767,86 @@ msgid ""
 "Below you'll find the items common to every child theme..."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:180 ../lib/admin/settings-general.php:247
-#: ../lib/admin/settings-general.php:321
-msgid "Information"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:181
+#: ../lib/admin/settings-general.php:482
 msgid ""
 "The information box allows you to see the current Bizznis theme information "
 "and display if desired."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:182
+#: ../lib/admin/settings-general.php:483
 msgid ""
 "Normally, this should be unchecked. You can also set to enable automatic "
 "updates."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:183
+#: ../lib/admin/settings-general.php:484
 msgid ""
 "This does not mean the updates happen automatically without your permission; "
 "it will just notify you that an update is available. You must select it to "
 "perform the update."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:184
+#: ../lib/admin/settings-general.php:485
 msgid ""
 "If you provide an email address and select to notify that email address when "
 "the update is available, your site will email you when the update can be "
 "performed.No, updates only affect files being updated."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:186 ../lib/admin/settings-general.php:252
-msgid "Custom Feeds"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:187
-msgid ""
-"If you use Feedburner to handle your rss feed(s) you can use this function "
-"to set your site's native feed to redirect to your Feedburner feed."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:188
-msgid ""
-"By filling in the feed links calling for the main site feed, it will display "
-"as a link to Feedburner."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:189
-msgid ""
-"By checking the \"Redirect Feed\" box, all traffic to default feed links "
-"will be redirected to the Feedburner link instead."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:191 ../lib/admin/settings-general.php:257
-#: ../lib/admin/settings-general.php:308
-msgid "Default Layout"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:192
+#: ../lib/admin/settings-general.php:488
 msgid ""
 "This lets you select the default layout for your entire site. On most of the "
 "child themes you'll see these options:"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:201
+#: ../lib/admin/settings-general.php:497
 msgid ""
 "These options can be extended or limited by the child theme. Additionally, "
 "many of the child themes do not allow different layouts on the home page as "
 "they have been designed for a specific home page layout."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:202
+#: ../lib/admin/settings-general.php:498
 msgid ""
 "This layout can also be overridden in the post/page/term layout options on "
 "each post/page/term."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:204 ../lib/admin/settings-general.php:262
-#: ../lib/admin/settings-general.php:317
-msgid "Breadcrumbs"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:205
+#: ../lib/admin/settings-general.php:501
 msgid ""
 "This box lets you define where the \"Breadcrumbs\" display. The Breadcrumb "
 "is the navigation tool that displays where a visitor is on the site at any "
 "given moment."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:207 ../lib/admin/settings-general.php:267
-#: ../lib/admin/settings-general.php:318
-msgid "Comments and Trackbacks"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:208
+#: ../lib/admin/settings-general.php:504
 msgid ""
 "This allows a site wide decision on whether comments and trackbacks "
 "(notifications when someone links to your page) are enabled for posts and "
 "pages."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:209
+#: ../lib/admin/settings-general.php:505
 msgid ""
 "If you enable comments or trackbacks here, it can be disabled on an "
 "individual post or page. If you disable here, they cannot be enabled on an "
 "individual post or page."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:211 ../lib/admin/settings-general.php:272
-#: ../lib/admin/settings-general.php:311
-msgid "Content Archives"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:212
+#: ../lib/admin/settings-general.php:508
 msgid ""
 "In the Bizznis Theme Settings you may change the site wide Content Archives "
 "options to control what displays in the site's Archives."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:213
+#: ../lib/admin/settings-general.php:509
 msgid ""
 "Archives include any pages using the blog template, category pages, tag "
 "pages, date archive, author archives, and the latest posts if there is no "
 "custom home page."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:214
+#: ../lib/admin/settings-general.php:510
 msgid ""
 "The first option allows you to display the post content or the post excerpt. "
 "The Display post content setting will display the entire post including HTML "
@@ -626,7 +854,7 @@ msgid ""
 "that is not displayed in the browser)."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:215
+#: ../lib/admin/settings-general.php:511
 msgid ""
 "It may also be coupled with the second field \"Limit content to [___] "
 "characters\" to limit the content to a specific number of letters or spaces. "
@@ -634,55 +862,55 @@ msgid ""
 "lengths than the excerpt."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:216
+#: ../lib/admin/settings-general.php:512
 msgid ""
 "The Display post excerpt setting will display the first 55 words of the post "
 "after also stripping any included HTML or the manual/custom excerpt added in "
 "the post edit screen."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:217
+#: ../lib/admin/settings-general.php:513
 msgid ""
 "The 'Include post image?' setting allows you to show a thumbnail of the "
 "first attached image or currently set featured image."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:218
+#: ../lib/admin/settings-general.php:514
 msgid ""
 "This option should not be used with the post content unless the content is "
 "limited to avoid duplicate images."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:219
+#: ../lib/admin/settings-general.php:515
 msgid ""
 "The 'Image Size' list is populated by the available image sizes defined in "
 "the theme."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:220
+#: ../lib/admin/settings-general.php:516
 msgid ""
 "Post Navigation Technique allows you to select one of three navigation "
 "methods."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:222 ../lib/admin/settings-general.php:277
+#: ../lib/admin/settings-general.php:518 ../lib/admin/settings-general.php:568
 msgid "Blog Page"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:223
+#: ../lib/admin/settings-general.php:519
 msgid ""
 "This works with the Blog Template, which is a page template that shows your "
 "latest posts. It's what people see when they land on your homepage."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:224
+#: ../lib/admin/settings-general.php:520
 msgid ""
 "In the General Settings you can select a specific category to display from "
 "the drop down menu, and exclude categories by ID, or even select how many "
 "posts you'd like to display on this page."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:225
+#: ../lib/admin/settings-general.php:521
 msgid ""
 "There are some special features of the Blog Template that allow you to "
 "specify which category to show on each page using the template, which is "
@@ -690,19 +918,14 @@ msgid ""
 "display separately."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:226
+#: ../lib/admin/settings-general.php:522
 #, php-format
 msgid ""
 "You can find more on this feature in the <a href=\"%s\" target=\"_blank"
 "\">How to Add a Post Category Page tutorial.</a>"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:228 ../lib/admin/settings-general.php:282
-#: ../lib/admin/settings-general.php:320
-msgid "Header and Footer Scripts"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:229
+#: ../lib/admin/settings-general.php:525
 msgid ""
 "This provides you with two fields that will output to the <head></head> of "
 "your site and just before the </body>. These will appear on every page of "
@@ -711,56 +934,56 @@ msgid ""
 "into the Bizznis Simple Hooks plugin."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:231
+#: ../lib/admin/settings-general.php:527
 msgid "How Home Pages Work"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:232
+#: ../lib/admin/settings-general.php:528
 msgid "Most Bizznis child themes include a custom home page."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:233
+#: ../lib/admin/settings-general.php:529
 msgid ""
 "To use this type of home page, make sure your latest posts are set to show "
 "on the front page. You can setup a page with the Blog page template to show "
 "a blog style list of your latest posts on another page."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:234
+#: ../lib/admin/settings-general.php:530
 msgid ""
 "This home page is typically setup via widgets in the sidebars for the home "
 "page. This can be accessed via the Widgets menu item under Appearance."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:235
+#: ../lib/admin/settings-general.php:531
 msgid ""
 "Child themes that include this type of home page typically include "
 "additional theme-specific tutorials which can be accessed via a sticky post "
 "at the top of that child theme support forum."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:236
+#: ../lib/admin/settings-general.php:532
 msgid ""
 "If your theme uses a custom home page and you want to show the latest posts "
 "in a blog format, do not use the blog template. Instead, you need to rename "
 "the home.php file to home-old.php instead."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:237
+#: ../lib/admin/settings-general.php:533
 msgid ""
 "Another common home page is the \"blog\" type home page, which is common to "
 "most of the free child themes. This shows your latest posts and requires no "
 "additional setup."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:238
+#: ../lib/admin/settings-general.php:534
 msgid ""
 "The third type of home page is the new dynamic home page. This is common on "
 "the newest child themes. It will show your latest posts in a blog type "
 "listing unless you put widgets into the home page sidebars."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:239
+#: ../lib/admin/settings-general.php:535
 msgid ""
 "This setup is preferred because it makes it easier to show a blog on the "
 "front page (no need to rename the home.php file) and does not have the "
@@ -768,458 +991,39 @@ msgid ""
 "installed."
 msgstr ""
 
-#: ../lib/admin/settings-general.php:287
+#: ../lib/admin/settings-general.php:578
 msgid "Home Pages"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:292 ../lib/admin/settings-seo.php:208
+#: ../lib/admin/settings-general.php:583 ../lib/admin/settings-seo.php:412
 msgid "For more information:"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:293 ../lib/admin/settings-seo.php:209
+#: ../lib/admin/settings-general.php:584 ../lib/admin/settings-seo.php:413
 msgid "Get Support"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:294 ../lib/admin/settings-seo.php:210
+#: ../lib/admin/settings-general.php:585 ../lib/admin/settings-seo.php:414
 msgid "Bizznis Snippets"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:295 ../lib/admin/settings-seo.php:211
+#: ../lib/admin/settings-general.php:586 ../lib/admin/settings-seo.php:415
 msgid "Bizznis Tutorials"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:310 ../lib/theme/sidebar.php:18
-msgid "Header"
+#: ../lib/admin/settings-seo.php:25 ../lib/admin/settings-seo.php:26
+msgid "Theme SEO"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:313
-msgid "Color Style"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:315
-msgid "Navigation"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:361
-msgid "Use for site title/logo:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:363
-msgid "Site Title &amp; Tagline"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:364
-msgid "Image logo"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:368
-msgid ""
-"By default, this option will pick the header image in your child theme's "
-"style.css file. The logo can be saved as logo.png to the images folder of "
-"your child theme and will be shown instead of your site title and tagline."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:369
-msgid ""
-"If you want to upload your own logo image and use more advanced options, "
-"make sure you've added <code>add_theme_support( 'bizznis-custom-header' );</"
-"code> to your child theme's functions.php file."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:382
-msgid "Select one of the following:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:388
-msgid "Display post content"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:389
-msgid "Display post excerpts"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:399
-msgid "Limit content to"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:401
-msgid "characters"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:404
-msgid ""
-"Using this option will limit the text and strip all formatting from the text "
-"displayed. To use this option, choose \"Display post content\" in the select "
-"box above."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:408
-msgid "Include the Featured Image?"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:411
-msgid "Image Size:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:421
-msgid "Select Post Navigation Technique:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:423
-msgid "Previous / Next"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:424
-msgid "Numeric"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:427
-msgid ""
-"These options will affect any listings page, including archive, author, "
-"blog, category, search, and tag pages."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:439
-msgid "Enable Comments"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:441 ../lib/admin/settings-general.php:449
-msgid "on posts?"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:444 ../lib/admin/settings-general.php:452
-msgid "on pages?"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:447
-msgid "Enable Trackbacks"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:454
-msgid ""
-"Comments and Trackbacks can also be disabled on a per post/page basis when "
-"creating/editing posts/pages."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:468
-msgid "Color Style:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:470
-msgid "Default"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:481
-msgid ""
-"Please select the color style from the drop down list and save your settings."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:493
-msgid "Primary Navigation"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:494
-#, php-format
-msgid ""
-"In order to use the navigation menus, you must build a <a href=\"%s\">custom "
-"menu</a>, then assign it to the proper Menu Location."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:497
-msgid "Enable Site Title on Left Side?"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:499
-#, php-format
-msgid ""
-"Site title is pulled from your <a href=\"%s\">Site Settings</a> and links to "
-"your homepage."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:502
-msgid "Enable Extras on Right Side?"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:506
-msgid "Display the following:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:508
-msgid "Today's date"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:509
-msgid "Search form"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:510
-msgid "Twitter link"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:515
-msgid "Enter Twitter ID:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:519
-msgid "Twitter Link Text:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:534
-msgid "Enable on:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:538
-msgid "Front Page"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:541
-msgid "Posts Page"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:544 ../lib/admin/settings-seo.php:223
-msgid "Homepage"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:549
-msgid "Posts"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:552
-msgid "Pages"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:555 ../lib/admin/settings-seo.php:225
-msgid "Archives"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:558
-msgid "404 Page"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:561
-msgid "Attachment Page"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:563
-msgid ""
-"Breadcrumbs are a great way of letting your visitors find out where they are "
-"on your site with just a glance. You can enable/disable them on certain "
-"areas of your site."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:575 ../lib/admin/settings-general.php:581
-#, php-format
-msgid "Enter scripts or code you would like output to %s:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:578 ../lib/admin/settings-general.php:584
-#, php-format
-msgid ""
-"The %1$s hook executes immediately before the closing %2$s tag in the "
-"document source."
-msgstr ""
-
-#: ../lib/admin/settings-general.php:595
-msgid "Version:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:595
-msgid "Released:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:599
-msgid "Enable Automatic Updates"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:603
-msgid "Notify by Email when update is available"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:607
-msgid "Enter Email Address:"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:610
-msgid ""
-"If you provide an email address above, you will be notified via email when a "
-"new version of Bizznis is available."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:25
-msgid "SEO"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:144
-msgid ""
-"Bizznis SEO (search engine optimization) is polite, and will disable itself "
-"when most popular SEO plugins (e.g., All-in-One SEO, WordPress SEO, etc.) "
-"are active."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:145
-msgid ""
-"If you don't see an SEO Settings sub menu, then you probably have another "
-"SEO plugin active."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:146
-msgid ""
-"If you see the menu, then opening that menu item will let you set the "
-"General SEO settings for your site."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:147
-msgid ""
-"Each page, post, and term will have its own SEO settings as well. The "
-"default settings are recommended for most users. If you wish to adjust your "
-"SEO settings, the boxes include internal descriptions."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:148
-msgid "Below you'll find a few succinct notes on the options for each box:"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:150 ../lib/admin/settings-seo.php:183
-msgid "Doctitle Settings"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:151
-msgid ""
-"<strong>Append Site Description</strong> will insert the site description "
-"from your General Settings after the title on your home page."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:152
-msgid ""
-"<strong>Append Site Name</strong> will put the site name from the General "
-"Settings after the title on inner page."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:153
-msgid ""
-"<strong>Doctitle Append Location</strong> determines which side of the title "
-"to add the previously mentioned items."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:154
-msgid ""
-"The <strong>Doctitle Separator</strong> is the character that will go "
-"between the title and appended text."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:156 ../lib/admin/settings-seo.php:188
-msgid "Homepage Settings"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:157
-msgid ""
-"These are the homepage specific SEO settings. Note: these settings will not "
-"apply if a static page is set as the front page. If you're using a static "
-"WordPress page as your hompage, you'll need to set the SEO settings on that "
-"particular page."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:158
-msgid ""
-"You can also specify if the Site Title, Description, or your own custom text "
-"should be wrapped in an &lt;h1&gt; tag (the primary heading in HTML)."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:159
-msgid ""
-"To add custom text you'll have to either edit a php file, or use a text "
-"widget on a widget enabled homepage."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:160
-msgid ""
-"The home doctitle sets what will appear within the <title></title> tags "
-"(unseen in the browser) for the home page."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:161
-msgid ""
-"The home META description fill in the meta tags for the home page. The META "
-"description is the short text blurb that appear in search engine results."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:162
-msgid ""
-"The Homepage Robots Meta Tags tell search engines how to handle the "
-"homepage. Noindex means not to index the page at all, and it will not appear "
-"in search results. Nofollow means do not follow any links from this page and "
-"noarchive tells them not to make an archive copy of the page."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:164 ../lib/admin/settings-seo.php:193
-msgid "Document Head Settings"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:165
-msgid ""
-"The Relationship Link Tags are tags added by WordPress that currently have "
-"no SEO value but slow your site load down. They're disabled by default, but "
-"if you have a specific need&#8212;for a plugin or other non typical "
-"use&#8212;then you can enable as needed here."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:166
-msgid ""
-"You can also add support for Windows Live Writer if you use software that "
-"supports this and include a shortlink tag if this is required by any third "
-"party service."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:169
-msgid ""
-"Noarchive and noindex are explained in the home settings. Here you can "
-"select what other parts of the site to apply these options to."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:170
-msgid ""
-"At least one archive should be indexed, but indexing multiple archives will "
-"typically result in a duplicate content penalization (multiple pages with "
-"identical content look manipulative to search engines)."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:171
-msgid ""
-"For most sites either the home page or blog page (using the blog template) "
-"will serve as this index which is why the default is not to index "
-"categories, tags, authors, dates, or searches."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:173
-msgid "Archives Settings"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:174
-msgid ""
-"Canonical links will point search engines to the front page of paginated "
-"content (search engines have to choose the \"preferred link\" when there is "
-"duplicate content on pages)."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:175
-msgid ""
-"This tells them \"this is paged content and the first page starts here\" and "
-"helps to avoid spreading keywords across multiple pages."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:203
-msgid "SEO Archives"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:221
+#: ../lib/admin/settings-seo.php:132
 msgid "Document Title"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:222
+#: ../lib/admin/settings-seo.php:133
 msgid "Document Head"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:235
+#: ../lib/admin/settings-seo.php:146
 #, php-format
 msgid ""
 "The document title (%s) is the single most important element in your "
@@ -1229,50 +1033,52 @@ msgid ""
 "options will help you control what it will look like by default."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:236
+#: ../lib/admin/settings-seo.php:147
 msgid ""
 "<strong>By default</strong>, the home page document title will contain the "
 "site title, the single post and page document titles will contain the post "
 "or page title, the archive pages will contain the archive type, etc."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:239
+#: ../lib/admin/settings-seo.php:150
 #, php-format
 msgid "Add site description (tagline) to %s on home page?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:243
+#: ../lib/admin/settings-seo.php:154
 #, php-format
 msgid "Add site name to %s on inner pages?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:246
+#: ../lib/admin/settings-seo.php:157
 msgid "Document Title Additions Location:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:247
+#: ../lib/admin/settings-seo.php:158
 msgid "Determines which side the added title text will go on."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:250
+#: ../lib/admin/settings-seo.php:161
+#: ../lib/widgets/featured-page-widget.php:149
 msgid "Left"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:253
+#: ../lib/admin/settings-seo.php:164
+#: ../lib/widgets/featured-page-widget.php:150
 msgid "Right"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:257
+#: ../lib/admin/settings-seo.php:168
 msgid "Document Title Separator:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:259
+#: ../lib/admin/settings-seo.php:170
 msgid ""
 "If the title consists of two parts (original title and optional addition), "
 "then the separator will go in between them."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:271
+#: ../lib/admin/settings-seo.php:182
 #, php-format
 msgid ""
 "By default, WordPress places several tags in your document %1$s. Most of "
@@ -1282,43 +1088,43 @@ msgid ""
 "%1$s. If you do not know what something is, leave it unchecked."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:272
+#: ../lib/admin/settings-seo.php:183
 msgid "Relationship Link Tags:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:275
+#: ../lib/admin/settings-seo.php:186
 #, php-format
 msgid "Adjacent Posts %s link tags"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:277
+#: ../lib/admin/settings-seo.php:188
 msgid "Windows Live Writer Support:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:280
+#: ../lib/admin/settings-seo.php:191
 msgid "Include Windows Live Writer Support Tag?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:282
+#: ../lib/admin/settings-seo.php:193
 msgid "Shortlink Tag:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:285
+#: ../lib/admin/settings-seo.php:196
 msgid "Include Shortlink tag?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:288
+#: ../lib/admin/settings-seo.php:199
 msgid ""
 "<span class=\"bizznis-admin-note\">Note:</span> The shortlink tag might have "
 "some use for 3rd party service discoverability, but it has no <abbr title="
 "\"Search engine optimization\">SEO</abbr> value whatsoever."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:302
+#: ../lib/admin/settings-seo.php:213
 msgid "Use semantic HTML5 page and section headings throughout site?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:304
+#: ../lib/admin/settings-seo.php:215
 #, php-format
 msgid ""
 "HTML5 allows for multiple %s tags throughout the document source, provided "
@@ -1326,58 +1132,58 @@ msgid ""
 "following this standard may have a marginal negative impact on SEO."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:306
+#: ../lib/admin/settings-seo.php:217
 #, php-format
 msgid "Which text would you like to be wrapped in %s tags?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:309
+#: ../lib/admin/settings-seo.php:220
 msgid "Site Title"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:312
+#: ../lib/admin/settings-seo.php:223
 msgid "Site Description (Tagline)"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:315
+#: ../lib/admin/settings-seo.php:226
 msgid "Neither. I'll manually wrap my own text on the homepage"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:319
+#: ../lib/admin/settings-seo.php:230
 msgid "Homepage Document Title:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:321
+#: ../lib/admin/settings-seo.php:232
 msgid ""
 "If you leave the document title field blank, your site&#8217;s title will be "
 "used instead."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:324
+#: ../lib/admin/settings-seo.php:235
 msgid "Home Meta Description:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:326
+#: ../lib/admin/settings-seo.php:237
 msgid ""
 "The meta description can be used to determine the text used under the title "
 "on search engine results pages."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:328
+#: ../lib/admin/settings-seo.php:239
 msgid "Homepage Robots Meta Tags:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:331 ../lib/admin/settings-seo.php:334
-#: ../lib/admin/settings-seo.php:337
+#: ../lib/admin/settings-seo.php:242 ../lib/admin/settings-seo.php:245
+#: ../lib/admin/settings-seo.php:248
 #, php-format
 msgid "Apply %s to the homepage?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:339
+#: ../lib/admin/settings-seo.php:250
 msgid "Homepage Author"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:341
+#: ../lib/admin/settings-seo.php:252
 #, php-format
 msgid ""
 "Select the user that you would like to be used as the %s for the homepage. "
@@ -1385,42 +1191,42 @@ msgid ""
 "profile edit screen."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:346
+#: ../lib/admin/settings-seo.php:257
 msgid "Select User"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:362
+#: ../lib/admin/settings-seo.php:273
 msgid ""
 "Depending on your situation, you may or may not want the following archive "
 "pages to be indexed by search engines. Only you can make that determination."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:365 ../lib/admin/settings-seo.php:386
+#: ../lib/admin/settings-seo.php:276 ../lib/admin/settings-seo.php:297
 #, php-format
 msgid "Apply %s to Category Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:368 ../lib/admin/settings-seo.php:389
+#: ../lib/admin/settings-seo.php:279 ../lib/admin/settings-seo.php:300
 #, php-format
 msgid "Apply %s to Tag Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:371 ../lib/admin/settings-seo.php:392
+#: ../lib/admin/settings-seo.php:282 ../lib/admin/settings-seo.php:303
 #, php-format
 msgid "Apply %s to Author Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:374 ../lib/admin/settings-seo.php:395
+#: ../lib/admin/settings-seo.php:285 ../lib/admin/settings-seo.php:306
 #, php-format
 msgid "Apply %s to Date Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:377 ../lib/admin/settings-seo.php:398
+#: ../lib/admin/settings-seo.php:288 ../lib/admin/settings-seo.php:309
 #, php-format
 msgid "Apply %s to Search Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:379
+#: ../lib/admin/settings-seo.php:290
 #, php-format
 msgid ""
 "Some search engines will cache pages in your site (e.g. Google Cache). The "
@@ -1428,12 +1234,12 @@ msgid ""
 "%1$s applied to."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:382
+#: ../lib/admin/settings-seo.php:293
 #, php-format
 msgid "Apply %s to Entire Site?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:400
+#: ../lib/admin/settings-seo.php:311
 #, php-format
 msgid ""
 "Occasionally, search engines use resources like the Open Directory Project "
@@ -1442,19 +1248,181 @@ msgid ""
 "them from doing so."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:403 ../lib/admin/settings-seo.php:406
+#: ../lib/admin/settings-seo.php:314 ../lib/admin/settings-seo.php:317
 #, php-format
 msgid "Apply %s to your site?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:420
+#: ../lib/admin/settings-seo.php:331
 msgid "Canonical Paginated Archives"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:423
+#: ../lib/admin/settings-seo.php:334
 msgid ""
 "This option points search engines to the first page of an archive, if "
 "viewing a paginated page. If you do not know what this means, leave it on."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:348
+msgid ""
+"Bizznis SEO (search engine optimization) is polite, and will disable itself "
+"when most popular SEO plugins (e.g., All-in-One SEO, WordPress SEO, etc.) "
+"are active."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:349
+msgid ""
+"If you don't see an SEO Settings sub menu, then you probably have another "
+"SEO plugin active."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:350
+msgid ""
+"If you see the menu, then opening that menu item will let you set the "
+"General SEO settings for your site."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:351
+msgid ""
+"Each page, post, and term will have its own SEO settings as well. The "
+"default settings are recommended for most users. If you wish to adjust your "
+"SEO settings, the boxes include internal descriptions."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:352
+msgid "Below you'll find a few succinct notes on the options for each box:"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:354 ../lib/admin/settings-seo.php:387
+msgid "Doctitle Settings"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:355
+msgid ""
+"<strong>Append Site Description</strong> will insert the site description "
+"from your General Settings after the title on your home page."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:356
+msgid ""
+"<strong>Append Site Name</strong> will put the site name from the General "
+"Settings after the title on inner page."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:357
+msgid ""
+"<strong>Doctitle Append Location</strong> determines which side of the title "
+"to add the previously mentioned items."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:358
+msgid ""
+"The <strong>Doctitle Separator</strong> is the character that will go "
+"between the title and appended text."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:360 ../lib/admin/settings-seo.php:392
+msgid "Homepage Settings"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:361
+msgid ""
+"These are the homepage specific SEO settings. Note: these settings will not "
+"apply if a static page is set as the front page. If you're using a static "
+"WordPress page as your hompage, you'll need to set the SEO settings on that "
+"particular page."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:362
+msgid ""
+"You can also specify if the Site Title, Description, or your own custom text "
+"should be wrapped in an &lt;h1&gt; tag (the primary heading in HTML)."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:363
+msgid ""
+"To add custom text you'll have to either edit a php file, or use a text "
+"widget on a widget enabled homepage."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:364
+msgid ""
+"The home doctitle sets what will appear within the <title></title> tags "
+"(unseen in the browser) for the home page."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:365
+msgid ""
+"The home META description fill in the meta tags for the home page. The META "
+"description is the short text blurb that appear in search engine results."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:366
+msgid ""
+"The Homepage Robots Meta Tags tell search engines how to handle the "
+"homepage. Noindex means not to index the page at all, and it will not appear "
+"in search results. Nofollow means do not follow any links from this page and "
+"noarchive tells them not to make an archive copy of the page."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:368 ../lib/admin/settings-seo.php:397
+msgid "Document Head Settings"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:369
+msgid ""
+"The Relationship Link Tags are tags added by WordPress that currently have "
+"no SEO value but slow your site load down. They're disabled by default, but "
+"if you have a specific need&#8212;for a plugin or other non typical "
+"use&#8212;then you can enable as needed here."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:370
+msgid ""
+"You can also add support for Windows Live Writer if you use software that "
+"supports this and include a shortlink tag if this is required by any third "
+"party service."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:373
+msgid ""
+"Noarchive and noindex are explained in the home settings. Here you can "
+"select what other parts of the site to apply these options to."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:374
+msgid ""
+"At least one archive should be indexed, but indexing multiple archives will "
+"typically result in a duplicate content penalization (multiple pages with "
+"identical content look manipulative to search engines)."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:375
+msgid ""
+"For most sites either the home page or blog page (using the blog template) "
+"will serve as this index which is why the default is not to index "
+"categories, tags, authors, dates, or searches."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:377
+msgid "Archives Settings"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:378
+msgid ""
+"Canonical links will point search engines to the front page of paginated "
+"content (search engines have to choose the \"preferred link\" when there is "
+"duplicate content on pages)."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:379
+msgid ""
+"This tells them \"this is paged content and the first page starts here\" and "
+"helps to avoid spreading keywords across multiple pages."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:407
+msgid "SEO Archives"
 msgstr ""
 
 #: ../lib/admin/upgrade.php:135
@@ -1493,7 +1461,7 @@ msgid ""
 "convenience."
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:27
+#: ../lib/functions/breadcrumb.php:27 ../lib/theme/sidebar.php:42
 msgid "Home"
 msgstr ""
 
@@ -1556,7 +1524,7 @@ msgctxt "separator in time difference"
 msgid "and"
 msgstr ""
 
-#: ../lib/functions/general.php:188
+#: ../lib/functions/general.php:210
 #, php-format
 msgid "Install %s"
 msgstr ""
@@ -1629,6 +1597,87 @@ msgstr ""
 msgid "Log out"
 msgstr ""
 
+#: ../lib/integrations/bbpress/bbpress.php:56
+msgid "bbPress Sidebar"
+msgstr ""
+
+#: ../lib/integrations/bbpress/bbpress.php:57
+msgid "This is the primary sidebar used on all bbPress pages."
+msgstr ""
+
+#: ../lib/integrations/bbpress/bbpress.php:87
+msgid "bbPress Sidebar Widget Area"
+msgstr ""
+
+#: ../lib/integrations/bbpress/inc/settings.php:58
+msgid "bbPress Integration"
+msgstr ""
+
+#: ../lib/integrations/bbpress/inc/settings.php:69
+msgid "Forum Layout: "
+msgstr ""
+
+#: ../lib/integrations/bbpress/inc/settings.php:81
+msgid "Register a sidebar that will be used on all bbPress pages"
+msgstr ""
+
+#: ../lib/integrations/bbpress/inc/settings.php:83
+#, php-format
+msgid ""
+"This option will add addition sidebar in your <a href=\"%s\">Widgets screen</"
+"a>. Created sidebar will replace Primary Sidebar on all bbPress pages."
+msgstr ""
+
+#: ../lib/integrations/bbpress/inc/settings.php:86
+msgid "Remove forum and topic descriptions."
+msgstr ""
+
+#: ../lib/integrations/bbpress/inc/settings.php:88
+msgid ""
+"This option will remove topic descriptions. E.g. \"This forum contains "
+"[&hellip;]\" notices."
+msgstr ""
+
+#: ../lib/integrations/woocommerce/woocommerce.php:66
+msgid "Shop Sidebar"
+msgstr ""
+
+#: ../lib/integrations/woocommerce/woocommerce.php:67
+msgid "This is the primary sidebar used on all WooCommerce shop pages."
+msgstr ""
+
+#: ../lib/integrations/woocommerce/woocommerce.php:97
+msgid "Shop Sidebar Widget Area"
+msgstr ""
+
+#: ../lib/integrations/woocommerce/inc/breadcrumb.php:51
+msgid "Search results for &ldquo;"
+msgstr ""
+
+#: ../lib/integrations/woocommerce/inc/breadcrumb.php:90
+msgid "Products tagged &ldquo;"
+msgstr ""
+
+#: ../lib/integrations/woocommerce/inc/breadcrumb.php:90
+msgctxt "endquote"
+msgid "&rdquo;"
+msgstr ""
+
+#: ../lib/integrations/woocommerce/inc/settings.php:52
+msgid "WooCoomerce Integration"
+msgstr ""
+
+#: ../lib/integrations/woocommerce/inc/settings.php:64
+msgid "Register a sidebar that will be used on all shop pages"
+msgstr ""
+
+#: ../lib/integrations/woocommerce/inc/settings.php:66
+#, php-format
+msgid ""
+"This option will add addition sidebar in your <a href=\"%s\">Widgets screen</"
+"a>. Created sidebar will replace Primary Sidebar on all shop pages."
+msgstr ""
+
 #: ../lib/theme/comments.php:40
 msgid "<h3>Comments</h3>"
 msgstr ""
@@ -1697,11 +1746,11 @@ msgstr ""
 msgid "Read more"
 msgstr ""
 
-#: ../lib/theme/menu.php:170 ../lib/theme/menu.php:183
+#: ../lib/theme/menu.php:158 ../lib/theme/menu.php:173
 msgid "Menu"
 msgstr ""
 
-#: ../lib/theme/menu.php:170 ../lib/theme/menu.php:183
+#: ../lib/theme/menu.php:158 ../lib/theme/menu.php:173
 msgid "Close Menu"
 msgstr ""
 
@@ -1753,27 +1802,80 @@ msgid ""
 "option."
 msgstr ""
 
-#: ../lib/theme/sidebar.php:58
+#: ../lib/theme/sidebar.php:43
+msgid ""
+"This is the widget area that replaces default content loop on the homepage."
+msgstr ""
+
+#: ../lib/theme/sidebar.php:66
 #, php-format
 msgid "Footer %d"
 msgstr ""
 
-#: ../lib/theme/sidebar.php:59
+#: ../lib/theme/sidebar.php:67
 #, php-format
 msgid "Footer %d widget area."
 msgstr ""
 
-#: ../lib/theme/sidebar.php:76
+#: ../lib/theme/sidebar.php:84
 msgid "Primary Sidebar Widget Area"
 msgstr ""
 
-#: ../lib/theme/sidebar.php:88
+#: ../lib/theme/sidebar.php:96
 msgid "Secondary Sidebar Widget Area"
 msgstr ""
 
-#: ../lib/theme/sidebar.php:101
+#: ../lib/theme/sidebar.php:109
 #, php-format
 msgid ""
 "This is the %s. You can add content to this area by visiting your <a href="
 "\"%s\">Widgets Panel</a> and adding new widgets to this area."
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:41
+msgid "Displays featured page with thumbnails"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:46
+msgid "Bizznis - Featured Page"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:122
+msgid "Title"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:126
+msgid "Page"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:132
+msgid "Show Featured Image"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:135
+msgid "Image Size"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:146
+msgid "Image Alignment"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:148
+msgid "None"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:156
+msgid "Show Page Title"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:160
+msgid "Show Page Content"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:163
+msgid "Content Character Limit"
+msgstr ""
+
+#: ../lib/widgets/featured-page-widget.php:167
+msgid "More Text"
 msgstr ""

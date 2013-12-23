@@ -25,7 +25,6 @@ class Bizznis_WC {
 		$this->constants();
 		$this->theme_support();
 		$this->post_type_support();
-		$this->i18n();
 	}
 	
 	/**
@@ -129,15 +128,6 @@ class Bizznis_WC {
 	 */
 	public function post_type_support() {
 		add_post_type_support( 'product', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts' ) );
-	}
-	
-	/**
-	 * Load the Bizznis textdomain for internationalization.
-	 *
-	 * @since 1.0.0
-	 */
-	public function i18n() {
-		load_theme_textdomain( 'bizznis', BIZZNIS_LANGUAGES_DIR );
 	}
 
 }
