@@ -10,7 +10,7 @@
 
 ###1. Download Poedit
 
-To be able to translate a theme, you’ll need a program called Poedit. It’s available for Windows, Mac and Linux. If you’re using Windows or Mac, you can download it here. If you’re on Linux, get it through your distributions package distribution system.
+To be able to translate a theme, you’ll need a program called Poedit. It’s available for Windows, Mac and Linux. If you’re using Windows or Mac, you can download it [here] (http://www.poedit.net/download.php). If you’re on Linux, get it through your distributions package distribution system.
 
 ###2. Edit the English .po file that came with this theme.
 
