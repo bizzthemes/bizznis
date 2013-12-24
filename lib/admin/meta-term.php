@@ -27,17 +27,17 @@ function bizznis_taxonomy_archive_options( $tag, $taxonomy ) {
 	<h3><?php echo esc_html( $tax->labels->singular_name ) . ' ' . __( 'Archive Settings', 'bizznis' ); ?></h3>
 	<table class="form-table">
 		<tbody>
-			<tr>
+			<tr class="form-field">
 				<th scope="row" valign="top"><label for="meta[headline]"><?php _e( 'Archive Headline', 'bizznis' ); ?></label></th>
 				<td>
 					<input id="meta[headline]" name="meta[headline]" type="text" value="<?php echo esc_attr( $tag->meta['headline'] ); ?>" size="40" />
 					<p class="description"><?php _e( 'Leave empty if you do not want to display a headline.', 'bizznis' ); ?></p>
 				</td>
 			</tr>
-			<tr>
+			<tr class="form-field">
 				<th scope="row" valign="top"><label for="meta[intro_text]"><?php _e( 'Archive Intro Text', 'bizznis' ); ?></label></th>
 				<td>
-					<textarea id="meta[intro_text]" class="widefat" name="meta[intro_text]" rows="5" cols="30"><?php echo esc_textarea( $tag->meta['intro_text'] ); ?></textarea>
+					<textarea id="meta[intro_text]" name="meta[intro_text]" rows="3" cols="50" class="large-text"><?php echo esc_textarea( $tag->meta['intro_text'] ); ?></textarea>
 					<p class="description"><?php _e( 'Leave empty if you do not want to display any intro text.', 'bizznis' ); ?></p>
 				</td>
 			</tr>
