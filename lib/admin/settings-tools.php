@@ -169,7 +169,7 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 	 * @since 1.0.0
 	 */
 	public function export() {
-		if ( ! bizznis_is_menu_page( 'bizznis-import-export' ) ) {
+		if ( ! bizznis_is_menu_page( 'bizznis-tools' ) ) {
 			return;
 		}
 		if ( empty( $_REQUEST['bizznis-export'] ) ) {
@@ -230,11 +230,24 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 		}
 		check_admin_referer( 'bizznis-import' );
 		do_action( 'bizznis_import', $_REQUEST['bizznis-import'], $_FILES['bizznis-import-upload'] );
-		$upload = file_get_contents( $_FILES['bizznis-import-upload']['tmp_name'] );
+		# WP filesystem check
+		$url = wp_nonce_url( 'themes.php?page=bizznis-tools' );
+		if ( false === ( $creds = request_filesystem_credentials( $url, '', false, false, null ) ) ) {
+			return;
+		}
+		# Try to get the filesystem running
+		if ( ! WP_Filesystem( $creds ) ) {
+			request_filesystem_credentials($url, '', true, false, null);
+			return;
+		}
+		# Let's finally use the filesystem
+		global $wp_filesystem;
+		$upload = $wp_filesystem->get_contents( $_FILES['bizznis-import-upload']['tmp_name'] );
+		# Decode json format
 		$options = json_decode( $upload, true );
 		# Check for errors
 		if ( ! $options || $_FILES['bizznis-import-upload']['error'] ) {
-			bizznis_admin_redirect( 'bizznis-import-export', array( 'error' => 'true' ) );
+			bizznis_admin_redirect( 'bizznis-tools', array( 'error' => 'true' ) );
 			exit;
 		}
 		# Identify the settings keys that we should import
@@ -250,9 +263,8 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 			}
 		}
 		# Redirect, add success flag to the URI
-		bizznis_admin_redirect( 'bizznis-import-export', array( 'imported' => 'true' ) );
+		bizznis_admin_redirect( 'bizznis-tools', array( 'imported' => 'true' ) );
 		exit;
-
 	}
 	
 	/**
