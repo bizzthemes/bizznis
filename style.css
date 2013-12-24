@@ -78,7 +78,6 @@ input[type="search"],
 	display: table;
 }
 
-
 /*
 Defaults
 ---------------------------------------------------------------------------------------------------- */
@@ -92,8 +91,8 @@ html {
 }
 
 body {
-	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	background-color: #efede7;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	font-size: 1.6rem;
 	line-height: 1.625;
@@ -131,8 +130,13 @@ textarea:focus,
 }
 
 a {
-	color: #1E1E1D;
+	color: #1e1e1d;
 	text-decoration: none;
+}
+
+a:hover {
+	color: #dc3231;
+	text-decoration: underline;
 }
 
 .entry-content a {
@@ -142,11 +146,6 @@ a {
 a img {
 	margin-bottom: -7px;
 	margin-bottom: -0.7rem;
-}
-
-a:hover {
-	color: #dc3231;
-	text-decoration: underline;
 }
 
 p {
@@ -171,11 +170,11 @@ blockquote::before {
 }
 
 blockquote {
+	border-left: 10px solid #efede7;
 	margin: 40px;
 	margin: 4rem;
 	padding-left: 40px;
 	padding-left: 4rem;
-	border-left: 10px solid #efede7;
 }
 
 .entry-content code {
@@ -249,23 +248,23 @@ img {
 }
 
 .embed-container {
-	position: relative;
-    padding-bottom: 56.25%; /* 16/9 ratio */
-    padding-top: 0; /* IE6 workaround*/
     height: 0;
     margin-bottom: 40px;
     margin-bottom: 4.0rem;
-    overflow: hidden;
+	overflow: hidden;
+	padding-bottom: 56.25%; /* 16/9 ratio */
+    padding-top: 0; /* IE6 workaround*/
+	position: relative;
 }
 
 .embed-container iframe,
 .embed-container object,
 .embed-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
     height: 100%;
+	left: 0;
+	position: absolute;
+    top: 0;
+	width: 100%;
 }
 
 /* Forms
@@ -278,9 +277,9 @@ textarea {
 	border: 1px solid #ddd;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
 	color: #333;
+	max-width: 100%;
 	padding: 10px;
 	padding: 1rem;
-	max-width: 100%;
 }
 
 input:focus,
@@ -305,7 +304,7 @@ input[type="reset"],
 input[type="submit"],
 .button,
 .entry-content .button {
-	background-color: #1E1E1D;
+	background-color: #1e1e1d;
 	border: none;
 	box-shadow: none;
 	color: #fff;
@@ -369,105 +368,7 @@ td {
 	padding: 0.6rem 0;
 }
 
-
-/*
-Structure and Layout
----------------------------------------------------------------------------------------------------- */
-
-/* Site Containers
---------------------------------------------- */
-
-.site-container {
-}
-
-.wrap {
-	margin: 0 auto;
-	max-width: 1140px;
-}
-
-.site-header {
-	background-color: #fff;
-}
-
-.site-main {
-	background-color: #fff;
-	clear: both;
-	margin: 40px auto;
-	margin: 4rem auto;
-	max-width: 1220px;
-	padding: 40px 0;
-	padding: 4rem 0;
-}
-
-/* Column Widths and Positions
---------------------------------------------- */
-
-/* Wrapping div for .content and .sidebar-primary */
-
-.content-sidebar-sidebar .content-sidebar-wrap,
-.sidebar-content-sidebar .content-sidebar-wrap,
-.sidebar-sidebar-content .content-sidebar-wrap {
-	width: 920px;
-}
-
-.content-sidebar-sidebar .content-sidebar-wrap {
-	float: left;
-}
-
-.sidebar-content-sidebar .content-sidebar-wrap,
-.sidebar-sidebar-content .content-sidebar-wrap {
-	float: right;
-}
-
-/* Content */
-
-.content {
-	float: right;
-	width: 750px;
-}
-
-.content-sidebar .content,
-.content-sidebar-sidebar .content,
-.sidebar-content-sidebar .content {
-	float: left;
-}
-
-.content-sidebar-sidebar .content,
-.sidebar-content-sidebar .content,
-.sidebar-sidebar-content .content {
-	width: 520px;
-}
-
-.full-width-content .content {
-	width: 100%;
-}
-
-/* Primary Sidebar */
-
-.sidebar-primary {
-	float: right;
-	width: 360px;
-}
-
-.sidebar-content .sidebar-primary,
-.sidebar-sidebar-content .sidebar-primary {
-	float: left;
-}
-
-/* Secondary Sidebar */
-
-.sidebar-secondary {
-	float: left;
-	width: 180px;
-}
-
-.content-sidebar-sidebar .sidebar-secondary {
-	float: right;
-}
-
-
 /* Column Classes
-	Link: http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css
 --------------------------------------------- */
 
 .five-sixths,
@@ -541,6 +442,102 @@ Structure and Layout
 	margin-left: 0;
 }
 
+/*
+Structure and Layout
+---------------------------------------------------------------------------------------------------- */
+
+/* Site Containers
+--------------------------------------------- */
+
+.wrap {
+	margin: 0 auto;
+	max-width: 1140px;
+}
+
+.site-header {
+	background-color: #fff;
+}
+
+.site-main {
+	background-color: #fff;
+	clear: both;
+	margin: 40px auto;
+	margin: 4rem auto;
+	max-width: 1220px;
+	padding: 40px 0;
+	padding: 4rem 0;
+}
+
+.site-footer {
+	font-size: 14px;
+	font-size: 1.4rem;
+}
+
+/* Column Widths and Positions
+--------------------------------------------- */
+
+/* Wrapping div for .content and .sidebar-primary */
+
+.content-sidebar-sidebar .content-sidebar-wrap,
+.sidebar-content-sidebar .content-sidebar-wrap,
+.sidebar-sidebar-content .content-sidebar-wrap {
+	width: 920px;
+}
+
+.content-sidebar-sidebar .content-sidebar-wrap {
+	float: left;
+}
+
+.sidebar-content-sidebar .content-sidebar-wrap,
+.sidebar-sidebar-content .content-sidebar-wrap {
+	float: right;
+}
+
+/* Content */
+
+.content {
+	float: right;
+	width: 750px;
+}
+
+.content-sidebar .content,
+.content-sidebar-sidebar .content,
+.sidebar-content-sidebar .content {
+	float: left;
+}
+
+.content-sidebar-sidebar .content,
+.sidebar-content-sidebar .content,
+.sidebar-sidebar-content .content {
+	width: 520px;
+}
+
+.full-width-content .content {
+	width: 100%;
+}
+
+/* Primary Sidebar */
+
+.sidebar-primary {
+	float: right;
+	width: 360px;
+}
+
+.sidebar-content .sidebar-primary,
+.sidebar-sidebar-content .sidebar-primary {
+	float: left;
+}
+
+/* Secondary Sidebar */
+
+.sidebar-secondary {
+	float: left;
+	width: 180px;
+}
+
+.content-sidebar-sidebar .sidebar-secondary {
+	float: right;
+}
 
 /*
 Common Classes
@@ -574,6 +571,7 @@ Common Classes
 }
 
 .sticky {
+	/* style it inside a child theme */
 }
 
 img.centered,
@@ -637,9 +635,9 @@ img.alignright,
 /* Breadcrumb */
 
 .breadcrumb {
+	font-weight: 300;
 	margin-bottom: 40px;
 	margin-bottom: 4rem;
-	font-weight: 300;
 }
 
 /* Author box */
@@ -652,11 +650,11 @@ img.alignright,
 .author-box,
 .archive-description {
 	background-color: #F9F8F2;
+	margin-bottom: 40px;
+	margin-bottom: 4rem;
 	overflow: hidden;
 	padding: 40px;
 	padding: 4rem;
-	margin-bottom: 40px;
-	margin-bottom: 4rem;
 }
 
 .author-box .avatar {
@@ -696,15 +694,15 @@ img.alignright,
 }
 
 .entry-title {
-	line-height: 1.38;
 	font-size: 38px;
 	font-size: 3.8rem;
+	line-height: 1.38;
 }
 
 .widgettitle {
+	font-weight: 300;
 	margin-bottom: 24px;
 	margin-bottom: 2.4rem;
-	font-weight: 300;
 }
 
 .sidebar .widgettitle a {
@@ -720,78 +718,8 @@ img.alignright,
 	margin: 0;
 }
 
-/*
-Widgets
----------------------------------------------------------------------------------------------------- */
 
-/* Featured Content
---------------------------------------------- */
-
-.featured-content .entry {
-	border-bottom: 2px solid #f5f5f5;
-	margin-bottom: 20px;
-	margin-bottom: 2rem;
-	padding: 0 0 24px;
-	padding: 0 0 2.4rem;
-}
-
-.featured-content .entry-title {
-	font-size: 24px;
-	font-size: 2.4rem;
-	line-height: 1.2;
-}
-
-.featured-content .entry-title a {
-}
-
-/*
-Plugins
----------------------------------------------------------------------------------------------------- */
-
-/* Jetpack
---------------------------------------------- */
-
-img#wpstats {
-	display: none;
-}
-
-/* Gravity Forms
---------------------------------------------- */
-
-div.gform_wrapper input[type="email"],
-div.gform_wrapper input[type="text"],
-div.gform_wrapper textarea,
-div.gform_wrapper select,
-div.gform_wrapper .ginput_complex label {
-	font-size: 16px;
-	font-size: 1.6rem;
-	padding: 10px;
-	padding: 1rem;
-}
-
-div.gform_wrapper .ginput_complex label {
-	padding: 0;
-}
-
-div.gform_wrapper .top_label .gfield_label {
-	margin: 0 0 10px 0;
-	margin: 0 0 1rem 0;
-}
-
-div.gform_wrapper li,
-div.gform_wrapper form li {
-	margin: 16px 0 0;
-	margin: 1.6rem 0 0;
-}
-
-div.gform_wrapper .gform_footer input[type="submit"] {
-	font-size: 14px;
-	font-size: 1.4rem;
-}
-
-
-/*
-Site Header
+/* Site Header
 ---------------------------------------------------------------------------------------------------- */
 
 /* Header content
@@ -833,7 +761,7 @@ Site Header
 /* Logo, hide text */
 
 .header-image .title-area {
-	background: url(images/logo.png) no-repeat top center;
+	background: url('images/logo.png') no-repeat top center;
 }
 
 .header-image .site-description,
@@ -843,8 +771,8 @@ Site Header
 }
 
 .header-image .site-title a {
-	min-height: 120px;
 	max-width: 100%;
+	min-height: 120px;
 }
 
 .header-image .site-description {
@@ -870,8 +798,7 @@ Site Header
 	margin-top: 1.7rem;
 }
 
-/*
-Site Navigation
+/* Site Navigation
 ---------------------------------------------------------------------------------------------------- */
 
 /* Navigation bar */
@@ -937,7 +864,7 @@ Site Navigation
 }
 
 .menu-item-has-children > a:after {
-	content: '\00a0\00a0\25BE';
+	content: '\00a0\00a0\25BE'; /* Read about CSS content here: http://css-tricks.com/css-content/ */
 }
 
 .sub-menu .menu-item-has-children > a:after {
@@ -953,27 +880,27 @@ Site Navigation
 }
 
 .menu-bizznis .sub-menu {
-	left: -9999px;
-	opacity: 0;
-	position: absolute;
 	-webkit-transition: opacity .4s ease-in-out;
 	-moz-transition:    opacity .4s ease-in-out;
 	-ms-transition:     opacity .4s ease-in-out;
 	-o-transition:      opacity .4s ease-in-out;
 	transition:         opacity .4s ease-in-out;
+	left: -9999px;
+	opacity: 0;
+	position: absolute;
 	width: 200px;
 	z-index: 99;
 }
 
 .menu-bizznis .sub-menu a {
 	background-color: #fff;
-	border: 1px solid #EFEDE7;
+	border: 1px solid #efede7;
 	border-top: none;
+	font-size: 14px;
+	font-size: 1.4rem;
 	padding: 16px 20px;
 	padding: 1.6rem 2rem;
 	position: relative;
-	font-size: 14px;
-	font-size: 1.4rem;
 	width: 200px;
 }
 
@@ -1011,7 +938,7 @@ Site Navigation
 --------------------------------------------- */
 
 .nav-secondary {
-	border: solid #EFEDE7;
+	border: solid #efede7;
 	border-width: 1px 0;
 }
 
@@ -1026,7 +953,7 @@ Site Navigation
 }
 
 .nav-header .sub-menu {
-	border-top: 1px solid #EFEDE7;
+	border-top: 1px solid #efede7;
 }
 
 .nav-header .sub-menu .sub-menu {
@@ -1042,8 +969,7 @@ Site Navigation
 	display: none;
 }
 
-/*
-Content Area
+/* Content Area
 ---------------------------------------------------------------------------------------------------- */
 
 /* Entries
@@ -1139,12 +1065,12 @@ Content Area
 }
 
 .entry-content .post-edit-link:before {
+	clear: both;
 	content: ".";
-	visibility: hidden;
 	display: block;
 	height: 10px;
 	height: 1rem;
-	clear: both;
+	visibility: hidden;
 }
 
 /* Pagination
@@ -1169,7 +1095,7 @@ Content Area
 
 .archive-pagination li a:hover,
 .archive-pagination li.active a {
-	background-color: #1E1E1D;
+	background-color: #1e1e1d;
 	color: #fff;
 }
 
@@ -1205,9 +1131,9 @@ Content Area
 }
 
 .comment-author {
+	font-weight: 700;
 	margin-right: 5px;
 	margin-right: .5rem;
-	font-weight: 700;
 }
 
 .comment-author .says {
@@ -1244,10 +1170,10 @@ Content Area
 }
 
 .comment-content p {
-	margin: 0 0 10px;
-	margin: 0 0 1rem;
 	font-size: 14px;
 	font-size: 1.4rem;
+	margin: 0 0 10px;
+	margin: 0 0 1rem;
 }
 
 .comment-content .alert {
@@ -1286,18 +1212,14 @@ Content Area
 	width: 100%;
 }
 
-.comment-list li {
-	
-}
-
 .entry-comments .children {
 	border-left: 1px dotted #999;
-	padding-left: 30px;
-	padding-left: 3rem;
 	margin-bottom: -15px;
 	margin-bottom: -1.5rem;
 	margin-top: 1.5px;
 	margin-top: 1.5rem;
+	padding-left: 30px;
+	padding-left: 3rem;
 	position: relative;
 }
 
@@ -1317,9 +1239,7 @@ Content Area
 	color: #999;
 }
 
-
-/*
-Sidebars
+/* Sidebars
 ---------------------------------------------------------------------------------------------------- */
 
 .sidebar {
@@ -1346,20 +1266,14 @@ Sidebars
 	padding: 4rem;
 }
 
-/*
-Site Footer
+/* Site Footer
 ---------------------------------------------------------------------------------------------------- */
-
-.site-footer {
-	font-size: 14px;
-	font-size: 1.4rem;
-}
 
 /* Footer Widgets
 --------------------------------------------- */
 
 .footer-widgets {
-	background-color: #1E1E1D;
+	background-color: #1e1e1d;
 	border-bottom: 1px solid #2C2C29;
 	color: #9E9D95;
 	clear: both;
@@ -1414,7 +1328,7 @@ Site Footer
 --------------------------------------------- */
 
 .footer-creds {
-	background-color: #1E1E1D;
+	background-color: #1e1e1d;
 	color: #9E9D95;
 	padding: 40px 0;
 	padding: 4rem 0;
@@ -1432,12 +1346,68 @@ Site Footer
 	color: #fff;
 }
 
+/* Widgets
+---------------------------------------------------------------------------------------------------- */
+
+/* Featured Content
+--------------------------------------------- */
+
+.featured-content .entry {
+	margin-bottom: 20px;
+	margin-bottom: 2rem;
+	padding: 0 0 24px;
+	padding: 0 0 2.4rem;
+}
+
+.featured-content .entry-title {
+	font-size: 24px;
+	font-size: 2.4rem;
+	line-height: 1.2;
+}
+
+/* Plugins
+---------------------------------------------------------------------------------------------------- */
+
+/* Gravity Forms
+--------------------------------------------- */
+
+div.gform_wrapper input[type="email"],
+div.gform_wrapper input[type="text"],
+div.gform_wrapper textarea,
+div.gform_wrapper select,
+div.gform_wrapper .ginput_complex label {
+	font-size: 16px;
+	font-size: 1.6rem;
+	padding: 10px;
+	padding: 1rem;
+}
+
+div.gform_wrapper .ginput_complex label {
+	padding: 0;
+}
+
+div.gform_wrapper .top_label .gfield_label {
+	margin: 0 0 10px 0;
+	margin: 0 0 1rem 0;
+}
+
+div.gform_wrapper li,
+div.gform_wrapper form li {
+	margin: 16px 0 0;
+	margin: 1.6rem 0 0;
+}
+
+div.gform_wrapper .gform_footer input[type="submit"] {
+	font-size: 14px;
+	font-size: 1.4rem;
+}
+
 
 /* Media Queries : design-based, not device-based, so make sure to alter it in your child theme
 				   to adapt per your own content, navigation width etc.
 ---------------------------------------------------------------------------------------------------- */
 
-/* Retina ready ----------- */
+/* Retina ready */
 
 @media
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
@@ -1524,24 +1494,11 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	}
 	
 	.content,
-	.breadcrumb {
-		margin-bottom: 20px;
-		margin-bottom: 2rem;
-	}
-	
+	.breadcrumb,
 	.sidebar .widget,
 	.footer-widgets .widget {
 		margin-bottom: 20px;
 		margin-bottom: 2rem;
-	}
-
-	.header-image .site-header .wrap {
-		background-position: center top;
-	}
-
-	.site-header .search-form {
-		margin: 16px auto ;
-		margin: 1.6rem auto;
 	}
 	
 	.nav-bizznis,
@@ -1570,10 +1527,10 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	}
 
 	.header-content {
-		padding-top: 40px;
-		padding-top: 4rem;
 		padding-bottom: 40px;
 		padding-bottom: 4rem;
+		padding-top: 40px;
+		padding-top: 4rem;
 	}
 	
 	.footer-creds,
@@ -1622,34 +1579,36 @@ only screen and (min-device-pixel-ratio : 1.5) {
 
 }
 
+/* Responsive Menu */
+
 @media only screen and (max-width: 767px){
 	
 	/* Nav toggle button */
 	
 	.nav-bizznis-toggle {
-		display: inline-block;
-		position: relative;
-		cursor: pointer;
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
+		cursor: pointer;
+		display: inline-block;
+		position: relative;
 		user-select: none;
 	}
 	
 	.nav-bizznis-toggle::after {
+		background-color: #efede7;
+		color: #1e1e1d;
 		content: attr(data-open);
 		display: block;
-		width: 100%;
 		margin: 15px 0;
 		margin: 1.5rem 0;
 		padding: 10px 15px;
 		padding: 1rem 1.5rem;
-		background-color: #EFEDE7;
-		color: #1E1E1D;
+		width: 100%;
 	}
 	
 	.nav-bizznis-toggle:hover:after{
-		background-color: #F2F0EA;
-		color: #1E1E1D;
+		background-color: #f2f0ea;
+		color: #1e1e1d;
 	}
 	
 	#nav-bizznis-toggle:checked+.nav-bizznis-toggle::after,
@@ -1708,12 +1667,12 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	}
 	
 	.nav-bizznis-toggle ~ .menu-bizznis .sub-menu {
-		width: 100%;
-		left: auto;
 		background-color: #efede7;
 		background-color: rgba(0, 0, 0, 0.05);
-		position: relative;
 		display: none;
+		left: auto;
+		position: relative;
+		width: 100%;
 	}
 	
 	.nav-bizznis-toggle ~ .menu-bizznis .sub-menu .sub-menu {
@@ -1721,9 +1680,9 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	}
 	
 	.nav-bizznis-toggle ~ .menu-bizznis .menu-item:hover > .sub-menu {
+		display: block;
 		left: auto;
 		opacity: 1;
-		display: block;
 	}
 	
 	.nav-bizznis-toggle ~ .menu-bizznis .sub-menu a {
@@ -1733,19 +1692,20 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	}
 	
 	.nav-bizznis-toggle ~ .menu-bizznis .sub-menu:after {
-		bottom: 100%;
-		left: 50%;
 		border: solid transparent;
-		content: " ";
-		height: 0;
-		width: 0;
-		position: absolute;
-		pointer-events: none;
 		border-color: transparent;
 		border-bottom-color: #efede7;
 		border-bottom-color: rgba(0, 0, 0, 0.05);
 		border-width: 10px;
+		bottom: 100%;
+		content: " ";
+		height: 0;
+		left: 50%;
 		margin-left: -10px;
+		margin-left: -1rem;
+		position: absolute;
+		pointer-events: none;
+		width: 0;
 	}
 	
 	/* Nav non-toggle items */
