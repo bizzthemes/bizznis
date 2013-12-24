@@ -10,7 +10,7 @@
  *
  * @since 1.0.0
  */
-class Bizznis_Admin_Settings extends Bizznis_Admin_Boxes {
+class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 
 	/**
 	 * Create an admin menu item and settings page.
@@ -163,6 +163,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Boxes {
 		# Hidden form fields
 		add_action( 'bizznis_admin_before_metaboxes', array( $this, 'hidden_fields' ) );
 		# Genaral
+		add_meta_box( 'bizznis-theme-settings-version', __( 'Information', 'bizznis' ), array( $this, 'info_box' ), $this->pagehook, 'column3' );
 		add_meta_box( 'bizznis-theme-settings-layout', __( 'Default Layout', 'bizznis' ), array( $this, 'layout_box' ), $this->pagehook, 'main' );
 		if ( current_theme_supports( 'bizznis-style-selector' ) )
 			add_meta_box( 'bizznis-theme-settings-style-selector', __( 'Color Style', 'bizznis' ), array( $this, 'style_box' ), $this->pagehook, 'main' );
@@ -173,269 +174,10 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Boxes {
 			add_meta_box( 'bizznis-theme-settings-menus', __( 'Menus', 'bizznis' ), array( $this, 'menu_box' ), $this->pagehook, 'column2' );
 		if ( current_theme_supports( 'bizznis-breadcrumbs' ) )
 			add_meta_box( 'bizznis-theme-settings-breadcrumb', __( 'Breadcrumbs', 'bizznis' ), array( $this, 'breadcrumb_box' ), $this->pagehook, 'column2' );
-			add_meta_box( 'bizznis-theme-settings-comments', __( 'Comments and Trackbacks', 'bizznis' ), array( $this, 'comments_box' ), $this->pagehook, 'column2' );
+		add_meta_box( 'bizznis-theme-settings-comments', __( 'Comments and Trackbacks', 'bizznis' ), array( $this, 'comments_box' ), $this->pagehook, 'column2' );
 		if ( current_user_can( 'unfiltered_html' ) )
 			add_meta_box( 'bizznis-theme-settings-scripts', __( 'Header and Footer Scripts', 'bizznis' ), array( $this, 'scripts_box' ), $this->pagehook, 'column3' );
-		add_meta_box( 'bizznis-theme-settings-version', __( 'Information', 'bizznis' ), array( $this, 'info_box' ), $this->pagehook, 'column3' );
 		do_action( 'bizznis_theme_settings_metaboxes', $this->pagehook );
-	}
-
-	/**
-	 * Outputs hidden form fields before the metaboxes.
-	 *
-	 * @since 1.0.0
-	 */
-	function hidden_fields( $pagehook ) {
-		if ( $pagehook != $this->pagehook )
-			return;
-		printf( '<input type="hidden" name="%s" value="%s" />', $this->get_field_name( 'theme_version' ), esc_attr( $this->get_field_value( 'theme_version' ) ) );
-		printf( '<input type="hidden" name="%s" value="%s" />', $this->get_field_name( 'db_version' ), esc_attr( $this->get_field_value( 'db_version' ) ) );
-
-	}
-	
-	/**
-	 * Callback for Theme Settings Default Layout meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	function layout_box() {
-		?>
-		<p class="bizznis-layout-selector">
-		<?php
-		bizznis_layout_selector( array( 'name' => $this->get_field_name( 'site_layout' ), 'selected' => $this->get_field_value( 'site_layout' ), 'type' => 'site' ) );
-		?>
-		</p>
-		<br class="clear" />
-		<?php
-	}
-	
-	/**
-	 * Callback for Theme Settings Color Style meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	function style_box() {
-		$current = $this->get_field_value( 'style_selection' );
-		$styles  = get_theme_support( 'bizznis-style-selector' );
-		?>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'style_selection' ); ?>"><?php _e( 'Color Style:', 'bizznis' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'style_selection' ); ?>" id="<?php echo $this->get_field_id( 'style_selection' ); ?>">
-				<option value=""><?php _e( 'Default', 'bizznis' ); ?></option>
-				<?php
-				if ( ! empty( $styles ) ) {
-					$styles = array_shift( $styles );
-					foreach ( (array) $styles as $style => $title ) {
-						?><option value="<?php echo esc_attr( $style ); ?>"<?php selected( $current, $style ); ?>><?php echo esc_html( $title ); ?></option><?php
-					}
-				}
-				?>
-			</select>
-		</p>
-		<p><span class="description"><?php _e( 'Please select the color style from the drop down list and save your settings.', 'bizznis' ); ?></span></p>
-		<?php
-	}
-	
-	/**
-	 * Callback for Theme Settings Header meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	function header_box() {
-		?>
-		<p><?php _e( 'Use for site title/logo:', 'bizznis' ); ?>
-			<select name="<?php echo $this->get_field_name( 'blog_title' ); ?>" id="<?php echo $this->get_field_id( 'blog_title' ); ?>">
-				<option value="text"<?php selected( $this->get_field_value( 'blog_title' ), 'text' ); ?>><?php _e( 'Site Title &amp; Tagline', 'bizznis' ); ?></option>
-				<option value="image"<?php selected( $this->get_field_value( 'blog_title' ), 'image' ); ?>><?php _e( 'Image logo', 'bizznis' ); ?></option>
-			</select>
-		</p>
-		<div id="bizznis_blog_title_image">
-			<p><span class="description"><?php _e( 'By default, this option will pick the header image in your child theme\'s style.css file. The logo can be saved as logo.png to the images folder of your child theme and will be shown instead of your site title and tagline.', 'bizznis' ); ?></span></p>
-			<p><span class="description"><?php _e( 'If you want to upload your own logo image and use more advanced options, make sure you\'ve added <code>add_theme_support( \'custom-header\' );</code> to your child theme\'s functions.php file.', 'bizznis' ); ?></span></p>
-		</div>
-		<?php
-	}
-	
-	/**
-	 * Callback for Theme Settings Post Archives meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	function post_archives_box() {
-		?>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'content_archive' ); ?>"><?php _e( 'Select one of the following:', 'bizznis' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'content_archive' ); ?>" id="<?php echo $this->get_field_id( 'content_archive' ); ?>">
-			<?php
-			$archive_display = apply_filters(
-				'bizznis_archive_display_options',
-				array(
-					'full'     => __( 'Display post content', 'bizznis' ),
-					'excerpts' => __( 'Display post excerpts', 'bizznis' ),
-				)
-			);
-			foreach ( (array) $archive_display as $value => $name )
-				echo '<option value="' . esc_attr( $value ) . '"' . selected( $this->get_field_value( 'content_archive' ), esc_attr( $value ), false ) . '>' . esc_html( $name ) . '</option>' . "\n";
-			?>
-			</select>
-		</p>
-		<div id="bizznis_content_limit_setting">
-			<p>
-				<label for="<?php echo $this->get_field_id( 'content_archive_limit' ); ?>"><?php _e( 'Limit content to', 'bizznis' ); ?>
-				<input type="text" name="<?php echo $this->get_field_name( 'content_archive_limit' ); ?>" id="<?php echo $this->get_field_id( 'content_archive_limit' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'content_archive_limit' ) ); ?>" size="3" />
-				<?php _e( 'characters', 'bizznis' ); ?></label>
-			</p>
-
-			<p><span class="description"><?php _e( 'Using this option will limit the text and strip all formatting from the text displayed. To use this option, choose "Display post content" in the select box above.', 'bizznis' ); ?></span></p>
-		</div>
-		<p>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'content_archive_thumbnail' ); ?>" id="<?php echo $this->get_field_id( 'content_archive_thumbnail' ); ?>" value="1"<?php checked( $this->get_field_value( 'content_archive_thumbnail' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'content_archive_thumbnail' ); ?>"><?php _e( 'Include the Featured Image?', 'bizznis' ); ?></label>
-		</p>
-		<p id="bizznis_image_size">
-			<label for="<?php echo $this->get_field_id( 'image_size' ); ?>"><?php _e( 'Image Size:', 'bizznis' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'image_size' ); ?>" id="<?php echo $this->get_field_id( 'image_size' ); ?>">
-			<?php
-			$sizes = bizznis_get_image_sizes();
-			foreach ( (array) $sizes as $name => $size )
-				echo '<option value="' . esc_attr( $name ) . '"' . selected( $this->get_field_value( 'image_size' ), $name, FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')</option>' . "\n";
-			?>
-			</select>
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'posts_nav' ); ?>"><?php _e( 'Select Post Navigation Technique:', 'bizznis' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'posts_nav' ); ?>" id="<?php echo $this->get_field_id( 'posts_nav' ); ?>">
-				<option value="prev-next"<?php selected( 'prev-next', $this->get_field_value( 'posts_nav' ) ); ?>><?php _e( 'Previous / Next', 'bizznis' ); ?></option>
-				<option value="numeric"<?php selected( 'numeric', $this->get_field_value( 'posts_nav' ) ); ?>><?php _e( 'Numeric', 'bizznis' ); ?></option>
-			</select>
-		</p>
-		<p><span class="description"><?php _e( 'These options will affect any listings page, including archive, author, blog, category, search, and tag pages.', 'bizznis' ); ?></span></p>
-		<?php
-	}
-	
-	/**
-	 * Callback for Theme Settings Menus Settings meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	function menu_box() {
-		?>
-		<?php if ( bizznis_nav_menu_supported( 'primary' ) ) : ?>
-		<h4><?php _e( 'Primary Menu', 'bizznis' ); ?></h4>
-		<p><span class="description"><?php printf( __( 'In order to use the navigation menus, you must build a <a href="%s">custom menu</a>, then assign it to the proper Menu Location.', 'bizznis' ), admin_url( 'nav-menus.php' ) ); ?></span></p>
-		<p>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'nav_extras_enable' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras_enable' ); ?>" value="1"<?php checked( $this->get_field_value( 'nav_extras_enable' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'nav_extras_enable' ); ?>"><?php _e( 'Enable Extras on Right Side?', 'bizznis' ); ?></label>
-		</p>
-		<div id="bizznis_nav_extras_settings">
-			<p>
-				<label for="<?php echo $this->get_field_id( 'nav_extras' ); ?>"><?php _e( 'Display the following:', 'bizznis' ); ?></label>
-				<select name="<?php echo $this->get_field_name( 'nav_extras' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras' ); ?>">
-					<option value="date"<?php selected( $this->get_field_value( 'nav_extras' ), 'date' ); ?>><?php _e( 'Today\'s date', 'bizznis' ); ?></option>
-					<option value="search"<?php selected( $this->get_field_value( 'nav_extras' ), 'search' ); ?>><?php _e( 'Search form', 'bizznis' ); ?></option>
-					<option value="twitter"<?php selected( $this->get_field_value( 'nav_extras' ), 'twitter' ); ?>><?php _e( 'Twitter link', 'bizznis' ); ?></option>
-				</select>
-			</p>
-			<div id="bizznis_nav_extras_twitter">
-				<p>
-					<label for="<?php echo $this->get_field_id( 'nav_extras_twitter_id' ); ?>"><?php _e( 'Enter Twitter ID:', 'bizznis' ); ?></label>
-					<input type="text" name="<?php echo $this->get_field_name( 'nav_extras_twitter_id' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras_twitter_id' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'nav_extras_twitter_id' ) ); ?>" size="27" />
-				</p>
-				<p>
-					<label for="<?php echo $this->get_field_id( 'nav_extras_twitter_text' ); ?>"><?php _e( 'Twitter Link Text:', 'bizznis' ); ?></label>
-					<input type="text" name="<?php echo $this->get_field_name( 'nav_extras_twitter_text' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras_twitter_text' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'nav_extras_twitter_text' ) ); ?>" size="27" />
-				</p>
-			</div>
-		</div>
-		<?php endif;
-	}
-	
-	/**
-	 * Callback for Theme Settings Breadcrumbs meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	function breadcrumb_box() {
-		?>
-		<h4><?php _e( 'Enable on:', 'bizznis' ); ?></h4>
-		<p>
-			<?php if ( 'page' == get_option( 'show_on_front' ) ) : ?>
-				<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_front_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_front_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_front_page' ) ); ?> />
-				<label for="<?php echo $this->get_field_id( 'breadcrumb_front_page' ); ?>"><?php _e( 'Front Page', 'bizznis' ); ?></label>
-				<br />
-				<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_posts_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_posts_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_posts_page' ) ); ?> />
-				<label for="<?php echo $this->get_field_id( 'breadcrumb_posts_page' ); ?>"><?php _e( 'Posts Page', 'bizznis' ); ?></label>
-			<?php else : ?>
-				<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_home' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_home' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_home' ) ); ?> />
-				<label for="<?php echo $this->get_field_id( 'breadcrumb_home' ); ?>"><?php _e( 'Homepage', 'bizznis' ); ?></label>
-			<?php endif; ?>
-		</p>
-		<p>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_single' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_single' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_single' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'breadcrumb_single' ); ?>"><?php _e( 'Posts', 'bizznis' ); ?></label>
-			<br />
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_page' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'breadcrumb_page' ); ?>"><?php _e( 'Pages', 'bizznis' ); ?></label>
-			<br />
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_archive' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_archive' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_archive' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'breadcrumb_archive' ); ?>"><?php _e( 'Archives', 'bizznis' ); ?></label>
-			<br />
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_404' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_404' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_404' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'breadcrumb_404' ); ?>"><?php _e( '404 Page', 'bizznis' ); ?></label>
-			<br />
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_attachment' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_attachment' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_attachment' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'breadcrumb_attachment' ); ?>"><?php _e( 'Attachment Page', 'bizznis' ); ?></label>
-		</p>
-		<p><span class="description"><?php _e( 'Breadcrumbs are a great way of letting your visitors find out where they are on your site with just a glance. You can enable/disable them on certain areas of your site.', 'bizznis' ); ?></span></p>
-		<?php
-	}
-	
-	/**
-	 * Callback for Theme Settings Comments meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	function comments_box() {
-		?>
-		<p>
-			<?php _e( 'Enable Comments', 'bizznis' ); ?>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'comments_posts' ); ?>" id="<?php echo $this->get_field_id( 'comments_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_posts' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'comments_posts' ); ?>" title="Enable comments on posts"><?php _e( 'on posts?', 'bizznis' ); ?></label>
-
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'comments_pages' ); ?>" id="<?php echo $this->get_field_id( 'comments_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_pages' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'comments_pages' ); ?>" title="Enable comments on pages"><?php _e( 'on pages?', 'bizznis' ); ?></label>
-		</p>
-		<p>
-			<?php _e( 'Enable Trackbacks', 'bizznis' ); ?>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'trackbacks_posts' ); ?>" id="<?php echo $this->get_field_id( 'trackbacks_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_posts' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'trackbacks_posts' ); ?>" title="Enable trackbacks on posts"><?php _e( 'on posts?', 'bizznis' ); ?></label>
-
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'trackbacks_pages' ); ?>" id="<?php echo $this->get_field_id( 'trackbacks_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_pages' ) ); ?> />
-			<label for="<?php echo $this->get_field_id( 'trackbacks_pages' ); ?>" title="Enable trackbacks on pages"><?php _e( 'on pages?', 'bizznis' ); ?></label>
-		</p>
-		<p><span class="description"><?php _e( 'Comments and Trackbacks can also be disabled on a per post/page basis when creating/editing posts/pages.', 'bizznis' ); ?></span></p>
-		<?php
-	}
-
-	/**
-	 * Callback for Theme Settings Header / Footer Scripts meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	function scripts_box() {
-		?>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'header_scripts' ); ?>"><?php printf( __( 'Enter scripts or code you would like output to %s:', 'bizznis' ), '<code>wp_head()</code>' ); ?></label>
-		</p>
-		<textarea name="<?php echo $this->get_field_name( 'header_scripts' ); ?>" id="<?php echo $this->get_field_id( 'header_scripts' ); ?>" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'header_scripts' ) ); ?></textarea>
-		<p><span class="description"><?php printf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'bizznis' ), '<code>wp_head()</code>', '<code>&lt;/head&gt;</code>' ); ?></span></p>
-		<hr class="div" />
-		<p>
-			<label for="<?php echo $this->get_field_id( 'footer_scripts' ); ?>"><?php printf( __( 'Enter scripts or code you would like output to %s:', 'bizznis' ), '<code>wp_footer()</code>' ); ?></label>
-		</p>
-		<textarea name="<?php echo $this->get_field_name( 'footer_scripts' ); ?>" id="<?php echo $this->get_field_id( 'footer_scripts' ); ?>" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'footer_scripts' ) ); ?></textarea>
-		<p><span class="description"><?php printf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'bizznis' ), '<code>wp_footer()</code>', '<code>&lt;/body&gt;</code>' ); ?></span></p>
-		<?php
 	}
 	
 	/**
@@ -443,28 +185,304 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Boxes {
 	 *
 	 * @since 1.0.0
 	 */
-	function info_box() {
+	function form() {
+		# Outputs hidden form fields before the metaboxes.
+		printf( '<input type="hidden" name="%s" value="%s" />', $this->get_field_name( 'theme_version' ), esc_attr( $this->get_field_value( 'theme_version' ) ) );
+		printf( '<input type="hidden" name="%s" value="%s" />', $this->get_field_name( 'db_version' ), esc_attr( $this->get_field_value( 'db_version' ) ) );
 		?>
-		<p><strong><?php _e( 'Version:', 'bizznis' ); ?></strong> <?php echo $this->get_field_value( 'theme_version' ); ?> &#x000B7; <strong><?php _e( 'Released:', 'bizznis' ); ?></strong> <?php echo PARENT_THEME_RELEASE_DATE; ?></p>
-		<?php if ( current_theme_supports( 'bizznis-auto-updates' ) ) : ?>
-		<p>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'update' ); ?>" id="<?php echo $this->get_field_id( 'update' ); ?>" value="1"<?php checked( $this->get_field_value( 'update' ) ) . disabled( is_super_admin(), 0 ); ?> />
-			<label for="<?php echo $this->get_field_id( 'update' ); ?>"><?php _e( 'Enable Automatic Updates', 'bizznis' ); ?></label></p>
-		<div id="bizznis_update_notification_setting">
-			<p>
-				<input type="checkbox" name="<?php echo $this->get_field_name( 'update_email' ); ?>" id="<?php echo $this->get_field_id( 'update_email' ); ?>" value="1"<?php checked( $this->get_field_value( 'update_email' ) ) . disabled( is_super_admin(), 0 ); ?> />
-				<label for="<?php echo $this->get_field_id( 'update_email' ); ?>"><?php _e( 'Notify by Email when update is available', 'bizznis' ); ?></label>
-			</p>
-			<div id="bizznis_update_notification_email">
-				<p>
-					<label for="<?php echo $this->get_field_id( 'update_email_address' ); ?>"><?php _e( 'Enter Email Address:', 'bizznis' ); ?></label>
-					<input type="text" name="<?php echo $this->get_field_name( 'update_email_address' ); ?>" id="<?php echo $this->get_field_id( 'update_email_address' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'update_email_address' ) ); ?>" size="27" <?php disabled( 0, is_super_admin() ); ?> />
-				</p>
-				<p><span class="description"><?php _e( 'If you provide an email address above, you will be notified via email when a new version of Bizznis is available.', 'bizznis' ); ?></span></p>
-			</div>
-		</div>
-		<?php
-		endif;
+		<!-- Information -->
+		<!--<h3><?php _e( 'Information', 'bizznis' ); ?></h3>-->
+		<table class="form-table">
+			<tbody>
+				<tr valign="top">
+					<th scope="row" valign="top"><?php _e( 'Information', 'bizznis' ); ?></th>
+					<td>
+						<p><em><?php _e( 'Version:', 'bizznis' ); ?></em> <?php echo $this->get_field_value( 'theme_version' ); ?> &#x000B7; <em><?php _e( 'Released:', 'bizznis' ); ?></em> <?php echo PARENT_THEME_RELEASE_DATE; ?></p>
+					</td>
+				</tr>
+				<?php if ( current_theme_supports( 'bizznis-auto-updates' ) ) : ?>
+				<tr valign="top">
+					<th scope="row" valign="top"><?php _e( 'Automatic Updates', 'bizznis' ); ?></th>
+					<td>
+						<p>
+							<input type="checkbox" name="<?php echo $this->get_field_name( 'update' ); ?>" id="<?php echo $this->get_field_id( 'update' ); ?>" value="1"<?php checked( $this->get_field_value( 'update' ) ) . disabled( is_super_admin(), 0 ); ?> />
+							<label for="<?php echo $this->get_field_id( 'update' ); ?>"><?php _e( 'Enable Automatic Updates', 'bizznis' ); ?></label>
+						</p>
+						<div id="bizznis_update_notification_setting">
+							<p>
+								<input type="checkbox" name="<?php echo $this->get_field_name( 'update_email' ); ?>" id="<?php echo $this->get_field_id( 'update_email' ); ?>" value="1"<?php checked( $this->get_field_value( 'update_email' ) ) . disabled( is_super_admin(), 0 ); ?> />
+								<label for="<?php echo $this->get_field_id( 'update_email' ); ?>"><?php _e( 'Notify by Email when update is available', 'bizznis' ); ?></label>
+							</p>
+							<div id="bizznis_update_notification_email">
+								<p>
+									<label for="<?php echo $this->get_field_id( 'update_email_address' ); ?>"><?php _e( 'Enter Email Address:', 'bizznis' ); ?></label>
+									<input type="text" name="<?php echo $this->get_field_name( 'update_email_address' ); ?>" id="<?php echo $this->get_field_id( 'update_email_address' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'update_email_address' ) ); ?>" size="27" <?php disabled( 0, is_super_admin() ); ?> />
+								</p>
+								<p class="description"><?php _e( 'If you provide an email address above, you will be notified via email when a new version of Bizznis is available.', 'bizznis' ); ?></p>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<?php endif; ?>
+			</tbody>
+		</table>
+		<!-- Default Layout -->
+		<h3><?php _e( 'Default Layout', 'bizznis' ); ?></h3>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Choose', 'bizznis' ); ?></th>
+					<td>
+						<div class="bizznis-layout-selector">
+							<p><?php bizznis_layout_selector( array( 'name' => $this->get_field_name( 'site_layout' ), 'selected' => $this->get_field_value( 'site_layout' ), 'type' => 'site' ) ); ?></p>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php if ( current_theme_supports( 'bizznis-style-selector' ) ) : ?>
+		<!-- Style Select -->
+		<!--<h3><?php _e( 'Color Style:', 'bizznis' ); ?></h3>-->
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Color Style', 'bizznis' ); ?></th>
+					<td>
+						<select name="<?php echo $this->get_field_name( 'style_selection' ); ?>" id="<?php echo $this->get_field_id( 'style_selection' ); ?>">
+							<option value=""><?php _e( 'Default', 'bizznis' ); ?></option>
+							<?php
+							$current = $this->get_field_value( 'style_selection' );
+							$styles  = get_theme_support( 'bizznis-style-selector' );
+							if ( ! empty( $styles ) ) {
+								$styles = array_shift( $styles );
+								foreach ( (array) $styles as $style => $title ) {
+									?><option value="<?php echo esc_attr( $style ); ?>"<?php selected( $current, $style ); ?>><?php echo esc_html( $title ); ?></option><?php
+								}
+							}
+							?>
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php endif; ?>
+		<?php if ( ! current_theme_supports( 'bizznis-custom-header' ) && ! current_theme_supports( 'custom-header' ) ) : ?>
+		<!-- Header -->
+		<!--<h3><?php _e( 'Header:', 'bizznis' ); ?></h3>-->
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Site title/logo', 'bizznis' ); ?></th>
+					<td>
+						<select name="<?php echo $this->get_field_name( 'blog_title' ); ?>" id="<?php echo $this->get_field_id( 'blog_title' ); ?>">
+							<option value="text"<?php selected( $this->get_field_value( 'blog_title' ), 'text' ); ?>><?php _e( 'Site Title &amp; Tagline', 'bizznis' ); ?></option>
+							<option value="image"<?php selected( $this->get_field_value( 'blog_title' ), 'image' ); ?>><?php _e( 'Image logo', 'bizznis' ); ?></option>
+						</select>
+						<div id="bizznis_blog_title_image">
+							<p><span class="description"><?php _e( 'By default, this option will pick the header image in your child theme\'s style.css file.', 'bizznis' ); ?></span></p>
+							<p><span class="description"><?php _e( 'The logo can be saved as logo.png to the images folder of your child theme and will be shown instead of your site title and tagline.', 'bizznis' ); ?></span></p>
+							<p><span class="description"><?php _e( 'If you want to use more advanced options, make sure you\'ve added <code>add_theme_support( \'custom-header\' );</code> to your child theme\'s functions.php file.', 'bizznis' ); ?></span></p>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php endif; ?>
+		<!-- Content Archives -->
+		<h3><?php _e( 'Content Archives:', 'bizznis' ); ?></h3>
+		<p><?php _e( 'These options will affect any listings page, including archive, author, blog, category, search, and tag pages.', 'bizznis' ); ?></p>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Display Option', 'bizznis' ); ?></th>
+					<td>
+						<select name="<?php echo $this->get_field_name( 'content_archive' ); ?>" id="<?php echo $this->get_field_id( 'content_archive' ); ?>">
+						<?php
+						$archive_display = apply_filters(
+							'bizznis_archive_display_options',
+							array(
+								'full'     => __( 'Display post content', 'bizznis' ),
+								'excerpts' => __( 'Display post excerpts', 'bizznis' ),
+							)
+						);
+						foreach ( (array) $archive_display as $value => $name ) {
+							echo '<option value="' . esc_attr( $value ) . '"' . selected( $this->get_field_value( 'content_archive' ), esc_attr( $value ), false ) . '>' . esc_html( $name ) . '</option>' . "\n";
+						}
+						?>
+						</select>
+					</div>
+					</td>
+				</tr>
+				<tr id="bizznis_content_limit_setting">
+					<th scope="row" valign="top"><?php _e( 'Limit content to', 'bizznis' ); ?></th>
+					<td>
+						<p>
+							<input type="text" name="<?php echo $this->get_field_name( 'content_archive_limit' ); ?>" id="<?php echo $this->get_field_id( 'content_archive_limit' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'content_archive_limit' ) ); ?>" size="3" />
+							<label for="<?php echo $this->get_field_id( 'content_archive_limit' ); ?>"><?php _e( 'characters', 'bizznis' ); ?></label>
+						</p>
+						<p class="description"><?php _e( 'Limit the text and strip all formatting from the text displayed.', 'bizznis' ); ?></p>
+						<p class="description"><?php _e( 'To use this option, choose "Display post content" in the select box above.', 'bizznis' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Featured Image', 'bizznis' ); ?></th>
+					<td>
+						<input type="checkbox" name="<?php echo $this->get_field_name( 'content_archive_thumbnail' ); ?>" id="<?php echo $this->get_field_id( 'content_archive_thumbnail' ); ?>" value="1"<?php checked( $this->get_field_value( 'content_archive_thumbnail' ) ); ?> />
+						<label for="<?php echo $this->get_field_id( 'content_archive_thumbnail' ); ?>"><?php _e( 'Include the Featured Image?', 'bizznis' ); ?></label>
+					</td>
+				</tr>
+				<tr id="bizznis_image_size">
+					<th scope="row" valign="top"><?php _e( 'Featured Image Size', 'bizznis' ); ?></th>
+					<td>
+						<select name="<?php echo $this->get_field_name( 'image_size' ); ?>" id="<?php echo $this->get_field_id( 'image_size' ); ?>">
+						<?php
+						$sizes = bizznis_get_image_sizes();
+						foreach ( (array) $sizes as $name => $size )
+							echo '<option value="' . esc_attr( $name ) . '"' . selected( $this->get_field_value( 'image_size' ), $name, FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')</option>' . "\n";
+						?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Navigation Technique', 'bizznis' ); ?></th>
+					<td>
+						<select name="<?php echo $this->get_field_name( 'posts_nav' ); ?>" id="<?php echo $this->get_field_id( 'posts_nav' ); ?>">
+							<option value="prev-next"<?php selected( 'prev-next', $this->get_field_value( 'posts_nav' ) ); ?>><?php _e( 'Previous / Next', 'bizznis' ); ?></option>
+							<option value="numeric"<?php selected( 'numeric', $this->get_field_value( 'posts_nav' ) ); ?>><?php _e( 'Numeric', 'bizznis' ); ?></option>
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php if ( current_theme_supports( 'bizznis-menus' ) && bizznis_nav_menu_supported( 'primary' ) ) : ?>
+		<!-- Menus -->
+		<h3><?php _e( 'Primary Menu:', 'bizznis' ); ?></h3>
+		<p><?php printf( __( 'In order to use the navigation menus, you must build a <a href="%s">custom menu</a>, then assign it to the proper Menu Location.', 'bizznis' ), admin_url( 'nav-menus.php' ) ); ?></p>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Extras', 'bizznis' ); ?></th>
+					<td>
+						<p>
+							<input type="checkbox" name="<?php echo $this->get_field_name( 'nav_extras_enable' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras_enable' ); ?>" value="1"<?php checked( $this->get_field_value( 'nav_extras_enable' ) ); ?> />
+							<label for="<?php echo $this->get_field_id( 'nav_extras_enable' ); ?>"><?php _e( 'Enable Extras on Right Side?', 'bizznis' ); ?></label>
+						</p>
+						<div id="bizznis_nav_extras_settings">
+							<p>
+								<label for="<?php echo $this->get_field_id( 'nav_extras' ); ?>"><?php _e( 'Display the following:', 'bizznis' ); ?></label>
+								<select name="<?php echo $this->get_field_name( 'nav_extras' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras' ); ?>">
+									<option value="date"<?php selected( $this->get_field_value( 'nav_extras' ), 'date' ); ?>><?php _e( 'Today\'s date', 'bizznis' ); ?></option>
+									<option value="search"<?php selected( $this->get_field_value( 'nav_extras' ), 'search' ); ?>><?php _e( 'Search form', 'bizznis' ); ?></option>
+									<option value="twitter"<?php selected( $this->get_field_value( 'nav_extras' ), 'twitter' ); ?>><?php _e( 'Twitter link', 'bizznis' ); ?></option>
+								</select>
+							</p>
+							<div id="bizznis_nav_extras_twitter">
+								<p>
+									<label for="<?php echo $this->get_field_id( 'nav_extras_twitter_id' ); ?>"><?php _e( 'Enter Twitter ID:', 'bizznis' ); ?></label>
+									<input type="text" name="<?php echo $this->get_field_name( 'nav_extras_twitter_id' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras_twitter_id' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'nav_extras_twitter_id' ) ); ?>" size="27" />
+								</p>
+								<p>
+									<label for="<?php echo $this->get_field_id( 'nav_extras_twitter_text' ); ?>"><?php _e( 'Twitter Link Text:', 'bizznis' ); ?></label>
+									<input type="text" name="<?php echo $this->get_field_name( 'nav_extras_twitter_text' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras_twitter_text' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'nav_extras_twitter_text' ) ); ?>" size="27" />
+								</p>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php endif; ?>
+		<?php if ( current_theme_supports( 'bizznis-breadcrumbs' ) ) : ?>
+		<!-- Breadcrumbs -->
+		<h3><?php _e( 'Breadcrumbs:', 'bizznis' ); ?></h3>
+		<p class="description"><?php _e( 'Breadcrumbs are a great way of letting your visitors find out where they are on your site with just a glance.', 'bizznis' ); ?></p>
+		<p class="description"><?php _e( 'You can enable/disable them on certain areas of your site.', 'bizznis' ); ?></p>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Enable on', 'bizznis' ); ?></th>
+					<td>
+						<p>
+							<?php if ( 'page' == get_option( 'show_on_front' ) ) : ?>
+								<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_front_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_front_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_front_page' ) ); ?> />
+								<label for="<?php echo $this->get_field_id( 'breadcrumb_front_page' ); ?>"><?php _e( 'Front Page', 'bizznis' ); ?></label>
+								<br />
+								<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_posts_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_posts_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_posts_page' ) ); ?> />
+								<label for="<?php echo $this->get_field_id( 'breadcrumb_posts_page' ); ?>"><?php _e( 'Posts Page', 'bizznis' ); ?></label>
+							<?php else : ?>
+								<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_home' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_home' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_home' ) ); ?> />
+								<label for="<?php echo $this->get_field_id( 'breadcrumb_home' ); ?>"><?php _e( 'Homepage', 'bizznis' ); ?></label>
+							<?php endif; ?>
+						</p>
+						<br />
+						<p>
+							<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_single' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_single' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_single' ) ); ?> />
+							<label for="<?php echo $this->get_field_id( 'breadcrumb_single' ); ?>"><?php _e( 'Posts', 'bizznis' ); ?></label>
+							<br />
+							<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_page' ) ); ?> />
+							<label for="<?php echo $this->get_field_id( 'breadcrumb_page' ); ?>"><?php _e( 'Pages', 'bizznis' ); ?></label>
+							<br />
+							<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_archive' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_archive' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_archive' ) ); ?> />
+							<label for="<?php echo $this->get_field_id( 'breadcrumb_archive' ); ?>"><?php _e( 'Archives', 'bizznis' ); ?></label>
+							<br />
+							<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_404' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_404' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_404' ) ); ?> />
+							<label for="<?php echo $this->get_field_id( 'breadcrumb_404' ); ?>"><?php _e( '404 Page', 'bizznis' ); ?></label>
+							<br />
+							<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_attachment' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_attachment' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_attachment' ) ); ?> />
+							<label for="<?php echo $this->get_field_id( 'breadcrumb_attachment' ); ?>"><?php _e( 'Attachment Page', 'bizznis' ); ?></label>
+						</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php endif; ?>
+		<!-- Comments -->
+		<h3><?php _e( 'Comments:', 'bizznis' ); ?></h3>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Enable Comments', 'bizznis' ); ?></th>
+					<td>
+						<input type="checkbox" name="<?php echo $this->get_field_name( 'comments_posts' ); ?>" id="<?php echo $this->get_field_id( 'comments_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_posts' ) ); ?> />
+						<label for="<?php echo $this->get_field_id( 'comments_posts' ); ?>" title="Enable comments on posts"><?php _e( 'on posts?', 'bizznis' ); ?></label>
+						<input type="checkbox" name="<?php echo $this->get_field_name( 'comments_pages' ); ?>" id="<?php echo $this->get_field_id( 'comments_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_pages' ) ); ?> />
+						<label for="<?php echo $this->get_field_id( 'comments_pages' ); ?>" title="Enable comments on pages"><?php _e( 'on pages?', 'bizznis' ); ?></label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Enable Trackbacks', 'bizznis' ); ?></th>
+					<td>
+						<input type="checkbox" name="<?php echo $this->get_field_name( 'trackbacks_posts' ); ?>" id="<?php echo $this->get_field_id( 'trackbacks_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_posts' ) ); ?> />
+						<label for="<?php echo $this->get_field_id( 'trackbacks_posts' ); ?>" title="Enable trackbacks on posts"><?php _e( 'on posts?', 'bizznis' ); ?></label>
+						<input type="checkbox" name="<?php echo $this->get_field_name( 'trackbacks_pages' ); ?>" id="<?php echo $this->get_field_id( 'trackbacks_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_pages' ) ); ?> />
+						<label for="<?php echo $this->get_field_id( 'trackbacks_pages' ); ?>" title="Enable trackbacks on pages"><?php _e( 'on pages?', 'bizznis' ); ?></label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php if ( current_user_can( 'unfiltered_html' ) ) : ?>
+		<!-- Scripts -->
+		<h3><?php _e( 'Scripts:', 'bizznis' ); ?></h3>
+		<p><?php printf( __( 'Enter scripts or code you would like output to %s or %s:', 'bizznis' ), bizznis_code( 'wp_head()' ), bizznis_code( 'wp_footer()' ) ); ?></p>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php printf( __( '%s scripts', 'bizznis' ), '<code>wp_head()</code>' ); ?></th>
+					<td>
+						<textarea name="<?php echo $this->get_field_name( 'header_scripts' ); ?>" id="<?php echo $this->get_field_id( 'header_scripts' ); ?>" class="large-text" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'header_scripts' ) ); ?></textarea>
+						<p class="description"><?php printf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'bizznis' ), '<code>wp_head()</code>', '<code>&lt;/head&gt;</code>' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" valign="top"><?php printf( __( '%s scripts', 'bizznis' ), '<code>wp_footer()</code>' ); ?></th>
+					<td>
+						<textarea name="<?php echo $this->get_field_name( 'footer_scripts' ); ?>" id="<?php echo $this->get_field_id( 'footer_scripts' ); ?>" class="large-text" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'footer_scripts' ) ); ?></textarea>
+						<p class="description"><?php printf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'bizznis' ), '<code>wp_footer()</code>', '<code>&lt;/body&gt;</code>' ); ?></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php endif;
 	}
 	
 	/**
