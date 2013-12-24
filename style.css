@@ -1433,18 +1433,19 @@ Site Footer
 }
 
 
-/*
-Media Queries
+/* Media Queries : design-based, not device-based, so make sure to alter it in your child theme
+				   to adapt per your own content, navigation width etc.
 ---------------------------------------------------------------------------------------------------- */
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-	only screen and (-moz-min-device-pixel-ratio: 1.5),
-	only screen and (-o-min-device-pixel-ratio: 3/2),
-	only screen and (min-device-pixel-ratio: 1.5) {
+/* Retina ready ----------- */
+
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
 
 	.header-image .title-area {
 		background: url(images/logo@2x.png) no-repeat left;
-		background-size: 480px 120px;
+		background-size: 330px 120px;
 	}
 
 }
@@ -1483,10 +1484,17 @@ Media Queries
 	.footer-widgets-4 {
 		width: 195px;
 	}
+	
+	.site-main {
+		padding-left: 5%;
+		padding-right: 5%;
+		padding-bottom: 0;
+		margin: 0;
+	}
 
 }
 
-@media only screen and (max-width: 1023px) {
+@media only screen and (max-width: 1039px) {
 
 	.content,
 	.content-sidebar-sidebar .content,
@@ -1507,13 +1515,6 @@ Media Queries
 	.title-area,
 	.wrap {
 		width: 100%;
-	}
-	
-	.site-main {
-		padding-left: 5%;
-		padding-right: 5%;
-		padding-bottom: 0;
-		margin: 0;
 	}
 	
 	.entry {
@@ -1621,7 +1622,7 @@ Media Queries
 
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 767px){
 	
 	/* Nav toggle button */
 	
