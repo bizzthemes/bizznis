@@ -10,7 +10,7 @@
  *
  * @since 1.0.0
  */
-class Bizznis_Admin_CPT_Archive_Settings extends Bizznis_Admin_Boxes {
+class Bizznis_Admin_CPT_Archive_Settings extends Bizznis_Admin_Form {
 
 	# Post type object.
 	protected $post_type;
@@ -92,75 +92,86 @@ class Bizznis_Admin_CPT_Archive_Settings extends Bizznis_Admin_Boxes {
 	}
 
 	/**
-	 * Register meta boxes on the CPT Archive pages.
+	 * Callback for Archive Settings Form.
 	 *
 	 * @since 1.0.0
 	 */
-	public function metaboxes() {
-		add_meta_box( 'bizznis-cpt-archives-settings', __( 'Archive Settings', 'bizznis' ), array( $this, 'archive_box' ), $this->pagehook, 'main' );
-		add_meta_box( 'bizznis-cpt-archives-layout-settings', __( 'Layout Settings', 'bizznis' ), array( $this, 'layout_box' ), $this->pagehook, 'column2' );
-		add_meta_box( 'bizznis-cpt-archives-seo-settings', __( 'SEO Settings', 'bizznis' ), array( $this, 'seo_box' ), $this->pagehook, 'column3' );
-		do_action( 'bizznis_cpt_archives_settings_metaboxes', $this->pagehook );
-	}
-
-	/**
-	 * Callback for Archive Settings meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	public function archive_box() {
+	public function form() {
 		?>
+		<!-- Cannot duplicate title, so let's hide it
+		<h3><?php _e( 'Archive Settings', 'bizznis' ); ?></h3>
+		-->
 		<p><?php printf( __( 'View the <a href="%s">%s archive</a>.', 'bizznis' ), get_post_type_archive_link( $this->post_type->name ), $this->post_type->name ); ?></p>
-		<p><label for="<?php echo $this->get_field_id( 'headline' ); ?>"><b><?php _e( 'Archive Headline', 'bizznis' ); ?></b></label></p>
-		<p><input class="large-text" type="text" name="<?php echo $this->get_field_name( 'headline' ); ?>" id="<?php echo $this->get_field_id( 'headline' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'headline' ) ); ?>" /></p>
-		<p class="description"><?php _e( 'Leave empty if you do not want to display a headline.', 'bizznis' ); ?></p>
-		<p><label for="<?php echo $this->get_field_id( 'intro_text' ); ?>"><b><?php _e( 'Archive Intro Text', 'bizznis' ); ?></b></label></p>
-		<p><textarea class="widefat" rows="5" cols="30" name="<?php echo $this->get_field_name( 'intro_text' ); ?>" id="<?php echo $this->get_field_id( 'intro_text' ); ?>"><?php echo esc_textarea( $this->get_field_value( 'intro_text' ) ); ?></textarea></p>
-		<p class="description"><?php _e( 'Leave empty if you do not want to display any intro text.', 'bizznis' ); ?></p>
-		<?php
-	}
-
-	/**
-	 * Callback for Layout Settings meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	public function layout_box() {
-		$layout = $this->get_field_value( 'layout' );
-		?>
-		<div class="bizznis-layout-selector">
-			<p><input type="radio" class="default-layout" name="<?php echo $this->get_field_name( 'layout' ); ?>" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
-
-			<p><?php bizznis_layout_selector( array( 'name' => $this->get_field_name( 'layout' ), 'selected' => $layout, 'type' => 'site' ) ); ?></p>
-		</div>
-		<br class="clear" />
-		<p><label for="<?php echo $this->get_field_id( 'body_class' ); ?>"><b><?php _e( 'Custom Body Class', 'bizznis' ); ?></b></label></p>
-		<p><input class="large-text" type="text" name="<?php echo $this->get_field_name( 'body_class' ); ?>" id="<?php echo $this->get_field_id( 'body_class' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'body_class' ) ); ?>" /></p>
-		<?php
-	}
-	
-	/**
-	 * Callback for SEO Settings meta box.
-	 *
-	 * @since 1.0.0
-	 */
-	public function seo_box() {
-		?>
-		<p><label for="<?php echo $this->get_field_id( 'doctitle' ); ?>"><b><?php _e( 'Custom Document Title', 'bizznis' ); ?></b></label></p>
-		<p><input class="large-text" type="text" name="<?php echo $this->get_field_name( 'doctitle' ); ?>" id="<?php echo $this->get_field_id( 'doctitle' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'doctitle' ) ); ?>" /></p>
-		<p><label for="<?php echo $this->get_field_id( 'doctitle' ); ?>"><b><?php _e( 'Meta Description', 'bizznis' ); ?></b></label></p>
-		<p><input class="large-text" type="text" name="<?php echo $this->get_field_name( 'description' ); ?>" id="<?php echo $this->get_field_id( 'description' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'description' ) ); ?>" /></p>
-		<h4><?php _e( 'Robots Meta Tags:', 'bizznis' ); ?></h4>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'noindex' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'noindex' ); ?>" id="<?php echo $this->get_field_id( 'noindex' ); ?>" value="1" <?php checked( $this->get_field_value( 'noindex' ) ); ?> />
-			<?php printf( __( 'Apply %s to this archive', 'bizznis' ), bizznis_code( 'noindex' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
-
-			<label for="<?php echo $this->get_field_id( 'nofollow' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'nofollow' ); ?>" id="<?php echo $this->get_field_id( 'nofollow' ); ?>" value="1" <?php checked( $this->get_field_value( 'nofollow' ) ); ?> />
-			<?php printf( __( 'Apply %s to this archive', 'bizznis' ), bizznis_code( 'nofollow' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
-
-			<label for="<?php echo $this->get_field_id( 'noarchive' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'noarchive' ); ?>" id="<?php echo $this->get_field_id( 'noarchive' ); ?>" value="1" <?php checked( $this->get_field_value( 'noarchive' ) ); ?> />
-			<?php printf( __( 'Apply %s to this archive', 'bizznis' ), bizznis_code( 'noarchive' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label>
-		</p>
+		<table class="form-table">
+			<tbody>
+				<tr class="form-field">
+					<th scope="row" valign="top"><label for="<?php echo $this->get_field_id( 'headline' ); ?>"><?php _e( 'Archive Headline', 'bizznis' ); ?></label></th>
+					<td>
+						<input name="<?php echo $this->get_field_name( 'headline' ); ?>" id="<?php echo $this->get_field_id( 'headline' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'headline' ) ); ?>" type="text" size="40" />
+						<p class="description"><?php _e( 'Leave empty if you do not want to display a headline.', 'bizznis' ); ?></p>
+					</td>
+				</tr>
+				<tr class="form-field">
+					<th scope="row" valign="top"><label for="<?php echo $this->get_field_id( 'intro_text' ); ?>"><?php _e( 'Archive Intro Text', 'bizznis' ); ?></label></th>
+					<td>
+						<textarea name="<?php echo $this->get_field_name( 'intro_text' ); ?>" id="<?php echo $this->get_field_id( 'intro_text' ); ?>" rows="3" cols="50" class="large-text"><?php echo esc_textarea( $this->get_field_value( 'intro_text' ) ); ?></textarea>
+						<p class="description"><?php _e( 'Leave empty if you do not want to display any intro text.', 'bizznis' ); ?></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<h3><?php _e( 'SEO Settings', 'bizznis' ); ?></h3>
+		<table class="form-table">
+			<tbody>
+				<tr class="form-field">
+					<th scope="row" valign="top"><label for="<?php echo $this->get_field_id( 'doctitle' ); ?>"><?php printf( __( 'Custom Document %s', 'bizznis' ), '<code>&lt;title&gt;</code>' ); ?></label></th>
+					<td>
+						<input name="<?php echo $this->get_field_name( 'doctitle' ); ?>" id="<?php echo $this->get_field_id( 'doctitle' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'doctitle' ) ); ?>" type="text" size="40" />
+					</td>
+				</tr>
+				<tr class="form-field">
+					<th scope="row" valign="top"><label for="<?php echo $this->get_field_id( 'doctitle' ); ?>"><?php printf( __( '%s Description', 'bizznis' ), '<code>META</code>' ); ?></label></th>
+					<td>
+						<textarea name="<?php echo $this->get_field_name( 'description' ); ?>" id="<?php echo $this->get_field_id( 'description' ); ?>" rows="3" cols="50"><?php echo esc_html( $this->get_field_value( 'description' ) ); ?></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Robots Meta', 'bizznis' ); ?></th>
+					<td>
+						<input type="checkbox" name="<?php echo $this->get_field_name( 'noindex' ); ?>" id="<?php echo $this->get_field_id( 'noindex' ); ?>" value="1" <?php checked( $this->get_field_value( 'noindex' ) ); ?> />
+						<label for="<?php echo $this->get_field_id( 'noindex' ); ?>"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), bizznis_code( 'noindex' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
+						<input type="checkbox" name="<?php echo $this->get_field_name( 'nofollow' ); ?>" id="<?php echo $this->get_field_id( 'nofollow' ); ?>" value="1" <?php checked( $this->get_field_value( 'nofollow' ) ); ?> />
+						<label for="<?php echo $this->get_field_id( 'nofollow' ); ?>"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), bizznis_code( 'nofollow' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
+						<input type="checkbox" name="<?php echo $this->get_field_name( 'noarchive' ); ?>" id="<?php echo $this->get_field_id( 'noarchive' ); ?>" value="1" <?php checked( $this->get_field_value( 'noarchive' ) ); ?> />
+						<label for="<?php echo $this->get_field_id( 'noarchive' ); ?>"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), bizznis_code( 'noarchive' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
+		<?php $layout = $this->get_field_value( 'layout' ); ?>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
+					<td>
+						<div class="bizznis-layout-selector">
+							<p>
+								<input type="radio" class="default-layout" name="<?php echo $this->get_field_name( 'layout' ); ?>" id="default-layout" value="" <?php checked( $layout, '' ); ?> />
+								<label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label>
+							</p>
+							<p><?php bizznis_layout_selector( array( 'name' => $this->get_field_name( 'layout' ), 'selected' => $layout, 'type' => 'site' ) ); ?></p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" valign="top"><label for="<?php echo $this->get_field_id( 'body_class' ); ?>"><?php _e( 'Custom Body Class', 'bizznis' ); ?></label></th>
+					<td>
+						<input name="<?php echo $this->get_field_name( 'body_class' ); ?>" id="<?php echo $this->get_field_id( 'body_class' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'body_class' ) ); ?>" type="text" size="40" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		<?php
 	}
 
