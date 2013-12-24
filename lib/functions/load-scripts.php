@@ -78,6 +78,7 @@ function bizznis_load_admin_js() {
 		'nav_extras_enable'         => array( '#bizznis-settings\\[nav_extras_enable\\]', '#bizznis_nav_extras_settings', '_checked' ),
 		// Checkboxed - when unchecked, show extra settings
 		'semantic_headings'         => array( '#bizznis-seo-settings\\[semantic_headings\\]', '#bizznis_seo_h1_wrap', '_unchecked' ),
+		'noarchive'         		=> array( '#bizznis-seo-settings\\[noarchive\\]', '#bizznis_noarchive_all_wrap', '_unchecked' ),
 		// Select toggles
 		'blog_title'                => array( '#bizznis-settings\\[blog_title\\]', '#bizznis_blog_title_image', 'image' ),
 		'nav_extras'                => array( '#bizznis-settings\\[nav_extras\\]', '#bizznis_nav_extras_twitter', 'twitter' ),
