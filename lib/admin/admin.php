@@ -290,20 +290,22 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 	 */
 	public function admin() {
 		?>
-		<div class="wrap bizznis-admin">
+		<div class="wrap bizznis-admin bizznis-form">
 		<form method="post" action="options.php">
 			<?php settings_fields( $this->settings_field ); ?>
 			<?php screen_icon( $this->page_ops['screen_icon'] ); ?>
-			<h2 class="nav-tab-wrapper">
-			<?php do_action( 'bizznis_tab', $this->pagehook ); ?>
+			<h2>
+				<?php do_action( 'bizznis_admin_title_left', $this->pagehook ); ?>
+				<?php echo esc_html( get_admin_page_title() ); ?>
+				<?php do_action( 'bizznis_admin_title_right', $this->pagehook ); ?>
 			</h2>
 			<?php do_action( $this->pagehook . '_settings_page_form', $this->pagehook ); ?>
-			<div class="bottom-buttons">
+			<p class="submit bottom-buttons">
 				<?php
 				submit_button( $this->page_ops['save_button_text'], 'primary', 'submit', false );
 				submit_button( $this->page_ops['reset_button_text'], 'secondary', $this->get_field_name( 'reset' ), false, array( 'onclick' => 'return bizznis_confirm(\'' . esc_js( __( 'Are you sure you want to reset?', 'bizznis' ) ) . '\');' ) );
 				?>
-			</div>
+			</p>
 		</form>
 		</div>
 		<?php
@@ -385,12 +387,12 @@ abstract class Bizznis_Admin_Boxes extends Bizznis_Admin {
 					<?php do_action( 'bizznis_admin_after_metaboxes', $this->pagehook ); ?>
 				</div>
 			</div>
-			<div class="bottom-buttons">
+			<p class="submit bottom-buttons">
 				<?php
 				submit_button( $this->page_ops['save_button_text'], 'primary', 'submit', false );
 				submit_button( $this->page_ops['reset_button_text'], 'secondary', $this->get_field_name( 'reset' ), false, array( 'onclick' => 'return bizznis_confirm(\'' . esc_js( __( 'Are you sure you want to reset?', 'bizznis' ) ) . '\');' ) );
 				?>
-			</div>
+			</p>
 		</form>
 		</div>
 		<script type="text/javascript">
