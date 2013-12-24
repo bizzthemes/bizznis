@@ -599,9 +599,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		# Add help sidebar
 		$screen->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
-			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://my.bizzthemes.com/help/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>' .
-			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://my.bizzthemes.com/snippets/' ) . '" target="_blank" title="' . __( 'Bizznis Snippets', 'bizznis' ) . '">' . __( 'Bizznis Snippets', 'bizznis' ) . '</a></p>' .
-			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://my.bizzthemes.com/tutorials/' ) . '" target="_blank" title="' . __( 'Bizznis Tutorials', 'bizznis' ) . '">' . __( 'Bizznis Tutorials', 'bizznis' ) . '</a></p>'
+			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
 		);
 	}
 

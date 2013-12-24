@@ -295,7 +295,7 @@ function bizznis_footer_bizznis_link_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
 		'before' => '',
-		'url'    => 'http://my.bizzthemes.com/themes/bizznis',
+		'url'    => 'http://bizzthemes.com/themes/bizznis',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'footer_bizznis_link' );
 	$output = $atts['before'] . '<a href="' . esc_url( $atts['url'] ) . '" title="Bizznis Theme">Bizznis Theme</a>' . $atts['after'];
