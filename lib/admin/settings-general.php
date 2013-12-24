@@ -231,7 +231,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th scope="row" valign="top"><?php _e( 'Choose', 'bizznis' ); ?></th>
+					<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
 					<td>
 						<div class="bizznis-layout-selector">
 							<p><?php bizznis_layout_selector( array( 'name' => $this->get_field_name( 'site_layout' ), 'selected' => $this->get_field_value( 'site_layout' ), 'type' => 'site' ) ); ?></p>
@@ -532,12 +532,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			'<p>'  . __( 'This option should not be used with the post content unless the content is limited to avoid duplicate images.' , 'bizznis' ) . '</p>' .
 			'<p>'  . __( 'The \'Image Size\' list is populated by the available image sizes defined in the theme.' , 'bizznis' ) . '</p>' .
 			'<p>'  . __( 'Post Navigation Technique allows you to select one of three navigation methods.' , 'bizznis' ) . '</p>';
-		$blog_help =
-			'<h3>' . __( 'Blog Page' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This works with the Blog Template, which is a page template that shows your latest posts. It\'s what people see when they land on your homepage.', 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'In the General Settings you can select a specific category to display from the drop down menu, and exclude categories by ID, or even select how many posts you\'d like to display on this page.', 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'There are some special features of the Blog Template that allow you to specify which category to show on each page using the template, which is helpful if you have a "News" category (or something else) that you want to display separately.', 'bizznis' ) . '</p>' .
-			'<p>'  . sprintf( __( 'You can find more on this feature in the <a href="%s" target="_blank">How to Add a Post Category Page tutorial.</a>' , 'bizznis' ), 'http://www.bizzthemes.com/tutorials/bizznis/add-post-category-page' ) . '</p>';
 		$scripts_help =
 			'<h3>' . __( 'Header and Footer Scripts' , 'bizznis' ) . '</h3>' .
 			'<p>'  . __( 'This provides you with two fields that will output to the <head></head> of your site and just before the </body>. These will appear on every page of the site and are a great way to add analytic code and other scripts. You cannot use PHP in these fields. If you need to use PHP then you should look into the Bizznis Simple Hooks plugin.' , 'bizznis' ) . '</p>';
@@ -580,11 +574,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			'id'      => $this->pagehook . '-archives',
 			'title'   => __( 'Content Archives' , 'bizznis' ),
 			'content' => $archives_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-blog',
-			'title'   => __( 'Blog Page' , 'bizznis' ),
-			'content' => $blog_help,
 		) );
 		$screen->add_help_tab( array(
 			'id'      => $this->pagehook . '-scripts',
