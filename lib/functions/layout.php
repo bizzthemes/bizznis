@@ -12,11 +12,13 @@
  */
 function bizznis_register_layout( $id = '', $args = array() ) {
 	global $_bizznis_layouts;
-	if ( ! is_array( $_bizznis_layouts ) )
+	if ( ! is_array( $_bizznis_layouts ) ) {
 		$_bizznis_layouts = array();
+	}
 	# Don't allow empty $id, or double registrations
-	if ( ! $id || isset( $_bizznis_layouts[$id] ) )
+	if ( ! $id || isset( $_bizznis_layouts[$id] ) ) {
 		return false;
+	}
 	$defaults = array(
 		'label' => __( 'No Label Selected', 'bizznis' ),
 		'img'   => BIZZNIS_ADMIN_IMAGES_URL . '/layouts/none.png',
@@ -34,15 +36,18 @@ function bizznis_register_layout( $id = '', $args = array() ) {
  */
 function bizznis_set_default_layout( $id = '' ) {
 	global $_bizznis_layouts;
-	if ( ! is_array( $_bizznis_layouts ) )
+	if ( ! is_array( $_bizznis_layouts ) ) {
 		$_bizznis_layouts = array();
+	}
 	# Don't allow empty $id, or unregistered layouts
-	if ( ! $id || ! isset( $_bizznis_layouts[$id] ) )
+	if ( ! $id || ! isset( $_bizznis_layouts[$id] ) ) {
 		return false;
+	}
 	# Remove default flag for all other layouts
 	foreach ( (array) $_bizznis_layouts as $key => $value ) {
-		if ( isset( $_bizznis_layouts[$key]['default'] ) )
+		if ( isset( $_bizznis_layouts[$key]['default'] ) ) {
 			unset( $_bizznis_layouts[$key]['default'] );
+		}
 	}
 	$_bizznis_layouts[$id]['default'] = true;
 	return $id;
@@ -55,8 +60,9 @@ function bizznis_set_default_layout( $id = '' ) {
  */
 function bizznis_unregister_layout( $id = '' ) {
 	global $_bizznis_layouts;
-	if ( ! $id || ! isset( $_bizznis_layouts[$id] ) )
+	if ( ! $id || ! isset( $_bizznis_layouts[$id] ) ) {
 		return false;
+	}
 	unset( $_bizznis_layouts[$id] );
 	return true;
 }
@@ -74,13 +80,15 @@ function bizznis_get_layouts( $type = '' ) {
 		return $_bizznis_layouts;
 	}
 	# Return all layouts, if no type specified
-	if ( '' == $type )
+	if ( '' == $type ) {
 		return $_bizznis_layouts;
+	}
 	$layouts = array();
 	# Cycle through looking for layouts of $type
 	foreach ( (array) $_bizznis_layouts as $id => $data ) {
-		if ( $data['type'] == $type )
+		if ( $data['type'] == $type ) {
 			$layouts[$id] = $data;
+		}
 	}
 	return $layouts;
 }
@@ -92,11 +100,13 @@ function bizznis_get_layouts( $type = '' ) {
  */
 function bizznis_get_layouts_for_customizer( $type = '' ) {
 	$layouts = bizznis_get_layouts( $type );
-	if ( empty( $layouts ) )
+	if ( empty( $layouts ) ) {
 		return $layouts;
+	}
 	# Simplified layout array
-	foreach ( (array) $layouts as $id => $data )
+	foreach ( (array) $layouts as $id => $data ) {
 		$customizer_layouts[$id] = $data['label'];
+	}
 	return $customizer_layouts;
 }
 
@@ -107,8 +117,9 @@ function bizznis_get_layouts_for_customizer( $type = '' ) {
  */
 function bizznis_get_layout( $id ) {
 	$layouts = bizznis_get_layouts();
-	if ( ! $id || ! isset( $layouts[$id] ) )
+	if ( ! $id || ! isset( $layouts[$id] ) ) {
 		return;
+	}
 	return $layouts[$id];
 }
 
@@ -137,15 +148,17 @@ function bizznis_get_default_layout() {
 function bizznis_site_layout( $use_cache = true ) {
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( 'bizznis_site_layout', null );
-	if ( null !== $pre )
+	if ( null !== $pre ) {
 		return $pre;
+	}
 	# If we're supposed to use the cache, setup cache. Use if value exists.
 	if ( $use_cache ) {
 		# Setup cache
 		static $layout_cache = '';
 		# If cache is populated, return value
-		if ( $layout_cache !== '' )
+		if ( $layout_cache !== '' ) {
 			return esc_attr( $layout_cache );
+		}
 	}
 	global $wp_query;
 	# If viewing a singular page or post
@@ -171,11 +184,13 @@ function bizznis_site_layout( $use_cache = true ) {
 		$site_layout = bizznis_get_option( 'site_layout' );
 	}
 	# Use default layout as a fallback, if necessary
-	if ( ! bizznis_get_layout( $site_layout ) )
+	if ( ! bizznis_get_layout( $site_layout ) ) {
 		$site_layout = bizznis_get_default_layout();
+	}
 	# Push layout into cache, if caching turned on
-	if ( $use_cache )
+	if ( $use_cache ) {
 		$layout_cache = $site_layout;
+	}
 	# Return site layout
 	return esc_attr( $site_layout );
 }
@@ -212,8 +227,10 @@ function bizznis_layout_selector( $args = array() ) {
 		);
 	}
 	# Echo or return output
-	if ( $args['echo'] )
+	if ( $args['echo'] ) {
 		echo $output;
-	else
+	}
+	else {
 		return $output;
+	}
 }

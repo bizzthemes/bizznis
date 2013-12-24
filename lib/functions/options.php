@@ -16,10 +16,9 @@ function bizznis_get_option( $key, $setting = null, $use_cache = true ) {
 	# If we need to bypass the cache
 	if ( ! $use_cache ) {
 		$options = get_option( $setting );
-
-		if ( ! is_array( $options ) || ! array_key_exists( $key, $options ) )
+		if ( ! is_array( $options ) || ! array_key_exists( $key, $options ) ) {
 			return '';
-
+		}
 		return is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
 	}
 	# Setup caches
@@ -27,26 +26,32 @@ function bizznis_get_option( $key, $setting = null, $use_cache = true ) {
 	static $options_cache  = array();
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( 'bizznis_pre_get_option_' . $key, null, $setting );
-	if ( null !== $pre )
+	if ( null !== $pre ) {
 		return $pre;
+	}
 	# Check options cache
-	if ( isset( $options_cache[$setting][$key] ) )
+	if ( isset( $options_cache[$setting][$key] ) ) {
 		# Option has been cached
 		return $options_cache[$setting][$key];
+	}
 	# Check settings cache
-	if ( isset( $settings_cache[$setting] ) )
+	if ( isset( $settings_cache[$setting] ) ) {
 		# Setting has been cached
 		$options = apply_filters( 'bizznis_options', $settings_cache[$setting], $setting );
-	else
+	}
+	else {
 		# Set value and cache setting
 		$options = $settings_cache[$setting] = apply_filters( 'bizznis_options', get_option( $setting ), $setting );
+	}
 	# Check for non-existent option
-	if ( ! is_array( $options ) || ! array_key_exists( $key, (array) $options ) )
+	if ( ! is_array( $options ) || ! array_key_exists( $key, (array) $options ) ) {
 		# Cache non-existent option
 		$options_cache[$setting][$key] = '';
-	else
+	}
+	else {
 		# Option has not been previously been cached, so cache now
 		$options_cache[$setting][$key] = is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
+	}
 	return $options_cache[$setting][$key];
 }
 
@@ -111,11 +116,13 @@ function bizznis_custom_field( $field, $output_pattern = '%s' ) {
  * @since 1.0.0
  */
 function bizznis_get_custom_field( $field ) {
-	if ( null === get_the_ID() )
+	if ( null === get_the_ID() ) {
 		return '';
+	}
 	$custom_field = get_post_meta( get_the_ID(), $field, true );
-	if ( ! $custom_field )
+	if ( ! $custom_field ) {
 		return '';
+	}
 	# Return custom field, slashes stripped, sanitized if string
 	return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
 }
@@ -127,28 +134,36 @@ function bizznis_get_custom_field( $field ) {
  */
 function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $post, $post_id ) {
 	# Verify the nonce
-	if ( ! isset( $_POST[ $nonce_name ] ) || ! wp_verify_nonce( $_POST[ $nonce_name ], $nonce_action ) )
+	if ( ! isset( $_POST[ $nonce_name ] ) || ! wp_verify_nonce( $_POST[ $nonce_name ], $nonce_action ) ) {
 		return;
+	}
 	# Don't try to save the data under autosave, ajax, or future post.
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+	}
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		return;
-	if ( defined( 'DOING_CRON' ) && DOING_CRON )
+	}
+	if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
 		return;
+	}
 	# Don't save if WP is creating a revision (same as DOING_AUTOSAVE?)
-	if ( 'revision' == $post->post_type )
+	if ( 'revision' == $post->post_type ) {
 		return;
+	}
 	# Check that the user is allowed to edit the post
-	if ( ! current_user_can( 'edit_post', $post->ID ) )
+	if ( ! current_user_can( 'edit_post', $post->ID ) ) {
 		return;
+	}
 	# Cycle through $data, insert value or delete field
 	foreach ( (array) $data as $field => $value ) {
 		# Save $value, or delete if the $value is empty
-		if ( $value )
+		if ( $value ) {
 			update_post_meta( $post_id, $field, $value );
-		else
+		}
+		else {
 			delete_post_meta( $post_id, $field );
+		}
 	}
 }
 
@@ -160,8 +175,9 @@ function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
 add_filter( 'get_term', 'bizznis_get_term_filter', 10, 2 ); #wp
 function bizznis_get_term_filter( $term, $taxonomy ) {
 	# Stop here, if $term is not object
-	if ( ! is_object( $term ) )
+	if ( ! is_object( $term ) ) {
 		return $term;
+	}
 	$db = get_option( 'bizznis-term-meta' );
 	$term_meta = isset( $db[$term->term_id] ) ? $db[$term->term_id] : array();
 	$term->meta = wp_parse_args( $term_meta, apply_filters( 'bizznis_term_meta_defaults', array(
@@ -177,8 +193,9 @@ function bizznis_get_term_filter( $term, $taxonomy ) {
 		'noarchive'           => 0,
 	) ) );
 	# Sanitize term meta
-	foreach ( $term->meta as $field => $value )
+	foreach ( $term->meta as $field => $value ) {
 		$term->meta[$field] = apply_filters( 'bizznis_term_meta_' . $field, stripslashes( wp_kses_decode_entities( $value ) ), $term, $taxonomy );
+	}
 	$term->meta = apply_filters( 'bizznis_term_meta', $term->meta, $term, $taxonomy );
 	return $term;
 }
@@ -190,8 +207,9 @@ function bizznis_get_term_filter( $term, $taxonomy ) {
  */
 add_filter( 'get_terms', 'bizznis_get_terms_filter', 10, 2 ); #wp
 function bizznis_get_terms_filter( array $terms, $taxonomy ) {
-	foreach( $terms as $term )
+	foreach( $terms as $term ) {
 		$term = bizznis_get_term_filter( $term, $taxonomy );
+	}
 	return $terms;
 }
 

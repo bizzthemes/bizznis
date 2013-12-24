@@ -11,11 +11,13 @@
  * @since 1.0.0
  */
 function bizznis_nav_menu_supported( $menu ) {
-	if ( ! current_theme_supports( 'bizznis-menus' ) )
+	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
 		return false;
+	}
 	$menus = get_theme_support( 'bizznis-menus' );
-	if ( array_key_exists( $menu, (array) $menus[0] ) )
+	if ( array_key_exists( $menu, (array) $menus[0] ) ) {
 		return true;
+	}
 	return false;
 }
 
@@ -29,8 +31,9 @@ function bizznis_nav_menu_supported( $menu ) {
 add_action( 'after_setup_theme', 'bizznis_register_nav_menus' );
 function bizznis_register_nav_menus() {
 	# Stop here if menus not supported
-	if ( ! current_theme_supports( 'bizznis-menus' ) )
+	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
 		return;
+	}
 	$menus = get_theme_support( 'bizznis-menus' );
 	# Register supported menus
 	foreach ( (array) $menus[0] as $id => $name ) {
@@ -53,8 +56,9 @@ function bizznis_register_nav_menus() {
 add_action( 'bizznis_header_top', 'bizznis_do_nav' );
 function bizznis_do_nav() {
 	# Stop here if menu not supported
-	if ( ! bizznis_nav_menu_supported( 'primary' ) )
+	if ( ! bizznis_nav_menu_supported( 'primary' ) ) {
 		return;
+	}
 	# If menu is assigned to theme location, output
 	if ( has_nav_menu( 'primary' ) ) {
 		$args = array(
@@ -67,8 +71,9 @@ function bizznis_do_nav() {
 		$nav .= wp_nav_menu( $args );
 		$nav .= apply_filters( 'nav_primary_after', '', $args );
 		# Do nothing if there is nothing to show
-		if ( ! $nav )
+		if ( ! $nav ) {
 			return;
+		}
 		$nav_markup_open = sprintf( '<nav %s>', bizznis_attr( 'nav-primary', array( 'class' => 'nav-bizznis nav-primary' ) ) );
 		$nav_markup_open .= sprintf( '<div %s>', bizznis_attr( 'nav-primary-container', array( 'class' => 'wrap' ) ) );
 		$nav_markup_close = '</div>';
@@ -92,8 +97,9 @@ function bizznis_do_nav() {
 add_action( 'bizznis_header_bottom', 'bizznis_do_subnav' );
 function bizznis_do_subnav() {
 	# Do nothing if menu not supported
-	if ( ! bizznis_nav_menu_supported( 'secondary' ) )
+	if ( ! bizznis_nav_menu_supported( 'secondary' ) ) {
 		return;
+	}
 	# If menu is assigned to theme location, output
 	if ( has_nav_menu( 'secondary' ) ) {
 		$args = array(
@@ -106,8 +112,9 @@ function bizznis_do_subnav() {
 		$subnav .= wp_nav_menu( $args );
 		$subnav .= apply_filters( 'nav_secondary_after', '', $args );
 		# Do nothing if there is nothing to show
-		if ( ! $subnav )
+		if ( ! $subnav ) {
 			return;
+		}
 		$subnav_markup_open = sprintf( '<nav %s>', bizznis_attr( 'nav-secondary', array( 'class' => 'nav-bizznis nav-secondary' ) ) );
 		$subnav_markup_open .= sprintf( '<div %s>', bizznis_attr( 'nav-secondary-container', array( 'class' => 'wrap' ) ) );
 		$subnav_markup_close = '</div>';
@@ -125,8 +132,9 @@ function bizznis_do_subnav() {
 add_filter( 'nav_primary_after', 'bizznis_nav_right', 10, 2 );
 function bizznis_nav_right( $menu = '', $args = '' ) {
 	# Stop here if extras not enabled
-	if ( ! bizznis_get_option( 'nav_extras_enable' ) )
+	if ( ! bizznis_get_option( 'nav_extras_enable' ) ) {
 		return $menu;
+	}
 	# show selected option
 	switch ( bizznis_get_option( 'nav_extras' ) ) {
 		case 'search':
@@ -204,8 +212,10 @@ function bizznis_header_menu_wrap( $menu ) {
 // add_filter( 'walker_nav_menu_start_el', 'bizznis_add_menu_description', 10, 2 );
 function bizznis_add_menu_description( $item_output, $item ) {
 	$description = $item->post_content;
-	if ( ' ' !== $description ) 
+	if ( ' ' !== $description ) {
 		return preg_replace( '/(<a.*?>[^<]*?)</', '$1' . '<span class="menu-description">' . $description . '</span><', $item_output);
-	 else
+	}
+	 else {
 		return $item_output;
+	}
 }

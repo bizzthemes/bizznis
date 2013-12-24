@@ -28,8 +28,7 @@ class Bizznis_Admin_About extends Bizznis_Admin_Basic {
 		);
 		$page_ops = array(
 			'screen_icon'       => 'options-bizznis'
-		);
-		
+		);		
 		$this->create( $page_id, $menu_ops );
 	}
 

@@ -46,11 +46,13 @@ abstract class Bizznis_Admin {
 			)
 		);
 		# Stop here if page_id not set
-		if ( ! $this->page_id )
+		if ( ! $this->page_id ) {
 			return;
+		}
 		# Check to make sure there we are only creating one menu per subclass
-		if ( isset( $this->menu_ops['theme_menu'] ) && ( isset( $this->menu_ops['theme_submenu'] ) ) || isset( $this->menu_ops['submenu'] ) && ( isset( $this->menu_ops['main_menu'] ) || isset( $this->menu_ops['first_submenu'] ) ) )
+		if ( isset( $this->menu_ops['theme_menu'] ) && ( isset( $this->menu_ops['theme_submenu'] ) ) || isset( $this->menu_ops['submenu'] ) && ( isset( $this->menu_ops['main_menu'] ) || isset( $this->menu_ops['first_submenu'] ) ) ) {
 			wp_die( sprintf( __( 'You cannot use %s to create two menus in the same subclass. Please use separate subclasses for each menu.', 'bizznis' ), 'Bizznis_Admin' ) );
+		}
 		# Theme options actions
 		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 5 ); 						# create the theme options menu
 		add_action( 'admin_menu', array( $this, 'maybe_add_main_menu' ), 5 ); 						# create top-level main menu
@@ -107,8 +109,9 @@ abstract class Bizznis_Admin {
 					'sep_capability' => '',
 				)
 			);
-			if ( $sep['sep_position'] && $sep['sep_capability'] )
+			if ( $sep['sep_position'] && $sep['sep_capability'] ) {
 				$GLOBALS['menu'][$sep['sep_position']] = array( '', $sep['sep_capability'], 'separator', '', 'bizznis-separator wp-menu-separator' );
+			}
 		}
 		//* Maybe add main menu
 		if ( isset( $this->menu_ops['main_menu'] ) && is_array( $this->menu_ops['main_menu'] ) ) {
@@ -182,17 +185,21 @@ abstract class Bizznis_Admin {
 	 */
 	public function register_settings() {
 		# If this page doesn't store settings, no need to register them
-		if ( ! $this->settings_field )
+		if ( ! $this->settings_field ) {
 			return;
+		}
 		register_setting( $this->settings_field, $this->settings_field );
 		add_option( $this->settings_field, $this->default_settings );
-		if ( ! bizznis_is_menu_page( $this->page_id ) )
+		if ( ! bizznis_is_menu_page( $this->page_id ) ) {
 			return;
+		}
 		if ( bizznis_get_option( 'reset', $this->settings_field ) ) {
-			if ( update_option( $this->settings_field, $this->default_settings ) )
+			if ( update_option( $this->settings_field, $this->default_settings ) ) {
 				bizznis_admin_redirect( $this->page_id, array( 'reset' => 'true' ) );
-			else
+			}
+			else {
 				bizznis_admin_redirect( $this->page_id, array( 'error' => 'true' ) );
+			}
 			exit;
 		}
 	}
@@ -203,14 +210,18 @@ abstract class Bizznis_Admin {
 	 * @since 1.0.0
 	 */
 	public function notices() {
-		if ( ! bizznis_is_menu_page( $this->page_id ) )
+		if ( ! bizznis_is_menu_page( $this->page_id ) ) {
 			return;
-		if ( isset( $_REQUEST['settings-updated'] ) && $_REQUEST['settings-updated'] == 'true' )
+		}
+		if ( isset( $_REQUEST['settings-updated'] ) && $_REQUEST['settings-updated'] == 'true' ) {
 			echo '<div id="message" class="updated"><p><strong>' . $this->page_ops['saved_notice_text'] . '</strong></p></div>';
-		elseif ( isset( $_REQUEST['reset'] ) && 'true' == $_REQUEST['reset'] )
+		}
+		elseif ( isset( $_REQUEST['reset'] ) && 'true' == $_REQUEST['reset'] ) {
 			echo '<div id="message" class="updated"><p><strong>' . $this->page_ops['reset_notice_text'] . '</strong></p></div>';
-		elseif ( isset( $_REQUEST['error'] ) && $_REQUEST['error'] == 'true' )
+		}
+		elseif ( isset( $_REQUEST['error'] ) && $_REQUEST['error'] == 'true' ) {
 			echo '<div id="message" class="updated"><p><strong>' . $this->page_ops['error_notice_text'] . '</strong></p></div>';
+		}
 	}
 
 	/**
@@ -318,8 +329,9 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 	 */
 	public function settings_init() {
 		add_action( $this->pagehook . '_settings_page_form', array( $this, 'form' ) );
-		if ( method_exists( $this, 'help' ) )
+		if ( method_exists( $this, 'help' ) ) {
 			add_action( 'load-' . $this->pagehook, array( $this, 'help' ) );
+		}
 	}
 
 }
@@ -427,8 +439,9 @@ abstract class Bizznis_Admin_Boxes extends Bizznis_Admin {
 				<?php
 				do_action( 'bizznis_admin_before_metaboxes', $this->pagehook );
 				do_meta_boxes( $this->pagehook, 'main', null );
-				if ( isset( $wp_meta_boxes[$this->pagehook]['column2'] ) )
+				if ( isset( $wp_meta_boxes[$this->pagehook]['column2'] ) ) {
 					do_meta_boxes( $this->pagehook, 'column2', null );
+				}
 				do_action( 'bizznis_admin_after_metaboxes', $this->pagehook );
 				?>
 			</div>
@@ -445,8 +458,9 @@ abstract class Bizznis_Admin_Boxes extends Bizznis_Admin {
 		add_action( 'load-' . $this->pagehook, array( $this, 'scripts' ) );
 		add_action( 'load-' . $this->pagehook, array( $this, 'metaboxes' ) );
 		add_action( $this->pagehook . '_settings_page_boxes', array( $this, 'do_metaboxes' ) );
-		if ( method_exists( $this, 'help' ) )
+		if ( method_exists( $this, 'help' ) ) {
 			add_action( 'load-' . $this->pagehook, array( $this, 'help' ) );
+		}
 	}
 
 }
@@ -466,8 +480,9 @@ abstract class Bizznis_Admin_Basic extends Bizznis_Admin {
 	 * @since 1.0.0
 	 */
 	public function settings_init() {
-		if ( method_exists( $this, 'help' ) )
+		if ( method_exists( $this, 'help' ) ) {
 			add_action( 'load-' . $this->pagehook, array( $this, 'help' ) );
+		}
 	}
 
 }

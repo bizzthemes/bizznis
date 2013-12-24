@@ -14,7 +14,9 @@ add_action( 'bizznis_loop', 'bizznis_do_loop' );
 function bizznis_do_loop() {
 	global $wp_query, $more;
 	$args = apply_filters( 'bizznis_loop_args', array() ); # Filtered args
-	if ( $args ) $wp_query = new WP_Query( $args );
+	if ( $args ) {
+		$wp_query = new WP_Query( $args );
+	}
 	$more = is_singular() ? $more : 0; # Only set $more to 0 if we're on an archive
 	# Loop entry markup
 	bizznis_loop_entry();
@@ -80,8 +82,9 @@ function bizznis_loop_grid( $args = array() ) {
 	# What page are we on?
 	$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
 	# Potentially remove features on page 2+
-	if ( ! $args['features_on_all'] && $paged > 1 )
+	if ( ! $args['features_on_all'] && $paged > 1 ) {
 		$args['features'] = 0;
+	}
 	# Set global loop args
 	$_bizznis_loop_args = $args;
 	# Remove some unnecessary stuff from the grid loop
@@ -142,10 +145,12 @@ function bizznis_loop_grid_content() {
 			) );
 			printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $image );
 		}
-		if ( $_bizznis_loop_args['feature_content_limit'] )
+		if ( $_bizznis_loop_args['feature_content_limit'] )  {
 			the_content_limit( (int) $_bizznis_loop_args['feature_content_limit'], esc_html( $_bizznis_loop_args['more'] ) );
-		else
+		}
+		else {
 			the_content( esc_html( $_bizznis_loop_args['more'] ) );
+		}
 	}
 	else {
 		if ( $_bizznis_loop_args['grid_image_size'] ) {
@@ -156,8 +161,9 @@ function bizznis_loop_grid_content() {
 			) );
 			printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $image );
 		}
-		if ( $_bizznis_loop_args['grid_content_limit'] )
+		if ( $_bizznis_loop_args['grid_content_limit'] ) {
 			the_content_limit( (int) $_bizznis_loop_args['grid_content_limit'], esc_html( $_bizznis_loop_args['more'] ) );
+		}
 		else {
 			the_excerpt();
 			printf( '<a href="%s" class="more-link">%s</a>', get_permalink(), esc_html( $_bizznis_loop_args['more'] ) );

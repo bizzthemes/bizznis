@@ -25,8 +25,9 @@ add_action( 'wp_head', 'wp_title', 1 );
 add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
 function bizznis_default_title( $title, $sep, $seplocation ) {
 	global $wp_query;
-	if ( is_feed() )
+	if ( is_feed() ) {
 		return trim( $title );
+	}
 	# Separator definition
 	$sep = bizznis_get_seo_option( 'doctitle_sep' ) ? bizznis_get_seo_option( 'doctitle_sep' ) : '-';
 	$seplocation = bizznis_get_seo_option( 'doctitle_seplocation' ) ? bizznis_get_seo_option( 'doctitle_seplocation' ) : 'right';
@@ -34,30 +35,35 @@ function bizznis_default_title( $title, $sep, $seplocation ) {
 	if ( is_front_page() ) {
 		#* Determine the doctitle
 		$title = bizznis_get_seo_option( 'home_doctitle' ) ? bizznis_get_seo_option( 'home_doctitle' ) : get_bloginfo( 'name' );
-
 		#* Append site description, if necessary
 		$title = bizznis_get_seo_option( 'append_description_home' ) ? $title . " $sep " . get_bloginfo( 'description' ) : $title;
 	}
 	# if viewing a post / page / attachment
 	if ( is_singular() ) {
 		# The User Defined Title (Bizznis)
-		if ( bizznis_get_custom_field( '_bizznis_title' ) )
+		if ( bizznis_get_custom_field( '_bizznis_title' ) ) {
 			$title = bizznis_get_custom_field( '_bizznis_title' );
+		}
 		# All-in-One SEO Pack Title (latest, vestigial)
-		elseif ( bizznis_get_custom_field( '_aioseop_title' ) )
+		elseif ( bizznis_get_custom_field( '_aioseop_title' ) ) {
 			$title = bizznis_get_custom_field( '_aioseop_title' );
+		}
 		# Headspace Title (vestigial)
-		elseif ( bizznis_get_custom_field( '_headspace_page_title' ) )
+		elseif ( bizznis_get_custom_field( '_headspace_page_title' ) ) {
 			$title = bizznis_get_custom_field( '_headspace_page_title' );
+		}
 		# Thesis Title (vestigial)
-		elseif ( bizznis_get_custom_field( 'thesis_title' ) )
+		elseif ( bizznis_get_custom_field( 'thesis_title' ) ) {
 			$title = bizznis_get_custom_field( 'thesis_title' );
+		}
 		# SEO Title Tag (vestigial)
-		elseif ( bizznis_get_custom_field( 'title_tag' ) )
+		elseif ( bizznis_get_custom_field( 'title_tag' ) ) {
 			$title = bizznis_get_custom_field( 'title_tag' );
+		}
 		# All-in-One SEO Pack Title (old, vestigial)
-		elseif ( bizznis_get_custom_field( 'title' ) )
+		elseif ( bizznis_get_custom_field( 'title' ) ) {
 			$title = bizznis_get_custom_field( 'title' );
+		}
 	}
 	if ( is_category() ) {
 		// $term = get_term( get_query_var('cat'), 'category' );
@@ -81,8 +87,9 @@ function bizznis_default_title( $title, $sep, $seplocation ) {
 		$title = bizznis_get_cpt_option( 'doctitle' );
 	}
 	# If we don't want site name appended, or if we're on the home page
-	if ( ! bizznis_get_seo_option( 'append_site_title' ) || is_front_page() )
+	if ( ! bizznis_get_seo_option( 'append_site_title' ) || is_front_page() ) {
 		return esc_html( trim( $title ) );
+	}
 	# Else append the site name
 	$title = 'right' == $seplocation ? $title . " $sep " . get_bloginfo( 'name' ) : get_bloginfo( 'name' ) . " $sep " . $title;
 	return esc_html( trim( $title ) );
@@ -96,16 +103,21 @@ function bizznis_default_title( $title, $sep, $seplocation ) {
 add_action( 'get_header', 'bizznis_doc_head_control' );
 function bizznis_doc_head_control() {
 	remove_action( 'wp_head', 'wp_generator' );
-	if ( ! bizznis_get_seo_option( 'head_adjacent_posts_rel_link' ) )
+	if ( ! bizznis_get_seo_option( 'head_adjacent_posts_rel_link' ) ) {
 		remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
-	if ( ! bizznis_get_seo_option( 'head_wlwmanifest_link' ) )
+	}
+	if ( ! bizznis_get_seo_option( 'head_wlwmanifest_link' ) ) {
 		remove_action( 'wp_head', 'wlwmanifest_link' );
-	if ( ! bizznis_get_seo_option( 'head_shortlink' ) )
+	}
+	if ( ! bizznis_get_seo_option( 'head_shortlink' ) ) {
 		remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
-	if ( is_single() && ! bizznis_get_option( 'comments_posts' ) )
+	}
+	if ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) {
 		remove_action( 'wp_head', 'feed_links_extra', 3 );
-	if ( is_page() && ! bizznis_get_option( 'comments_pages' ) )
+	}
+	if ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) {
 		remove_action( 'wp_head', 'feed_links_extra', 3 );
+	}
 }
 
 /**
@@ -119,25 +131,31 @@ function bizznis_seo_meta_description() {
 	# Output nothing if description isn't present.
 	$description = '';
 	# If we're on the home page
-	if ( is_front_page() )
+	if ( is_front_page() ) {
 		$description = bizznis_get_seo_option( 'home_description' ) ? bizznis_get_seo_option( 'home_description' ) : get_bloginfo( 'description' );
+	}
 	# If we're on a single post / page / attachment
 	if ( is_singular() ) {
 		# Description is set via custom field
-		if ( bizznis_get_custom_field( '_bizznis_description' ) )
+		if ( bizznis_get_custom_field( '_bizznis_description' ) ) {
 			$description = bizznis_get_custom_field( '_bizznis_description' );
+		}
 		# All-in-One SEO Pack (latest, vestigial)
-		elseif ( bizznis_get_custom_field( '_aioseop_description' ) )
+		elseif ( bizznis_get_custom_field( '_aioseop_description' ) ) {
 			$description = bizznis_get_custom_field( '_aioseop_description' );
+		}
 		# Headspace2 (vestigial)
-		elseif ( bizznis_get_custom_field( '_headspace_description' ) )
+		elseif ( bizznis_get_custom_field( '_headspace_description' ) ) {
 			$description = bizznis_get_custom_field( '_headspace_description' );
+		}
 		# Thesis (vestigial)
-		elseif ( bizznis_get_custom_field( 'thesis_description' ) )
+		elseif ( bizznis_get_custom_field( 'thesis_description' ) ) {
 			$description = bizznis_get_custom_field( 'thesis_description' );
+		}
 		# All-in-One SEO Pack (old, vestigial)
-		elseif ( bizznis_get_custom_field( 'description' ) )
+		elseif ( bizznis_get_custom_field( 'description' ) ) {
 			$description = bizznis_get_custom_field( 'description' );
+		}
 	}
 	if ( is_category() ) {
 		// $term = get_term( get_query_var('cat'), 'category' );
@@ -161,8 +179,9 @@ function bizznis_seo_meta_description() {
 		$description = bizznis_get_cpt_option( 'description' ) ? bizznis_get_cpt_option( 'description' ) : '';
 	}
 	# Add the description if one exists
-	if ( $description )
+	if ( $description ) {
 		echo '<meta name="description" content="' . esc_attr( $description ) . '" />' . "\n";
+	}
 }
 
 /**
@@ -173,8 +192,9 @@ function bizznis_seo_meta_description() {
 add_action( 'wp_head', 'bizznis_responsive_viewport', 1 );
 function bizznis_responsive_viewport() {
 	# Child theme needs to support 'bizznis-responsive-viewport'.
-	if ( ! current_theme_supports( 'bizznis-responsive-viewport' ) )
+	if ( ! current_theme_supports( 'bizznis-responsive-viewport' ) ) {
 		return;
+	}
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1" />' . "\n";
 }
 
@@ -187,8 +207,9 @@ add_action( 'wp_head', 'bizznis_robots_meta', 1 );
 function bizznis_robots_meta() {
 	global $wp_query;
 	# If the blog is private, then following logic is unnecessary as WP will insert noindex and nofollow
-	if ( 0 == get_option( 'blog_public' ) )
+	if ( 0 == get_option( 'blog_public' ) ) {
 		return;
+	}
 	# Defaults
 	$meta = array(
 		'noindex'   => '',
@@ -268,8 +289,9 @@ function bizznis_robots_meta() {
 	# Strip empty array items
 	$meta = array_filter( $meta );
 	# Add meta if any exist
-	if ( $meta )
+	if ( $meta ) {
 		printf( '<meta name="robots" content="%s" />' . "\n", implode( ',', $meta ) );
+	}
 }
 
 /**
@@ -281,22 +303,29 @@ add_action( 'wp_head', 'bizznis_load_favicon' );
 function bizznis_load_favicon() {
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( 'bizznis_pre_load_favicon', false );
-	if ( $pre !== false )
+	if ( $pre !== false ) {
 		$favicon = $pre;
-	elseif ( file_exists( CHILD_DIR . '/images/favicon.ico' ) )
+	}
+	elseif ( file_exists( CHILD_DIR . '/images/favicon.ico' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.ico';
-	elseif ( file_exists( CHILD_DIR . '/images/favicon.gif' ) )
+	}
+	elseif ( file_exists( CHILD_DIR . '/images/favicon.gif' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.gif';
-	elseif ( file_exists( CHILD_DIR . '/images/favicon.png' ) )
+	}
+	elseif ( file_exists( CHILD_DIR . '/images/favicon.png' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.png';
-	elseif ( file_exists( CHILD_DIR . '/images/favicon.jpg' ) )
+	}
+	elseif ( file_exists( CHILD_DIR . '/images/favicon.jpg' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.jpg';
-	else
+	}
+	else {
 		$favicon = BIZZNIS_IMAGES_URL . '/favicon.ico';
+	}
 	# URL to favicon is filtered via 'bizznis_favicon_url' before being echoed.
 	$favicon = apply_filters( 'bizznis_favicon_url', $favicon );
-	if ( $favicon )
+	if ( $favicon ) {
 		echo '<link rel="Shortcut Icon" href="' . esc_url( $favicon ) . '" type="image/x-icon" />' . "\n";
+	}
 }
 
 /**
@@ -306,8 +335,9 @@ function bizznis_load_favicon() {
  */
 add_action( 'wp_head', 'bizznis_do_meta_pingback' );
 function bizznis_do_meta_pingback() {
-	if ( 'open' == get_option( 'default_ping_status' ) )
+	if ( 'open' == get_option( 'default_ping_status' ) ) {
 		echo '<link rel="pingback" href="' . get_bloginfo( 'pingback_url' ) . '" />' . "\n";
+	}
 }
 
 /**
@@ -322,27 +352,32 @@ function bizznis_canonical() {
 	global $wp_query;
 	# Output nothing if canonical isn't present.
 	$canonical = '';
-	if ( is_front_page() )
+	if ( is_front_page() ) {
 		$canonical = trailingslashit( home_url() );
+	}
 	if ( is_singular() ) {
-		if ( ! $id = $wp_query->get_queried_object_id() )
+		if ( ! $id = $wp_query->get_queried_object_id() ) {
 			return;
+		}
 		$cf = bizznis_get_custom_field( '_bizznis_canonical_uri' );
 		$canonical = $cf ? $cf : get_permalink( $id );
 	}
 	if ( is_category() || is_tag() || is_tax() ) {
-		if ( ! $id = $wp_query->get_queried_object_id() )
+		if ( ! $id = $wp_query->get_queried_object_id() ) {
 			return;
+		}
 		$taxonomy = $wp_query->queried_object->taxonomy;
 		$canonical = bizznis_get_seo_option( 'canonical_archives' ) ? get_term_link( (int) $id, $taxonomy ) : 0;
 	}
 	if ( is_author() ) {
-		if ( ! $id = $wp_query->get_queried_object_id() )
+		if ( ! $id = $wp_query->get_queried_object_id() ) {
 			return;
+		}
 		$canonical = bizznis_get_seo_option( 'canonical_archives' ) ? get_author_posts_url( $id ) : 0;
 	}
-	if ( $canonical )
+	if ( $canonical ) {
 		printf( '<link rel="canonical" href="%s" />' . "\n", esc_url( apply_filters( 'bizznis_canonical', $canonical ) ) );
+	}
 }
 
 /**
@@ -381,8 +416,9 @@ function bizznis_header_scripts() {
 	# Applies 'bizznis_header_scripts' filter on value stored in header_scripts setting.
 	echo apply_filters( 'bizznis_header_scripts', bizznis_get_option( 'header_scripts' ) );
 	# If singular, echo scripts from custom field
-	if ( is_singular() )
+	if ( is_singular() ) {
 		bizznis_custom_field( '_bizznis_scripts' );
+	}
 }
 
 /**
@@ -394,13 +430,15 @@ add_action( 'after_setup_theme', 'bizznis_custom_header' );
 function bizznis_custom_header() {
 	$wp_custom_header = get_theme_support( 'custom-header' );
 	# Stop here if not active (Bizznis of WP custom header)
-	if ( ! $wp_custom_header )
+	if ( ! $wp_custom_header ) {
 		return;
+	}
 	# Blog title option is obsolete when custom header is active
 	add_filter( 'bizznis_pre_get_option_blog_title', '__return_empty_array' );
 	# Stop here if WP custom header is active
-	if ( $wp_custom_header )
+	if ( $wp_custom_header ) {
 		return;
+	}
 }
 
 /**
@@ -411,34 +449,40 @@ function bizznis_custom_header() {
 add_action( 'wp_head', 'bizznis_custom_header_style' );
 function bizznis_custom_header_style() {
 	# Stop here if custom header not supported
-	if ( ! current_theme_supports( 'custom-header' ) )
+	if ( ! current_theme_supports( 'custom-header' ) ) {
 		return;
+	}
 	# Stop here if user specifies their own callback
-	if ( get_theme_support( 'custom-header', 'wp-head-callback' ) )
+	if ( get_theme_support( 'custom-header', 'wp-head-callback' ) ) {
 		return;
+	}
 	# Output nothing if header style isn't present.
 	$output = '';
 	$header_image = get_header_image();
 	$text_color   = get_header_textcolor();
 	# If no options set, don't waste the output. Stop here.
-	if ( empty( $header_image ) && ! display_header_text() && $text_color == get_theme_support( 'custom-header', 'default-text-color' ) )
+	if ( empty( $header_image ) && ! display_header_text() && $text_color == get_theme_support( 'custom-header', 'default-text-color' ) ) {
 		return;
+	}
 	$header_selector = get_theme_support( 'custom-header', 'header-selector' );
 	$title_selector  = '.custom-header .site-title';
 	$desc_selector   = '.custom-header .site-description';
 	# Header selector fallback
-	if ( ! $header_selector )
+	if ( ! $header_selector ) {
 		$header_selector = '.custom-header .title-area';
+	}
 	# Header image CSS, if exists
 	if ( $header_image ) {
 		$output .= sprintf( '%s { background-image: url(%s) !important; background-repeat: no-repeat; background-position: center center; min-width: %spx; min-height: %spx; }', $header_selector, esc_url( $header_image ), get_custom_header()->width, get_custom_header()->height );
 		$output .= sprintf( '%s a { min-width: %spx; min-height: %spx; }', $title_selector, get_custom_header()->width, get_custom_header()->height );
 	}
 	# Header text color CSS, if showing text
-	if ( display_header_text() && $text_color != get_theme_support( 'custom-header', 'default-text-color' ) )
+	if ( display_header_text() && $text_color != get_theme_support( 'custom-header', 'default-text-color' ) ) {
 		$output .= sprintf( '%2$s a, %2$s a:hover, %3$s { color: #%1$s !important; }', esc_html( $text_color ), esc_html( $title_selector ), esc_html( $desc_selector ) );
-	if ( $output )
+	}
+	if ( $output ) {
 		printf( '<style type="text/css">%s</style>' . "\n", $output );
+	}
 }
 
 /**

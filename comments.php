@@ -6,8 +6,9 @@
 */
 
 //* Stop here if the current post is protected by a password
-if ( post_password_required() )
+if ( post_password_required() ) {
 	return;
+}
 
 //* This hook handles all comments code
 do_action( 'bizznis_comments' );

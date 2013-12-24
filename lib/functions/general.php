@@ -12,10 +12,12 @@
  */
 function bizznis_enable_author_box( $args = array() ) {
 	$args = wp_parse_args( $args, array( 'type' => 'single' ) );
-	if ( 'single' === $args['type'] )
+	if ( 'single' === $args['type'] ) {
 		add_filter( 'get_the_author_bizznis_author_box_single', '__return_true' );
-	elseif ( 'archive' === $args['type'] )
+	}
+	elseif ( 'archive' === $args['type'] ) {
 		add_filter( 'get_the_author_bizznis_author_box_archive', '__return_true' );
+	}
 }
 
 /**
@@ -24,8 +26,9 @@ function bizznis_enable_author_box( $args = array() ) {
  * @since 1.0.0
  */
 function bizznis_admin_redirect( $page, array $query_args = array() ) {
-	if ( ! $page )
+	if ( ! $page ) {
 		return;
+	}
 	$url = html_entity_decode( menu_page_url( $page, 0 ) );
 	foreach ( (array) $query_args as $key => $value ) {
 		if ( empty( $key ) && empty( $value ) ) {
@@ -43,8 +46,9 @@ function bizznis_admin_redirect( $page, array $query_args = array() ) {
  */
 add_action( 'template_redirect', 'bizznis_custom_field_redirect' );
 function bizznis_custom_field_redirect() {
-	if ( ! is_singular() )
+	if ( ! is_singular() ) {
 		return;
+	}
 	if ( $url = bizznis_get_custom_field( 'redirect' ) ) {
 		wp_redirect( esc_url_raw( $url ), 301 );
 		exit;
@@ -58,8 +62,9 @@ function bizznis_custom_field_redirect() {
  */
 function bizznis_get_theme_support_arg( $feature, $arg, $default = '' ) {
 	$support = get_theme_support( $feature );
-	if ( ! $support || ! isset( $support[0] ) || ! array_key_exists( $arg, (array) $support[0] ) )
+	if ( ! $support || ! isset( $support[0] ) || ! array_key_exists( $arg, (array) $support[0] ) ) {
 		return $default;
+	}
 	return $support[0][ $arg ];
 }
 
@@ -72,22 +77,25 @@ function bizznis_detect_plugin( array $plugins ) {
 	# Check for classes
 	if ( isset( $plugins['classes'] ) ) {
 		foreach ( $plugins['classes'] as $name ) {
-			if ( class_exists( $name ) )
+			if ( class_exists( $name ) ) {
 				return true;
+			}
 		}
 	}
 	# Check for functions
 	if ( isset( $plugins['functions'] ) ) {
 		foreach ( $plugins['functions'] as $name ) {
-			if ( function_exists( $name ) )
+			if ( function_exists( $name ) ) {
 				return true;
+			}
 		}
 	}
 	# Check for constants
 	if ( isset( $plugins['constants'] ) ) {
 		foreach ( $plugins['constants'] as $name ) {
-			if ( defined( $name ) )
+			if ( defined( $name ) ) {
 				return true;
+			}
 		}
 	}
 	# No class, function or constant found to exist
@@ -101,11 +109,13 @@ function bizznis_detect_plugin( array $plugins ) {
  */
 function bizznis_is_menu_page( $pagehook = '' ) {
 	global $page_hook;
-	if ( isset( $page_hook ) && $page_hook == $pagehook )
+	if ( isset( $page_hook ) && $page_hook == $pagehook ) {
 		return true;
+	}
 	# May be too early for $page_hook
-	if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == $pagehook )
+	if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == $pagehook ) {
 		return true;
+	}
 	return false;
 }
 
@@ -116,8 +126,9 @@ function bizznis_is_menu_page( $pagehook = '' ) {
  */
 function bizznis_is_customizer() {
 	global $wp_customize;
-	if ( isset( $wp_customize ) )
+	if ( isset( $wp_customize ) ) {
 		return true;
+	}
 	return false;
 }
 
@@ -158,8 +169,9 @@ function bizznis_get_global_post_type_name( $post_type_name = '' ) {
  */
 function bizznis_get_cpt_archive_types() {
 	static $bizznis_cpt_archive_types;
-	if ( $bizznis_cpt_archive_types )
+	if ( $bizznis_cpt_archive_types ) {
 		return $bizznis_cpt_archive_types;
+	}
 	$args = apply_filters(
 		'bizznis_cpt_archives_args',
 		array(
@@ -181,8 +193,9 @@ function bizznis_get_cpt_archive_types() {
  */
 function bizznis_get_cpt_archive_types_names() {
 	$post_type_names = array();
-	foreach ( bizznis_get_cpt_archive_types() as $post_type )
+	foreach ( bizznis_get_cpt_archive_types() as $post_type ) {
 		$post_type_names[] = $post_type->name;
+	}
 	return $post_type_names;
 }
 
@@ -203,10 +216,12 @@ function bizznis_has_post_type_archive_support( $post_type_name = '' ) {
  * @since 1.0.0
  */
 function bizznis_plugin_install_link( $plugin_slug = '', $text = '' ) {
-	if ( is_main_site() )
+	if ( is_main_site() ) {
 		$url = network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
-	else
+	}
+	else {
 		$url = admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
+	}
 	$title_text = sprintf( __( 'Install %s', 'bizznis' ), $text );
 	return sprintf( '<a href="%s" class="thickbox" title="%s">%s</a>', esc_url( $url ), esc_attr( $title_text ), esc_html( $text ) );
 }

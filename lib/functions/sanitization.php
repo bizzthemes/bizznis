@@ -55,8 +55,9 @@ class Bizznis_Settings_Sanitizer {
 	 */
 	function do_filter( $filter, $new_value, $old_value ) {
 		$available_filters = $this->get_available_filters();
-		if ( ! in_array( $filter, array_keys( $available_filters ) ) )
+		if ( ! in_array( $filter, array_keys( $available_filters ) ) ) {
 			return $new_value;
+		}
 		return call_user_func( $available_filters[$filter], $new_value, $old_value );
 	}
 
@@ -158,10 +159,12 @@ class Bizznis_Settings_Sanitizer {
 	 * @since 1.0.0
 	 */
 	function requires_unfiltered_html( $new_value, $old_value ) {
-		if ( current_user_can( 'unfiltered_html' ) )
+		if ( current_user_can( 'unfiltered_html' ) ) {
 			return $new_value;
-		else
+		}
+		else {
 			return $old_value;
+		}
 	}
 
 }

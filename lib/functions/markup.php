@@ -32,8 +32,9 @@ function bizznis_attr( $context, $attributes = array() ) {
     # Cycle through attributes, build tag attribute string
 	$output = ''; #zero default
     foreach ( $attributes as $key => $value ) {
-		if ( ! $value )
+		if ( ! $value ) {
             continue;
+		}
 		# add custom classes per context
 		if ( $key == 'class' ) {
 			$classes 	= explode( ' ', $value ); # turn into array

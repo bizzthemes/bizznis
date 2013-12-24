@@ -14,8 +14,9 @@
 add_action( 'admin_menu', 'bizznis_add_inpost_seo_box' );
 function bizznis_add_inpost_seo_box() {
 	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
-		if ( post_type_supports( $type, 'bizznis-seo' ) )
+		if ( post_type_supports( $type, 'bizznis-seo' ) ) {
 			add_meta_box( 'bizznis_inpost_seo_box', __( 'Theme SEO Settings', 'bizznis' ), 'bizznis_inpost_seo_box', $type, 'normal', 'high' );
+		}
 	}
 }
 
@@ -55,8 +56,9 @@ function bizznis_inpost_seo_box() {
  */
 add_action( 'save_post', 'bizznis_inpost_seo_save', 1, 2 );
 function bizznis_inpost_seo_save( $post_id, $post ) {
-	if ( ! isset( $_POST['bizznis_seo'] ) )
+	if ( ! isset( $_POST['bizznis_seo'] ) ) {
 		return;
+	}
 	# Merge user submitted options with fallback defaults
 	$data = wp_parse_args( $_POST['bizznis_seo'], array(
 		'_bizznis_title'         => '',
@@ -69,8 +71,9 @@ function bizznis_inpost_seo_save( $post_id, $post ) {
 	) );
 	# Sanitize the title, description, and tags
 	foreach ( (array) $data as $key => $value ) {
-		if ( in_array( $key, array( '_bizznis_title', '_bizznis_description' ) ) )
+		if ( in_array( $key, array( '_bizznis_title', '_bizznis_description' ) ) ) {
 			$data[ $key ] = strip_tags( $value );
+		}
 	}
 	bizznis_save_custom_fields( $data, 'bizznis_inpost_seo_save', 'bizznis_inpost_seo_nonce', $post, $post_id );
 }
@@ -84,11 +87,13 @@ function bizznis_inpost_seo_save( $post_id, $post ) {
 add_action( 'admin_menu', 'bizznis_add_inpost_scripts_box' );
 function bizznis_add_inpost_scripts_box() {
 	# If user doesn't have unfiltered html capability, don't show this box
-	if ( ! current_user_can( 'unfiltered_html' ) )
+	if ( ! current_user_can( 'unfiltered_html' ) ) {
 		return;
+	}
 	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
-		if ( post_type_supports( $type, 'bizznis-scripts' ) )
+		if ( post_type_supports( $type, 'bizznis-scripts' ) ) {
 			add_meta_box( 'bizznis_inpost_scripts_box', __( 'Scripts', 'bizznis' ), 'bizznis_inpost_scripts_box', $type, 'normal', 'low' );
+		}
 	}
 }
 
@@ -113,11 +118,13 @@ function bizznis_inpost_scripts_box() {
  */
 add_action( 'save_post', 'bizznis_inpost_scripts_save', 1, 2 );
 function bizznis_inpost_scripts_save( $post_id, $post ) {
-	if ( ! isset( $_POST['bizznis_seo'] ) )
+	if ( ! isset( $_POST['bizznis_seo'] ) ) {
 		return;
+	}
 	# If user doesn't have unfiltered html capability, don't try to save
-	if ( ! current_user_can( 'unfiltered_html' ) )
+	if ( ! current_user_can( 'unfiltered_html' ) ) {
 		return;
+	}
 	# Merge user submitted options with fallback defaults
 	$data = wp_parse_args( $_POST['bizznis_seo'], array(
 		'_bizznis_scripts' => '',
@@ -133,11 +140,13 @@ function bizznis_inpost_scripts_save( $post_id, $post ) {
  */
 add_action( 'admin_menu', 'bizznis_add_inpost_layout_box' );
 function bizznis_add_inpost_layout_box() {
-	if ( ! current_theme_supports( 'bizznis-inpost-layouts' ) )
+	if ( ! current_theme_supports( 'bizznis-inpost-layouts' ) ) {
 		return;
+	}
 	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
-		if ( post_type_supports( $type, 'bizznis-layouts' ) )
+		if ( post_type_supports( $type, 'bizznis-layouts' ) ) {
 			add_meta_box( 'bizznis_inpost_layout_box', __( 'Layout Settings', 'bizznis' ), 'bizznis_inpost_layout_box', $type, 'normal', 'high' );
+		}
 	}
 }
 
@@ -170,8 +179,9 @@ function bizznis_inpost_layout_box() {
  */
 add_action( 'save_post', 'bizznis_inpost_layout_save', 1, 2 );
 function bizznis_inpost_layout_save( $post_id, $post ) {
-	if ( ! isset( $_POST['bizznis_layout'] ) )
+	if ( ! isset( $_POST['bizznis_layout'] ) ) {
 		return;
+	}
 	$data = wp_parse_args( $_POST['bizznis_layout'], array(
 		'_bizznis_layout'            => '',
 		'_bizznis_custom_body_class' => '',

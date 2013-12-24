@@ -55,8 +55,9 @@ function bizznis_register_default_widget_areas() {
 add_action( 'after_setup_theme', 'bizznis_register_footer_widget_areas' );
 function bizznis_register_footer_widget_areas() {
 	$footer_widgets = get_theme_support( 'bizznis-footer-widgets' );
-	if ( ! $footer_widgets || ! isset( $footer_widgets[0] ) || ! is_numeric( $footer_widgets[0] ) )
+	if ( ! $footer_widgets || ! isset( $footer_widgets[0] ) || ! is_numeric( $footer_widgets[0] ) ) {
 		return;
+	}
 	$footer_widgets = (int) $footer_widgets[0];
 	$counter = 1;
 	while ( $counter <= $footer_widgets ) {
@@ -80,8 +81,9 @@ function bizznis_register_footer_widget_areas() {
 add_action( 'bizznis_sidebar', 'bizznis_do_sidebar' );
 function bizznis_do_sidebar() {
 	# Only shows if sidebar is empty, and current user has the ability to edit theme options (manage widgets).
-	if ( ! dynamic_sidebar( 'sidebar' ) && current_user_can( 'edit_theme_options' )  )
+	if ( ! dynamic_sidebar( 'sidebar' ) && current_user_can( 'edit_theme_options' )  ) {
 		bizznis_default_widget_area_content( __( 'Primary Sidebar Widget Area', 'bizznis' ) );
+	}
 }
 
 /**
@@ -92,8 +94,9 @@ function bizznis_do_sidebar() {
 add_action( 'bizznis_sidebar_alt', 'bizznis_do_sidebar_alt' );
 function bizznis_do_sidebar_alt() {
 	# Only shows if sidebar is empty, and current user has the ability to edit theme options (manage widgets).
-	if ( ! dynamic_sidebar( 'sidebar-alt' ) && current_user_can( 'edit_theme_options' ) )
+	if ( ! dynamic_sidebar( 'sidebar-alt' ) && current_user_can( 'edit_theme_options' ) ) {
 		bizznis_default_widget_area_content( __( 'Secondary Sidebar Widget Area', 'bizznis' ) );
+	}
 }
 
 /**

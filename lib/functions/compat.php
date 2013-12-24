@@ -9,25 +9,25 @@
 //* extension enabled. WordPress already provides a proper working definition for mb_substr().
 
 if ( ! function_exists( 'mb_strpos' ) ) {
-function mb_strpos( $haystack, $needle, $offset = 0, $encoding = '' ) {
-	return strpos( $haystack, $needle, $offset );
-}
+	function mb_strpos( $haystack, $needle, $offset = 0, $encoding = '' ) {
+		return strpos( $haystack, $needle, $offset );
+	}
 }
 
 if ( ! function_exists( 'mb_strrpos' ) ) {
-function mb_strrpos( $haystack, $needle, $offset = 0, $encoding = '' ) {
-	return strrpos( $haystack, $needle, $offset );
-}
+	function mb_strrpos( $haystack, $needle, $offset = 0, $encoding = '' ) {
+		return strrpos( $haystack, $needle, $offset );
+	}
 }
 
 if ( ! function_exists( 'mb_strlen' ) ) {
-function mb_strlen( $string, $encoding = '' ) {
-	return strlen( $string );
-}
+	function mb_strlen( $string, $encoding = '' ) {
+		return strlen( $string );
+	}
 }
 
 if ( ! function_exists( 'mb_strtolower' ) ) {
-function mb_strtolower( $string, $encoding = '' ) {
-	return strtolower( $string );
-}
+	function mb_strtolower( $string, $encoding = '' ) {
+		return strtolower( $string );
+	}
 }

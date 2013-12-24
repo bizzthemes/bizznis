@@ -13,12 +13,14 @@
 add_action( 'bizznis_footer_top', 'bizznis_footer_widget_areas', 5 );
 function bizznis_footer_widget_areas() {
 	$footer_widgets = get_theme_support( 'bizznis-footer-widgets' );
-	if ( ! $footer_widgets || ! isset( $footer_widgets[0] ) || ! is_numeric( $footer_widgets[0] ) )
+	if ( ! $footer_widgets || ! isset( $footer_widgets[0] ) || ! is_numeric( $footer_widgets[0] ) ) {
 		return;
+	}
 	$footer_widgets = (int) $footer_widgets[0];
 	# Check to see if first widget area has widgets. If not, do nothing. No need to check all footer widget areas.
-	if ( ! is_active_sidebar( 'footer-1' ) )
+	if ( ! is_active_sidebar( 'footer-1' ) ) {
 		return;
+	}
 	$inside  = '';
 	$output  = '';
 	$counter = 1;

@@ -40,13 +40,15 @@
 function bizznis_wc_template_loader( $template ) {
 	if ( is_single() && 'product' == get_post_type() ) {
 		$template = locate_template( array( 'woocommerce/single-product.php' ) );
-		if ( ! $template )
+		if ( ! $template ) {
 			$template = BIZZNIS_WC_TEMPLATES_DIR . '/single-product.php';
+		}
 	}
 	elseif ( is_post_type_archive( 'product' ) ||  is_page( get_option( 'woocommerce_shop_page_id' ) ) ) {
 		$template = locate_template( array( 'woocommerce/archive-product.php' ) );
-		if ( ! $template )
+		if ( ! $template ) {
 			$template = BIZZNIS_WC_TEMPLATES_DIR . '/archive-product.php';
+		}
 	}
 	elseif ( is_tax() ) {
 		$term = get_query_var( 'term' );
@@ -63,8 +65,9 @@ function bizznis_wc_template_loader( $template ) {
 			);
 			$template = locate_template( $templates );
 			# Fallback to BWC template
-			if ( ! $template )
+			if ( ! $template ) {
 				$template = BIZZNIS_WC_TEMPLATES_DIR . '/taxonomy.php';
+			}
 		}
 	}
 	return $template;

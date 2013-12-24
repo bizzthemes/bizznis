@@ -58,8 +58,9 @@ class Bizznis_Featured_Page extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		echo $before_widget;
 		# Set up the author bio
-		if ( ! empty( $instance['title'] ) )
+		if ( ! empty( $instance['title'] ) ) {
 			echo $before_title . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $after_title;
+		}
 		$wp_query = new WP_Query( array( 'page_id' => $instance['page_id'] ) );
 		if ( have_posts() ) : while ( have_posts() ) : the_post();
 			printf( '<article %s>', bizznis_attr( 'entry', array( 'class' => implode( ' ', get_post_class() ) ) ) );
@@ -69,8 +70,9 @@ class Bizznis_Featured_Page extends WP_Widget {
 				'context' => 'featured-page-widget',
 				'attr'    => bizznis_parse_attr( 'entry-image-widget', array( 'class' => 'entry-image attachment-' . get_post_type( $wp_query->post->ID ) . ' ' . esc_attr( $instance['image_alignment'] ) ) ),
 			) );
-			if ( $instance['show_image'] && $image )
+			if ( $instance['show_image'] && $image ) {
 				printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $image );
+			}
 			if ( ! empty( $instance['show_title'] ) ) {
 				printf( '<header class="entry-header"><h2 class="entry-title"><a href="%s" title="%s">%s</a></h2></header>', get_permalink(), the_title_attribute( 'echo=0' ), get_the_title() );
 			}
@@ -84,7 +86,6 @@ class Bizznis_Featured_Page extends WP_Widget {
 					the_content_limit( (int) $instance['content_limit'], esc_html( $instance['more_text'] ) );
 				}
 				echo '</div>';
-
 			}
 			echo  '</article>';
 			endwhile;

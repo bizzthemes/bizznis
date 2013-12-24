@@ -14,14 +14,18 @@ add_action( 'bizznis_after_entry', 'bizznis_get_comments_template' );
 function bizznis_get_comments_template() {
 	global $post;
 	# Stop here if comments are off for this post type
-	if ( ! post_type_supports( $post->post_type, 'comments' ) )
+	if ( ! post_type_supports( $post->post_type, 'comments' ) ) {
 		return;
-	if ( is_singular() && ! in_array( $post->post_type, array( 'post', 'page' ) ) )
+	}
+	if ( is_singular() && ! in_array( $post->post_type, array( 'post', 'page' ) ) ) {
 		comments_template( '', true );
-	elseif ( is_singular( 'post' ) && ( bizznis_get_option( 'trackbacks_posts' ) || bizznis_get_option( 'comments_posts' ) ) )
+	}
+	elseif ( is_singular( 'post' ) && ( bizznis_get_option( 'trackbacks_posts' ) || bizznis_get_option( 'comments_posts' ) ) ) {
 		comments_template( '', true );
-	elseif ( is_singular( 'page' ) && ( bizznis_get_option( 'trackbacks_pages' ) || bizznis_get_option( 'comments_pages' ) ) )
+	}
+	elseif ( is_singular( 'page' ) && ( bizznis_get_option( 'trackbacks_pages' ) || bizznis_get_option( 'comments_pages' ) ) ) {
 		comments_template( '', true );
+	}
 }
 
 /**
@@ -33,8 +37,9 @@ add_action( 'bizznis_comments', 'bizznis_do_comments', 5 );
 function bizznis_do_comments() {
 	global $post, $wp_query;
 	# Stop here if comments are off for this post type
-	if ( ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) || ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) )
+	if ( ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) || ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) ) {
 		return;
+	}
 	if ( have_comments() && ! empty( $wp_query->comments_by_type['comment'] ) ) {
 		printf( '<div %s>', bizznis_attr( 'entry-comments' ) );
 		echo apply_filters( 'bizznis_title_comments', __( '<h3>Comments</h3>', 'bizznis' ) );
@@ -53,10 +58,12 @@ function bizznis_do_comments() {
 		echo '</div>';
 	}
 	# No comments so far
-	elseif ( 'open' == $post->comment_status && $no_comments_text = apply_filters( 'bizznis_no_comments_text', '' ) )
+	elseif ( 'open' == $post->comment_status && $no_comments_text = apply_filters( 'bizznis_no_comments_text', '' ) ) {
 		echo sprintf( '<div %s>', bizznis_attr( 'entry-comments' ) ) . $no_comments_text . '</div>';
-	elseif ( $comments_closed_text = apply_filters( 'bizznis_comments_closed_text', '' ) )
+	}
+	elseif ( $comments_closed_text = apply_filters( 'bizznis_comments_closed_text', '' ) ) {
 		echo sprintf( '<div %s>', bizznis_attr( 'entry-comments' ) ) . $comments_closed_text . '</div>';
+	}
 }
 
 /**
@@ -68,8 +75,9 @@ add_action( 'bizznis_comments', 'bizznis_do_pings', 10 );
 function bizznis_do_pings() {
 	global $wp_query;
 	# Stop here if trackbacks are off for this post type
-	if ( ( is_page() && ! bizznis_get_option( 'trackbacks_pages' ) ) || ( is_single() && ! bizznis_get_option( 'trackbacks_posts' ) ) )
+	if ( ( is_page() && ! bizznis_get_option( 'trackbacks_pages' ) ) || ( is_single() && ! bizznis_get_option( 'trackbacks_posts' ) ) ) {
 		return;
+	}
 	# If have pings
 	if ( have_comments() && !empty( $wp_query->comments_by_type['pings'] ) ) {
 		printf( '<div %s>', bizznis_attr( 'entry-pings' ) );
@@ -78,8 +86,10 @@ function bizznis_do_pings() {
 			do_action( 'bizznis_list_pings' );
 		echo '</ol>';
 		echo '</div>';
-	} else
-		echo apply_filters( 'bizznis_no_pings_text', '' );	
+	}
+	else {
+		echo apply_filters( 'bizznis_no_pings_text', '' );
+	}
 }
 
 /**
@@ -145,9 +155,9 @@ function bizznis_comment_callback( $comment, array $args, $depth ) {
 				</p>
 			</header>
 			<div class="comment-content" itemprop="commentText">
-				<?php if ( $comment->comment_approved == '0' ) : ?>
+				<?php if ( $comment->comment_approved == '0' ) { ?>
 					<p class="alert"><?php echo apply_filters( 'bizznis_comment_awaiting_moderation', __( 'Your comment is awaiting moderation.', 'bizznis' ) ); ?></p>
-				<?php endif; ?>
+				<?php } ?>
 				<?php comment_text(); ?>
 			</div>
 			<?php
@@ -172,8 +182,9 @@ function bizznis_comment_callback( $comment, array $args, $depth ) {
 add_action( 'bizznis_comments', 'bizznis_do_comment_form', 15 );
 function bizznis_do_comment_form() {
 	# Stop here if comments are closed for this post type
-	if ( ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) || ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) )
+	if ( ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) || ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) ) {
 		return;
+	}
 	comment_form( array( 'format' => 'html5' ) );
 }
 
@@ -231,7 +242,8 @@ function bizznis_comment_form_args( array $defaults ) {
  */
 add_filter( 'get_comments_link', 'bizznis_comments_link_filter', 10, 2 );
 function bizznis_comments_link_filter( $link, $post_id ) {
-	if ( 0 == get_comments_number() )
+	if ( 0 == get_comments_number() ) {
 		return get_permalink( $post_id ) . '#respond';
+	}
 	return $link;
 }

@@ -36,16 +36,20 @@ class Bizznis_WC {
 		# Hook in before the action happens
 		do_action( 'bizznis_pre_woocommerce_integration' );
 	    # Stop here, if bizznis woocommerce integratin is not defined
-	  if ( ! current_theme_supports( 'bizznis-woocommerce' ) ) return;
+		if ( ! current_theme_supports( 'bizznis-woocommerce' ) ) {
+			return;
+		}
 		# Stop here, if woocommerce version is lower than 2.0.0
 		global $woocommerce;
-	  if ( version_compare( $woocommerce->version, '2.0.0', '<' ) ) return;
+		if ( version_compare( $woocommerce->version, '2.0.0', '<' ) ) {
+			return;
+		}
 		# Environment is OK, let's go!
 		global $woocommerce;
 		# Load Functions
-	  if ( ! current_theme_supports( 'bizznis-woo-breadcrumbs') ) :
-		load_template( BIZZNIS_WC_INC_DIR . '/breadcrumb.php' );
-	  endif;
+		if ( ! current_theme_supports( 'bizznis-woo-breadcrumbs') ) {
+			load_template( BIZZNIS_WC_INC_DIR . '/breadcrumb.php' );
+		}
 		load_template( BIZZNIS_WC_INC_DIR . '/template-loader.php' );
 		load_template( BIZZNIS_WC_INC_DIR . '/settings.php' );
 		# Take control of shop template loading
@@ -93,8 +97,9 @@ class Bizznis_WC {
 	 */
 	public function load_wc_sidebar() {
 		// Throw up placeholder content if the sidebar is active but empty
-		if ( ! dynamic_sidebar( 'sidebar-woocommerce' ) && current_user_can( 'edit_theme_options' )  )
+		if ( ! dynamic_sidebar( 'sidebar-woocommerce' ) && current_user_can( 'edit_theme_options' )  ) {
 			bizznis_default_widget_area_content( __( 'Shop Sidebar Widget Area', 'bizznis' ) );
+		}
 	}
 	
 	/**

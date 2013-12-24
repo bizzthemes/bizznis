@@ -39,8 +39,9 @@ function bizznis_add_user_profile_fields() {
  * @since 1.0.0
  */
 function bizznis_user_options_fields( $user ) {
-	if ( ! current_user_can( 'edit_users', $user->ID ) )
+	if ( ! current_user_can( 'edit_users', $user->ID ) ) {
 		return false;
+	}
 	?>
 	<h3><?php _e( 'User Permissions', 'bizznis' ); ?></h3>
 	<table class="form-table">
@@ -65,8 +66,9 @@ function bizznis_user_options_fields( $user ) {
  * @since 1.0.0
  */
 function bizznis_user_archive_fields( $user ) {
-	if ( ! current_user_can( 'edit_users', $user->ID ) )
+	if ( ! current_user_can( 'edit_users', $user->ID ) ) {
 		return false;
+	}
 	?>
 	<h3><?php _e( 'Author Archive Settings', 'bizznis' ); ?></h3>
 	<p><span class="description"><?php _e( 'These settings apply to this author\'s archive pages.', 'bizznis' ); ?></span></p>
@@ -106,8 +108,9 @@ function bizznis_user_archive_fields( $user ) {
  * @since 1.0.0
  */
 function bizznis_user_seo_fields( $user ) {
-	if ( ! current_user_can( 'edit_users', $user->ID ) )
+	if ( ! current_user_can( 'edit_users', $user->ID ) ) {
 		return false;
+	}
 	?>
 	<h3><?php _e( 'Theme SEO Settings', 'bizznis' ); ?></h3>
 	<p><span class="description"><?php _e( 'These settings apply to this author\'s archive pages.', 'bizznis' ); ?></span></p>
@@ -147,8 +150,9 @@ function bizznis_user_seo_fields( $user ) {
  * @since 1.0.0
  */
 function bizznis_user_layout_fields( $user ) {
-	if ( ! current_user_can( 'edit_users', $user->ID ) )
+	if ( ! current_user_can( 'edit_users', $user->ID ) ) {
 		return false;
+	}
 	$layout = get_the_author_meta( 'layout', $user->ID );
 	$layout = $layout ? $layout : '';
 	?>
@@ -181,10 +185,12 @@ function bizznis_user_layout_fields( $user ) {
 add_action( 'personal_options_update',  'bizznis_user_meta_save' );
 add_action( 'edit_user_profile_update', 'bizznis_user_meta_save' );
 function bizznis_user_meta_save( $user_id ) {
-	if ( ! current_user_can( 'edit_users', $user_id ) )
+	if ( ! current_user_can( 'edit_users', $user_id ) ) {
 		return;
-	if ( ! isset( $_POST['meta'] ) || ! is_array( $_POST['meta'] ) )
+	}
+	if ( ! isset( $_POST['meta'] ) || ! is_array( $_POST['meta'] ) ) {
 		return;
+	}
 	$meta = wp_parse_args(
 		$_POST['meta'],
 		array(
@@ -206,8 +212,9 @@ function bizznis_user_meta_save( $user_id ) {
 	# Sanitize 
 	$meta['headline']   = strip_tags( $meta['headline'] );
 	$meta['intro_text'] = current_user_can( 'unfiltered_html' ) ? $meta['intro_text'] : bizznis_formatting_kses( $meta['intro_text'] );
-	foreach ( $meta as $key => $value )
+	foreach ( $meta as $key => $value ) {
 		update_user_meta( $user_id, $key, $value );
+	}
 }
 
 /**
@@ -221,20 +228,25 @@ function bizznis_user_meta_default_on( $value, $user_id ) {
 	# Get the name of the field by removing the prefix from the active filter
 	$field = str_replace( 'get_the_author_', '', current_filter() );
 	# If a real value exists, simply return it
-	if ( $value )
+	if ( $value ) {
 		return $value;
+	}
 	# Setup user data
-	if ( ! $user_id )
+	if ( ! $user_id ) {
 		global $authordata;
-	else
+	}
+	else {
 		$authordata = get_userdata( $user_id );
+	}
 	# Just in case
 	$user_field = "user_$field";
-	if ( isset( $authordata->$user_field ) )
+	if ( isset( $authordata->$user_field ) ) {
 		return $authordata->user_field;
+	}
 	# If an empty or false value exists, return it
-	if ( isset( $authordata->$field ) )
+	if ( isset( $authordata->$field ) ) {
 		return $value;
+	}
 	# If all that fails, default to true
 	return 1;
 }
@@ -246,8 +258,10 @@ function bizznis_user_meta_default_on( $value, $user_id ) {
  */
 add_filter( 'get_the_author_bizznis_author_box_single', 'bizznis_author_box_single_default_on', 10, 2 );
 function bizznis_author_box_single_default_on( $value, $user_id ) {
-	if ( bizznis_get_option( 'author_box_single' ) )
+	if ( bizznis_get_option( 'author_box_single' ) ) {
 		return bizznis_user_meta_default_on( $value, $user_id );
-	else
+	}
+	else {
 		return $value;
+	}
 }

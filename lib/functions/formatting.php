@@ -71,14 +71,17 @@ function bizznis_rel_nofollow( $text ) {
  * @since 1.0.0
  */
 function bizznis_sanitize_html_classes( $classes, $return_format = 'input' ) {
-	if ( 'input' == $return_format )
+	if ( 'input' == $return_format ) {
 		$return_format = is_array( $classes ) ? 'array' : 'string';
+	}
 	$classes = is_array( $classes ) ? $classes : explode( ' ', $classes );
 	$sanitized_classes = array_map( 'sanitize_html_class', $classes );
-	if ( 'array' == $return_format )
+	if ( 'array' == $return_format ) {
 		return $sanitized_classes;
-	else
+	}
+	else {
 		return implode( ' ', $sanitized_classes );
+	}
 }
 
 /**
@@ -125,8 +128,9 @@ function bizznis_human_time_diff( $older_date, $newer_date = false ) {
 	$newer_date = $newer_date ? $newer_date : time();
 	# Difference in seconds
 	$since = absint( $newer_date - $older_date );
-	if ( ! $since )
+	if ( ! $since ) {
 		return '0 ' . _x( 'seconds', 'time difference', 'bizznis' );
+	}
 	# Hold units of time in seconds, and their pluralised strings (not translated yet)
 	$units = array(
 		array( 31536000, _nx_noop( '%s year', '%s years', 'time difference' ) ),  // 60 * 60 * 24 * 365
@@ -141,8 +145,9 @@ function bizznis_human_time_diff( $older_date, $newer_date = false ) {
 	for ( $i = 0, $j = count( $units ); $i < $j; $i++ ) {
 		$seconds = $units[$i][0];
 		# Finding the biggest chunk (if the chunk fits, break)
-		if ( ( $count = floor( $since / $seconds ) ) != 0 )
+		if ( ( $count = floor( $since / $seconds ) ) != 0 ) {
 			break;
+		}
 	}
 	# Translate unit string, and add to the output
 	$output = sprintf( translate_nooped_plural( $units[$i][1], $count, 'bizznis' ), $count );
@@ -152,9 +157,10 @@ function bizznis_human_time_diff( $older_date, $newer_date = false ) {
 	if ( $ii < $j ) {
 		$seconds2 = $units[$ii][0];
 		# Check if this second unit has a value > 0
-		if ( ( $count2 = floor( ( $since - ( $seconds * $count ) ) / $seconds2 ) ) != 0 )
+		if ( ( $count2 = floor( ( $since - ( $seconds * $count ) ) / $seconds2 ) ) != 0 ) {
 			# Add translated separator string, and translated unit string
 			$output .= sprintf( ' %s ' . translate_nooped_plural( $units[$ii][1], $count2, 'bizznis' ),	_x( 'and', 'separator in time difference', 'bizznis' ),	$count2	);
+		}
 	}
 	return $output;
 }

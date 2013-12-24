@@ -23,8 +23,9 @@ function bizznis_get_image_id( $index = 0 ) {
 			)
 		)
 	);
-	if ( isset( $image_ids[$index] ) )
+	if ( isset( $image_ids[$index] ) ) {
 		return $image_ids[$index];
+	}
 	return false;
 }
 
@@ -46,8 +47,9 @@ function bizznis_get_image( $args = array() ) {
 	$args = wp_parse_args( $args, $defaults );
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( 'bizznis_pre_get_image', false, $args, $post );
-	if ( false !== $pre )
+	if ( false !== $pre ) {
 		return $pre;
+	}
 	# Check for post image (native WP)
 	if ( has_post_thumbnail() && ( 0 === $args['num'] ) ) {
 		$id = get_post_thumbnail_id();
@@ -67,19 +69,25 @@ function bizznis_get_image( $args = array() ) {
 		$url  = $args['fallback']['url'];
 	}
 	# Else, return false (no image)
-	else
+	else {
 		return false;
+	}
 	# Source path, relative to the root
 	$src = str_replace( home_url(), '', $url );
 	# Determine output
-	if ( 'html' === strtolower( $args['format'] ) )
+	if ( 'html' === strtolower( $args['format'] ) ) {
 		$output = $html;
-	elseif ( 'url' === strtolower( $args['format'] ) )
+	}
+	elseif ( 'url' === strtolower( $args['format'] ) ) {
 		$output = $url;
-	else
+	}
+	else {
 		$output = $src;
+	}
 	# Return false if $url is blank
-	if ( empty( $url ) ) $output = false;
+	if ( empty( $url ) ) {
+		$output = false;
+	}
 	# Return data, filtered
 	return apply_filters( 'bizznis_get_image', $output, $args, $id, $html, $url, $src );
 }
@@ -97,10 +105,12 @@ function bizznis_image( $args = array() ) {
 		- attr   - string, default is ''
 	*/
 	$image = bizznis_get_image( $args );
-	if ( $image )
+	if ( $image ) {
 		echo $image;
-	else
+	}
+	else {
 		return false;
+	}
 }
 
 /**
@@ -110,8 +120,9 @@ function bizznis_image( $args = array() ) {
  */
 function bizznis_get_additional_image_sizes() {
 	global $_wp_additional_image_sizes;
-	if ( $_wp_additional_image_sizes )
+	if ( $_wp_additional_image_sizes ) {
 		return $_wp_additional_image_sizes;
+	}
 	return array();
 }
 

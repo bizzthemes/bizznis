@@ -44,8 +44,9 @@ add_action( 'after_setup_theme', '_bizznis_builtin_sidebar_params' );
 function _bizznis_builtin_sidebar_params() {
 	global $wp_registered_sidebars;
 	foreach ( $wp_registered_sidebars as $id => $params ) {
-		if ( ! isset( $params['_bizznis_builtin'] ) )
+		if ( ! isset( $params['_bizznis_builtin'] ) ) {
 			continue;
+		}
 		$wp_registered_sidebars[ $id ]['before_widget'] = '<section id="%1$s" class="widget %2$s"><div class="widget-wrap">';
 		$wp_registered_sidebars[ $id ]['after_widget']  = '</div></section>';
 	}
@@ -57,8 +58,9 @@ function _bizznis_builtin_sidebar_params() {
  * @since 1.0.0
  */
 function bizznis_widget_area( $id, $args = array() ) {
-	if ( ! $id )
+	if ( ! $id ) {
 		return false;
+	}
 	$args = wp_parse_args(
 		$args,
 		array(
@@ -70,18 +72,22 @@ function bizznis_widget_area( $id, $args = array() ) {
 			'after_sidebar_hook'  => 'bizznis_after_' . $id . '_widget_area',
 		)
 	);
-	if ( ! is_active_sidebar( $id ) && ! $args['show_inactive'] )
+	if ( ! is_active_sidebar( $id ) && ! $args['show_inactive'] ) {
 		return false;
+	}
 	# Opening markup
 	echo $args['before'];
 	# Before hook
-	if ( $args['before_sidebar_hook'] )
-			do_action( $args['before_sidebar_hook'] );
-	if ( ! dynamic_sidebar( $id ) )
+	if ( $args['before_sidebar_hook'] ) {
+		do_action( $args['before_sidebar_hook'] );
+	}
+	if ( ! dynamic_sidebar( $id ) ) {
 		echo $args['default'];
+	}
 	# After hook
-	if( $args['after_sidebar_hook'] )
-			do_action( $args['after_sidebar_hook'] );
+	if( $args['after_sidebar_hook'] ) {
+		do_action( $args['after_sidebar_hook'] );
+	}
 	# Closing markup
 	echo $args['after'];
 	return true;
@@ -105,8 +111,9 @@ function bizznis_widget_area( $id, $args = array() ) {
 add_action( 'load-themes.php', 'bizznis_remove_default_widgets_added_by_wp' );
 function bizznis_remove_default_widgets_added_by_wp() {
 	# Some tomfoolery for a faux activation hook
-	if ( ! isset( $_REQUEST['activated'] ) || 'true' !== $_REQUEST['activated'] )
+	if ( ! isset( $_REQUEST['activated'] ) || 'true' !== $_REQUEST['activated'] ) {
 		return;
+	}
 	$widgets  = get_option( 'sidebars_widgets' );
 	$defaults = array( 0 => 'search-2', 1 => 'recent-posts-2', 2 => 'recent-comments-2', 3 => 'archives-2', 4 => 'categories-2', 5 => 'meta-2', );
 	if ( isset( $widgets['header-aside'] ) && $defaults === $widgets['header-aside'] ) {

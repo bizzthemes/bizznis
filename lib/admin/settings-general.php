@@ -200,7 +200,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 						<p><em><?php _e( 'Version:', 'bizznis' ); ?></em> <?php echo $this->get_field_value( 'theme_version' ); ?> &#x000B7; <em><?php _e( 'Released:', 'bizznis' ); ?></em> <?php echo PARENT_THEME_RELEASE_DATE; ?></p>
 					</td>
 				</tr>
-				<?php if ( current_theme_supports( 'bizznis-auto-updates' ) ) : ?>
+				<?php if ( current_theme_supports( 'bizznis-auto-updates' ) ) { ?>
 				<tr valign="top">
 					<th scope="row" valign="top"><?php _e( 'Automatic Updates', 'bizznis' ); ?></th>
 					<td>
@@ -223,7 +223,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 						</div>
 					</td>
 				</tr>
-				<?php endif; ?>
+				<?php } ?>
 			</tbody>
 		</table>
 		<!-- Default Layout -->
@@ -240,7 +240,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				</tr>
 			</tbody>
 		</table>
-		<?php if ( current_theme_supports( 'bizznis-style-selector' ) ) : ?>
+		<?php if ( current_theme_supports( 'bizznis-style-selector' ) ) { ?>
 		<!-- Style Select -->
 		<!--<h3><?php _e( 'Color Style:', 'bizznis' ); ?></h3>-->
 		<table class="form-table">
@@ -265,8 +265,8 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				</tr>
 			</tbody>
 		</table>
-		<?php endif; ?>
-		<?php if ( ! current_theme_supports( 'bizznis-custom-header' ) && ! current_theme_supports( 'custom-header' ) ) : ?>
+		<?php } ?>
+		<?php if ( ! current_theme_supports( 'bizznis-custom-header' ) && ! current_theme_supports( 'custom-header' ) ) { ?>
 		<!-- Header -->
 		<!--<h3><?php _e( 'Header:', 'bizznis' ); ?></h3>-->
 		<table class="form-table">
@@ -287,7 +287,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				</tr>
 			</tbody>
 		</table>
-		<?php endif; ?>
+		<?php } ?>
 		<!-- Content Archives -->
 		<h3><?php _e( 'Content Archives:', 'bizznis' ); ?></h3>
 		<p><?php _e( 'These options will affect any listings page, including archive, author, blog, category, search, and tag pages.', 'bizznis' ); ?></p>
@@ -337,8 +337,9 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 						<select name="<?php echo $this->get_field_name( 'image_size' ); ?>" id="<?php echo $this->get_field_id( 'image_size' ); ?>">
 						<?php
 						$sizes = bizznis_get_image_sizes();
-						foreach ( (array) $sizes as $name => $size )
+						foreach ( (array) $sizes as $name => $size ) {
 							echo '<option value="' . esc_attr( $name ) . '"' . selected( $this->get_field_value( 'image_size' ), $name, FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')</option>' . "\n";
+						}
 						?>
 						</select>
 					</td>
@@ -354,7 +355,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				</tr>
 			</tbody>
 		</table>
-		<?php if ( current_theme_supports( 'bizznis-menus' ) && bizznis_nav_menu_supported( 'primary' ) ) : ?>
+		<?php if ( current_theme_supports( 'bizznis-menus' ) && bizznis_nav_menu_supported( 'primary' ) ) { ?>
 		<!-- Menus -->
 		<h3><?php _e( 'Primary Menu:', 'bizznis' ); ?></h3>
 		<p><?php printf( __( 'In order to use the navigation menus, you must build a <a href="%s">custom menu</a>, then assign it to the proper Menu Location.', 'bizznis' ), admin_url( 'nav-menus.php' ) ); ?></p>
@@ -391,8 +392,8 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				</tr>
 			</tbody>
 		</table>
-		<?php endif; ?>
-		<?php if ( current_theme_supports( 'bizznis-breadcrumbs' ) ) : ?>
+		<?php } ?>
+		<?php if ( current_theme_supports( 'bizznis-breadcrumbs' ) ) { ?>
 		<!-- Breadcrumbs -->
 		<h3><?php _e( 'Breadcrumbs:', 'bizznis' ); ?></h3>
 		<p class="description"><?php _e( 'Breadcrumbs are a great way of letting your visitors find out where they are on your site with just a glance.', 'bizznis' ); ?></p>
@@ -403,16 +404,16 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 					<th scope="row" valign="top"><?php _e( 'Enable on', 'bizznis' ); ?></th>
 					<td>
 						<p>
-							<?php if ( 'page' == get_option( 'show_on_front' ) ) : ?>
+							<?php if ( 'page' == get_option( 'show_on_front' ) ) { ?>
 								<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_front_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_front_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_front_page' ) ); ?> />
 								<label for="<?php echo $this->get_field_id( 'breadcrumb_front_page' ); ?>"><?php _e( 'Front Page', 'bizznis' ); ?></label>
 								<br />
 								<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_posts_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_posts_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_posts_page' ) ); ?> />
 								<label for="<?php echo $this->get_field_id( 'breadcrumb_posts_page' ); ?>"><?php _e( 'Posts Page', 'bizznis' ); ?></label>
-							<?php else : ?>
+							<?php } else { ?>
 								<input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_home' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_home' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_home' ) ); ?> />
 								<label for="<?php echo $this->get_field_id( 'breadcrumb_home' ); ?>"><?php _e( 'Homepage', 'bizznis' ); ?></label>
-							<?php endif; ?>
+							<?php } ?>
 						</p>
 						<br />
 						<p>
@@ -435,7 +436,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				</tr>
 			</tbody>
 		</table>
-		<?php endif; ?>
+		<?php } ?>
 		<!-- Comments -->
 		<h3><?php _e( 'Comments:', 'bizznis' ); ?></h3>
 		<table class="form-table">
@@ -460,7 +461,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				</tr>
 			</tbody>
 		</table>
-		<?php if ( current_user_can( 'unfiltered_html' ) ) : ?>
+		<?php if ( current_user_can( 'unfiltered_html' ) ) { ?>
 		<!-- Scripts -->
 		<h3><?php _e( 'Scripts:', 'bizznis' ); ?></h3>
 		<p><?php printf( __( 'Enter scripts or code you would like output to %s or %s:', 'bizznis' ), bizznis_code( 'wp_head()' ), bizznis_code( 'wp_footer()' ) ); ?></p>
@@ -482,7 +483,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				</tr>
 			</tbody>
 		</table>
-		<?php endif;
+		<?php }
 	}
 	
 	/**

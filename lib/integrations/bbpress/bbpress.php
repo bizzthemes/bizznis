@@ -38,7 +38,9 @@ class Bizznis_BBP {
 		# Hook in before the action happens
 		do_action( 'bizznis_pre_bbpress_integration' );
 	    # Stop here, if bizznis bbpress integratin is not defined
-	  if ( ! current_theme_supports( 'bizznis-bbpress' ) ) return;
+		if ( ! current_theme_supports( 'bizznis-bbpress' ) ) {
+			return;
+		}
 		# Environment is OK, let's go!
 		load_template( BIZZNIS_BBP_INC_DIR . '/settings.php' );
 	}
@@ -83,8 +85,9 @@ class Bizznis_BBP {
 	 */
 	public function load_bbp_sidebar() {
 		# Throw up placeholder content if the sidebar is active but empty
-		if ( ! dynamic_sidebar( 'sidebar-bbpress' ) && current_user_can( 'edit_theme_options' )  )
+		if ( ! dynamic_sidebar( 'sidebar-bbpress' ) && current_user_can( 'edit_theme_options' )  ) {
 			bizznis_default_widget_area_content( __( 'bbPress Sidebar Widget Area', 'bizznis' ) );
+		}
 	}
 	
 	/**
@@ -104,8 +107,9 @@ class Bizznis_BBP {
 	 */
 	public function load_bbp_actions() {
 		# Stop here, if not on a bbpress template
-		if ( ! is_bbpress() )
+		if ( ! is_bbpress() ) {
 			return;
+		}
 		# Remove bizznis breadcrumbs
 		remove_action( 'bizznis_loop', 'bizznis_do_breadcrumbs', 4 );
 		# Remove post info & meta
@@ -157,8 +161,9 @@ class Bizznis_BBP {
 	 */
 	public function bbp_select_layout( $layout ) {
 		# Stop here, if not on a bbpress template
-		if ( ! is_bbpress() )
+		if ( ! is_bbpress() ) {
 			return $layout;
+		}
 		# Set some defaults
 		$forum_id = bbp_get_forum_id();
 		# For some reason, if we use the cached version, weird things seem to happen.
@@ -167,12 +172,14 @@ class Bizznis_BBP {
 		# Check and see if a layout has been set for the parent forum
 		if ( !empty( $forum_id ) ) {
 			$parent = esc_attr( get_post_meta( $forum_id, '_bizznis_layout' , true ) );
-			if ( !empty( $parent ) )
+			if ( !empty( $parent ) ) {
 				return apply_filters( 'bizznis_bbp_layout', $parent );
+			}
 		}
 		# Second, see if a layout has been defined in the bbPress Bizznis settings
-		if ( empty( $parent ) || ( bizznis_get_option( 'bizznis_bbp_layout' ) !== 'bizznis-default' ) )
+		if ( empty( $parent ) || ( bizznis_get_option( 'bizznis_bbp_layout' ) !== 'bizznis-default' ) ) {
 			$retval = bizznis_get_option( 'bizznis_bbp_layout' );
+		}
 		# Filter the return value
 		return apply_filters( 'bizznis_bbp_layout', $retval, $forum_id, $parent );
 	}

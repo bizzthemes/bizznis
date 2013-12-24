@@ -13,18 +13,21 @@
 add_action( 'after_setup_theme', 'bizznis_add_admin_menu' );
 function bizznis_add_admin_menu() {
 	# Stop here, if not viewing the admin
-	if ( ! is_admin() )
+	if ( ! is_admin() ) {
 		return;
+	}
 	# Global variable
 	global $_bizznis_admin_settings;
 	# Don't add menu item if programatically disabled
-	if ( ! current_theme_supports( 'bizznis-admin-menu' ) )
+	if ( ! current_theme_supports( 'bizznis-admin-menu' ) ) {
 		return;
+	}
 	# Current user object
 	$user = wp_get_current_user();
 	# Don't add menu item if disabled for current user
-	if ( ! get_the_author_meta( 'bizznis_admin_menu', $user->ID ) )
+	if ( ! get_the_author_meta( 'bizznis_admin_menu', $user->ID ) ) {
 		return;
+	}
 	# Add "Settings" submenu item
 	new Bizznis_Admin_Settings;
 	# Hook here to create submenus
@@ -40,13 +43,15 @@ function bizznis_add_admin_menu() {
 add_action( 'bizznis_admin_menu', 'bizznis_add_admin_submenus' );
 function bizznis_add_admin_submenus() {
 	# Stop here, if not viewing the admin
-	if ( ! is_admin() )
+	if ( ! is_admin() ) {
 		return;
+	}
 	# Global variable
 	global $_bizznis_admin_seo_settings;
 	# Don't add submenu items if Bizznis menu is disabled
-	if( ! current_theme_supports( 'bizznis-admin-menu' ) )
+	if( ! current_theme_supports( 'bizznis-admin-menu' ) ) {
 		return;
+	}
 	# Get current user
 	$user = wp_get_current_user();
 	# Add "SEO Settings" submenu item

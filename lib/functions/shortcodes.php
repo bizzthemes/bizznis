@@ -77,8 +77,9 @@ function bizznis_post_author_link_shortcode( $atts ) {
 	$atts = shortcode_atts( $defaults, $atts, 'post_author_link' );
 	$url = get_the_author_meta( 'url' );
 	# If no url, use post author shortcode function.
-	if ( ! $url )
+	if ( ! $url ) {
 		return bizznis_post_author_shortcode( $atts );
+	}
 	$author = get_the_author();
 	$output  = sprintf( '<span %s>', bizznis_attr( 'entry-author' ) );
 	$output .= $atts['before'];
@@ -128,8 +129,9 @@ function bizznis_post_comments_shortcode( $atts ) {
 		'zero'        => __( 'Leave a Comment', 'bizznis' ),
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_comments' );
-	if ( ( ! bizznis_get_option( 'comments_posts' ) || ! comments_open() ) && 'enabled' === $atts['hide_if_off'] )
+	if ( ( ! bizznis_get_option( 'comments_posts' ) || ! comments_open() ) && 'enabled' === $atts['hide_if_off'] ) {
 		return;
+	}
 	# Darn you, WordPress!
 	ob_start();
 	comments_number( $atts['zero'], $atts['one'], $atts['more'] );
@@ -154,8 +156,9 @@ function bizznis_post_tags_shortcode( $atts ) {
 	$atts = shortcode_atts( $defaults, $atts, 'post_tags' );
 	$tags = get_the_tag_list( $atts['before'], trim( $atts['sep'] ) . ' ', $atts['after'] );
 	# Stop here if no tags
-	if ( ! $tags )
+	if ( ! $tags ) {
 		return;
+	}
 	$output = sprintf( '<span %s>', bizznis_attr( 'entry-tags' ) ) . $tags . '</span>';
 	return apply_filters( 'bizznis_post_tags_shortcode', $output, $atts );
 }
@@ -194,10 +197,12 @@ function bizznis_post_terms_shortcode( $atts ) {
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_terms' );
 	$terms = get_the_term_list( $post->ID, $atts['taxonomy'], $atts['before'], trim( $atts['sep'] ) . ' ', $atts['after'] );
-	if ( is_wp_error( $terms ) )
-			return;
-	if ( empty( $terms ) )
-			return;
+	if ( is_wp_error( $terms ) ) {
+		return;
+	}
+	if ( empty( $terms ) ) {
+		return;
+	}
 	$output = sprintf( '<span %s>', bizznis_attr( 'entry-terms' ) ) . $terms . '</span>';
 	return apply_filters( 'bizznis_post_terms_shortcode', $output, $terms, $atts );
 }
@@ -209,8 +214,9 @@ function bizznis_post_terms_shortcode( $atts ) {
  */
 add_shortcode( 'post_edit', 'bizznis_post_edit_shortcode' );
 function bizznis_post_edit_shortcode( $atts ) {
-	if ( ! apply_filters( 'bizznis_edit_post_link', true ) )
+	if ( ! apply_filters( 'bizznis_edit_post_link', true ) ) {
 		return;
+	}
 	$defaults = array(
 		'after'  => '',
 		'before' => '',
@@ -261,8 +267,9 @@ function bizznis_footer_copyright_shortcode( $atts ) {
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'footer_copyright' );
 	$output = $atts['before'] . $atts['copyright'] . ' ';
-	if ( '' != $atts['first'] && date( 'Y' ) != $atts['first'] )
+	if ( '' != $atts['first'] && date( 'Y' ) != $atts['first'] ) {
 		$output .= $atts['first'] . '&#x02013;';
+	}
 	$output .= date( 'Y' ) . $atts['after'];
 	return apply_filters( 'bizznis_footer_copyright_shortcode', $output, $atts );
 }
@@ -274,8 +281,9 @@ function bizznis_footer_copyright_shortcode( $atts ) {
  */
 add_shortcode( 'footer_childtheme_link', 'bizznis_footer_childtheme_link_shortcode' );
 function bizznis_footer_childtheme_link_shortcode( $atts ) {
-	if ( ! is_child_theme() || ! defined( 'CHILD_THEME_NAME' ) || ! defined( 'CHILD_THEME_URL' ) )
+	if ( ! is_child_theme() || ! defined( 'CHILD_THEME_NAME' ) || ! defined( 'CHILD_THEME_URL' ) ) {
 		return;
+	}
 	$defaults = array(
 		'after'  => '',
 		'before' => '&#x000B7;',
@@ -348,10 +356,12 @@ function bizznis_footer_loginout_shortcode( $atts ) {
 		'redirect' => '',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'footer_loginout' );
-	if ( ! is_user_logged_in() )
+	if ( ! is_user_logged_in() ) {
 		$link = '<a href="' . esc_url( wp_login_url( $atts['redirect'] ) ) . '">' . __( 'Log in', 'bizznis' ) . '</a>';
-	else
+	}
+	else {
 		$link = '<a href="' . esc_url( wp_logout_url( $atts['redirect'] ) ) . '">' . __( 'Log out', 'bizznis' ) . '</a>';
+	}
 	$output = $atts['before'] . apply_filters( 'loginout', $link ) . $atts['after'];
 	return apply_filters( 'bizznis_footer_loginout_shortcode', $output, $atts );
 }

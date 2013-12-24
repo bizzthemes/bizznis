@@ -13,8 +13,9 @@
 add_action( 'wp_enqueue_scripts', 'bizznis_load_scripts' );
 function bizznis_load_scripts() {
 	# If a single post or page, threaded comments are enabled, and comments are open
-	if ( is_singular() && get_option( 'thread_comments' ) && comments_open() )
+	if ( is_singular() && get_option( 'thread_comments' ) && comments_open() ) {
 		wp_enqueue_script( 'comment-reply' );		
+	}
 }
 
 /**
@@ -42,14 +43,15 @@ function bizznis_load_admin_scripts( $hook_suffix ) {
 		bizznis_load_admin_js();
 	}
 	# If we're on a Bizznis admin screen
-	if ( bizznis_is_menu_page( 'bizznis' ) || bizznis_is_menu_page( 'bizznis-seo' ) || bizznis_is_menu_page( 'design-settings' ) )
+	if ( bizznis_is_menu_page( 'bizznis' ) || bizznis_is_menu_page( 'bizznis-seo' ) || bizznis_is_menu_page( 'design-settings' ) ) {
 		bizznis_load_admin_js();
-		
+	}		
 	global $post;
 	# If we're viewing an edit post page, make sure we need Bizznis SEO JS
 	if ( in_array( $hook_suffix, array( 'post-new.php', 'post.php' ) ) ) {
-		if ( ! bizznis_seo_disabled() && post_type_supports( $post->post_type, 'bizznis-seo' ) )
+		if ( ! bizznis_seo_disabled() && post_type_supports( $post->post_type, 'bizznis-seo' ) ) {
 			bizznis_load_admin_js();
+		}
 	}
 }
 

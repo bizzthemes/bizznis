@@ -12,8 +12,9 @@
  */
 add_action( 'admin_init', 'bizznis_add_taxonomy_archive_options' );
 function bizznis_add_taxonomy_archive_options() {
-	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name )
+	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name ) {
 		add_action( $tax_name . '_edit_form', 'bizznis_taxonomy_archive_options', 10, 2 );
+	}
 }
 
 /**
@@ -53,8 +54,9 @@ function bizznis_taxonomy_archive_options( $tag, $taxonomy ) {
  */
 add_action( 'admin_init', 'bizznis_add_taxonomy_seo_options' );
 function bizznis_add_taxonomy_seo_options() {
-	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name )
+	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name ) {
 		add_action( $tax_name . '_edit_form', 'bizznis_taxonomy_seo_options', 10, 2 );
+	}
 }
 
 /**
@@ -103,8 +105,9 @@ function bizznis_taxonomy_seo_options( $tag, $taxonomy ) {
  */
 add_action( 'admin_init', 'bizznis_add_taxonomy_layout_options' );
 function bizznis_add_taxonomy_layout_options() {
-	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name )
+	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name ) {
 		add_action( $tax_name . '_edit_form', 'bizznis_taxonomy_layout_options', 10, 2 );
+	}
 }
 
 /**
@@ -142,12 +145,14 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
  */
 add_action( 'edit_term', 'bizznis_term_meta_save', 10, 2 );
 function bizznis_term_meta_save( $term_id, $tt_id ) {
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		return;
+	}
 	$term_meta = (array) get_option( 'bizznis-term-meta' );
 	$term_meta[$term_id] = isset( $_POST['meta'] ) ? (array) $_POST['meta'] : array();
-	if ( ! current_user_can( 'unfiltered_html' ) && isset( $term_meta[$term_id]['archive_description'] ) )
+	if ( ! current_user_can( 'unfiltered_html' ) && isset( $term_meta[$term_id]['archive_description'] ) ) {
 		$term_meta[$term_id]['archive_description'] = bizznis_formatting_kses( $term_meta[$term_id]['archive_description'] );
+	}
 	update_option( 'bizznis-term-meta', $term_meta );
 }
 

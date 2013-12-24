@@ -34,8 +34,9 @@ function bizznis_disable_seo() {
  * @since 1.0.0
  */
 function bizznis_seo_disabled() {
-	if ( defined( 'BIZZNIS_SEO_DISABLED' ) && BIZZNIS_SEO_DISABLED )
+	if ( defined( 'BIZZNIS_SEO_DISABLED' ) && BIZZNIS_SEO_DISABLED ) {
 		return true;
+	}
 	return false;
 }
 
@@ -47,8 +48,9 @@ function bizznis_seo_disabled() {
  */
 add_action( 'after_setup_theme', 'bizznis_seo_compatibility_check', 5 );
 function bizznis_seo_compatibility_check() {
-	if ( bizznis_detect_seo_plugins() )
+	if ( bizznis_detect_seo_plugins() ) {
 		bizznis_disable_seo();
+	}
 	# Disable Bizznis <title> generation if SEO Title Tag is active
 	if ( function_exists( 'seo_title_tag' ) ) {
 		remove_filter( 'wp_title', 'bizznis_default_title', 10, 3 );

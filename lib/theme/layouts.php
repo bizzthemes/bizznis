@@ -41,8 +41,9 @@ function bizznis_create_initial_layouts() {
 			'img'   => $url . 'c.png',
 		),
 	), $url );
-	foreach ( (array) $layouts as $layout_id => $layout_args )
+	foreach ( (array) $layouts as $layout_id => $layout_args ) {
 		bizznis_register_layout( $layout_id, $layout_args );
+	}
 }
 
 /**
@@ -54,8 +55,9 @@ add_action( 'bizznis_after_content', 'bizznis_get_sidebar' );
 function bizznis_get_sidebar() {
 	$site_layout = bizznis_site_layout();
 	# Don't load sidebar on pages that don't need it
-	if ( $site_layout == 'full-width-content' )
+	if ( $site_layout == 'full-width-content' ) {
 		return;
+	}
 	get_sidebar();
 }
 
@@ -68,8 +70,9 @@ add_action( 'bizznis_after_content_sidebar_wrap', 'bizznis_get_sidebar_alt', 15 
 function bizznis_get_sidebar_alt() {
 	$site_layout = bizznis_site_layout();
 	# Don't load sidebar-alt on pages that don't need it
-	if ( in_array( $site_layout, array( 'content-sidebar', 'sidebar-content', 'full-width-content' ) ) )
+	if ( in_array( $site_layout, array( 'content-sidebar', 'sidebar-content', 'full-width-content' ) ) ) {
 		return;
+	}
 	get_sidebar( 'alt' );
 }
 
@@ -82,8 +85,9 @@ add_filter( 'body_class', 'bizznis_custom_body_class', 15 );
 function bizznis_custom_body_class( array $classes ) {
 	# It accepts values from a per-post or per-page custom field, and only outputs when viewing a singular page.
 	$new_class = is_singular() ? bizznis_get_custom_field( '_bizznis_custom_body_class' ) : null;
-	if ( $new_class )
+	if ( $new_class ) {
 		$classes[] = esc_attr( $new_class );
+	}
 	return $classes;
 }
 
@@ -95,13 +99,16 @@ function bizznis_custom_body_class( array $classes ) {
 add_filter( 'body_class', 'bizznis_header_body_classes' );
 function bizznis_header_body_classes( array $classes ) {
 	if ( current_theme_supports( 'custom-header' ) ) {
-		if ( get_theme_support( 'custom-header', 'default-text-color' ) != get_header_textcolor() || get_theme_support( 'custom-header', 'default-image' ) != get_header_image() )
+		if ( get_theme_support( 'custom-header', 'default-text-color' ) != get_header_textcolor() || get_theme_support( 'custom-header', 'default-image' ) != get_header_image() ) {
 			$classes[] = 'custom-header';
+		}
 	}
-	if ( 'image' == bizznis_get_option( 'blog_title' ) || ( current_theme_supports( 'custom-header' ) && ! display_header_text() ) )
+	if ( 'image' == bizznis_get_option( 'blog_title' ) || ( current_theme_supports( 'custom-header' ) && ! display_header_text() ) ) {
 		$classes[] = 'header-image';
-	if ( ! is_active_sidebar( 'header-aside' ) && ! has_action( 'bizznis_header_aside' ) )
+	}
+	if ( ! is_active_sidebar( 'header-aside' ) && ! has_action( 'bizznis_header_aside' ) ) {
 		$classes[] = 'header-full-width';
+	}
 	return $classes;
 }
 
@@ -113,8 +120,9 @@ function bizznis_header_body_classes( array $classes ) {
 add_filter( 'body_class', 'bizznis_background_body_classes' );
 function bizznis_background_body_classes( array $classes ) {
 	if ( current_theme_supports( 'custom-background' ) ) {
-		if ( get_theme_mod( 'background_color' ) || get_background_image() )
+		if ( get_theme_mod( 'background_color' ) || get_background_image() ) {
 			$classes[] = 'custom-background-active';
+		}
 	}
 	return $classes;
 }
@@ -127,8 +135,9 @@ function bizznis_background_body_classes( array $classes ) {
 add_filter( 'body_class', 'bizznis_layout_body_classes' );
 function bizznis_layout_body_classes( array $classes ) {
 	$site_layout = bizznis_site_layout();
-	if ( $site_layout )
+	if ( $site_layout ) {
 		$classes[] = $site_layout;
+	}
 	return $classes;
 }
 
@@ -142,8 +151,9 @@ function bizznis_layout_body_classes( array $classes ) {
 add_filter( 'body_class', 'bizznis_style_selector_body_classes' );
 function bizznis_style_selector_body_classes( array $classes ) {
 	$current = bizznis_get_option( 'style_selection' );
-	if ( $current )
+	if ( $current ) {
 		$classes[] = esc_attr( sanitize_html_class( $current ) );
+	}
 	return $classes;
 }
 
@@ -155,11 +165,13 @@ function bizznis_style_selector_body_classes( array $classes ) {
 add_filter( 'body_class', 'bizznis_cpt_archive_body_class', 15 );
 function bizznis_cpt_archive_body_class( array $classes ) {
 	# It accepts a value from the archive settings page.
-	if ( ! is_post_type_archive() || ! bizznis_has_post_type_archive_support() )
+	if ( ! is_post_type_archive() || ! bizznis_has_post_type_archive_support() ) {
 		return $classes;
+	}
 	$new_class = bizznis_get_cpt_option( 'body_class' );
-	if ( $new_class )
+	if ( $new_class ) {
 		$classes[] = esc_attr( sanitize_html_class( $new_class ) );
+	}
 	return $classes;
 }
 
