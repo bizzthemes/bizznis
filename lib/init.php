@@ -52,7 +52,7 @@ class Bizznis_Init {
 		load_template( BIZZNIS_ADMIN_DIR . '/admin-menu.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-general.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-seo.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/settings-import-export.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/settings-tools.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-cpt-archive.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-about.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-inpost.php' );
@@ -159,7 +159,7 @@ class Bizznis_Init {
 		add_theme_support( 'bizznis-archive-layouts' );
 		add_theme_support( 'bizznis-admin-menu' );
 		add_theme_support( 'bizznis-seo-settings-menu' );
-		add_theme_support( 'bizznis-import-export-menu' );
+		add_theme_support( 'bizznis-tools-menu' );
 		add_theme_support( 'bizznis-auto-updates' );
 		add_theme_support( 'bizznis-breadcrumbs' );
 		add_theme_support( 'bizznis-responsive-viewport' ); #html5
