@@ -14,56 +14,29 @@
  *
  * @since 1.0.0
  */
-function bizznis_update_check() {
-	global $wp_version;
+function bizznis_update_check() {	
 	# If updates are disabled
-	if ( ! bizznis_get_option( 'update' ) || ! current_theme_supports( 'bizznis-auto-updates' ) )
+	if ( ! bizznis_get_option( 'update' ) || ! current_theme_supports( 'bizznis-auto-updates' ) ) {
+		add_filter( 'http_request_args', 'bizznis_prevent_theme_update', 5, 2 );
 		return false;
-	# Get time of last update check
-	$bizznis_update = get_transient( 'bizznis-update' );
-	# If it has expired, do an update check
-	if ( ! $bizznis_update ) {
-		$url     = 'http://bizznis.bizzthemes.com/update-check/';
-		$options = apply_filters( 'bizznis_update_remote_post_options',
-			array(
-				'body' => array(
-					'bizznis_version' => PARENT_THEME_VERSION,
-					'wp_version'      => $wp_version,
-					'php_version'     => phpversion(),
-					'uri'             => home_url(),
-					'user-agent'      => "WordPress/$wp_version;",
-				),
-			)
-		);
-		$response = wp_remote_post( $url, $options );
-		$bizznis_update = wp_remote_retrieve_body( $response );
-		# If an error occurred, return FALSE, store for 1 hour
-		if ( 'error' == $bizznis_update || is_wp_error( $bizznis_update ) || ! is_serialized( $bizznis_update ) ) {
-			set_transient( 'bizznis-update', array( 'new_version' => PARENT_THEME_VERSION ), 60 * 60 );
-			return false;
-		}
-		# Else, unserialize
-		$bizznis_update = maybe_unserialize( $bizznis_update );
-		# And store in transient for 24 hours
-		set_transient( 'bizznis-update', $bizznis_update, 60 * 60 * 24 );
+	}
+	# Check the updates transient
+	$bizznis_update = get_site_transient('update_themes');
+	if ( ! isset( $bizznis_update->response ) ) {
+		return false;
+	}
+	$bizznis_update = $bizznis_update->response;
+	if ( ! isset( $bizznis_update[ 'bizznis' ] ) ) {
+		return false;
+	}
+	else {
+		$bizznis_update = $bizznis_update[ 'bizznis' ];
 	}
 	# If we're already using the latest version, return false
-	if ( version_compare( PARENT_THEME_VERSION, $bizznis_update['new_version'], '>=' ) )
+	if ( version_compare( PARENT_THEME_VERSION, $bizznis_update['new_version'], '>=' ) ) {
 		return false;
+	}
 	return $bizznis_update;
-}
-
-/**
- * Upgrade the database to version 1904.
- *
- * @since 1.0.0
- */
-function bizznis_upgrade_1904() {
-	# Update Settings
-	_bizznis_update_settings( array(
-		'theme_version' => '2.0.0',
-		'db_version'    => '1904',
-	) );
 }
 
 /**
@@ -80,18 +53,22 @@ function bizznis_upgrade_1904() {
 add_action( 'admin_init', 'bizznis_upgrade', 20 );
 function bizznis_upgrade() {
 	# Don't do anything if we're on the latest version
-	if ( bizznis_get_option( 'db_version', null, false ) >= PARENT_DB_VERSION )
+	if ( bizznis_get_option( 'db_version', null, false ) >= PARENT_DB_VERSION ) {
 		return;
+	}
+	/*
 	#########################
 	# UPDATE TO VERSION 1.6
 	#########################
 	if ( version_compare( bizznis_get_option( 'theme_version', null, false ), '1.9', '<' ) ) {
 		# Vestige nav settings, for backward compatibility
-		if ( 'nav-menu' != bizznis_get_option( 'nav_type' ) )
+		if ( 'nav-menu' != bizznis_get_option( 'nav_type' ) ) {
 			_bizznis_vestige( array( 'nav_type', 'nav_superfish', 'nav_home', 'nav_pages_sort', 'nav_categories_sort', 'nav_depth', 'nav_exclude', 'nav_include', ) );
+		}
 		# Vestige subnav settings, for backward compatibility
-		if ( 'nav-menu' != bizznis_get_option( 'subnav_type' ) )
+		if ( 'nav-menu' != bizznis_get_option( 'subnav_type' ) ) {
 			_bizznis_vestige( array( 'subnav_type', 'subnav_superfish', 'subnav_home', 'subnav_pages_sort', 'subnav_categories_sort', 'subnav_depth', 'subnav_exclude', 'subnav_include', ) );
+		}
 		$theme_settings = get_option( BIZZNIS_SETTINGS_FIELD );
 		$new_settings   = array( 'theme_version' => '1.6', );
 		$settings = wp_parse_args( $new_settings, $theme_settings );
@@ -100,9 +77,26 @@ function bizznis_upgrade() {
 	###########################
 	# UPDATE DB TO VERSION 1904
 	###########################
-	if ( bizznis_get_option( 'db_version', null, false ) < '1904' )
+	if ( bizznis_get_option( 'db_version', null, false ) < '1904' ) {
 		bizznis_upgrade_1904();
+	}
+	*/
 	do_action( 'bizznis_upgrade' );
+}
+
+/**
+ * Upgrade the database to version 1904.
+ *
+ * @since 1.0.0
+ */
+function bizznis_upgrade_1904() {
+	/*
+	# Update Settings
+	_bizznis_update_settings( array(
+		'theme_version' => '2.0.0',
+		'db_version'    => '1904',
+	) );
+	*/
 }
 
 /**
@@ -113,8 +107,9 @@ function bizznis_upgrade() {
  */
 add_action( 'bizznis_upgrade', 'bizznis_upgrade_redirect' );
 function bizznis_upgrade_redirect() {
-	if ( ! is_admin() || ! current_user_can( 'edit_theme_options' ) )
+	if ( ! is_admin() || ! current_user_can( 'edit_theme_options' ) ) {
 		return;
+	}
 	bizznis_admin_redirect( 'bizznis-about' );
 	exit;
 }
@@ -129,10 +124,12 @@ function bizznis_upgrade_redirect() {
  */
 add_action( 'admin_notices', 'bizznis_upgraded_notice' );
 function bizznis_upgraded_notice() {
-	if ( ! bizznis_is_menu_page( 'bizznis' ) )
+	if ( ! bizznis_is_menu_page( 'bizznis' ) ) {
 		return;
-	if ( isset( $_REQUEST['upgraded'] ) && 'true' == $_REQUEST['upgraded'] )
-		echo '<div id="message" class="updated highlight" id="message"><p><strong>' . sprintf( __( 'Congratulations! You are now rocking Bizznis %s', 'bizznis' ), bizznis_get_option( 'theme_version' ) ) . '</strong></p></div>';
+	}
+	if ( isset( $_REQUEST['upgraded'] ) && 'true' == $_REQUEST['upgraded'] ) {
+		echo '<div class="updated highlight" id="message"><p><strong>' . sprintf( __( 'Congratulations! You are now rocking Bizznis %s', 'bizznis' ), bizznis_get_option( 'theme_version' ) ) . '</strong></p></div>';
+	}
 }
 
 /**
@@ -148,8 +145,9 @@ function bizznis_upgraded_notice() {
  */
 add_filter( 'update_theme_complete_actions', 'bizznis_update_action_links', 10, 2 );
 function bizznis_update_action_links( $actions, $theme ) {
-	if ( 'bizznis' != $theme )
+	if ( 'bizznis' != $theme ) {
 		return $actions;
+	}
 	return sprintf( '<a href="%s">%s</a>', menu_page_url( 'bizznis', 0 ), __( 'Click here to complete the upgrade', 'bizznis' ) );
 }
 
@@ -162,13 +160,13 @@ function bizznis_update_action_links( $actions, $theme ) {
 add_action( 'admin_notices', 'bizznis_update_nag' );
 function bizznis_update_nag() {
 	$bizznis_update = bizznis_update_check();
-	if ( ! is_super_admin() || ! $bizznis_update )
+	if ( ! is_super_admin() || ! $bizznis_update ) {
 		return false;
-	echo '<div id="update-nag">';
+	}
+	echo '<div class="update-nag">';
 	printf(
-		__( 'Bizznis %s is available. <a href="%s" class="thickbox thickbox-preview">Check out what\'s new</a> or <a href="%s" onclick="return bizznis_confirm(\'%s\');">update now</a>.', 'bizznis' ),
+		__( 'Bizznis %s is available. <a href="%s" onclick="return bizznis_confirm(\'%s\');">Update now</a>.', 'bizznis' ),
 		esc_html( $bizznis_update['new_version'] ),
-		esc_url( $bizznis_update['changelog_url'] ),
 		wp_nonce_url( 'update.php?action=upgrade-theme&amp;theme=bizznis', 'upgrade-theme_bizznis' ),
 		esc_js( __( 'Upgrading Bizznis will overwrite the current installed version of Bizznis. Are you sure you want to upgrade?. "Cancel" to stop, "OK" to upgrade.', 'bizznis' ) )
 	);
@@ -189,16 +187,19 @@ function bizznis_update_email() {
 	$email_on = bizznis_get_option( 'update_email' );
 	$email    = bizznis_get_option( 'update_email_address' );
 	# If we're not supposed to send an email, or email is blank / invalid, stop!
-	if ( ! $email_on || ! is_email( $email ) )
+	if ( ! $email_on || ! is_email( $email ) ) {
 		return;
+	}
 	# Check for updates
 	$update_check = bizznis_update_check();
 	# If no new version is available, stop!
-	if ( ! $update_check )
+	if ( ! $update_check ) {
 		return;
+	}
 	# If we've already sent an email for this version, stop!
-	if ( get_option( 'bizznis-update-email' ) == $update_check['new_version'] )
+	if ( get_option( 'bizznis-update-email' ) == $update_check['new_version'] ) {
 		return;
+	}
 	# Let's send an email!
 	$subject  = sprintf( __( 'Bizznis %s is available for %s', 'bizznis' ), esc_html( $update_check['new_version'] ), home_url() );
 	$message  = sprintf( __( 'Bizznis %s is now available. We have provided 1-click updates for this theme, so please log into your dashboard and update at your earliest convenience.', 'bizznis' ), esc_html( $update_check['new_version'] ) );
@@ -210,42 +211,6 @@ function bizznis_update_email() {
 }
 
 /**
- * Integrate the Bizznis update check into the WordPress update checks.
- *
- * This function filters the value that is returned when WordPress tries to pull
- * theme update transient data.
- *
- * It uses bizznis_update_check() to check to see if we need to do an update,
- * and if so, adds the proper array to the $value->response object. WordPress
- * handles the rest.
- *
- * @since 1.0.0
- */
-add_filter( 'site_transient_update_themes', 'bizznis_update_push' );
-add_filter( 'transient_update_themes', 'bizznis_update_push' );
-function bizznis_update_push( $value ) {
-	$bizznis_update = bizznis_update_check();
-	if ( $bizznis_update )
-		$value->response['bizznis'] = $bizznis_update;
-	return $value;
-}
-
-/**
- * Delete Bizznis update transient after updates or when viewing the themes page.
- * The server will then do a fresh version check.
- *
- * It also disables the update nag on those pages as well.
- *
- * @since 1.0.0
- */
-add_action( 'load-update-core.php', 'bizznis_clear_update_transient' );
-add_action( 'load-themes.php', 'bizznis_clear_update_transient' );
-function bizznis_clear_update_transient() {
-	delete_transient( 'bizznis-update' );
-	remove_action( 'admin_notices', 'bizznis_update_nag' );
-}
-
-/**
  * Converts array of keys from Bizznis options to vestigial options.
  * This is done for backwards compatibility.
  *
@@ -253,8 +218,9 @@ function bizznis_clear_update_transient() {
  */
 function _bizznis_vestige( $keys = array(), $setting = BIZZNIS_SETTINGS_FIELD ) {
 	# If no $keys passed, do nothing
-	if ( ! $keys )
+	if ( ! $keys ) {
 		return;
+	}
 	# Pull options
 	$options = get_option( $setting );
 	$vestige = get_option( 'bizznis-vestige' );
@@ -267,11 +233,33 @@ function _bizznis_vestige( $keys = array(), $setting = BIZZNIS_SETTINGS_FIELD ) 
 		}
 	}
 	# If no new vestigial options being pushed, do nothing
-	if ( ! $new_vestige )
+	if ( ! $new_vestige ) {
 		return;
+	}
 	# Merge the arrays, if necessary
 	$vestige = $vestige ? wp_parse_args( $new_vestige, $vestige ) : $new_vestige;
 	# Insert into options table
 	update_option( 'bizznis-vestige', $vestige );
 	update_option( $setting, $options );
+}
+
+/**
+ * Disable WordPress theme update checks
+ * If there is a theme in the repo with the same name, 
+ * this prevents WP from prompting an update.
+ *
+ * @link http://markjaquith.wordpress.com/2009/12/14/excluding-your-plugin-or-theme-from-update-checks/
+ * @author Mark Jaquith
+ * @since 1.0.0
+ * 
+ */
+function bizznis_prevent_theme_update( $r, $url ) {
+    if ( 0 !== strpos( $url, 'http://api.wordpress.org/themes/update-check' ) ) {
+		return $r; # Not a theme update request. Bail immediately.
+	}
+	$themes = unserialize( $r['body']['themes'] );
+	unset( $themes[ get_option( 'template' ) ] );
+	unset( $themes[ get_option( 'stylesheet' ) ] );
+	$r['body']['themes'] = serialize( $themes );
+	return $r;
 }
