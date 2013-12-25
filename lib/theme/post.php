@@ -346,8 +346,8 @@ function bizznis_posts_nav() {
  * @since 1.0.0
  */
 function bizznis_prev_next_posts_nav() {
-	$prev_link = get_previous_posts_link( apply_filters( 'bizznis_prev_link_text', '&#x000AB;' . __( 'Previous Page', 'bizznis' ) ) );
-	$next_link = get_next_posts_link( apply_filters( 'bizznis_next_link_text', __( 'Next Page', 'bizznis' ) . '&#x000BB;' ) );
+	$prev_link = get_previous_posts_link( apply_filters( 'bizznis_prev_link_text', '&#x000AB; ' . __( 'Previous Page', 'bizznis' ) ) );
+	$next_link = get_next_posts_link( apply_filters( 'bizznis_next_link_text', __( 'Next Page', 'bizznis' ) . ' &#x000BB;' ) );
 	$prev = $prev_link ? '<div class="pagination-previous alignleft">' . $prev_link . '</div>' : '';
 	$next = $next_link ? '<div class="pagination-next alignright">' . $next_link . '</div>' : '';
 	$nav = sprintf( '<nav %s>', bizznis_attr( 'archive-pagination' ) );
