@@ -33,9 +33,13 @@ class Bizznis_Init {
 		# Run the bizznis_pre_framework Hook
 		do_action( 'bizznis_pre_framework' );
 		# Stop here, if necessary
-	  if ( defined( 'BIZZNIS_LOAD_FRAMEWORK' ) && BIZZNIS_LOAD_FRAMEWORK === false ) {
+	if ( defined( 'BIZZNIS_LOAD_FRAMEWORK' ) && BIZZNIS_LOAD_FRAMEWORK === false ) {
 		return;
-	  }
+	}
+		# Stop here, if WP is old
+	if ( version_compare( $GLOBALS['wp_version'], '3.6', '<' ) ) {
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/back-compat.php' );
+	}
 		# Load Theme
 		load_template( BIZZNIS_THEME_DIR . '/structure.php' );
 		load_template( BIZZNIS_THEME_DIR . '/header.php' );
@@ -49,7 +53,7 @@ class Bizznis_Init {
 		load_template( BIZZNIS_THEME_DIR . '/archive.php' );
 		load_template( BIZZNIS_THEME_DIR . '/search.php' );
 		# Load Admin
-	  if ( is_admin() ) {
+	if ( is_admin() ) {
 		load_template( BIZZNIS_ADMIN_DIR . '/admin.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/admin-menu.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-general.php' );
@@ -61,7 +65,7 @@ class Bizznis_Init {
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-term.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-user.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/upgrade.php' );
-	  }
+	}
 		# Load Functions
 		require_if_theme_supports( 'bizznis-breadcrumbs', BIZZNIS_FUNCTIONS_DIR . '/breadcrumb.php' ); #optional
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/compat.php' );
@@ -166,14 +170,14 @@ class Bizznis_Init {
 		add_theme_support( 'bizznis-breadcrumbs' );
 		add_theme_support( 'bizznis-responsive-viewport' ); #html5
 		# Maybe add support for Bizznis menus
-	  if ( ! current_theme_supports( 'bizznis-menus' ) ) {
+	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
 		add_theme_support( 'bizznis-menus', array(
 			'primary'   => __( 'Primary Navigation Menu', 'bizznis' ),
 			'secondary' => __( 'Secondary Navigation Menu', 'bizznis' ),
 		) );
-	  }
+	}
 		# Turn on footer widgets if Bizznis is active
-	  if ( ! is_child_theme() ) {
+	if ( ! is_child_theme() ) {
 		add_theme_support( 'custom-header', array(
 			'width'					=> 320,
 			'flex-width'			=> true,
@@ -184,7 +188,7 @@ class Bizznis_Init {
 		) );
 		add_theme_support( 'custom-background' );
 		add_theme_support( 'bizznis-footer-widgets', 4 );
-	  }
+	}
 	}
 	
 	/**
