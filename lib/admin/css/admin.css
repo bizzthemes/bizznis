@@ -180,6 +180,14 @@ hr.div {
 	clear: both;
 }
 
+/* RTL ----------- */
+
+.rtl .bizznis-layout-selector label.box {
+	float: right;
+}
+
+/* Media queries ----------- */
+
 @media only screen and (max-width: 500px){
 	.bizznis-badge {
 		position: relative;
@@ -188,9 +196,7 @@ hr.div {
 	}
 }
 
-/**
- * HiDPI Displays
- */
+/* HiDPI Displays */
 @media print,
   (-o-min-device-pixel-ratio: 5/4),
   (-webkit-min-device-pixel-ratio: 1.25),
