@@ -153,31 +153,112 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			)
 		);
 	}
-
+	
 	/**
-	 * Register meta boxes on the Theme Settings page.
+	 * Contextual help content.
 	 *
 	 * @since 1.0.0
 	 */
-	function metaboxes() {
-		# Hidden form fields
-		add_action( 'bizznis_admin_before_metaboxes', array( $this, 'hidden_fields' ) );
-		# Genaral
-		add_meta_box( 'bizznis-theme-settings-version', __( 'Information', 'bizznis' ), array( $this, 'info_box' ), $this->pagehook, 'column3' );
-		add_meta_box( 'bizznis-theme-settings-layout', __( 'Default Layout', 'bizznis' ), array( $this, 'layout_box' ), $this->pagehook, 'main' );
-		if ( current_theme_supports( 'bizznis-style-selector' ) )
-			add_meta_box( 'bizznis-theme-settings-style-selector', __( 'Color Style', 'bizznis' ), array( $this, 'style_box' ), $this->pagehook, 'main' );
-		if ( ! current_theme_supports( 'bizznis-custom-header' ) && ! current_theme_supports( 'custom-header' ) )
-			add_meta_box( 'bizznis-theme-settings-header', __( 'Header', 'bizznis' ), array( $this, 'header_box' ), $this->pagehook, 'main' );
-		add_meta_box( 'bizznis-theme-settings-posts', __( 'Content Archives', 'bizznis' ), array( $this, 'post_archives_box' ), $this->pagehook, 'main' );
-		if ( current_theme_supports( 'bizznis-menus' ) )
-			add_meta_box( 'bizznis-theme-settings-menus', __( 'Menus', 'bizznis' ), array( $this, 'menu_box' ), $this->pagehook, 'column2' );
-		if ( current_theme_supports( 'bizznis-breadcrumbs' ) )
-			add_meta_box( 'bizznis-theme-settings-breadcrumb', __( 'Breadcrumbs', 'bizznis' ), array( $this, 'breadcrumb_box' ), $this->pagehook, 'column2' );
-		add_meta_box( 'bizznis-theme-settings-comments', __( 'Comments and Trackbacks', 'bizznis' ), array( $this, 'comments_box' ), $this->pagehook, 'column2' );
-		if ( current_user_can( 'unfiltered_html' ) )
-			add_meta_box( 'bizznis-theme-settings-scripts', __( 'Header and Footer Scripts', 'bizznis' ), array( $this, 'scripts_box' ), $this->pagehook, 'column3' );
-		do_action( 'bizznis_theme_settings_metaboxes', $this->pagehook );
+	public function help() {
+		$screen = get_current_screen();
+		$theme_settings_help =
+			'<h3>' . __( 'Theme Settings' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'Your Theme Settings provides control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Some child themes may add additional menu items to this list, including the ability to select different color schemes or set theme specific features such as a slider. Each of the boxes can be collapsed by clicking the box header and expanded by doing the same. They can also be dragged into any order you desire or even hidden by clicking on "Screen Options" in the top right of the screen and "unchecking" the boxes you do not want to see. Below you\'ll find the items common to every child theme...' , 'bizznis' ) . '</p>';
+		$information_help =
+			'<h3>' . __( 'Information' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'The information box allows you to see the current Bizznis theme information and display if desired.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'Normally, this should be unchecked. You can also set to enable automatic updates.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'This does not mean the updates happen automatically without your permission; it will just notify you that an update is available. You must select it to perform the update.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'If you provide an email address and select to notify that email address when the update is available, your site will email you when the update can be performed.No, updates only affect files being updated.' , 'bizznis' ) . '</p>';
+		$layout_help =
+			'<h3>' . __( 'Default Layout' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'This lets you select the default layout for your entire site. On most of the child themes you\'ll see these options:' , 'bizznis' ) . '</p>' .
+			'<ul>' .
+				'<li>' . __( 'Content Sidebar' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Sidebar Content' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Sidebar Content Sidebar' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Content Sidebar Sidebar' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Sidebar Sidebar Content' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Full Width Content' , 'bizznis' ) . '</li>' .
+			'</ul>' .
+			'<p>'  . __( 'These options can be extended or limited by the child theme. Additionally, many of the child themes do not allow different layouts on the home page as they have been designed for a specific home page layout.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'This layout can also be overridden in the post/page/term layout options on each post/page/term.' , 'bizznis' ) . '</p>';
+		$breadcrumbs_help =
+			'<h3>' . __( 'Breadcrumbs' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'This box lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.' , 'bizznis' ) . '</p>';
+		$comments_help =
+			'<h3>' . __( 'Comments and Trackbacks' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'This allows a site wide decision on whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.' , 'bizznis' ) . '</p>';
+		$archives_help =
+			'<h3>' . __( 'Content Archives' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'In the Bizznis Theme Settings you may change the site wide Content Archives options to control what displays in the site\'s Archives.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'Archives include any pages using the blog template, category pages, tag pages, date archive, author archives, and the latest posts if there is no custom home page.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'The first option allows you to display the post content or the post excerpt. The Display post content setting will display the entire post including HTML code up to the <!--more--> tag if used (this is HTML for the comment tag that is not displayed in the browser).' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'It may also be coupled with the second field "Limit content to [___] characters" to limit the content to a specific number of letters or spaces. This will strip any HTML, but allows for more precise and easily changed lengths than the excerpt.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'The Display post excerpt setting will display the first 55 words of the post after also stripping any included HTML or the manual/custom excerpt added in the post edit screen.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'The \'Include post image?\' setting allows you to show a thumbnail of the first attached image or currently set featured image.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'This option should not be used with the post content unless the content is limited to avoid duplicate images.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'The \'Image Size\' list is populated by the available image sizes defined in the theme.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'Post Navigation Technique allows you to select one of three navigation methods.' , 'bizznis' ) . '</p>';
+		$scripts_help =
+			'<h3>' . __( 'Header and Footer Scripts' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'This provides you with two fields that will output to the <head></head> of your site and just before the </body>. These will appear on every page of the site and are a great way to add analytic code and other scripts. You cannot use PHP in these fields. If you need to use PHP then you should look into the Bizznis Simple Hooks plugin.' , 'bizznis' ) . '</p>';
+		$home_help =
+			'<h3>' . __( 'How Home Pages Work' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'Most Bizznis child themes include a custom home page.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'To use this type of home page, make sure your latest posts are set to show on the front page. You can setup a page with the Blog page template to show a blog style list of your latest posts on another page.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'This home page is typically setup via widgets in the sidebars for the home page. This can be accessed via the Widgets menu item under Appearance.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'Child themes that include this type of home page typically include additional theme-specific tutorials which can be accessed via a sticky post at the top of that child theme support forum.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'If your theme uses a custom home page and you want to show the latest posts in a blog format, do not use the blog template. Instead, you need to rename the home.php file to home-old.php instead.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'Another common home page is the "blog" type home page, which is common to most of the free child themes. This shows your latest posts and requires no additional setup.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'The third type of home page is the new dynamic home page. This is common on the newest child themes. It will show your latest posts in a blog type listing unless you put widgets into the home page sidebars.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'This setup is preferred because it makes it easier to show a blog on the front page (no need to rename the home.php file) and does not have the confusion of no content on the home page when the theme is initially installed.' , 'bizznis' ) . '</p>';
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-theme-settings',
+			'title'   => __( 'Theme Settings' , 'bizznis' ),
+			'content' => $theme_settings_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-information',
+			'title'   => __( 'Information' , 'bizznis' ),
+			'content' => $information_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-layout',
+			'title'   => __( 'Default Layout' , 'bizznis' ),
+			'content' => $layout_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-breadcrumbs',
+			'title'   => __( 'Breadcrumbs' , 'bizznis' ),
+			'content' => $breadcrumbs_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-comments',
+			'title'   => __( 'Comments and Trackbacks' , 'bizznis' ),
+			'content' => $comments_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-archives',
+			'title'   => __( 'Content Archives' , 'bizznis' ),
+			'content' => $archives_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-scripts',
+			'title'   => __( 'Header and Footer Scripts' , 'bizznis' ),
+			'content' => $scripts_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-home',
+			'title'   => __( 'Home Pages' , 'bizznis' ),
+			'content' => $home_help,
+		) );
+		# Add help sidebar
+		$screen->set_help_sidebar(
+			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
+			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
+		);
 	}
 	
 	/**
@@ -484,113 +565,9 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			</tbody>
 		</table>
 		<?php }
-	}
-	
-	/**
-	 * Contextual help content.
-	 *
-	 * @since 1.0.0
-	 */
-	public function help() {
-		$screen = get_current_screen();
-		$theme_settings_help =
-			'<h3>' . __( 'Theme Settings' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'Your Theme Settings provides control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Some child themes may add additional menu items to this list, including the ability to select different color schemes or set theme specific features such as a slider. Each of the boxes can be collapsed by clicking the box header and expanded by doing the same. They can also be dragged into any order you desire or even hidden by clicking on "Screen Options" in the top right of the screen and "unchecking" the boxes you do not want to see. Below you\'ll find the items common to every child theme...' , 'bizznis' ) . '</p>';
-		$information_help =
-			'<h3>' . __( 'Information' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'The information box allows you to see the current Bizznis theme information and display if desired.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'Normally, this should be unchecked. You can also set to enable automatic updates.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'This does not mean the updates happen automatically without your permission; it will just notify you that an update is available. You must select it to perform the update.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'If you provide an email address and select to notify that email address when the update is available, your site will email you when the update can be performed.No, updates only affect files being updated.' , 'bizznis' ) . '</p>';
-		$layout_help =
-			'<h3>' . __( 'Default Layout' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This lets you select the default layout for your entire site. On most of the child themes you\'ll see these options:' , 'bizznis' ) . '</p>' .
-			'<ul>' .
-				'<li>' . __( 'Content Sidebar' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Sidebar Content' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Sidebar Content Sidebar' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Content Sidebar Sidebar' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Sidebar Sidebar Content' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Full Width Content' , 'bizznis' ) . '</li>' .
-			'</ul>' .
-			'<p>'  . __( 'These options can be extended or limited by the child theme. Additionally, many of the child themes do not allow different layouts on the home page as they have been designed for a specific home page layout.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'This layout can also be overridden in the post/page/term layout options on each post/page/term.' , 'bizznis' ) . '</p>';
-		$breadcrumbs_help =
-			'<h3>' . __( 'Breadcrumbs' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This box lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.' , 'bizznis' ) . '</p>';
-		$comments_help =
-			'<h3>' . __( 'Comments and Trackbacks' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This allows a site wide decision on whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.' , 'bizznis' ) . '</p>';
-		$archives_help =
-			'<h3>' . __( 'Content Archives' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'In the Bizznis Theme Settings you may change the site wide Content Archives options to control what displays in the site\'s Archives.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'Archives include any pages using the blog template, category pages, tag pages, date archive, author archives, and the latest posts if there is no custom home page.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'The first option allows you to display the post content or the post excerpt. The Display post content setting will display the entire post including HTML code up to the <!--more--> tag if used (this is HTML for the comment tag that is not displayed in the browser).' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'It may also be coupled with the second field "Limit content to [___] characters" to limit the content to a specific number of letters or spaces. This will strip any HTML, but allows for more precise and easily changed lengths than the excerpt.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'The Display post excerpt setting will display the first 55 words of the post after also stripping any included HTML or the manual/custom excerpt added in the post edit screen.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'The \'Include post image?\' setting allows you to show a thumbnail of the first attached image or currently set featured image.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'This option should not be used with the post content unless the content is limited to avoid duplicate images.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'The \'Image Size\' list is populated by the available image sizes defined in the theme.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'Post Navigation Technique allows you to select one of three navigation methods.' , 'bizznis' ) . '</p>';
-		$scripts_help =
-			'<h3>' . __( 'Header and Footer Scripts' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This provides you with two fields that will output to the <head></head> of your site and just before the </body>. These will appear on every page of the site and are a great way to add analytic code and other scripts. You cannot use PHP in these fields. If you need to use PHP then you should look into the Bizznis Simple Hooks plugin.' , 'bizznis' ) . '</p>';
-		$home_help =
-			'<h3>' . __( 'How Home Pages Work' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'Most Bizznis child themes include a custom home page.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'To use this type of home page, make sure your latest posts are set to show on the front page. You can setup a page with the Blog page template to show a blog style list of your latest posts on another page.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'This home page is typically setup via widgets in the sidebars for the home page. This can be accessed via the Widgets menu item under Appearance.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'Child themes that include this type of home page typically include additional theme-specific tutorials which can be accessed via a sticky post at the top of that child theme support forum.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'If your theme uses a custom home page and you want to show the latest posts in a blog format, do not use the blog template. Instead, you need to rename the home.php file to home-old.php instead.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'Another common home page is the "blog" type home page, which is common to most of the free child themes. This shows your latest posts and requires no additional setup.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'The third type of home page is the new dynamic home page. This is common on the newest child themes. It will show your latest posts in a blog type listing unless you put widgets into the home page sidebars.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'This setup is preferred because it makes it easier to show a blog on the front page (no need to rename the home.php file) and does not have the confusion of no content on the home page when the theme is initially installed.' , 'bizznis' ) . '</p>';
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-theme-settings',
-			'title'   => __( 'Theme Settings' , 'bizznis' ),
-			'content' => $theme_settings_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-information',
-			'title'   => __( 'Information' , 'bizznis' ),
-			'content' => $information_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-layout',
-			'title'   => __( 'Default Layout' , 'bizznis' ),
-			'content' => $layout_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-breadcrumbs',
-			'title'   => __( 'Breadcrumbs' , 'bizznis' ),
-			'content' => $breadcrumbs_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-comments',
-			'title'   => __( 'Comments and Trackbacks' , 'bizznis' ),
-			'content' => $comments_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-archives',
-			'title'   => __( 'Content Archives' , 'bizznis' ),
-			'content' => $archives_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-scripts',
-			'title'   => __( 'Header and Footer Scripts' , 'bizznis' ),
-			'content' => $scripts_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-home',
-			'title'   => __( 'Home Pages' , 'bizznis' ),
-			'content' => $home_help,
-		) );
-		# Add help sidebar
-		$screen->set_help_sidebar(
-			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
-			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
-		);
+		# Add option to hook in new settings
+		do_settings_fields( 'settings-general', 'default' );
+		do_settings_sections( 'settings-general' );
 	}
 
 }

@@ -33,6 +33,48 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 		add_action( 'admin_init', array( $this, 'export' ) );
 		add_action( 'admin_init', array( $this, 'import' ) );
 	}
+	
+	/**
+	 * Contextual help content.
+	 *
+	 * @since 1.0.0
+	 */
+	public function help() {
+		$screen = get_current_screen();
+		$general_settings_help =
+			'<h3>' . __( 'Import/Export', 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'This allows you to import or export Bizznis Settings.', 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'This is specific to Bizznis settings and does not includes posts, pages, or images, which is what the built-in WordPress import/export menu does.', 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'It also does not include other settings for plugins, widgets, or post/page/term/user specific settings.', 'bizznis' ) . '</p>';
+		$import_settings_help =
+			'<h3>' . __( 'Import', 'bizznis' ) . '</h3>' .
+			'<p>'  . sprintf( __( 'You can import a file you\'ve previously exported. The file name will start with %s followed by one or more strings indicating which settings it contains, finally followed by the date and time it was exported.', 'bizznis' ), bizznis_code( 'bizznis-' ) ) . '</p>' .
+			'<p>' . __( 'Once you upload an import file, it will automatically overwrite your existing settings.', 'bizznis' ) . ' <strong>' . __( 'This cannot be undone', 'bizznis' ) . '</strong>.</p>';
+		$export_settings_help =
+			'<h3>' . __( 'Export', 'bizznis' ) . '</h3>' .
+			'<p>'  . sprintf( __( 'You can export your Bizznis-related settings to back them up, or copy them to another site. Child themes and plugins may add their own checkboxes to the list. The settings are exported in %s format.', 'bizznis' ), '<abbr title="' . __( 'JavaScript Object Notation', 'bizznis' ) . '">' . __( 'JSON', 'bizznis' ) . '</abbr>' ) . '</p>';
+
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-general-settings',
+			'title'   => __( 'Import/Export', 'bizznis' ),
+			'content' => $general_settings_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-import',
+			'title'   => __( 'Import', 'bizznis' ),
+			'content' => $import_settings_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-export',
+			'title'   => __( 'Export', 'bizznis' ),
+			'content' => $export_settings_help,
+		) );
+		# Add help sidebar
+		$screen->set_help_sidebar(
+			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
+			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
+		);
+	}
 
 	/**
 	 * Callback for displaying the Bizznis Import / Export admin page.
@@ -265,48 +307,6 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 		# Redirect, add success flag to the URI
 		bizznis_admin_redirect( 'bizznis-tools', array( 'imported' => 'true' ) );
 		exit;
-	}
-	
-	/**
-	 * Contextual help content.
-	 *
-	 * @since 1.0.0
-	 */
-	public function help() {
-		$screen = get_current_screen();
-		$general_settings_help =
-			'<h3>' . __( 'Import/Export', 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This allows you to import or export Bizznis Settings.', 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'This is specific to Bizznis settings and does not includes posts, pages, or images, which is what the built-in WordPress import/export menu does.', 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'It also does not include other settings for plugins, widgets, or post/page/term/user specific settings.', 'bizznis' ) . '</p>';
-		$import_settings_help =
-			'<h3>' . __( 'Import', 'bizznis' ) . '</h3>' .
-			'<p>'  . sprintf( __( 'You can import a file you\'ve previously exported. The file name will start with %s followed by one or more strings indicating which settings it contains, finally followed by the date and time it was exported.', 'bizznis' ), bizznis_code( 'bizznis-' ) ) . '</p>' .
-			'<p>' . __( 'Once you upload an import file, it will automatically overwrite your existing settings.', 'bizznis' ) . ' <strong>' . __( 'This cannot be undone', 'bizznis' ) . '</strong>.</p>';
-		$export_settings_help =
-			'<h3>' . __( 'Export', 'bizznis' ) . '</h3>' .
-			'<p>'  . sprintf( __( 'You can export your Bizznis-related settings to back them up, or copy them to another site. Child themes and plugins may add their own checkboxes to the list. The settings are exported in %s format.', 'bizznis' ), '<abbr title="' . __( 'JavaScript Object Notation', 'bizznis' ) . '">' . __( 'JSON', 'bizznis' ) . '</abbr>' ) . '</p>';
-
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-general-settings',
-			'title'   => __( 'Import/Export', 'bizznis' ),
-			'content' => $general_settings_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-import',
-			'title'   => __( 'Import', 'bizznis' ),
-			'content' => $import_settings_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'      => $this->pagehook . '-export',
-			'title'   => __( 'Export', 'bizznis' ),
-			'content' => $export_settings_help,
-		) );
-		# Add help sidebar
-		$screen->set_help_sidebar(
-			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
-			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
-		);
 	}
 
 }

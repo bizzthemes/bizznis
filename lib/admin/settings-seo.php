@@ -122,6 +122,84 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 			)
 		);
 	}
+	
+	/**
+	 * Contextual help content.
+	 *
+	 * @since 1.0.0
+	 */
+	public function help() {
+		$screen = get_current_screen();
+		$seo_settings_help =
+			'<h3>' . __( 'SEO Settings' , 'bizznis' ) . '</h3>' .
+			'<p>' .  __( 'Bizznis SEO (search engine optimization) is polite, and will disable itself when most popular SEO plugins (e.g., All-in-One SEO, WordPress SEO, etc.) are active.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'If you don\'t see an SEO Settings sub menu, then you probably have another SEO plugin active.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'If you see the menu, then opening that menu item will let you set the General SEO settings for your site.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'Each page, post, and term will have its own SEO settings as well. The default settings are recommended for most users. If you wish to adjust your SEO settings, the boxes include internal descriptions.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'Below you\'ll find a few succinct notes on the options for each box:' , 'bizznis' ) . '</p>';
+		$doctitle_help =
+			'<h3>' . __( 'Doctitle Settings' , 'bizznis' ) . '</h3>' .
+			'<p>' .  __( '<strong>Append Site Description</strong> will insert the site description from your General Settings after the title on your home page.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( '<strong>Append Site Name</strong> will put the site name from the General Settings after the title on inner page.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( '<strong>Doctitle Append Location</strong> determines which side of the title to add the previously mentioned items.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'The <strong>Doctitle Separator</strong> is the character that will go between the title and appended text.' , 'bizznis' ) . '</p>';
+		$dochead_help =
+			'<h3>' . __( 'Document Head Settings' , 'bizznis' ) . '</h3>' .
+			'<p>' .  __( 'The Relationship Link Tags are tags added by WordPress that currently have no SEO value but slow your site load down. They\'re disabled by default, but if you have a specific need&#8212;for a plugin or other non typical use&#8212;then you can enable as needed here.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'You can also add support for Windows Live Writer if you use software that supports this and include a shortlink tag if this is required by any third party service.' , 'bizznis' ) . '</p>';
+		$homepage_help =
+			'<h3>' . __( 'Homepage Settings' , 'bizznis' ) . '</h3>' .
+			'<p>' .  __( 'These are the homepage specific SEO settings. Note: these settings will not apply if a static page is set as the front page. If you\'re using a static WordPress page as your hompage, you\'ll need to set the SEO settings on that particular page.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'You can also specify if the Site Title, Description, or your own custom text should be wrapped in an &lt;h1&gt; tag (the primary heading in HTML).' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'To add custom text you\'ll have to either edit a php file, or use a text widget on a widget enabled homepage.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'The home doctitle sets what will appear within the <title></title> tags (unseen in the browser) for the home page.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'The home META description fill in the meta tags for the home page. The META description is the short text blurb that appear in search engine results.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'The Homepage Robots Meta Tags tell search engines how to handle the homepage. Noindex means not to index the page at all, and it will not appear in search results. Nofollow means do not follow any links from this page and noarchive tells them not to make an archive copy of the page.' , 'bizznis' ) . '</p>';
+		$robots_help =
+			'<h3>' . __( 'Robots Meta Settings' , 'bizznis' ) . '</h3>' .
+			'<p>' .  __( 'Noarchive and noindex are explained in the home settings. Here you can select what other parts of the site to apply these options to.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'At least one archive should be indexed, but indexing multiple archives will typically result in a duplicate content penalization (multiple pages with identical content look manipulative to search engines).' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'For most sites either the home page or blog page (using the blog template) will serve as this index which is why the default is not to index categories, tags, authors, dates, or searches.' , 'bizznis' ) . '</p>';
+		$seoarchives_help =
+			'<h3>' . __( 'Archives Settings' , 'bizznis' ) . '</h3>' .
+			'<p>' .  __( 'Canonical links will point search engines to the front page of paginated content (search engines have to choose the "preferred link" when there is duplicate content on pages).' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'This tells them "this is paged content and the first page starts here" and helps to avoid spreading keywords across multiple pages.' , 'bizznis' ) . '</p>';
+		$screen->add_help_tab( array(
+			'id'	=> $this->pagehook . '-seo-settings',
+			'title'	=> __( 'SEO Settings' , 'bizznis' ),
+			'content'	=> $seo_settings_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'	=> $this->pagehook . '-doctitle',
+			'title'	=> __( 'Document Title Settings' , 'bizznis' ),
+			'content'	=> $doctitle_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'	=> $this->pagehook . '-dochead',
+			'title'	=> __( 'Document Head Settings' , 'bizznis' ),
+			'content'	=> $dochead_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'	=> $this->pagehook . '-homepage',
+			'title'	=> __( 'Homepage Settings' , 'bizznis' ),
+			'content'	=> $homepage_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'	=> $this->pagehook . '-robots',
+			'title'	=> __( 'Robots Meta Settings' , 'bizznis' ),
+			'content'	=> $robots_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'	=> $this->pagehook . '-seo-archives',
+			'title'	=> __( 'SEO Archives' , 'bizznis' ),
+			'content'	=> $seoarchives_help,
+		) );
+		# Add help sidebar
+		$screen->set_help_sidebar(
+			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
+			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
+		);
+	}
 
 	/**
 	 * Callback for SEO Settings Form.
@@ -343,84 +421,9 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 			</tbody>
 		</table>
 		<?php
-	}
-	
-	/**
-	 * Contextual help content.
-	 *
-	 * @since 1.0.0
-	 */
-	public function help() {
-		$screen = get_current_screen();
-		$seo_settings_help =
-			'<h3>' . __( 'SEO Settings' , 'bizznis' ) . '</h3>' .
-			'<p>' .  __( 'Bizznis SEO (search engine optimization) is polite, and will disable itself when most popular SEO plugins (e.g., All-in-One SEO, WordPress SEO, etc.) are active.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'If you don\'t see an SEO Settings sub menu, then you probably have another SEO plugin active.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'If you see the menu, then opening that menu item will let you set the General SEO settings for your site.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'Each page, post, and term will have its own SEO settings as well. The default settings are recommended for most users. If you wish to adjust your SEO settings, the boxes include internal descriptions.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'Below you\'ll find a few succinct notes on the options for each box:' , 'bizznis' ) . '</p>';
-		$doctitle_help =
-			'<h3>' . __( 'Doctitle Settings' , 'bizznis' ) . '</h3>' .
-			'<p>' .  __( '<strong>Append Site Description</strong> will insert the site description from your General Settings after the title on your home page.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( '<strong>Append Site Name</strong> will put the site name from the General Settings after the title on inner page.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( '<strong>Doctitle Append Location</strong> determines which side of the title to add the previously mentioned items.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'The <strong>Doctitle Separator</strong> is the character that will go between the title and appended text.' , 'bizznis' ) . '</p>';
-		$dochead_help =
-			'<h3>' . __( 'Document Head Settings' , 'bizznis' ) . '</h3>' .
-			'<p>' .  __( 'The Relationship Link Tags are tags added by WordPress that currently have no SEO value but slow your site load down. They\'re disabled by default, but if you have a specific need&#8212;for a plugin or other non typical use&#8212;then you can enable as needed here.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'You can also add support for Windows Live Writer if you use software that supports this and include a shortlink tag if this is required by any third party service.' , 'bizznis' ) . '</p>';
-		$homepage_help =
-			'<h3>' . __( 'Homepage Settings' , 'bizznis' ) . '</h3>' .
-			'<p>' .  __( 'These are the homepage specific SEO settings. Note: these settings will not apply if a static page is set as the front page. If you\'re using a static WordPress page as your hompage, you\'ll need to set the SEO settings on that particular page.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'You can also specify if the Site Title, Description, or your own custom text should be wrapped in an &lt;h1&gt; tag (the primary heading in HTML).' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'To add custom text you\'ll have to either edit a php file, or use a text widget on a widget enabled homepage.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'The home doctitle sets what will appear within the <title></title> tags (unseen in the browser) for the home page.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'The home META description fill in the meta tags for the home page. The META description is the short text blurb that appear in search engine results.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'The Homepage Robots Meta Tags tell search engines how to handle the homepage. Noindex means not to index the page at all, and it will not appear in search results. Nofollow means do not follow any links from this page and noarchive tells them not to make an archive copy of the page.' , 'bizznis' ) . '</p>';
-		$robots_help =
-			'<h3>' . __( 'Robots Meta Settings' , 'bizznis' ) . '</h3>' .
-			'<p>' .  __( 'Noarchive and noindex are explained in the home settings. Here you can select what other parts of the site to apply these options to.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'At least one archive should be indexed, but indexing multiple archives will typically result in a duplicate content penalization (multiple pages with identical content look manipulative to search engines).' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'For most sites either the home page or blog page (using the blog template) will serve as this index which is why the default is not to index categories, tags, authors, dates, or searches.' , 'bizznis' ) . '</p>';
-		$seoarchives_help =
-			'<h3>' . __( 'Archives Settings' , 'bizznis' ) . '</h3>' .
-			'<p>' .  __( 'Canonical links will point search engines to the front page of paginated content (search engines have to choose the "preferred link" when there is duplicate content on pages).' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'This tells them "this is paged content and the first page starts here" and helps to avoid spreading keywords across multiple pages.' , 'bizznis' ) . '</p>';
-		$screen->add_help_tab( array(
-			'id'	=> $this->pagehook . '-seo-settings',
-			'title'	=> __( 'SEO Settings' , 'bizznis' ),
-			'content'	=> $seo_settings_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'	=> $this->pagehook . '-doctitle',
-			'title'	=> __( 'Document Title Settings' , 'bizznis' ),
-			'content'	=> $doctitle_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'	=> $this->pagehook . '-dochead',
-			'title'	=> __( 'Document Head Settings' , 'bizznis' ),
-			'content'	=> $dochead_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'	=> $this->pagehook . '-homepage',
-			'title'	=> __( 'Homepage Settings' , 'bizznis' ),
-			'content'	=> $homepage_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'	=> $this->pagehook . '-robots',
-			'title'	=> __( 'Robots Meta Settings' , 'bizznis' ),
-			'content'	=> $robots_help,
-		) );
-		$screen->add_help_tab( array(
-			'id'	=> $this->pagehook . '-seo-archives',
-			'title'	=> __( 'SEO Archives' , 'bizznis' ),
-			'content'	=> $seoarchives_help,
-		) );
-		# Add help sidebar
-		$screen->set_help_sidebar(
-			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
-			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
-		);
+		# Add option to hook in new settings
+		do_settings_fields( 'settings-seo', 'default' );
+		do_settings_sections( 'settings-seo' );
 	}
 
 }
