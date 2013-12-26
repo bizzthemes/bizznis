@@ -26,11 +26,11 @@ function bizznis_update_check() {
 		return false;
 	}
 	$bizznis_update = $bizznis_update->response;
-	if ( ! isset( $bizznis_update[ 'bizznis' ] ) ) {
+	if ( ! isset( $bizznis_update['bizznis'] ) ) {
 		return false;
 	}
 	else {
-		$bizznis_update = $bizznis_update[ 'bizznis' ];
+		$bizznis_update = $bizznis_update['bizznis'];
 	}
 	# If we're already using the latest version, return false
 	if ( version_compare( PARENT_THEME_VERSION, $bizznis_update['new_version'], '>=' ) ) {
