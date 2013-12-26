@@ -55,8 +55,6 @@ abstract class Bizznis_Admin {
 		}
 		# Theme options actions
 		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 5 ); 						# create the theme options menu
-		add_action( 'admin_menu', array( $this, 'maybe_add_main_menu' ), 5 ); 						# create top-level main menu
-		add_action( 'admin_menu', array( $this, 'maybe_add_first_submenu' ), 5 );					# create first submenu, linked with main menu
 		add_action( 'admin_menu', array( $this, 'maybe_add_submenu' ) ); 							# create submenu, custom position
 		add_action( 'admin_init', array( $this, 'register_settings' ) ); 							# set up settings
 		add_action( 'admin_notices', array( $this, 'notices' ) ); 									# set up notices
@@ -91,69 +89,6 @@ abstract class Bizznis_Admin {
 				)
 			);
 			$this->pagehook = add_theme_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );									
-		}
-	}
-	
-	/**
-	 * Possibly create a new top level admin menu.
-	 *
-	 * @since 1.0.0
-	 */
-	public function maybe_add_main_menu() {
-		//* Maybe add a menu separator
-		if ( isset( $this->menu_ops['main_menu']['sep'] ) ) {
-			$sep = wp_parse_args(
-				$this->menu_ops['main_menu']['sep'],
-				array(
-					'sep_position'   => '',
-					'sep_capability' => '',
-				)
-			);
-			if ( $sep['sep_position'] && $sep['sep_capability'] ) {
-				$GLOBALS['menu'][$sep['sep_position']] = array( '', $sep['sep_capability'], 'separator', '', 'bizznis-separator wp-menu-separator' );
-			}
-		}
-		//* Maybe add main menu
-		if ( isset( $this->menu_ops['main_menu'] ) && is_array( $this->menu_ops['main_menu'] ) ) {
-			$menu = wp_parse_args(
-				$this->menu_ops['main_menu'],
-				array(
-					'page_title' => '',
-					'menu_title' => '',
-					'capability' => 'edit_theme_options',
-					'icon_url'   => '',
-					'position'   => '',
-				)
-			);
-			$this->pagehook = add_menu_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ), $menu['icon_url'], $menu['position'] );
-		}
-	}
-
-	/**
-	 * Possibly create the first submenu item.
-	 *
-	 * Because the main menu and first submenu item are usually linked, if you
-	 * don't create them at the same time, something can sneak in between the
-	 * two, specifically custom post type menu items that are assigned to the
-	 * custom top-level menu.
-	 *
-	 * Plus, maybe_add_first_submenu takes the guesswork out of creating a
-	 * submenu of the top-level menu you just created. It's a shortcut of sorts.
-	 *
-	 * @since 1.0.0
-	 */
-	public function maybe_add_first_submenu() {
-		//* Maybe add first submenu
-		if ( isset( $this->menu_ops['first_submenu'] ) && is_array( $this->menu_ops['first_submenu'] ) ) {
-			$menu = wp_parse_args(
-				$this->menu_ops['first_submenu'],
-				array(
-					'page_title' => '',
-					'menu_title' => '',
-					'capability' => 'edit_theme_options',
-				)
-			);
-			$this->pagehook = add_submenu_page( $this->page_id, $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );
 		}
 	}
 
