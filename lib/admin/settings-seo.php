@@ -20,7 +20,7 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 	function __construct() {
 		$page_id  = 'bizznis-seo';
 		$menu_ops = array(
-			'theme_submenu' => array(
+			'theme_menu' => array(
 				'parent_slug' => 'bizznis',
 				'page_title'  => __( 'Theme SEO', 'bizznis' ),
 				'menu_title'  => __( 'Theme SEO', 'bizznis' ),
