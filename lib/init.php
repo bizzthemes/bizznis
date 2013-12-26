@@ -175,6 +175,8 @@ class Bizznis_Init {
 		) );
 	}
 		# Turn on footer widgets if Bizznis is active
+		# Turn on custom header image / custom logo
+		# Turn on custom background image / color
 	if ( ! is_child_theme() ) {
 		add_theme_support( 'custom-header', array(
 			'width'					=> 320,
