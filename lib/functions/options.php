@@ -83,25 +83,6 @@ function bizznis_seo_option( $key, $use_cache = true ) {
 }
 
 /**
- * Return a CPT Archive setting value from the options table.
- *
- * @since 1.0.0
- */
-function bizznis_get_cpt_option( $key, $post_type_name = '', $use_cache = true ) {
-	$post_type_name = bizznis_get_global_post_type_name( $post_type_name );
-	return bizznis_get_option( $key, BIZZNIS_CPT_ARCHIVE_SETTINGS_FIELD_PREFIX . $post_type_name, $use_cache );
-}
-
-/**
- * Echo a CPT Archive option from the options table.
- *
- * @since 1.0.0
- */
-function bizznis_cpt_option( $key, $post_type_name, $use_cache = true ) {
-	echo bizznis_get_cpt_option( $key, $post_type_name, $use_cache );
-}
-
-/**
  * Echo data from a post or page custom field.
  *
  * @since 1.0.0

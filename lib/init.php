@@ -59,7 +59,6 @@ class Bizznis_Init {
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-general.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-seo.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-tools.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/settings-cpt-archive.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-about.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-inpost.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-term.php' );
@@ -144,7 +143,6 @@ class Bizznis_Init {
 		# Settings Field (for DB storage)
 		define( 'BIZZNIS_SETTINGS_FIELD', 		apply_filters( 'bizznis_settings_field', 'bizznis-settings' ) );
 		define( 'BIZZNIS_SEO_SETTINGS_FIELD', 	apply_filters( 'bizznis_seo_settings_field', 'bizznis-seo-settings' ) );
-		define( 'BIZZNIS_CPT_ARCHIVE_SETTINGS_FIELD_PREFIX', apply_filters( 'bizznis_cpt_archive_settings_field_prefix', 'bizznis-cpt-archive-settings-' ) );
 	}
 	
 	/**

@@ -55,7 +55,6 @@ abstract class Bizznis_Admin {
 		}
 		# Theme options actions
 		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 5 ); 						# create the theme options menu
-		add_action( 'admin_menu', array( $this, 'maybe_add_submenu' ) ); 							# create submenu, custom position
 		add_action( 'admin_init', array( $this, 'register_settings' ) ); 							# set up settings
 		add_action( 'admin_notices', array( $this, 'notices' ) ); 									# set up notices
 		add_action( 'admin_init', array( $this, 'settings_init' ) ); 								# load the page content (metaboxes or custom form)
@@ -89,27 +88,6 @@ abstract class Bizznis_Admin {
 				)
 			);
 			$this->pagehook = add_theme_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );									
-		}
-	}
-
-	/**
-	 * Possibly create a submenu item.
-	 *
-	 * @since 1.0.0
-	 */
-	public function maybe_add_submenu() {
-		//* Maybe add submenu
-		if ( isset( $this->menu_ops['submenu'] ) && is_array( $this->menu_ops['submenu'] ) ) {
-			$menu = wp_parse_args(
-				$this->menu_ops['submenu'],
-				array(
-					'parent_slug' => '',
-					'page_title'  => '',
-					'menu_title'  => '',
-					'capability'  => 'edit_theme_options',
-				)
-			);
-			$this->pagehook = add_submenu_page( $menu['parent_slug'], $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );
 		}
 	}
 

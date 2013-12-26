@@ -171,10 +171,6 @@ function bizznis_site_layout( $use_cache = true ) {
 		$term = $wp_query->get_queried_object();
 		$site_layout = $term && isset( $term->meta['layout'] ) && $term->meta['layout'] ? $term->meta['layout'] : bizznis_get_option( 'site_layout' );
 	}
-	# If viewing a supported post type
-	elseif ( is_post_type_archive() && bizznis_has_post_type_archive_support() ) {
-		$site_layout = bizznis_get_cpt_option( 'layout' ) ? bizznis_get_cpt_option( 'layout' ) : bizznis_get_option( 'site_layout' );
-	}
 	# If viewing an author archive
 	elseif ( is_author() ) {
 		$site_layout = get_the_author_meta( 'layout', (int) get_query_var( 'author' ) ) ? get_the_author_meta( 'layout', (int) get_query_var( 'author' ) ) : bizznis_get_option( 'site_layout' );

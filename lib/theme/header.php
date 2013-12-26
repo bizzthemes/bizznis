@@ -83,9 +83,6 @@ function bizznis_default_title( $title, $sep, $seplocation ) {
 		$user_title = get_the_author_meta( 'doctitle', (int) get_query_var( 'author' ) );
 		$title      = $user_title ? $user_title : $title;
 	}
-	if ( is_post_type_archive() && bizznis_has_post_type_archive_support() ) {
-		$title = bizznis_get_cpt_option( 'doctitle' );
-	}
 	# If we don't want site name appended, or if we're on the home page
 	if ( ! bizznis_get_seo_option( 'append_site_title' ) || is_front_page() ) {
 		return esc_html( trim( $title ) );
@@ -175,9 +172,6 @@ function bizznis_seo_meta_description() {
 		$user_description = get_the_author_meta( 'meta_description', (int) get_query_var( 'author' ) );
 		$description = $user_description ? $user_description : '';
 	}
-	if ( is_post_type_archive() && bizznis_has_post_type_archive_support() ) {
-		$description = bizznis_get_cpt_option( 'description' ) ? bizznis_get_cpt_option( 'description' ) : '';
-	}
 	# Add the description if one exists
 	if ( $description ) {
 		echo '<meta name="description" content="' . esc_attr( $description ) . '" />' . "\n";
@@ -252,14 +246,6 @@ function bizznis_robots_meta() {
 		$meta['nofollow']  = $term->meta['nofollow'] ? 'nofollow' : $meta['nofollow'];
 		$meta['noarchive'] = $term->meta['noarchive'] ? 'noarchive' : $meta['noarchive'];
 		# noindex paged archives, if canonical archives is off
-		$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-		$meta['noindex'] = $paged > 1 && ! bizznis_get_seo_option( 'canonical_archives' ) ? 'noindex' : $meta['noindex'];
-	}
-	if ( is_post_type_archive() && bizznis_has_post_type_archive_support() ) {
-		$meta['noindex']   = bizznis_get_cpt_option( 'noindex' ) ? 'noindex' : $meta['noindex'];
-		$meta['nofollow']  = bizznis_get_cpt_option( 'nofollow' ) ? 'nofollow' : $meta['nofollow'];
-		$meta['noarchive'] = bizznis_get_cpt_option( 'noarchive' ) ? 'noarchive' : $meta['noarchive'];
-		//* noindex paged archives, if canonical archives is off
 		$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
 		$meta['noindex'] = $paged > 1 && ! bizznis_get_seo_option( 'canonical_archives' ) ? 'noindex' : $meta['noindex'];
 	}

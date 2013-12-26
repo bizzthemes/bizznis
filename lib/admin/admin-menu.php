@@ -75,23 +75,3 @@ add_action( 'bizznis_admin_title_right', 'bizznis_add_admin_menu_feedback', 15 )
 function bizznis_add_admin_menu_feedback() {
 	printf( __( '<a href="%s" target="_blank" class="feedback" title="Report a Bug">Report a Bug</a>', 'bizznis' ), esc_url( 'https://github.com/bizzthemes/bizznis/issues' ) );
 }
-
-/**
- * Add archive settings page to relevant custom post type registrations.
- *
- * An instance of `Bizznis_Admin_CPT_Archive_Settings` is instantiated for each relevant CPT, assigned to an individual
- * global variable.
- *
- * @since 1.0.0
- */
-add_action( 'admin_menu', 'bizznis_add_cpt_archive_page', 5 );
-function bizznis_add_cpt_archive_page() {
-	$post_types = bizznis_get_cpt_archive_types();
-	foreach( $post_types as $post_type ) {
-		if ( bizznis_has_post_type_archive_support( $post_type->name ) ) {
-			$admin_object_name = '_bizznis_admin_cpt_archives_' . $post_type->name;
-			global ${$admin_object_name};
-			${$admin_object_name} = new Bizznis_Admin_CPT_Archive_Settings( $post_type );
-		}
-	}
-}

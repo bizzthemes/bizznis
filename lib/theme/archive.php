@@ -80,30 +80,3 @@ function bizznis_do_author_box_archive() {
 		bizznis_author_box( 'archive' );
 	}
 }
-
-/**
- * Add custom headline and description to relevant custom post type archive pages.
- *
- * @since 1.0.0
- */
-add_filter( 'bizznis_cpt_archive_intro_text_output', 'wpautop' );
-add_action( 'bizznis_loop', 'bizznis_do_cpt_archive_title_description', 5 );
-function bizznis_do_cpt_archive_title_description() {
-	# Stop here if we're not on a post type archive page
-	if ( ! is_post_type_archive() || ! bizznis_has_post_type_archive_support() ) {
-		return;
-	}
-	# Stop here if we're not on page 1
-	if ( get_query_var( 'paged' ) >= 2 ) {
-		return;
-	}
-	# If there's a custom headline to display, it is marked up as a level 1 heading.
-	$headline   = bizznis_get_cpt_option( 'headline' );
-	$intro_text = bizznis_get_cpt_option( 'intro_text' );
-	# If there's a description (intro text) to display, it is run through wpautop() before being added to a div.
-	$headline   = $headline ? sprintf( '<h1 class="archive-title">%s</h1>', $headline ) : '';
-	$intro_text = $intro_text ? apply_filters( 'bizznis_cpt_archive_intro_text_output', $intro_text ) : '';
-	if ( $headline || $intro_text ) {
-		printf( '<div class="archive-description cpt-archive-description">%s</div>', $headline . $intro_text );
-	}
-}

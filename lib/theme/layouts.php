@@ -158,24 +158,6 @@ function bizznis_style_selector_body_classes( array $classes ) {
 }
 
 /**
- * Adds a custom class to the custom post type archive body classes.
- *
- * @since 1.0.0
- */
-add_filter( 'body_class', 'bizznis_cpt_archive_body_class', 15 );
-function bizznis_cpt_archive_body_class( array $classes ) {
-	# It accepts a value from the archive settings page.
-	if ( ! is_post_type_archive() || ! bizznis_has_post_type_archive_support() ) {
-		return $classes;
-	}
-	$new_class = bizznis_get_cpt_option( 'body_class' );
-	if ( $new_class ) {
-		$classes[] = esc_attr( sanitize_html_class( $new_class ) );
-	}
-	return $classes;
-}
-
-/**
  * Filter the content width based on the user selected layout.
  *
  * @since 1.0.0
