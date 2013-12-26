@@ -78,17 +78,6 @@ abstract class Bizznis_Admin {
 			);
 			$this->pagehook = add_theme_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );
 		}
-		# Maybe add theme submenu
-		if ( isset( $this->menu_ops['theme_submenu'] ) && is_array( $this->menu_ops['theme_submenu'] ) ) {
-			$menu = wp_parse_args( $this->menu_ops['theme_submenu'],
-				array(
-					'page_title' => '',
-					'menu_title' => '',
-					'capability' => 'edit_theme_options'
-				)
-			);
-			$this->pagehook = add_theme_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );									
-		}
 	}
 
 	/**
