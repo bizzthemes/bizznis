@@ -127,7 +127,7 @@ class Bizznis_Init {
 		define( 'CHILD_URL', 					get_stylesheet_directory_uri() );
 		define( 'BIZZNIS_LIB_URL', 				PARENT_URL . 		'/lib' );
 		define( 'BIZZNIS_CUSTOM_URL', 			CHILD_URL . 		'/custom' );
-		define( 'BIZZNIS_IMAGES_URL', 			BIZZNIS_LIB_URL . 	'/images' );
+		define( 'BIZZNIS_IMAGES_URL', 			PARENT_URL . 		'/images' );
 		define( 'BIZZNIS_ADMIN_URL', 			BIZZNIS_LIB_URL . 	'/admin' );
 		define( 'BIZZNIS_ADMIN_IMAGES_URL', 	BIZZNIS_ADMIN_URL . '/images' );
 		define( 'BIZZNIS_ADMIN_CSS_URL', 		BIZZNIS_ADMIN_URL . '/css' );
@@ -184,7 +184,10 @@ class Bizznis_Init {
 			'default-text-color'	=> '333333',
 			'header-selector'		=> '.title-area',
 		) );
-		add_theme_support( 'custom-background' );
+		add_theme_support( 'custom-background', array(
+			'default-color' => 'f9f8f2',
+			'default-image' => BIZZNIS_IMAGES_URL . '/background.png',
+		) );
 		add_theme_support( 'bizznis-footer-widgets', 4 );
 	}
 	}
