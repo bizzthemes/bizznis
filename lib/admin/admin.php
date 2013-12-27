@@ -55,6 +55,7 @@ abstract class Bizznis_Admin {
 		}
 		# Theme options actions
 		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 5 ); 						# create the theme options menu
+		add_action( 'admin_menu', array( $this, 'maybe_hide_theme_menu' ), 5 ); 					# hide the theme options menu
 		add_action( 'admin_init', array( $this, 'register_settings' ) ); 							# set up settings
 		add_action( 'admin_notices', array( $this, 'notices' ) ); 									# set up notices
 		add_action( 'admin_init', array( $this, 'settings_init' ) ); 								# load the page content (metaboxes or custom form)
@@ -62,7 +63,7 @@ abstract class Bizznis_Admin {
 	}
 	
 	/**
-	 * Possibly create a new top level theme menu.
+	 * Possibly create a new theme menu.
 	 *
 	 * @since 1.0.0
 	 */
@@ -77,6 +78,18 @@ abstract class Bizznis_Admin {
 				)
 			);
 			$this->pagehook = add_theme_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );
+		}
+	}
+	
+	/**
+	 * Possibly hide a theme menu.
+	 *
+	 * @since 1.0.0
+	 */
+	public function maybe_hide_theme_menu() {
+		# Hide theme menu if not viewing/browsing it
+		if ( isset( $this->menu_ops['theme_menu']['menu_hide'] ) && ! bizznis_is_menu_page( $this->page_id ) ) {
+			remove_submenu_page( 'themes.php', $this->page_id );
 		}
 	}
 
@@ -213,6 +226,10 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 				<?php do_action( 'bizznis_admin_title_right', $this->pagehook ); ?>
 			</h2>
 			<?php do_action( $this->pagehook . '_settings_page_form', $this->pagehook ); ?>
+			<?php do_action( 'bizznis_admin_after_form', $this->pagehook ); ?>
+			<!-- Allow developers to add their own options -->
+			<?php do_settings_fields( $this->page_id, 'default' ); ?>
+			<?php do_settings_sections( $this->page_id );?>
 			<p class="submit bottom-buttons">
 				<?php
 				submit_button( $this->page_ops['save_button_text'], 'primary', 'submit', false );

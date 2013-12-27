@@ -20,10 +20,11 @@ class Bizznis_Admin_About extends Bizznis_Admin_Basic {
 	function __construct() {
 		$page_id = 'bizznis-about';
 		$menu_ops = array(
-			'submenu' => array(
-				'parent_slug' => 'admin.php',
+			'theme_menu' => array(
+				'parent_slug' => 'themes.php',
 				'page_title'  => sprintf( __( 'Welcome to Bizznis %s', 'bizznis' ), PARENT_THEME_BRANCH ),
-				'menu_title'  => __( 'About', 'bizznis' ),
+				'menu_title'  => __( 'About Bizznis', 'bizznis' ),
+				'menu_hide'	  => true,
 			)
 		);
 		$page_ops = array(
