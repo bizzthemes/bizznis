@@ -18,6 +18,11 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.1
+
+* Updated screenshot images of the theme
+* Fixed outbound links to theme support pages
+
 ### 1.0.0
 
 * Initial Public Release
