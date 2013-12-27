@@ -58,7 +58,7 @@ function bizznis_upgrade() {
 	}
 	/*
 	#########################
-	# UPDATE TO VERSION 1.6
+	# UPDATE TO VERSION 1.0.
 	#########################
 	if ( version_compare( bizznis_get_option( 'theme_version', null, false ), '1.9', '<' ) ) {
 		# Vestige nav settings, for backward compatibility
@@ -73,30 +73,28 @@ function bizznis_upgrade() {
 		$new_settings   = array( 'theme_version' => '1.6', );
 		$settings = wp_parse_args( $new_settings, $theme_settings );
 		update_option( BIZZNIS_SETTINGS_FIELD, $settings );
-	}	
-	###########################
-	# UPDATE DB TO VERSION 1904
-	###########################
-	if ( bizznis_get_option( 'db_version', null, false ) < '1904' ) {
-		bizznis_upgrade_1904();
 	}
 	*/
+	###########################
+	# UPDATE DB TO VERSION 1001
+	###########################
+	if ( bizznis_get_option( 'db_version', null, false ) < '1001' ) {
+		bizznis_upgrade_1001();
+	}
 	do_action( 'bizznis_upgrade' );
 }
 
 /**
- * Upgrade the database to version 1904.
+ * Upgrade the database to version 1001.
  *
  * @since 1.0.0
  */
-function bizznis_upgrade_1904() {
-	/*
+function bizznis_upgrade_1001() {
 	# Update Settings
 	_bizznis_update_settings( array(
-		'theme_version' => '2.0.0',
-		'db_version'    => '1904',
+		'theme_version' => '1.0.1',
+		'db_version'    => '1001',
 	) );
-	*/
 }
 
 /**

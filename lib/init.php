@@ -103,7 +103,7 @@ class Bizznis_Init {
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
 		define( 'PARENT_THEME_VERSION', 		'1.0.1' );
 		define( 'PARENT_THEME_BRANCH', 			'1.0' );
-		define( 'PARENT_DB_VERSION', 			'1000' );
+		define( 'PARENT_DB_VERSION', 			'1001' );
 		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1388577600' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
