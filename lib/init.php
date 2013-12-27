@@ -163,7 +163,7 @@ class Bizznis_Init {
 		add_theme_support( 'bizznis-archive-layouts' );
 		add_theme_support( 'bizznis-admin-menu' );
 		add_theme_support( 'bizznis-seo-settings-menu' );
-		add_theme_support( 'bizznis-tools-menu' );
+		add_theme_support( 'bizznis-tools-settings-menu' );
 		add_theme_support( 'bizznis-auto-updates' );
 		add_theme_support( 'bizznis-breadcrumbs' );
 		add_theme_support( 'bizznis-responsive-viewport' ); #html5

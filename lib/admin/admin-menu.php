@@ -47,7 +47,7 @@ function bizznis_add_admin_submenus() {
 		return;
 	}
 	# Global variable
-	global $_bizznis_admin_seo_settings;
+	global $_bizznis_admin_seo_settings, $_bizznis_admin_tools, $_bizznis_admin_readme;
 	# Don't add submenu items if Bizznis menu is disabled
 	if( ! current_theme_supports( 'bizznis-admin-menu' ) ) {
 		return;
@@ -59,8 +59,8 @@ function bizznis_add_admin_submenus() {
 		$_bizznis_admin_seo_settings = new Bizznis_Admin_SEO_Settings;
 	}
 	# Add "Import/Export Settings" submenu item
-	if ( current_theme_supports( 'bizznis-tools-menu' ) && get_the_author_meta( 'bizznis_import_export_menu', $user->ID ) ) {
-		$_bizznis_admin_import_export = new Bizznis_Admin_Import_Export;
+	if ( current_theme_supports( 'bizznis-tools-settings-menu' ) && get_the_author_meta( 'bizznis_tools_settings_menu', $user->ID ) ) {
+		$_bizznis_admin_tools = new Bizznis_Admin_Import_Export;
 	}
 	# Add the about page (no menu)
 	new Bizznis_Admin_About;

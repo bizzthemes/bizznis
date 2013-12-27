@@ -79,7 +79,7 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 	/**
 	 * Callback for displaying the Bizznis Import / Export admin page.
 	 *
-	 * Call the bizznis_import_export_form action after the last default table row.
+	 * Call the bizznis_tools_form action after the last default table row.
 	 *
 	 * @since 1.0.0
 	 */
@@ -125,7 +125,7 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 							</p>
 						</td>
 					</tr>
-					<?php do_action( 'bizznis_import_export_form' ); ?>
+					<?php do_action( 'bizznis_tools_form' ); ?>
 				</tbody>
 			</table>
 		</div>
