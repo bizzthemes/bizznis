@@ -565,9 +565,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			</tbody>
 		</table>
 		<?php }
-		# Add option to hook in new settings
-		do_settings_fields( 'settings-general', 'default' );
-		do_settings_sections( 'settings-general' );
 	}
 
 }

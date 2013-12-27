@@ -421,9 +421,6 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 			</tbody>
 		</table>
 		<?php
-		# Add option to hook in new settings
-		do_settings_fields( 'settings-seo', 'default' );
-		do_settings_sections( 'settings-seo' );
 	}
 
 }
