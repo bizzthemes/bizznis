@@ -16,18 +16,79 @@ Text Domain: 	bizznis
 				Please do all modifications in the form of a child theme.
 */
 
-/*
-Imports
----------------------------------------------------------------------------------------------------- */
+/* FILE STRUCTURE:
+
+	Imports
+	HTML5 Reset
+		- Normalize CSS Reset
+		- Box Sizing
+		- Float Clearing
+	Defaults
+		- Typographical Elements
+		- Headings
+		- Objects
+		- Forms
+		- Tables
+		- Column Classes
+	Structure and Layout
+		- Site Containers
+		- Column Widths and Positions
+			- Wrapping div for .content and .sidebar-primary
+			- Content
+			- Primary Sidebar
+			- Secondary Sidebar
+	Common Classes
+		- WordPress
+		- Bizznis
+			- Breadcrumb
+			- Author box
+		- Headings
+	Site Header
+		- Header content
+			- Title area
+			- Full width header, no widgets
+			- Logo, hide text
+			- Header Aside Area
+	Site Navigation
+		- Navigation bar
+		- Navigation menu
+		- Primary Navigation
+		- Secondary Navigation
+		- Site Header Navigation
+		- Mobile Navigation
+	Content Area
+		- Entries
+		- Pagination
+		- Comments
+	Sidebars
+	Site Footer
+		- Footer Widgets
+		- Footer Creds
+	Custom Widgets
+		- Featured Content
+	Plugins
+		- Gravity Forms
+	Media Queries
+		- Retina ready
+		- Responsive width
+		- Responsive Menu
+			- Nav toggle button
+			- Nav toggle items
+			- Nav non-toggle items
+
+*/
+
+/* Imports
+------------------------------------------------------------------------------------------------------------------ */
 
 @import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
 
 
-/*
-HTML5 Reset
----------------------------------------------------------------------------------------------------- */
+/* HTML5 Reset
+------------------------------------------------------------------------------------------------------------------ */
 
-/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+/* Normalize CSS Reset - normalize.css v2.1.3 | MIT License | git.io/normalize
+--------------------------------------------- */
 
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:transparent}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
@@ -78,9 +139,8 @@ input[type="search"],
 	display: table;
 }
 
-/*
-Defaults
----------------------------------------------------------------------------------------------------- */
+/* Defaults
+------------------------------------------------------------------------------------------------------------------ */
 
 /* Typographical Elements
 --------------------------------------------- */
@@ -442,9 +502,8 @@ td {
 	margin-left: 0;
 }
 
-/*
-Structure and Layout
----------------------------------------------------------------------------------------------------- */
+/* Structure and Layout
+------------------------------------------------------------------------------------------------------------------ */
 
 /* Site Containers
 --------------------------------------------- */
@@ -476,7 +535,8 @@ Structure and Layout
 /* Column Widths and Positions
 --------------------------------------------- */
 
-/* Wrapping div for .content and .sidebar-primary */
+/* Wrapping div for .content and .sidebar-primary
+-------------------- */
 
 .content-sidebar-sidebar .content-sidebar-wrap,
 .sidebar-content-sidebar .content-sidebar-wrap,
@@ -493,7 +553,8 @@ Structure and Layout
 	float: right;
 }
 
-/* Content */
+/* Content
+-------------------- */
 
 .content {
 	float: right;
@@ -516,7 +577,8 @@ Structure and Layout
 	width: 100%;
 }
 
-/* Primary Sidebar */
+/* Primary Sidebar
+-------------------- */
 
 .sidebar-primary {
 	float: right;
@@ -528,7 +590,8 @@ Structure and Layout
 	float: left;
 }
 
-/* Secondary Sidebar */
+/* Secondary Sidebar
+-------------------- */
 
 .sidebar-secondary {
 	float: left;
@@ -539,9 +602,8 @@ Structure and Layout
 	float: right;
 }
 
-/*
-Common Classes
----------------------------------------------------------------------------------------------------- */
+/* Common Classes
+------------------------------------------------------------------------------------------------------------------ */
 
 /* WordPress
 --------------------------------------------- */
@@ -632,7 +694,8 @@ img.alignright,
 /* Bizznis
 --------------------------------------------- */
 
-/* Breadcrumb */
+/* Breadcrumb
+-------------------- */
 
 .breadcrumb {
 	font-weight: 300;
@@ -640,7 +703,8 @@ img.alignright,
 	margin-bottom: 4rem;
 }
 
-/* Author box */
+/* Author box
+-------------------- */
 
 .author-box,
 .author-box h1 {
@@ -649,7 +713,7 @@ img.alignright,
 
 .author-box,
 .archive-description {
-	background-color: #F9F8F2;
+	background-color: #f9f8f2;
 	margin-bottom: 40px;
 	margin-bottom: 4rem;
 	overflow: hidden;
@@ -720,7 +784,7 @@ img.alignright,
 
 
 /* Site Header
----------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ */
 
 /* Header content
 --------------------------------------------- */
@@ -730,7 +794,8 @@ img.alignright,
 	padding: 4rem 0;
 }
 
-/* Title area */
+/* Title area
+-------------------- */
 
 .title-area {
 	float: left;
@@ -751,14 +816,16 @@ img.alignright,
 	margin-bottom: 0;
 }
 
-/* Full width header, no widgets */
+/* Full width header, no widgets
+-------------------- */
 
 .header-full-width .title-area,
 .header-full-width .site-title {
 	width: 100%;
 }
 
-/* Logo, hide text */
+/* Logo, hide text
+-------------------- */
 
 .header-image .title-area {
 	background: url('images/logo.png') no-repeat top center;
@@ -780,7 +847,7 @@ img.alignright,
 }
 
 /* Header Aside Area
---------------------------------------------- */
+-------------------- */
 
 .header-aside-area {
 	float: right;
@@ -799,9 +866,10 @@ img.alignright,
 }
 
 /* Site Navigation
----------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ */
 
-/* Navigation bar */
+/* Navigation bar
+-------------------- */
 
 .nav-bizznis {
 	clear: both;
@@ -842,7 +910,8 @@ img.alignright,
 	padding: 1rem 0;
 }
 
-/* Navigation menu */
+/* Navigation menu
+-------------------- */
 
 .menu-bizznis {
 	float: left;
@@ -986,7 +1055,7 @@ img.alignright,
 }
 
 /* Content Area
----------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ */
 
 /* Entries
 --------------------------------------------- */
@@ -1256,7 +1325,7 @@ img.alignright,
 }
 
 /* Sidebars
----------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ */
 
 .sidebar {
 	font-size: 14px;
@@ -1275,7 +1344,7 @@ img.alignright,
 }
 
 .sidebar .widget {
-	background-color: #F9F8F2;
+	background-color: #f9f8f2;
 	margin-bottom: 40px;
 	margin-bottom: 4rem;
 	padding: 40px;
@@ -1283,7 +1352,7 @@ img.alignright,
 }
 
 /* Site Footer
----------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ */
 
 /* Footer Widgets
 --------------------------------------------- */
@@ -1362,8 +1431,8 @@ img.alignright,
 	color: #fff;
 }
 
-/* Widgets
----------------------------------------------------------------------------------------------------- */
+/* Custom Widgets
+------------------------------------------------------------------------------------------------------------------ */
 
 /* Featured Content
 --------------------------------------------- */
@@ -1382,7 +1451,7 @@ img.alignright,
 }
 
 /* Plugins
----------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ */
 
 /* Gravity Forms
 --------------------------------------------- */
@@ -1421,9 +1490,10 @@ div.gform_wrapper .gform_footer input[type="submit"] {
 
 /* Media Queries : design-based, not device-based, so make sure to alter it in your child theme
 				   to adapt per your own content, navigation width etc.
----------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ */
 
-/* Retina ready */
+/* Retina ready
+--------------------------------------------- */
 
 @media
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
@@ -1436,6 +1506,8 @@ only screen and (min-device-pixel-ratio : 1.5) {
 
 }
 
+/* Responsive width
+--------------------------------------------- */
 @media only screen and (max-width: 1139px) {
 
 	.wrap {
@@ -1595,11 +1667,13 @@ only screen and (min-device-pixel-ratio : 1.5) {
 
 }
 
-/* Responsive Menu */
+/* Responsive Menu
+--------------------------------------------- */
 
 @media only screen and (max-width: 767px){
 	
-	/* Nav toggle button */
+	/* Nav toggle button
+	-------------------- */
 	
 	.nav-bizznis-toggle {
 		-webkit-touch-callout: none;
@@ -1639,7 +1713,8 @@ only screen and (min-device-pixel-ratio : 1.5) {
 		display: block;
 	}
 	
-	/* Nav toggle items */
+	/* Nav toggle items
+	-------------------- */
 	
 	.nav-bizznis-toggle ~ .menu-bizznis,
 	.nav-bizznis-toggle ~ .menu-bizznis-extra { 
@@ -1724,7 +1799,8 @@ only screen and (min-device-pixel-ratio : 1.5) {
 		width: 0;
 	}
 	
-	/* Nav non-toggle items */
+	/* Nav non-toggle items
+	-------------------- */
 	
 	.nav-bizznis a,
 	.nav-bizznis > .first > a,
