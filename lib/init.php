@@ -126,7 +126,6 @@ class Bizznis_Init {
 		define( 'PARENT_URL', 					get_template_directory_uri() );
 		define( 'CHILD_URL', 					get_stylesheet_directory_uri() );
 		define( 'BIZZNIS_LIB_URL', 				PARENT_URL . 		'/lib' );
-		define( 'BIZZNIS_CUSTOM_URL', 			CHILD_URL . 		'/custom' );
 		define( 'BIZZNIS_IMAGES_URL', 			PARENT_URL . 		'/images' );
 		define( 'BIZZNIS_ADMIN_URL', 			BIZZNIS_LIB_URL . 	'/admin' );
 		define( 'BIZZNIS_ADMIN_IMAGES_URL', 	BIZZNIS_ADMIN_URL . '/images' );
