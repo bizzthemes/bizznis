@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-26 19:14+0100\n"
-"PO-Revision-Date: 2013-12-26 19:14+0100\n"
+"POT-Creation-Date: 2013-12-28 11:41+0100\n"
+"PO-Revision-Date: 2013-12-28 11:41+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -34,11 +34,11 @@ msgstr ""
 msgid "Search Results for:"
 msgstr ""
 
-#: ../lib/init.php:173
+#: ../lib/init.php:172
 msgid "Primary Navigation Menu"
 msgstr ""
 
-#: ../lib/init.php:174
+#: ../lib/init.php:173
 msgid "Secondary Navigation Menu"
 msgstr ""
 
@@ -81,13 +81,13 @@ msgid ""
 "separate subclasses for each menu."
 msgstr ""
 
-#: ../lib/admin/admin.php:219 ../lib/admin/admin.php:307
+#: ../lib/admin/admin.php:236 ../lib/admin/admin.php:324
 #: ../lib/functions/load-scripts.php:70
 msgid "Are you sure you want to reset?"
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:18 ../lib/admin/meta-term.php:70
-#: ../lib/admin/meta-user.php:115
+#: ../lib/admin/meta-user.php:117
 msgid "Theme SEO Settings"
 msgstr ""
 
@@ -147,12 +147,12 @@ msgid ""
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:148 ../lib/admin/meta-term.php:121
-#: ../lib/admin/meta-user.php:159
+#: ../lib/admin/meta-user.php:161
 msgid "Layout Settings"
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:163 ../lib/admin/meta-term.php:130
-#: ../lib/admin/meta-user.php:169
+#: ../lib/admin/meta-user.php:171
 #, php-format
 msgid "Default Layout set in <a href=\"%s\">Theme Settings</a>"
 msgstr ""
@@ -185,30 +185,29 @@ msgstr ""
 msgid "Leave empty if you do not want to display any intro text."
 msgstr ""
 
-#: ../lib/admin/meta-term.php:74 ../lib/admin/meta-user.php:120
+#: ../lib/admin/meta-term.php:74 ../lib/admin/meta-user.php:122
 #, php-format
 msgid "Custom Document %s"
 msgstr ""
 
-#: ../lib/admin/meta-term.php:80 ../lib/admin/meta-user.php:126
+#: ../lib/admin/meta-term.php:80 ../lib/admin/meta-user.php:128
 #, php-format
 msgid "%s Description"
 msgstr ""
 
-#: ../lib/admin/meta-term.php:86 ../lib/admin/meta-user.php:132
+#: ../lib/admin/meta-term.php:86 ../lib/admin/meta-user.php:134
 #: ../lib/admin/settings-seo.php:342
 msgid "Robots Meta"
 msgstr ""
 
 #: ../lib/admin/meta-term.php:89 ../lib/admin/meta-term.php:91
-#: ../lib/admin/meta-term.php:93 ../lib/admin/meta-user.php:135
-#: ../lib/admin/meta-user.php:137 ../lib/admin/meta-user.php:139
+#: ../lib/admin/meta-term.php:93 ../lib/admin/meta-user.php:137
+#: ../lib/admin/meta-user.php:139 ../lib/admin/meta-user.php:141
 #, php-format
 msgid "Apply %s to this archive?"
 msgstr ""
 
-#: ../lib/admin/meta-term.php:125 ../lib/admin/meta-user.php:164
-#: ../lib/admin/settings-general.php:315
+#: ../lib/admin/meta-term.php:125 ../lib/admin/meta-user.php:166
 msgid "Choose Layout"
 msgstr ""
 
@@ -225,48 +224,52 @@ msgid "Bizznis Admin Menus"
 msgstr ""
 
 #: ../lib/admin/meta-user.php:53
-msgid "Enable Bizznis Admin Menu?"
+msgid "Enable Bizznis Admin Menus?"
 msgstr ""
 
 #: ../lib/admin/meta-user.php:55
-msgid "Enable SEO Settings Submenu?"
+msgid "Enable SEO Settings?"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:73
+#: ../lib/admin/meta-user.php:57
+msgid "Enable Import/Export Tools?"
+msgstr ""
+
+#: ../lib/admin/meta-user.php:75
 msgid "Author Archive Settings"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:74 ../lib/admin/meta-user.php:116
-#: ../lib/admin/meta-user.php:160
+#: ../lib/admin/meta-user.php:76 ../lib/admin/meta-user.php:118
+#: ../lib/admin/meta-user.php:162
 msgid "These settings apply to this author's archive pages."
 msgstr ""
 
-#: ../lib/admin/meta-user.php:78
+#: ../lib/admin/meta-user.php:80
 msgid "Custom Archive Headline"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:81
+#: ../lib/admin/meta-user.php:83
 #, php-format
 msgid "Will display in the %s tag at the top of the first page"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:85
+#: ../lib/admin/meta-user.php:87
 msgid "Custom Description Text"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:88
+#: ../lib/admin/meta-user.php:90
 msgid "This text will be the first paragraph, and display on the first page"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:92
+#: ../lib/admin/meta-user.php:94
 msgid "Author Box"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:95
+#: ../lib/admin/meta-user.php:97
 msgid "Enable Author Box on this User's Posts?"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:97
+#: ../lib/admin/meta-user.php:99
 msgid "Enable Author Box on this User's Archives?"
 msgstr ""
 
@@ -275,80 +278,80 @@ msgstr ""
 msgid "Welcome to Bizznis %s"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:26 ../lib/theme/post.php:310
-msgid "About"
+#: ../lib/admin/settings-about.php:26
+msgid "About Bizznis"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:44
+#: ../lib/admin/settings-about.php:45
 msgid ""
 "This theme will make your website rock solid, secure and ideal to attract "
 "new customers."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:47
+#: ../lib/admin/settings-about.php:48
 msgid ""
 "Forked the best theme framework <br/><small>and made it even better.</small>"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:51
+#: ../lib/admin/settings-about.php:52
 msgid "Business Oriented"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:52
+#: ../lib/admin/settings-about.php:53
 msgid "Reliable and supported. Integrates best business website practices."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:55
+#: ../lib/admin/settings-about.php:56
 msgid "Secure and Lightning Fast"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:56
+#: ../lib/admin/settings-about.php:57
 msgid "Getting your website hacked can become a nightmare. It stops here. Now."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:59
+#: ../lib/admin/settings-about.php:60
 msgid "Decisions, not Options"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:60
+#: ../lib/admin/settings-about.php:61
 msgid ""
 "Truckload of options are gone and every option is carefully thought out."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:66
+#: ../lib/admin/settings-about.php:67
 msgid "HTML5, Mobile Ready"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:67
+#: ../lib/admin/settings-about.php:68
 msgid ""
 "It works even better on Mobile Devices. Cross-browser compatibility and app-"
 "like behaviour. "
 msgstr ""
 
-#: ../lib/admin/settings-about.php:70
+#: ../lib/admin/settings-about.php:71
 msgid "Bizznis and WordPress"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:71
+#: ../lib/admin/settings-about.php:72
 msgid ""
 "Beautifully Integrated, incredibly Powerful. Together, they make the perfect "
 "match."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:74
+#: ../lib/admin/settings-about.php:75
 msgid "Child-theme ready"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:75
+#: ../lib/admin/settings-about.php:76
 msgid ""
 "Do all customizations in form of a child theme and never modify Bizznis code."
 msgstr ""
 
-#: ../lib/admin/settings-about.php:80
+#: ../lib/admin/settings-about.php:81
 msgid "Go to &rarr; Theme Settings"
 msgstr ""
 
-#: ../lib/admin/settings-about.php:81
+#: ../lib/admin/settings-about.php:82
 msgid "Go to &rarr; SEO Settings"
 msgstr ""
 
@@ -407,7 +410,7 @@ msgid ""
 msgstr ""
 
 #: ../lib/admin/settings-general.php:174 ../lib/admin/settings-general.php:229
-#: ../lib/admin/settings-general.php:311
+#: ../lib/admin/settings-general.php:311 ../lib/admin/settings-general.php:315
 #: ../lib/integrations/bbpress/inc/settings.php:71
 msgid "Default Layout"
 msgstr ""
@@ -1469,34 +1472,34 @@ msgstr ""
 msgid "No export options available."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:131
+#: ../lib/admin/upgrade.php:129
 #, php-format
 msgid "Congratulations! You are now rocking Bizznis %s"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:151
+#: ../lib/admin/upgrade.php:149
 msgid "Click here to complete the upgrade"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:168
+#: ../lib/admin/upgrade.php:166
 #, php-format
 msgid ""
 "Bizznis %s is available. <a href=\"%s\" onclick=\"return "
 "bizznis_confirm('%s');\">Update now</a>."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:171
+#: ../lib/admin/upgrade.php:169
 msgid ""
 "Upgrading Bizznis will overwrite the current installed version of Bizznis. "
 "Are you sure you want to upgrade?. \"Cancel\" to stop, \"OK\" to upgrade."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:204
+#: ../lib/admin/upgrade.php:202
 #, php-format
 msgid "Bizznis %s is available for %s"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:205
+#: ../lib/admin/upgrade.php:203
 #, php-format
 msgid ""
 "Bizznis %s is now available. We have provided 1-click updates for this "
@@ -1819,6 +1822,10 @@ msgstr ""
 
 #: ../lib/theme/post.php:226
 msgid "Sorry, no content matched your criteria."
+msgstr ""
+
+#: ../lib/theme/post.php:310
+msgid "About"
 msgstr ""
 
 #: ../lib/theme/post.php:349 ../lib/theme/post.php:396
