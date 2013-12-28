@@ -22,6 +22,7 @@ Changelog
 
 * Updated screenshot images of the theme
 * Fixed outbound links to theme support pages
+* Detailed list of diff with previous version https://github.com/bizzthemes/bizznis/compare/1.0.0...1.0.1
 
 ### 1.0.0
 
