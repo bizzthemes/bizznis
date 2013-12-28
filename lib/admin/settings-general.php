@@ -308,11 +308,11 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			</tbody>
 		</table>
 		<!-- Default Layout -->
-		<h3><?php _e( 'Default Layout', 'bizznis' ); ?></h3>
+		<!--<h3><?php _e( 'Default Layout', 'bizznis' ); ?></h3>-->
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
+					<th scope="row" valign="top"><?php _e( 'Default Layout', 'bizznis' ); ?></th>
 					<td>
 						<div class="bizznis-layout-selector">
 							<p><?php bizznis_layout_selector( array( 'name' => $this->get_field_name( 'site_layout' ), 'selected' => $this->get_field_value( 'site_layout' ), 'type' => 'site' ) ); ?></p>
