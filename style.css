@@ -1100,14 +1100,6 @@ img.alignright,
 	margin-left: 4rem;
 }
 
-.entry-content ol li {
-	list-style-type: decimal;
-}
-
-.entry-content ul li {
-	list-style-type: disc;
-}
-
 .entry-content ol ol,
 .entry-content ul ul,
 .entry-content .wp-caption p {
