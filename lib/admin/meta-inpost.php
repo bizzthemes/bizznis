@@ -15,7 +15,7 @@ add_action( 'admin_menu', 'bizznis_add_inpost_seo_box' );
 function bizznis_add_inpost_seo_box() {
 	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
 		if ( post_type_supports( $type, 'bizznis-seo' ) ) {
-			add_meta_box( 'bizznis_inpost_seo_box', __( 'Theme SEO Settings', 'bizznis' ), 'bizznis_inpost_seo_box', $type, 'normal', 'high' );
+			add_meta_box( 'bizznis_inpost_seo_box', __( 'SEO Settings', 'bizznis' ), 'bizznis_inpost_seo_box', $type, 'normal', 'core' );
 		}
 	}
 }
@@ -145,7 +145,7 @@ function bizznis_add_inpost_layout_box() {
 	}
 	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
 		if ( post_type_supports( $type, 'bizznis-layouts' ) ) {
-			add_meta_box( 'bizznis_inpost_layout_box', __( 'Layout Settings', 'bizznis' ), 'bizznis_inpost_layout_box', $type, 'normal', 'high' );
+			add_meta_box( 'bizznis_inpost_layout_box', __( 'Layout Settings', 'bizznis' ), 'bizznis_inpost_layout_box', $type, 'normal', 'core' );
 		}
 	}
 }
