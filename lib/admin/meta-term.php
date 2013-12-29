@@ -67,7 +67,7 @@ function bizznis_add_taxonomy_seo_options() {
 function bizznis_taxonomy_seo_options( $tag, $taxonomy ) {
 	$tax = get_taxonomy( $taxonomy );
 	?>
-	<h3><?php _e( 'Theme SEO Settings', 'bizznis' ); ?></h3>
+	<h3><?php _e( 'SEO Settings', 'bizznis' ); ?></h3>
 	<table class="form-table">
 		<tbody>
 			<tr class="form-field">
