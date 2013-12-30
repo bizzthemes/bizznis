@@ -30,8 +30,8 @@ class Bizznis_Init {
 	 * @since 1.0.0
 	 */
 	public function launch() {
-		# Run the bizznis_pre_framework Hook
-		do_action( 'bizznis_pre_framework' );
+		# Run the hook before bizznis framework is loaded
+		do_action( 'bizznis_pre_load' );
 		# Stop here, if necessary
 	if ( defined( 'BIZZNIS_LOAD_FRAMEWORK' ) && BIZZNIS_LOAD_FRAMEWORK === false ) {
 		return;
