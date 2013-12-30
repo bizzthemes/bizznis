@@ -565,6 +565,8 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			</tbody>
 		</table>
 		<?php }
+		# The 'bizznis_theme_settings_form' action hook is called at the end of this function.
+		do_action( 'bizznis_theme_settings_form', $this->pagehook );
 	}
 
 }
