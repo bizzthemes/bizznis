@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-28 11:41+0100\n"
-"PO-Revision-Date: 2013-12-28 11:41+0100\n"
+"POT-Creation-Date: 2013-12-30 10:59+0100\n"
+"PO-Revision-Date: 2013-12-30 10:59+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -87,8 +87,9 @@ msgid "Are you sure you want to reset?"
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:18 ../lib/admin/meta-term.php:70
-#: ../lib/admin/meta-user.php:117
-msgid "Theme SEO Settings"
+#: ../lib/admin/settings-seo.php:134 ../lib/admin/settings-seo.php:169
+#: ../lib/admin/settings-tools.php:167
+msgid "SEO Settings"
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:31
@@ -273,6 +274,10 @@ msgstr ""
 msgid "Enable Author Box on this User's Archives?"
 msgstr ""
 
+#: ../lib/admin/meta-user.php:117
+msgid "Theme SEO Settings"
+msgstr ""
+
 #: ../lib/admin/settings-about.php:25
 #, php-format
 msgid "Welcome to Bizznis %s"
@@ -411,7 +416,7 @@ msgstr ""
 
 #: ../lib/admin/settings-general.php:174 ../lib/admin/settings-general.php:229
 #: ../lib/admin/settings-general.php:311 ../lib/admin/settings-general.php:315
-#: ../lib/integrations/bbpress/inc/settings.php:71
+#: ../lib/integrations/bbpress/inc/settings.php:79
 msgid "Default Layout"
 msgstr ""
 
@@ -911,11 +916,6 @@ msgstr ""
 
 #: ../lib/admin/settings-seo.php:25 ../lib/admin/settings-seo.php:26
 msgid "Theme SEO"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:134 ../lib/admin/settings-seo.php:169
-#: ../lib/admin/settings-tools.php:167
-msgid "SEO Settings"
 msgstr ""
 
 #: ../lib/admin/settings-seo.php:135
@@ -1652,7 +1652,8 @@ msgid "Log out"
 msgstr ""
 
 #: ../lib/integrations/bbpress/bbpress.php:58
-msgid "bbPress Sidebar"
+#: ../lib/integrations/bbpress/inc/settings.php:89
+msgid "Forums Sidebar"
 msgstr ""
 
 #: ../lib/integrations/bbpress/bbpress.php:59
@@ -1663,36 +1664,42 @@ msgstr ""
 msgid "bbPress Sidebar Widget Area"
 msgstr ""
 
-#: ../lib/integrations/bbpress/inc/settings.php:58
+#: ../lib/integrations/bbpress/inc/settings.php:60
 msgid "bbPress Integration"
 msgstr ""
 
-#: ../lib/integrations/bbpress/inc/settings.php:69
-msgid "Forum Layout: "
+#: ../lib/integrations/bbpress/inc/settings.php:76
+msgid "Forums Layout"
 msgstr ""
 
-#: ../lib/integrations/bbpress/inc/settings.php:81
+#: ../lib/integrations/bbpress/inc/settings.php:92
 msgid "Register a sidebar that will be used on all bbPress pages"
 msgstr ""
 
-#: ../lib/integrations/bbpress/inc/settings.php:83
+#: ../lib/integrations/bbpress/inc/settings.php:93
 #, php-format
 msgid ""
-"This option will add addition sidebar in your <a href=\"%s\">Widgets screen</"
-"a>. Created sidebar will replace Primary Sidebar on all bbPress pages."
+"This option will add additional sidebar in your <a href=\"%s\">Widgets "
+"screen</a>. Created sidebar will replace Primary Sidebar on all bbPress "
+"pages."
 msgstr ""
 
-#: ../lib/integrations/bbpress/inc/settings.php:86
+#: ../lib/integrations/bbpress/inc/settings.php:97
+msgid "Descriptions"
+msgstr ""
+
+#: ../lib/integrations/bbpress/inc/settings.php:100
 msgid "Remove forum and topic descriptions."
 msgstr ""
 
-#: ../lib/integrations/bbpress/inc/settings.php:88
+#: ../lib/integrations/bbpress/inc/settings.php:101
 msgid ""
 "This option will remove topic descriptions. E.g. \"This forum contains "
 "[&hellip;]\" notices."
 msgstr ""
 
 #: ../lib/integrations/woocommerce/woocommerce.php:70
+#: ../lib/integrations/woocommerce/inc/settings.php:70
 msgid "Shop Sidebar"
 msgstr ""
 
@@ -1717,19 +1724,19 @@ msgctxt "endquote"
 msgid "&rdquo;"
 msgstr ""
 
-#: ../lib/integrations/woocommerce/inc/settings.php:52
+#: ../lib/integrations/woocommerce/inc/settings.php:54
 msgid "WooCoomerce Integration"
 msgstr ""
 
-#: ../lib/integrations/woocommerce/inc/settings.php:64
+#: ../lib/integrations/woocommerce/inc/settings.php:73
 msgid "Register a sidebar that will be used on all shop pages"
 msgstr ""
 
-#: ../lib/integrations/woocommerce/inc/settings.php:66
+#: ../lib/integrations/woocommerce/inc/settings.php:74
 #, php-format
 msgid ""
-"This option will add addition sidebar in your <a href=\"%s\">Widgets screen</"
-"a>. Created sidebar will replace Primary Sidebar on all shop pages."
+"This option will add additional sidebar in your <a href=\"%s\">Widgets "
+"screen</a>. Created sidebar will replace Primary Sidebar on all shop pages."
 msgstr ""
 
 #: ../lib/theme/comments.php:45
