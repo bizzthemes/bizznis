@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-30 10:59+0100\n"
-"PO-Revision-Date: 2013-12-30 10:59+0100\n"
+"POT-Creation-Date: 2013-12-30 11:01+0100\n"
+"PO-Revision-Date: 2013-12-30 11:01+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -87,8 +87,8 @@ msgid "Are you sure you want to reset?"
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:18 ../lib/admin/meta-term.php:70
-#: ../lib/admin/settings-seo.php:134 ../lib/admin/settings-seo.php:169
-#: ../lib/admin/settings-tools.php:167
+#: ../lib/admin/meta-user.php:117 ../lib/admin/settings-seo.php:134
+#: ../lib/admin/settings-seo.php:169 ../lib/admin/settings-tools.php:167
 msgid "SEO Settings"
 msgstr ""
 
@@ -272,10 +272,6 @@ msgstr ""
 
 #: ../lib/admin/meta-user.php:99
 msgid "Enable Author Box on this User's Archives?"
-msgstr ""
-
-#: ../lib/admin/meta-user.php:117
-msgid "Theme SEO Settings"
 msgstr ""
 
 #: ../lib/admin/settings-about.php:25

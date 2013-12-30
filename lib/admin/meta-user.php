@@ -114,7 +114,7 @@ function bizznis_user_seo_fields( $user ) {
 		return false;
 	}
 	?>
-	<h3><?php _e( 'Theme SEO Settings', 'bizznis' ); ?></h3>
+	<h3><?php _e( 'SEO Settings', 'bizznis' ); ?></h3>
 	<p><span class="description"><?php _e( 'These settings apply to this author\'s archive pages.', 'bizznis' ); ?></span></p>
 	<table class="form-table">
 		<tbody>
