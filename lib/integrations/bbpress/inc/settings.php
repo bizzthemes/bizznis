@@ -19,7 +19,7 @@ class Bizznis_BBP_Settings {
 		# Saniztize options
 		add_action( 'bizznis_settings_sanitizer_init',  array( $this, 'sanitization_filters' ) );
 		# Register settings
-		add_action( 'bizznis_theme_settings_metaboxes', array( $this, 'register_settings_box' ) );
+		add_action( 'admin_init', 						array( $this, 'register_settings_options' ) );
 	}
 
 	/**
@@ -49,43 +49,60 @@ class Bizznis_BBP_Settings {
 	}
 
 	/**
-	 * Register the settings metabox
+	 * Register the settings options
 	 *
-	 * @since 1.0.0
+	 * @since 1.0.2
 	 * @param $_bizznis_theme_settings_pagehook
 	 */
-	function register_settings_box( $_bizznis_theme_settings_pagehook ) {
-		add_meta_box( 'bizznis-theme-settings-bbp', __( 'bbPress Integration', 'bizznis' ), array( $this, 'settings_box' ), $_bizznis_theme_settings_pagehook, 'main', 'low' );
+	function register_settings_options( $_bizznis_theme_settings_pagehook ) {
+		add_settings_section(  
+			'bbp_settings_section',							// ID used to identify this section and with which to register options  
+			__( 'bbPress Integration', 'bizznis' ),			// Title to be displayed on the administration page  
+			array( $this, 'settings_options' ),					// Callback used to render the description of the section  
+			'bizznis'										// Page ID on which to add this section of options  
+		); 
 	}
 
 	/**
-	 * Render the settings metabox
+	 * Render the settings options
 	 *
-	 * @since 1.0.0
+	 * @since 1.0.2
 	 */
-	function settings_box() {	
+	function settings_options() {	
 		?>
-		<p>
-			<label for="bizznis_bbp_layout"><?php _e( 'Forum Layout: ', 'bizznis' ); ?></label>
-			<select name="<?php echo BIZZNIS_SETTINGS_FIELD; ?>[bizznis_bbp_layout]" id="bizznis_bbp_layout">
-				<option value="bizznis-default" <?php selected( bizznis_get_option( 'bizznis_bbp_layout' ), 'bizznis-default' ); ?>><?php _e( 'Default Layout', 'bizznis' ); ?></option> 
-				<?php
-				foreach ( bizznis_get_layouts() as $id => $data ) {	
-					echo '<option value="' . esc_attr( $id ) . '" ' . selected( bizznis_get_option( 'bizznis_bbp_layout' ), esc_attr( $id ) ) . '>' . esc_attr( $data['label'] ) . '</option>';
-				}
-				?>
-			</select>
-		</p>
-		<p>
-			<input type="checkbox" id="bizznis_bbp_sidebar" name="<?php echo BIZZNIS_SETTINGS_FIELD; ?>[bizznis_bbp_sidebar]" value="1" <?php checked( bizznis_get_option( 'bizznis_bbp_sidebar' ) ); ?> />
-			<label for="bizznis_bbp_sidebar"><?php _e( 'Register a sidebar that will be used on all bbPress pages', 'bizznis' ); ?></label>
-		</p>
-		<p><span class="description"><?php printf( __( 'This option will add addition sidebar in your <a href="%s">Widgets screen</a>. Created sidebar will replace Primary Sidebar on all bbPress pages.', 'bizznis' ), admin_url( 'widgets.php' ) ); ?></span></p>
-		<p>
-			<input type="checkbox" id="bizznis_bbp_desc" name="<?php echo BIZZNIS_SETTINGS_FIELD; ?>[bizznis_bbp_desc]" value="1" <?php checked( bizznis_get_option( 'bizznis_bbp_desc' ) ); ?> />
-			<label for="bizznis_bbp_desc"><?php _e( 'Remove forum and topic descriptions.', 'bizznis' ); ?></label>
-		</p>
-		<p><span class="description"><?php _e( 'This option will remove topic descriptions. E.g. "This forum contains [&hellip;]" notices.', 'bizznis' ); ?></span></p>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Forums Layout', 'bizznis' ); ?></th>
+					<td>
+						<select name="<?php echo BIZZNIS_SETTINGS_FIELD; ?>[bizznis_bbp_layout]" id="bizznis_bbp_layout">
+							<option value="bizznis-default" <?php selected( bizznis_get_option( 'bizznis_bbp_layout' ), 'bizznis-default' ); ?>><?php _e( 'Default Layout', 'bizznis' ); ?></option> 
+							<?php
+							foreach ( bizznis_get_layouts() as $id => $data ) {	
+								echo '<option value="' . esc_attr( $id ) . '" ' . selected( bizznis_get_option( 'bizznis_bbp_layout' ), esc_attr( $id ) ) . '>' . esc_attr( $data['label'] ) . '</option>';
+							}
+							?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Forums Sidebar', 'bizznis' ); ?></th>
+					<td>
+						<input type="checkbox" id="bizznis_bbp_sidebar" name="<?php echo BIZZNIS_SETTINGS_FIELD; ?>[bizznis_bbp_sidebar]" value="1" <?php checked( bizznis_get_option( 'bizznis_bbp_sidebar' ) ); ?> />
+						<label for="bizznis_bbp_sidebar"><?php _e( 'Register a sidebar that will be used on all bbPress pages', 'bizznis' ); ?></label>
+						<p class="description"><?php printf( __( 'This option will add additional sidebar in your <a href="%s">Widgets screen</a>. Created sidebar will replace Primary Sidebar on all bbPress pages.', 'bizznis' ), admin_url( 'widgets.php' ) ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Descriptions', 'bizznis' ); ?></th>
+					<td>
+						<input type="checkbox" id="bizznis_bbp_desc" name="<?php echo BIZZNIS_SETTINGS_FIELD; ?>[bizznis_bbp_desc]" value="1" <?php checked( bizznis_get_option( 'bizznis_bbp_desc' ) ); ?> />
+						<label for="bizznis_bbp_desc"><?php _e( 'Remove forum and topic descriptions.', 'bizznis' ); ?></label>
+						<p class="description"><?php _e( 'This option will remove topic descriptions. E.g. "This forum contains [&hellip;]" notices.', 'bizznis' ); ?></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		<?php
 	}
 }

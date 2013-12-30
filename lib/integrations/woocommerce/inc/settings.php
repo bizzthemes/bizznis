@@ -19,7 +19,7 @@ class Bizznis_WC_Settings {
 		# Saniztize options
 		add_action( 'bizznis_settings_sanitizer_init',  array( $this, 'sanitization_filters' ) );
 		# Register settings
-		add_action( 'bizznis_theme_settings_metaboxes', array( $this, 'register_settings_box' ) );
+		add_action( 'admin_init', 						array( $this, 'register_settings_options' ) );
 	}
 
 	/**
@@ -43,27 +43,39 @@ class Bizznis_WC_Settings {
 	}
 
 	/**
-	 * Register the settings metabox
+	 * Register the settings options
 	 *
-	 * @since 1.0.0
+	 * @since 1.0.2
 	 * @param $_bizznis_theme_settings_pagehook
 	 */
-	function register_settings_box( $_bizznis_theme_settings_pagehook ) {
-		add_meta_box( 'bizznis-theme-settings-wc', __( 'WooCoomerce Integration', 'bizznis' ), array( $this, 'settings_box' ), $_bizznis_theme_settings_pagehook, 'main', 'low' );
+	function register_settings_options( $_bizznis_theme_settings_pagehook ) {
+		add_settings_section(  
+			'wc_settings_section',							// ID used to identify this section and with which to register options  
+			__( 'WooCoomerce Integration', 'bizznis' ),		// Title to be displayed on the administration page  
+			array( $this, 'settings_options' ),					// Callback used to render the description of the section  
+			'bizznis'										// Page ID on which to add this section of options  
+		); 
 	}
 
 	/**
-	 * Render the settings metabox
+	 * Render the settings options
 	 *
-	 * @since 1.0.0
+	 * @since 1.0.2
 	 */
-	function settings_box() {	
+	function settings_options() {	
 		?>
-		<p>
-			<input type="checkbox" id="bizznis_wc_sidebar" name="<?php echo BIZZNIS_SETTINGS_FIELD; ?>[bizznis_wc_sidebar]" value="1" <?php checked( bizznis_get_option( 'bizznis_wc_sidebar' ) ); ?> />
-			<label for="bizznis_wc_sidebar"><?php _e( 'Register a sidebar that will be used on all shop pages', 'bizznis' ); ?></label>
-		</p>
-		<p><span class="description"><?php printf( __( 'This option will add addition sidebar in your <a href="%s">Widgets screen</a>. Created sidebar will replace Primary Sidebar on all shop pages.', 'bizznis' ), admin_url( 'widgets.php' ) ); ?></span></p>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row" valign="top"><?php _e( 'Shop Sidebar', 'bizznis' ); ?></th>
+					<td>
+						<input type="checkbox" id="bizznis_wc_sidebar" name="<?php echo BIZZNIS_SETTINGS_FIELD; ?>[bizznis_wc_sidebar]" value="1" <?php checked( bizznis_get_option( 'bizznis_wc_sidebar' ) ); ?> />
+						<label for="bizznis_wc_sidebar"><?php _e( 'Register a sidebar that will be used on all shop pages', 'bizznis' ); ?></label>
+						<p><span class="description"><?php printf( __( 'This option will add additional sidebar in your <a href="%s">Widgets screen</a>. Created sidebar will replace Primary Sidebar on all shop pages.', 'bizznis' ), admin_url( 'widgets.php' ) ); ?></span></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		<?php
 	}
 }

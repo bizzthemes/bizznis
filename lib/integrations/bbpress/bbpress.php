@@ -55,7 +55,7 @@ class Bizznis_BBP {
 		if ( bizznis_get_option( 'bizznis_bbp_sidebar' ) ) {
 			bizznis_register_sidebar( array( 
 				'id'          => 'sidebar-bbpress', 
-				'name'        => __( 'bbPress Sidebar', 'bizznis' ), 
+				'name'        => __( 'Forums Sidebar', 'bizznis' ), 
 				'description' => __( 'This is the primary sidebar used on all bbPress pages.', 'bizznis' )
 				) 
 			);
@@ -96,20 +96,8 @@ class Bizznis_BBP {
 	 * @since 1.0.0
 	 */
 	public function bbp_post_actions() {
-		# Load up all the actions
-		add_action( 'bizznis_before', array( $this, 'load_bbp_actions' ) );
-	}
-	
-	/**
-	 * Tweak Bizznis post actions
-	 *
-	 * @since 1.0.0
-	 */
-	public function load_bbp_actions() {
-		# Stop here, if not on a bbpress template
-		if ( ! is_bbpress() ) {
-			return;
-		}
+		# Stop if not on a bbPress template page
+		add_action( 'bizznis_before', array( $this, 'check_if_bbp_template' ) );
 		# Remove bizznis breadcrumbs
 		remove_action( 'bizznis_loop', 'bizznis_do_breadcrumbs', 4 );
 		# Remove post info & meta
@@ -142,6 +130,19 @@ class Bizznis_BBP {
 			add_filter( 'bbp_get_single_forum_description', '__return_false' );
 			add_filter( 'bbp_get_single_topic_description', '__return_false' );
 		}
+	}
+	
+	/**
+	 * Check if bbPress template
+	 *
+	 * @since 1.0.2
+	 */
+	public function check_if_bbp_template() {
+		# Stop here, if not on a bbpress template
+		if ( ! is_bbpress() ) {
+			return;
+		}
+		
 	}
 	
 	/**
