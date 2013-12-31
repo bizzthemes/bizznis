@@ -18,6 +18,12 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.2
+
+* Added theme settings menu to admin bar on front
+* Restructured theme settings from metaboxes to from fields
+* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.1...1.0.2
+
 ### 1.0.1
 
 * Updated screenshot images of the theme
