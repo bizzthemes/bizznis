@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-30 11:01+0100\n"
-"PO-Revision-Date: 2013-12-30 11:01+0100\n"
+"POT-Creation-Date: 2013-12-31 17:16+0100\n"
+"PO-Revision-Date: 2013-12-31 17:16+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -47,6 +47,21 @@ msgstr ""
 msgid ""
 "<a href=\"%s\" target=\"_blank\" class=\"feedback\" title=\"Report a Bug"
 "\">Report a Bug</a>"
+msgstr ""
+
+#: ../lib/admin/admin-menu.php:96 ../lib/admin/settings-general.php:25
+#: ../lib/admin/settings-general.php:26 ../lib/admin/settings-general.php:165
+#: ../lib/admin/settings-general.php:219 ../lib/admin/settings-tools.php:163
+msgid "Theme Settings"
+msgstr ""
+
+#: ../lib/admin/admin-menu.php:105 ../lib/admin/settings-seo.php:25
+#: ../lib/admin/settings-seo.php:26
+msgid "Theme SEO"
+msgstr ""
+
+#: ../lib/admin/admin-menu.php:113 ../lib/admin/settings-tools.php:28
+msgid "Theme Tools"
 msgstr ""
 
 #: ../lib/admin/admin.php:41 ../lib/admin/settings-general.php:34
@@ -354,12 +369,6 @@ msgstr ""
 
 #: ../lib/admin/settings-about.php:82
 msgid "Go to &rarr; SEO Settings"
-msgstr ""
-
-#: ../lib/admin/settings-general.php:25 ../lib/admin/settings-general.php:26
-#: ../lib/admin/settings-general.php:165 ../lib/admin/settings-general.php:219
-#: ../lib/admin/settings-tools.php:163
-msgid "Theme Settings"
 msgstr ""
 
 #: ../lib/admin/settings-general.php:51
@@ -910,10 +919,6 @@ msgid ""
 "document source."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:25 ../lib/admin/settings-seo.php:26
-msgid "Theme SEO"
-msgstr ""
-
 #: ../lib/admin/settings-seo.php:135
 msgid ""
 "Bizznis SEO (search engine optimization) is polite, and will disable itself "
@@ -1346,10 +1351,6 @@ msgstr ""
 msgid "Theme Import/Export Tools"
 msgstr ""
 
-#: ../lib/admin/settings-tools.php:28
-msgid "Theme Tools"
-msgstr ""
-
 #: ../lib/admin/settings-tools.php:45 ../lib/admin/settings-tools.php:59
 msgid "Import/Export"
 msgstr ""
@@ -1468,34 +1469,34 @@ msgstr ""
 msgid "No export options available."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:129
+#: ../lib/admin/upgrade.php:148
 #, php-format
 msgid "Congratulations! You are now rocking Bizznis %s"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:149
+#: ../lib/admin/upgrade.php:168
 msgid "Click here to complete the upgrade"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:166
+#: ../lib/admin/upgrade.php:185
 #, php-format
 msgid ""
 "Bizznis %s is available. <a href=\"%s\" onclick=\"return "
 "bizznis_confirm('%s');\">Update now</a>."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:169
+#: ../lib/admin/upgrade.php:188
 msgid ""
 "Upgrading Bizznis will overwrite the current installed version of Bizznis. "
 "Are you sure you want to upgrade?. \"Cancel\" to stop, \"OK\" to upgrade."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:202
+#: ../lib/admin/upgrade.php:221
 #, php-format
 msgid "Bizznis %s is available for %s"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:203
+#: ../lib/admin/upgrade.php:222
 #, php-format
 msgid ""
 "Bizznis %s is now available. We have provided 1-click updates for this "
