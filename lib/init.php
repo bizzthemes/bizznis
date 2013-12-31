@@ -55,7 +55,6 @@ class Bizznis_Init {
 		# Load Admin
 	if ( is_admin() ) {
 		load_template( BIZZNIS_ADMIN_DIR . '/admin.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/admin-menu.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-general.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-seo.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-tools.php' );
@@ -65,6 +64,7 @@ class Bizznis_Init {
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-user.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/upgrade.php' );
 	}
+		load_template( BIZZNIS_ADMIN_DIR . '/admin-menu.php' ); #also loaded on front
 		# Load Functions
 		require_if_theme_supports( 'bizznis-breadcrumbs', BIZZNIS_FUNCTIONS_DIR . '/breadcrumb.php' ); #optional
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/compat.php' );

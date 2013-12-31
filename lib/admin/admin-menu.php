@@ -75,3 +75,44 @@ add_action( 'bizznis_admin_title_right', 'bizznis_add_admin_menu_feedback', 15 )
 function bizznis_add_admin_menu_feedback() {
 	printf( __( '<a href="%s" target="_blank" class="feedback" title="Report a Bug">Report a Bug</a>', 'bizznis' ), esc_url( 'https://github.com/bizzthemes/bizznis/issues' ) );
 }
+
+/**
+ * Add bizznis theme settings menus to admin bar on front
+ *
+ * @since 1.0.2
+ */
+add_action( 'admin_bar_menu', 'bizznis_link_to_theme_settings', 999 );
+function bizznis_link_to_theme_settings( $wp_admin_bar ) {
+	# Stop here, if viewing the admin
+	if ( is_admin() ) {
+		return;
+	}
+	# Don't add menu item if programatically disabled
+	if( ! current_theme_supports( 'bizznis-admin-menu' ) ) {
+		return;
+	}
+	$wp_admin_bar->add_node( array(
+		'id'    	=> 'theme-settings',
+		'title' 	=> __( 'Theme Settings', 'bizznis' ),
+		'href'  	=> add_query_arg( array( 'page' => 'bizznis' ), admin_url( 'themes.php' ) ),
+		'parent'	=> 'site-name',
+	) );
+	# Get current user
+	$user = wp_get_current_user();
+	if ( current_theme_supports( 'bizznis-seo-settings-menu' ) && get_the_author_meta( 'bizznis_seo_settings_menu', $user->ID ) ) {
+		$wp_admin_bar->add_node( array(
+			'id'    	=> 'theme-seo',
+			'title' 	=> __( 'Theme SEO', 'bizznis' ),
+			'href'  	=> add_query_arg( array( 'page' => 'bizznis-seo' ), admin_url( 'themes.php' ) ),
+			'parent'	=> 'site-name',
+		) );
+	}
+	if ( current_theme_supports( 'bizznis-tools-settings-menu' ) && get_the_author_meta( 'bizznis_tools_settings_menu', $user->ID ) ) {
+		$wp_admin_bar->add_node( array(
+			'id'    	=> 'theme-tools',
+			'title' 	=> __( 'Theme Tools', 'bizznis' ),
+			'href'  	=> add_query_arg( array( 'page' => 'bizznis-tools' ), admin_url( 'themes.php' ) ),
+			'parent'	=> 'site-name',
+		) );
+	}
+}
