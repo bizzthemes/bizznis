@@ -18,6 +18,12 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.3
+
+* Added editor-style file to match TinyMCE with actual content
+* Added theme settings to admin bar on front
+* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.2...1.0.3
+
 ### 1.0.2
 
 * Added theme settings menu to admin bar on front

@@ -87,6 +87,12 @@ function bizznis_upgrade() {
 	if ( bizznis_get_option( 'db_version', null, false ) < '1002' ) {
 		bizznis_upgrade_1002();
 	}
+	###########################
+	# UPDATE DB TO VERSION 1003
+	###########################
+	if ( bizznis_get_option( 'db_version', null, false ) < '1003' ) {
+		bizznis_upgrade_1003();
+	}
 	do_action( 'bizznis_upgrade' );
 }
 
@@ -113,6 +119,19 @@ function bizznis_upgrade_1002() {
 	_bizznis_update_settings( array(
 		'theme_version' => '1.0.2',
 		'db_version'    => '1002',
+	) );
+}
+
+/**
+ * Upgrade the database to version 1002.
+ *
+ * @since 1.0.2
+ */
+function bizznis_upgrade_1003() {
+	# Update Settings
+	_bizznis_update_settings( array(
+		'theme_version' => '1.0.3',
+		'db_version'    => '1003',
 	) );
 }
 
