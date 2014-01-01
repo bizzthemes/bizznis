@@ -96,8 +96,25 @@ class Bizznis_BBP {
 	 * @since 1.0.0
 	 */
 	public function bbp_post_actions() {
-		# Stop if not on a bbPress template page
-		add_action( 'bizznis_before', array( $this, 'check_if_bbp_template' ) );
+		# Remove forum/topic descriptions
+		if ( bizznis_get_option( 'bizznis_bbp_desc' ) ) {
+			add_filter( 'bbp_get_single_forum_description', '__return_false' );
+			add_filter( 'bbp_get_single_topic_description', '__return_false' );
+		}
+		# Manipulate with bizznis hooks
+		add_action( 'bizznis_before', array( $this, 'bizznis_post_actions' ) );
+	}
+	
+	/**
+	 * Check if bbPress template
+	 *
+	 * @since 1.0.2
+	 */
+	public function bizznis_post_actions() {
+		# Stop here, if not on a bbpress template
+		if ( ! is_bbpress() ) {
+			return;
+		}
 		# Remove bizznis breadcrumbs
 		remove_action( 'bizznis_loop', 'bizznis_do_breadcrumbs', 4 );
 		# Remove post info & meta
@@ -124,25 +141,7 @@ class Bizznis_BBP {
 		}
 		# Re-add the_content back
 		add_action( 'bizznis_post_content',  'the_content' );
-		add_action( 'bizznis_entry_content', 'the_content' );
-		# Remove forum/topic descriptions
-		if ( bizznis_get_option( 'bizznis_bbp_desc' ) ) {
-			add_filter( 'bbp_get_single_forum_description', '__return_false' );
-			add_filter( 'bbp_get_single_topic_description', '__return_false' );
-		}
-	}
-	
-	/**
-	 * Check if bbPress template
-	 *
-	 * @since 1.0.2
-	 */
-	public function check_if_bbp_template() {
-		# Stop here, if not on a bbpress template
-		if ( ! is_bbpress() ) {
-			return;
-		}
-		
+		add_action( 'bizznis_entry_content', 'the_content' );		
 	}
 	
 	/**
