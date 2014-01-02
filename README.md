@@ -18,6 +18,11 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.4
+
+* Added the_post_thumbnail to process featured images
+* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.3...1.0.4
+
 ### 1.0.3
 
 * Added editor-style file to match TinyMCE with actual content
