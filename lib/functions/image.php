@@ -53,7 +53,8 @@ function bizznis_get_image( $args = array() ) {
 	# Check for post image (native WP)
 	if ( has_post_thumbnail() && ( 0 === $args['num'] ) ) {
 		$id = get_post_thumbnail_id();
-		$html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
+		// $html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
+		$html = get_the_post_thumbnail( $post->ID, $args['size'], $args['attr'] );
 		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
 	}
 	# Else if first-attached, pull the first (default) image attachment
