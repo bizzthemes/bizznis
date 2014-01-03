@@ -1,6 +1,6 @@
 This integration allows you to seamlessly integrate bbPress with the Bizznis Parent and Bizznis child themes.
 
-== Description ==
+##Descriptio
 
 This integration does the following:
 
@@ -13,18 +13,18 @@ This integration does the following:
 
 The forum sidebar and layout options are located on the Bizznis Settings page, look for 'bbPress Integration'.
 
-== Installation ==
+##Installation
 
 1. Add this code to your Bizznis child theme's `functions.php` file: `add_theme_support( 'bizznis-bbpress' );`
 2. That's it. Navigate to your forum pages and you should see the new bbPress in action.
 
-== Template Customization ==
+##Template Customization
 
 Take copies of bbPress theme files, located inside `wp-content/plugins/templates/default/bbpress/` 
 and place these copies in a folder called `bbpress` in the root of your child theme's main folder, 
 like this: `wp-content/themes/my-child-theme/bbpress/`. Now modify them however you like.
 
-== How does the integration handle bbPress's CSS? ==
+##How does the integration handle bbPress's CSS?
 
 Bizznis Integration for bbPress does not modify bbPress's way of working with CSS. By default,
 bbPress provides its own `bbpress.css` file containing basic styles for the shop pages which is located here:
@@ -44,6 +44,6 @@ function remove_bbp_styles(){
 If you are using a Bizznis child theme specially designed for bbPress, refer to the theme's documentation to find out
 if all of the above has been been taken care of for you already.
 
-== Technical Info ==
+##Technical Info
 
 Read all here: http://codex.bbpress.org/
