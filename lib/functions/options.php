@@ -175,7 +175,7 @@ function bizznis_get_term_filter( $term, $taxonomy ) {
 	) ) );
 	# Sanitize term meta
 	foreach ( $term->meta as $field => $value ) {
-		$term->meta[$field] = apply_filters( 'bizznis_term_meta_' . $field, stripslashes( wp_kses_decode_entities( $value ) ), $term, $taxonomy );
+		$term->meta[$field] = apply_filters( 'bizznis_term_meta_' . $field, stripslashes_deep( wp_kses_decode_entities( $value ) ), $term, $taxonomy );
 	}
 	$term->meta = apply_filters( 'bizznis_term_meta', $term->meta, $term, $taxonomy );
 	return $term;
