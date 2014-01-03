@@ -16,12 +16,12 @@ to learn more about naming requirements for taxonomy templates.
 
 **This version is compatible with WooCommerce 2.0+**
 
-== Installation ==
+##Installation
 
 1. Add this code to your Bizznis child theme's `functions.php` file: `add_theme_support( 'bizznis-woocommerce' );`
 2. That's it. Navigate to your shop pages and you should see the new templates in action.
 
-== Template Customization ==
+##Template Customization
 
 It's not recommended to customize the integration's templates because, if you do, you will lose any customizations
 the next time the integration is updated. Instead, take copies of the integration's `single-product.php`,
@@ -30,7 +30,7 @@ in the root of your child theme's main folder, like this: `wp-content/themes/my-
 
 Make sure you keep the same file names!
 
-== Breadcrumbs ==
+##Breadcrumbs
 
 The modified Bizznis breadcrumbs will reflect all your existing Bizznis breadcrumb customizations too. Users
 who prefer to use WooCommerce's breadcrumbs can do so by adding this to their child theme's functions.php:
@@ -38,12 +38,12 @@ who prefer to use WooCommerce's breadcrumbs can do so by adding this to their ch
 And this to the relevant templates:
 - `remove_action( 'bizznis_loop', 'bizznis_do_breadcrumbs' );`
 
-== Shop on front page ==
+##Shop on front page
 
 1. Go to the *Dashboard > Settings > Reading* page select A Static Page and select "Shop" as the front page.
 2. It is recommended to turn off Bizznis breadcrumbs for the Home page in *Dashboard > Bizznis > Theme Settings > Breadcrumb options*.
 
-== How does the integration handle WooCommerce's CSS? ==
+##How does the integration handle WooCommerce's CSS?
 
 Bizznis Integration for WooCommerce does not modify WooCommerce's way of working with CSS. By default,
 WooCommerce provides its own `woocommerce.css` file containing basic styles for the shop pages which is located here:
@@ -67,7 +67,7 @@ in the *WooCommerce Settings page > General tab*, or a better option, add this c
 If you are using a Bizznis child theme specially designed for WooCommerce, refer to the theme's documentation to find out
 if all of the above has been been taken care of for you already.
 
-== Technical Info ==
+##Technical Info
 
 For more technically minded users, this is what the integration does:
 
