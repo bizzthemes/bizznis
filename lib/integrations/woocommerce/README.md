@@ -1,6 +1,6 @@
 This integration allows you to seamlessly integrate WooCommerce with the Bizznis Parent and Bizznis child themes.
 
-== Description ==
+##Description
 
 This integration replaces WooCommerce's built-in shop templates with its own Bizznis-ready versions,
 specifically the `single-product.php`, `archive-product.php` and `taxonomy.php` templates needed to 
