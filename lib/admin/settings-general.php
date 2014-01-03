@@ -360,9 +360,9 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 							<option value="image"<?php selected( $this->get_field_value( 'blog_title' ), 'image' ); ?>><?php _e( 'Image logo', 'bizznis' ); ?></option>
 						</select>
 						<div id="bizznis_blog_title_image">
-							<p><span class="description"><?php _e( 'By default, this option will pick the header image in your child theme\'s style.css file.', 'bizznis' ); ?></span></p>
-							<p><span class="description"><?php _e( 'The logo can be saved as logo.png to the images folder of your child theme and will be shown instead of your site title and tagline.', 'bizznis' ); ?></span></p>
-							<p><span class="description"><?php _e( 'If you want to use more advanced options, make sure you\'ve added <code>add_theme_support( \'custom-header\' );</code> to your child theme\'s functions.php file.', 'bizznis' ); ?></span></p>
+							<p class="description"><?php _e( 'By default, this option will pick the header image in your child theme\'s style.css file.', 'bizznis' ); ?></p>
+							<p class="description"><?php _e( 'The logo can be saved as logo.png to the images folder of your child theme and will be shown instead of your site title and tagline.', 'bizznis' ); ?></p>
+							<p class="description"><?php _e( 'If you want to use more advanced options, make sure you\'ve added <code>add_theme_support( \'custom-header\' );</code> to your child theme\'s functions.php file.', 'bizznis' ); ?></p>
 						</div>
 					</td>
 				</tr>
@@ -371,7 +371,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		<?php } ?>
 		<!-- Content Archives -->
 		<h3><?php _e( 'Content Archives:', 'bizznis' ); ?></h3>
-		<p><?php _e( 'These options will affect any listings page, including archive, author, blog, category, search, and tag pages.', 'bizznis' ); ?></p>
+		<p class="description"><?php _e( 'These options will affect any listings page, including archive, author, blog, category, search, and tag pages.', 'bizznis' ); ?></p>
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -439,7 +439,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		<?php if ( current_theme_supports( 'bizznis-menus' ) && bizznis_nav_menu_supported( 'primary' ) ) { ?>
 		<!-- Menus -->
 		<h3><?php _e( 'Primary Menu:', 'bizznis' ); ?></h3>
-		<p><?php printf( __( 'In order to use the navigation menus, you must build a <a href="%s">custom menu</a>, then assign it to the proper Menu Location.', 'bizznis' ), admin_url( 'nav-menus.php' ) ); ?></p>
+		<p class="description"><?php printf( __( 'In order to use the navigation menus, you must build a <a href="%s">custom menu</a>, then assign it to the proper Menu Location.', 'bizznis' ), admin_url( 'nav-menus.php' ) ); ?></p>
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -545,7 +545,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		<?php if ( current_user_can( 'unfiltered_html' ) ) { ?>
 		<!-- Scripts -->
 		<h3><?php _e( 'Scripts:', 'bizznis' ); ?></h3>
-		<p><?php printf( __( 'Enter scripts or code you would like output to %s or %s:', 'bizznis' ), bizznis_code( 'wp_head()' ), bizznis_code( 'wp_footer()' ) ); ?></p>
+		<p class="description"><?php printf( __( 'Enter scripts or code you would like output to %s or %s:', 'bizznis' ), bizznis_code( 'wp_head()' ), bizznis_code( 'wp_footer()' ) ); ?></p>
 		<table class="form-table">
 			<tbody>
 				<tr>

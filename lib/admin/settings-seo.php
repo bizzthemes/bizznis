@@ -210,8 +210,8 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 		?>
 		<!-- Document Title -->
 		<h3><?php _e( 'Document Title', 'bizznis' ); ?></h3>
-		<p><?php printf( __( 'The document %s is the single most important element in your document source for <abbr title="Search engine optimization">SEO</abbr>.', 'bizznis' ), bizznis_code( '<title>' ) ); ?></p>
-		<p><?php _e( 'The title can, and should, be different on each page, but these options will help you control what it will look like by default.', 'bizznis' ); ?></p>
+		<p class="description"><?php printf( __( 'The document %s is the single most important element in your document source for <abbr title="Search engine optimization">SEO</abbr>.', 'bizznis' ), bizznis_code( '<title>' ) ); ?></p>
+		<p class="description"><?php _e( 'The title can, and should, be different on each page, but these options will help you control what it will look like by default.', 'bizznis' ); ?></p>
 		<table class="form-table">
 			<tbody>
 				<tr valign="top">
@@ -249,8 +249,8 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 		</table>
 		<!-- Document Head -->
 		<h3><?php _e( 'Document Head', 'bizznis' ); ?></h3>
-		<p><?php printf( __( 'By default, WordPress places several tags in your document %1$s. ', 'bizznis' ), bizznis_code( '<head>' ) ); ?></p>
-		<p><?php _e( 'Most of these tags are completely unnecessary, and provide no <abbr title="Search engine optimization">SEO</abbr> value whatsoever; they just make your site slower to load.', 'bizznis' ); ?></p>
+		<p class="description"><?php printf( __( 'By default, WordPress places several tags in your document %1$s. ', 'bizznis' ), bizznis_code( '<head>' ) ); ?></p>
+		<p class="description"><?php _e( 'Most of these tags are completely unnecessary, and provide no <abbr title="Search engine optimization">SEO</abbr> value whatsoever; they just make your site slower to load.', 'bizznis' ); ?></p>
 		<table class="form-table">
 			<tbody>
 				<tr valign="top">
@@ -271,8 +271,8 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 		</table>
 		<!-- Homepage -->
 		<h3><?php _e( 'Homepage', 'bizznis' ); ?></h3>
-		<p><?php _e( 'These are the homepage specific SEO settings. ', 'bizznis' ); ?></p>
-		<p><?php _e( 'Note: these settings will not apply if a static page is set as the front page. In that case, you\'ll need to set the SEO settings on that particular page.', 'bizznis' ); ?></p>
+		<p class="description"><?php _e( 'These are the homepage specific SEO settings. ', 'bizznis' ); ?></p>
+		<p class="description"><?php _e( 'Note: these settings will not apply if a static page is set as the front page. In that case, you\'ll need to set the SEO settings on that particular page.', 'bizznis' ); ?></p>
 		<table class="form-table">
 			<tbody>
 				<tr valign="top">

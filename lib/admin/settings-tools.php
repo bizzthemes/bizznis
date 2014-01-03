@@ -93,8 +93,8 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 					<tr>
 						<th scope="row"><b><?php _e( 'Import Settings', 'bizznis' ); ?></p></th>
 						<td>
-							<p><?php printf( __( 'Upload the data file (%s) from your computer and we\'ll import your settings.', 'bizznis' ), bizznis_code( '.json' ) ); ?></p>
-							<p><?php _e( 'Choose the file from your computer and click "Upload file and Import"', 'bizznis' ); ?></p>
+							<p class="description"><?php printf( __( 'Upload the data file (%s) from your computer and we\'ll import your settings.', 'bizznis' ), bizznis_code( '.json' ) ); ?></p>
+							<p class="description"><?php _e( 'Choose the file from your computer and click "Upload file and Import"', 'bizznis' ); ?></p>
 							<p>
 								<form enctype="multipart/form-data" method="post" action="<?php echo menu_page_url( 'bizznis-tools', 0 ); ?>">
 									<?php wp_nonce_field( 'bizznis-import' ); ?>
@@ -111,8 +111,8 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 					<tr>
 						<th scope="row"><b><?php _e( 'Export Settings', 'bizznis' ); ?></b></th>
 						<td>
-							<p><?php printf( __( 'When you click the button below, Bizznis will generate a data file (%s) for you to save to your computer.', 'bizznis' ), bizznis_code( '.json' ) ); ?></p>
-							<p><?php _e( 'Once you have saved the download file, you can use the import function on another site to import this data.', 'bizznis' ); ?></p>
+							<p class="description"><?php printf( __( 'When you click the button below, Bizznis will generate a data file (%s) for you to save to your computer.', 'bizznis' ), bizznis_code( '.json' ) ); ?></p>
+							<p class="description"><?php _e( 'Once you have saved the download file, you can use the import function on another site to import this data.', 'bizznis' ); ?></p>
 							<p>
 								<form method="post" action="<?php echo menu_page_url( 'bizznis-tools', 0 ); ?>">
 									<?php
