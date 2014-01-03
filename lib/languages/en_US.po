@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-31 17:16+0100\n"
-"PO-Revision-Date: 2013-12-31 17:16+0100\n"
+"POT-Creation-Date: 2014-01-03 20:57+0100\n"
+"PO-Revision-Date: 2014-01-03 20:57+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -1469,34 +1469,34 @@ msgstr ""
 msgid "No export options available."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:148
+#: ../lib/admin/upgrade.php:127
 #, php-format
 msgid "Congratulations! You are now rocking Bizznis %s"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:168
+#: ../lib/admin/upgrade.php:147
 msgid "Click here to complete the upgrade"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:185
+#: ../lib/admin/upgrade.php:164
 #, php-format
 msgid ""
 "Bizznis %s is available. <a href=\"%s\" onclick=\"return "
 "bizznis_confirm('%s');\">Update now</a>."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:188
+#: ../lib/admin/upgrade.php:167
 msgid ""
 "Upgrading Bizznis will overwrite the current installed version of Bizznis. "
 "Are you sure you want to upgrade?. \"Cancel\" to stop, \"OK\" to upgrade."
 msgstr ""
 
-#: ../lib/admin/upgrade.php:221
+#: ../lib/admin/upgrade.php:200
 #, php-format
 msgid "Bizznis %s is available for %s"
 msgstr ""
 
-#: ../lib/admin/upgrade.php:222
+#: ../lib/admin/upgrade.php:201
 #, php-format
 msgid ""
 "Bizznis %s is now available. We have provided 1-click updates for this "
