@@ -11,7 +11,7 @@
  * @since 1.0.0
  */
 class Bizznis_WC {
-	
+
 	/**
 	 * Fires up constants, WP supported functions and translation strings
 	 *
