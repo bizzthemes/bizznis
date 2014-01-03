@@ -87,7 +87,7 @@ For more technically minded users, this is what the integration does:
 * The template loader allows users to use their own templates in the child theme's 'woocommerce' folder. These user templates, if they exist in the child theme's `woocommerce' folder, will be loaded in place of the supplied Bizznis Integration for WooCommerce templates
 * Using appropriate filters, modifies the Bizznis breadcrumbs output to mimic the breadcrumb structure provided by WooCommerce's built-in breadcrumbs.
 
-== More about breadcrumbs ==
+##More about breadcrumbs
 
 By default, the Bizznis breadcrumbs do not provide the same breadcrumb structure as those built-in to WooCommerce.
 Bizznis Integration for WooCommerce modifies the normal Bizznis Breadcrumbs output on shop pages to mimic the structure of those built-in to WooCommerce.
@@ -95,7 +95,7 @@ Bizznis Integration for WooCommerce modifies the normal Bizznis Breadcrumbs outp
 Note that the templates provided in this integration automatically unhook WooCommerce's built-in breadcrumbs via this code in each template:
 `remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );`
 
-== Filters ==
+##Filters
 
 This integration provides some filters which may be useful for developers.
 
@@ -107,7 +107,7 @@ Allows further modification of the single product page breadcrumbs.
 Located in `bizznis_wc_get_single_crumb()` in `lib/breadcrumb.php`.
 Allows further modification of the product archive (shop page) breadcrumbs.
 
-== More info about WooCommerce CSS handling ==
+##More info about WooCommerce CSS handling
 
 For the benefit of theme developers and customizers, here is a summary of possible scenarios for dealing with WooCommerce CSS:
 
