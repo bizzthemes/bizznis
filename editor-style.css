@@ -402,6 +402,12 @@ img.centered,
 	text-align: right;
 }
 
+.wp-caption {
+	border: none;
+	background: none;
+	max-width: 100%;
+}
+
 img.alignnone,
 .wp-caption.alignnone {
 	margin-bottom: 24px;
@@ -417,7 +423,8 @@ img.alignright,
 	margin: 0 0 24px 24px;
 }
 
-.wp-caption-text {
+.wp-caption-text,
+.wp-caption-dd {
 	font-size: 14px;
 	font-weight: 700;
 	margin-top: 15px;

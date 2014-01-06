@@ -68,6 +68,7 @@ Text Domain: 	bizznis
 		- Featured Content
 	Plugins
 		- Gravity Forms
+		- Github
 	Media Queries
 		- Retina ready
 		- Responsive width
@@ -655,6 +656,12 @@ img.centered,
 .alignright {
 	float: right;
 	text-align: right;
+}
+
+.wp-caption {
+	border: none;
+	background: none;
+	max-width: 100%;
 }
 
 img.alignnone,
@@ -1332,9 +1339,22 @@ img.alignright,
 
 .sidebar li {
 	list-style-type: none;
-	margin-bottom: 7px;
-	margin-bottom: .7rem;
+	margin-bottom: 10px;
+	margin-bottom: 1rem;
 	word-wrap: break-word;
+}
+
+.sidebar li ul,
+.sidebar li ol {
+	margin-left: 20px;
+	margin-left: 2rem;
+	margin-top: 10px;
+	margin-top: 1rem;
+}
+
+.sidebar li ul li,
+.sidebar li ol li {
+	list-style-type: inherit;
 }
 
 .sidebar p:last-child {
@@ -1483,6 +1503,14 @@ div.gform_wrapper form li {
 div.gform_wrapper .gform_footer input[type="submit"] {
 	font-size: 14px;
 	font-size: 1.4rem;
+}
+
+/* Github
+--------------------------------------------- */
+
+table.lines {
+	margin-bottom: 0;
+	line-height: 1.5;
 }
 
 
