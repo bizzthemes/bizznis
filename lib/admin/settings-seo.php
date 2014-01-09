@@ -134,18 +134,18 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 			'<h3>' . __( 'SEO Settings' , 'bizznis' ) . '</h3>' .
 			'<p>' .  __( 'Bizznis SEO (search engine optimization) is polite, and will disable itself when most popular SEO plugins (e.g., All-in-One SEO, WordPress SEO, etc.) are active.' , 'bizznis' ) . '</p>' .
 			'<p>' .  __( 'If you don\'t see an SEO Settings sub menu, then you probably have another SEO plugin active.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( 'If you see the menu, then opening that menu item will let you set the General SEO settings for your site.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'If you see the menu, then opening that menu item will let you set the SEO settings for your site.' , 'bizznis' ) . '</p>' .
 			'<p>' .  __( 'Each page, post, and term will have its own SEO settings as well. The default settings are recommended for most users. If you wish to adjust your SEO settings, the boxes include internal descriptions.' , 'bizznis' ) . '</p>' .
 			'<p>' .  __( 'Below you\'ll find a few succinct notes on the options for each box:' , 'bizznis' ) . '</p>';
 		$doctitle_help =
-			'<h3>' . __( 'Doctitle Settings' , 'bizznis' ) . '</h3>' .
-			'<p>' .  __( '<strong>Append Site Description</strong> will insert the site description from your General Settings after the title on your home page.' , 'bizznis' ) . '</p>' .
-			'<p>' .  __( '<strong>Append Site Name</strong> will put the site name from the General Settings after the title on inner page.' , 'bizznis' ) . '</p>' .
+			'<h3>' . __( 'Document Title Settings' , 'bizznis' ) . '</h3>' .
+			'<p>' .  __( '<strong>Append Site Description</strong> will insert the site description from your Theme Settings after the title on your home page.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( '<strong>Append Site Name</strong> will put the site name from the Theme Settings after the title on inner page.' , 'bizznis' ) . '</p>' .
 			'<p>' .  __( '<strong>Doctitle Append Location</strong> determines which side of the title to add the previously mentioned items.' , 'bizznis' ) . '</p>' .
 			'<p>' .  __( 'The <strong>Doctitle Separator</strong> is the character that will go between the title and appended text.' , 'bizznis' ) . '</p>';
 		$dochead_help =
 			'<h3>' . __( 'Document Head Settings' , 'bizznis' ) . '</h3>' .
-			'<p>' .  __( 'The Relationship Link Tags are tags added by WordPress that currently have no SEO value but slow your site load down. They\'re disabled by default, but if you have a specific need&#8212;for a plugin or other non typical use&#8212;then you can enable as needed here.' , 'bizznis' ) . '</p>' .
+			'<p>' .  __( 'The Relationship Link Tags are tags added by WordPress that currently have no SEO value but slow your site load down. They\'re disabled by default, but if you have a specific need &#8212; for a plugin or other non typical use &#8212; then you can enable as needed here.' , 'bizznis' ) . '</p>' .
 			'<p>' .  __( 'You can also add support for Windows Live Writer if you use software that supports this and include a shortlink tag if this is required by any third party service.' , 'bizznis' ) . '</p>';
 		$homepage_help =
 			'<h3>' . __( 'Homepage Settings' , 'bizznis' ) . '</h3>' .

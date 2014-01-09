@@ -163,33 +163,25 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		$screen = get_current_screen();
 		$theme_settings_help =
 			'<h3>' . __( 'Theme Settings' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'Your Theme Settings provides control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Some child themes may add additional menu items to this list, including the ability to select different color schemes or set theme specific features such as a slider. Each of the boxes can be collapsed by clicking the box header and expanded by doing the same. They can also be dragged into any order you desire or even hidden by clicking on "Screen Options" in the top right of the screen and "unchecking" the boxes you do not want to see. Below you\'ll find the items common to every child theme...' , 'bizznis' ) . '</p>';
+			'<p>'  . __( 'Bizznis Theme Settings provide control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Some child themes may add additional settings fields, including the ability to select different color styles or set theme specific features such as a slider. Below you\'ll find the items common to every child theme...' , 'bizznis' ) . '</p>';
 		$information_help =
 			'<h3>' . __( 'Information' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'The information box allows you to see the current Bizznis theme information and display if desired.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'Normally, this should be unchecked. You can also set to enable automatic updates.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'This does not mean the updates happen automatically without your permission; it will just notify you that an update is available. You must select it to perform the update.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'If you provide an email address and select to notify that email address when the update is available, your site will email you when the update can be performed.No, updates only affect files being updated.' , 'bizznis' ) . '</p>';
+			'<p>'  . __( 'The information field allows you to see the current Bizznis theme information.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'You can also set to enable automatic updates and get email notification, when update is available. This does not mean the updates happen automatically without your permission; it will just notify you that an update is available. You must select it to perform the update.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'If you provide an email address and select to notify that email address when the update is available, your site will email you when the update can be performed.' , 'bizznis' ) . '</p>';
 		$layout_help =
 			'<h3>' . __( 'Default Layout' , 'bizznis' ) . '</h3>' .
 			'<p>'  . __( 'This lets you select the default layout for your entire site. On most of the child themes you\'ll see these options:' , 'bizznis' ) . '</p>' .
 			'<ul>' .
-				'<li>' . __( 'Content Sidebar' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Sidebar Content' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Sidebar Content Sidebar' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Content Sidebar Sidebar' , 'bizznis' ) . '</li>' .
-				'<li>' . __( 'Sidebar Sidebar Content' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Content | Sidebar' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Sidebar | Content' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Sidebar | Content | Sidebar' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Content | Sidebar | Sidebar' , 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Sidebar | Sidebar | Content' , 'bizznis' ) . '</li>' .
 				'<li>' . __( 'Full Width Content' , 'bizznis' ) . '</li>' .
 			'</ul>' .
 			'<p>'  . __( 'These options can be extended or limited by the child theme. Additionally, many of the child themes do not allow different layouts on the home page as they have been designed for a specific home page layout.' , 'bizznis' ) . '</p>' .
 			'<p>'  . __( 'This layout can also be overridden in the post/page/term layout options on each post/page/term.' , 'bizznis' ) . '</p>';
-		$breadcrumbs_help =
-			'<h3>' . __( 'Breadcrumbs' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This box lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.' , 'bizznis' ) . '</p>';
-		$comments_help =
-			'<h3>' . __( 'Comments and Trackbacks' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This allows a site wide decision on whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.' , 'bizznis' ) . '</p>';
 		$archives_help =
 			'<h3>' . __( 'Content Archives' , 'bizznis' ) . '</h3>' .
 			'<p>'  . __( 'In the Bizznis Theme Settings you may change the site wide Content Archives options to control what displays in the site\'s Archives.' , 'bizznis' ) . '</p>' .
@@ -197,13 +189,29 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			'<p>'  . __( 'The first option allows you to display the post content or the post excerpt. The Display post content setting will display the entire post including HTML code up to the <!--more--> tag if used (this is HTML for the comment tag that is not displayed in the browser).' , 'bizznis' ) . '</p>' .
 			'<p>'  . __( 'It may also be coupled with the second field "Limit content to [___] characters" to limit the content to a specific number of letters or spaces. This will strip any HTML, but allows for more precise and easily changed lengths than the excerpt.' , 'bizznis' ) . '</p>' .
 			'<p>'  . __( 'The Display post excerpt setting will display the first 55 words of the post after also stripping any included HTML or the manual/custom excerpt added in the post edit screen.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'The \'Include post image?\' setting allows you to show a thumbnail of the first attached image or currently set featured image.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'The \'Featured Image\' setting allows you to show a thumbnail of the first attached image or currently set featured image.' , 'bizznis' ) . '</p>' .
 			'<p>'  . __( 'This option should not be used with the post content unless the content is limited to avoid duplicate images.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'The \'Image Size\' list is populated by the available image sizes defined in the theme.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'Post Navigation Technique allows you to select one of three navigation methods.' , 'bizznis' ) . '</p>';
+			'<p>'  . __( 'The \'Featured Image Size\' list is populated by the available image sizes defined in the theme.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'Post Navigation Technique allows you to select one of two navigation methods.' , 'bizznis' ) . '</p>';
+		$navigation_help =
+			'<h3>' . __( 'Primary Menu', 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'The Primary Navigation Extras typically display on the right side of your Primary Navigation menu.', 'bizznis' ) . '</p>' .
+			'<ul>' .
+				'<li>' . __( 'Today\'s date displays the current date', 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Search form displays a small search form utilizing the WordPress search functionality.', 'bizznis' ) . '</li>' .
+				'<li>' . __( 'Twitter link displays a link to your Twitter profile, as indicated in Twitter ID setting. Enter only your user name in this setting.', 'bizznis' ) . '</li>' .
+			'</ul>' .
+			'<p>'  . __( 'These options can be extended or limited by the child theme.', 'bizznis' ) . '</p>';
+		$breadcrumbs_help =
+			'<h3>' . __( 'Breadcrumbs' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'This field lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.' , 'bizznis' ) . '</p>';
+		$comments_help =
+			'<h3>' . __( 'Comments and Trackbacks' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'This allows to decide whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'Even If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.' , 'bizznis' ) . '</p>';
 		$scripts_help =
 			'<h3>' . __( 'Header and Footer Scripts' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This provides you with two fields that will output to the <head></head> of your site and just before the </body>. These will appear on every page of the site and are a great way to add analytic code and other scripts. You cannot use PHP in these fields. If you need to use PHP then you should look into the Bizznis Simple Hooks plugin.' , 'bizznis' ) . '</p>';
+			'<p>'  . __( 'This provides you with two fields that will output HTML scripts to either header or the footer of your website. These will appear on every page of the site and are a great way to add analytic code and other scripts. You cannot use PHP in these fields. If you need to use PHP then add it via hooks inside a child theme.' , 'bizznis' ) . '</p>';
 		$home_help =
 			'<h3>' . __( 'How Home Pages Work' , 'bizznis' ) . '</h3>' .
 			'<p>'  . __( 'Most Bizznis child themes include a custom home page.' , 'bizznis' ) . '</p>' .
@@ -228,6 +236,11 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			'id'      => $this->pagehook . '-layout',
 			'title'   => __( 'Default Layout' , 'bizznis' ),
 			'content' => $layout_help,
+		) );
+		$screen->add_help_tab( array(
+			'id'      => $this->pagehook . '-navigation',
+			'title'   => __( 'Primary Menu' , 'bizznis' ),
+			'content' => $navigation_help,
 		) );
 		$screen->add_help_tab( array(
 			'id'      => $this->pagehook . '-breadcrumbs',
@@ -349,11 +362,11 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		<?php } ?>
 		<?php if ( ! current_theme_supports( 'bizznis-custom-header' ) && ! current_theme_supports( 'custom-header' ) ) { ?>
 		<!-- Header -->
-		<!--<h3><?php _e( 'Header:', 'bizznis' ); ?></h3>-->
+		<h3><?php _e( 'Header:', 'bizznis' ); ?></h3>
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th scope="row" valign="top"><?php _e( 'Site title/logo', 'bizznis' ); ?></th>
+					<th scope="row" valign="top"><?php _e( 'Site Title/Logo', 'bizznis' ); ?></th>
 					<td>
 						<select name="<?php echo $this->get_field_name( 'blog_title' ); ?>" id="<?php echo $this->get_field_id( 'blog_title' ); ?>">
 							<option value="text"<?php selected( $this->get_field_value( 'blog_title' ), 'text' ); ?>><?php _e( 'Site Title &amp; Tagline', 'bizznis' ); ?></option>
