@@ -41,17 +41,17 @@ class Bizznis_Init {
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/back-compat.php' );
 	}
 		# Load Theme
-		load_template( BIZZNIS_THEME_DIR . '/structure.php' );
-		load_template( BIZZNIS_THEME_DIR . '/header.php' );
-		load_template( BIZZNIS_THEME_DIR . '/footer.php' );
-		load_template( BIZZNIS_THEME_DIR . '/menu.php' );
-		load_template( BIZZNIS_THEME_DIR . '/layouts.php' );
-		load_template( BIZZNIS_THEME_DIR . '/post.php' );
-		load_template( BIZZNIS_THEME_DIR . '/loops.php' );
-		load_template( BIZZNIS_THEME_DIR . '/comments.php' );
-		load_template( BIZZNIS_THEME_DIR . '/sidebar.php' );
-		load_template( BIZZNIS_THEME_DIR . '/archive.php' );
-		load_template( BIZZNIS_THEME_DIR . '/search.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/structure.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/header.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/footer.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/menu.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/layouts.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/post.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/loops.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/comments.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/sidebar.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/archive.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/search.php' );
 		# Load Admin
 	if ( is_admin() ) {
 		load_template( BIZZNIS_ADMIN_DIR . '/admin.php' );
@@ -116,7 +116,7 @@ class Bizznis_Init {
 		define( 'BIZZNIS_ADMIN_JS_DIR', 		BIZZNIS_ADMIN_DIR . '/js' );
 		define( 'BIZZNIS_CLASSES_DIR', 			BIZZNIS_LIB_DIR . 	'/classes' );
 		define( 'BIZZNIS_FUNCTIONS_DIR', 		BIZZNIS_LIB_DIR . 	'/functions' );
-		define( 'BIZZNIS_THEME_DIR', 			BIZZNIS_LIB_DIR . 	'/theme' );
+		define( 'BIZZNIS_FRONTEND_DIR', 		BIZZNIS_LIB_DIR . 	'/frontend' );
 		define( 'BIZZNIS_WIDGETS_DIR', 			BIZZNIS_LIB_DIR . 	'/widgets' );
 		define( 'BIZZNIS_INT_DIR', 				BIZZNIS_LIB_DIR . 	'/integrations' );
 		define( 'BIZZNIS_INT_WC_DIR', 			BIZZNIS_INT_DIR . 	'/woocommerce' );
@@ -133,7 +133,7 @@ class Bizznis_Init {
 		define( 'BIZZNIS_CLASSES_URL', 			BIZZNIS_LIB_URL . 	'/classes' );
 		define( 'BIZZNIS_FUNCTIONS_URL', 		BIZZNIS_LIB_URL . 	'/functions' );
 		define( 'BIZZNIS_SHORTCODES_URL', 		BIZZNIS_LIB_URL . 	'/shortcodes' );
-		define( 'BIZZNIS_THEME_URL', 			BIZZNIS_LIB_URL . 	'/theme' );
+		define( 'BIZZNIS_FRONTEND_URL', 		BIZZNIS_LIB_URL . 	'/frontend' );
 		define( 'BIZZNIS_WIDGETS_URL', 			BIZZNIS_LIB_URL . 	'/widgets' );
 		define( 'BIZZNIS_INT_URL', 				BIZZNIS_LIB_URL . 	'/integrations' );
 		define( 'BIZZNIS_INT_WC_URL', 			BIZZNIS_INT_URL . 	'/woocommerce' );
