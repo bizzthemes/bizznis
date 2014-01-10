@@ -423,15 +423,13 @@ th {
 }
 
 table .label {
-	padding-right: 20px;
-	padding-right: 2rem;
 	font-weight: 600;
 }
 
 td {
 	border-top: 1px solid #ddd;
-	padding: 6px 0;
-	padding: 0.6rem 0;
+	padding: 5px 20px 5px 0;
+	padding: .5rem 2rem .5rem 0;
 }
 
 /* Column Classes
