@@ -39,7 +39,6 @@ function bizznis_register_nav_menus() {
 	foreach ( (array) $menus[0] as $id => $name ) {
 		register_nav_menu( $id, $name );
 	}
-	do_action( 'bizznis_register_nav_menus' );
 }
 
 /**
