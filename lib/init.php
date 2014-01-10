@@ -109,7 +109,6 @@ class Bizznis_Init {
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
 		define( 'BIZZNIS_LIB_DIR', 				PARENT_DIR . 		'/lib' );
-		define( 'BIZZNIS_CUSTOM_DIR', 			PARENT_DIR . 		'/custom' );
 		define( 'BIZZNIS_IMAGES_DIR', 			PARENT_DIR . 		'/images' );
 		define( 'BIZZNIS_ADMIN_DIR', 			BIZZNIS_LIB_DIR . 	'/admin' );
 		define( 'BIZZNIS_ADMIN_IMAGES_DIR', 	BIZZNIS_ADMIN_DIR . '/images' );
