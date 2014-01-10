@@ -422,6 +422,12 @@ th {
 	text-transform: uppercase;
 }
 
+table .label {
+	padding-right: 20px;
+	padding-right: 2rem;
+	font-weight: 600;
+}
+
 td {
 	border-top: 1px solid #ddd;
 	padding: 6px 0;
