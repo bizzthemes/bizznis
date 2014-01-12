@@ -19,21 +19,25 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 	 */
 	function __construct() {
 		$page_id  = 'bizznis-seo';
-		$menu_ops = array(
-			'theme_menu' => array(
-				'parent_slug' => 'bizznis',
-				'page_title'  => __( 'Theme SEO', 'bizznis' ),
-				'menu_title'  => __( 'Theme SEO', 'bizznis' ),
-				'capability'  => 'edit_theme_options',
+		$menu_ops = apply_filters( 'bizznis_seo_settings_menu_ops',
+			array(
+				'theme_menu' => array(
+					'parent_slug' => 'bizznis',
+					'page_title'  => __( 'Theme SEO', 'bizznis' ),
+					'menu_title'  => __( 'Theme SEO', 'bizznis' ),
+					'capability'  => 'edit_theme_options',
+				)
 			)
 		);
-		$page_ops = array(
-			'screen_icon'       => 'options-bizznis',
-			'save_button_text'  => __( 'Save Settings', 'bizznis' ),
-			'reset_button_text' => __( 'Reset Settings', 'bizznis' ),
-			'saved_notice_text' => __( 'Settings saved.', 'bizznis' ),
-			'reset_notice_text' => __( 'Settings reset.', 'bizznis' ),
-			'error_notice_text' => __( 'Error saving settings.', 'bizznis' ),
+		$page_ops = apply_filters( 'bizznis_seo_settings_page_ops',
+			array(
+				'screen_icon'       => 'options-bizznis',
+				'save_button_text'  => __( 'Save Settings', 'bizznis' ),
+				'reset_button_text' => __( 'Reset Settings', 'bizznis' ),
+				'saved_notice_text' => __( 'Settings saved.', 'bizznis' ),
+				'reset_notice_text' => __( 'Settings reset.', 'bizznis' ),
+				'error_notice_text' => __( 'Error saving settings.', 'bizznis' ),
+			)
 		);
 		$settings_field = BIZZNIS_SEO_SETTINGS_FIELD;
 		$default_settings = apply_filters( 'bizznis_seo_settings_defaults',
