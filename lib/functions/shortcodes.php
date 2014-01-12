@@ -242,7 +242,7 @@ function bizznis_footer_backtotop_shortcode( $atts ) {
 	$defaults = array(
 		'after'    => '',
 		'before'   => '',
-		'href'     => '#wrap',
+		'href'     => '#',
 		'nofollow' => true,
 		'text'     => __( 'Return to top of page', 'bizznis' ),
 	);
