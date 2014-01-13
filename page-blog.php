@@ -14,16 +14,14 @@
  */
 add_filter( 'bizznis_loop_args', 'bizznis_blog_loop' );
 function bizznis_blog_loop() {
-	$include = bizznis_get_option( 'blog_cat' );
-	$exclude = bizznis_get_option( 'blog_cat_exclude' ) ? explode( ',', str_replace( ' ', '', bizznis_get_option( 'blog_cat_exclude' ) ) ) : '';
 	$paged   = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
 	# Easter Egg
 	$query_args = wp_parse_args(
 		bizznis_get_custom_field( 'query_args' ),
 		array(
-			'cat'              => $include,
-			'category__not_in' => $exclude,
-			'showposts'        => bizznis_get_option( 'blog_cat_num' ),
+			'cat'              => '',
+			'category__not_in' => '',
+			'showposts'        => '',
 			'paged'            => $paged,
 		)
 	);
