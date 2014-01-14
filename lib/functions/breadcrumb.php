@@ -22,26 +22,24 @@ class Bizznis_Breadcrumb {
 	 */
 	public function __construct() {
 		# Default arguments
-		$this->args = apply_filters( 'bizznis_breadcrumbs_ops',
-			array(
-				'home'                    => __( 'Home', 'bizznis' ),
-				'sep'                     => ' / ',
-				'list_sep'                => ', ',
-				'prefix'                  => sprintf( '<nav %s>', bizznis_attr( 'breadcrumb' ) ),
-				'suffix'                  => '</nav>',
-				'heirarchial_attachments' => true,
-				'heirarchial_categories'  => true,
-				'labels' => array(
-					'prefix'    => __( 'You are here: ', 'bizznis' ),
-					'author'    => __( 'Archives for ', 'bizznis' ),
-					'category'  => __( 'Archives for ', 'bizznis' ),
-					'tag'       => __( 'Archives for ', 'bizznis' ),
-					'date'      => __( 'Archives for ', 'bizznis' ),
-					'search'    => __( 'Search for ', 'bizznis' ),
-					'tax'       => __( 'Archives for ', 'bizznis' ),
-					'post_type' => __( 'Archives for ', 'bizznis' ),
-					'404'       => __( 'Not found ', 'bizznis' )
-				)
+		$this->args = array(
+			'home'                    => __( 'Home', 'bizznis' ),
+			'sep'                     => ' / ',
+			'list_sep'                => ', ',
+			'prefix'                  => sprintf( '<nav %s>', bizznis_attr( 'breadcrumb' ) ),
+			'suffix'                  => '</nav>',
+			'heirarchial_attachments' => true,
+			'heirarchial_categories'  => true,
+			'labels' => array(
+				'prefix'    => __( 'You are here: ', 'bizznis' ),
+				'author'    => __( 'Archives for ', 'bizznis' ),
+				'category'  => __( 'Archives for ', 'bizznis' ),
+				'tag'       => __( 'Archives for ', 'bizznis' ),
+				'date'      => __( 'Archives for ', 'bizznis' ),
+				'search'    => __( 'Search for ', 'bizznis' ),
+				'tax'       => __( 'Archives for ', 'bizznis' ),
+				'post_type' => __( 'Archives for ', 'bizznis' ),
+				'404'       => __( 'Not found ', 'bizznis' )
 			)
 		);
 	}
