@@ -68,6 +68,7 @@ Text Domain:		bizznis
 		- Featured Content
 	Plugins
 		- Gravity Forms
+	External Scripts
 		- Github
 	Media Queries
 		- Retina ready
@@ -1505,6 +1506,9 @@ div.gform_wrapper .gform_footer input[type="submit"] {
 	font-size: 14px;
 	font-size: 1.4rem;
 }
+
+/* External Scripts
+------------------------------------------------------------------------------------------------------------------ */
 
 /* Github
 --------------------------------------------- */
