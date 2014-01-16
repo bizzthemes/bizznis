@@ -36,14 +36,6 @@ function bizznis_register_default_widget_areas() {
 			'_bizznis_builtin' => true,
 		)
 	);
-	bizznis_register_sidebar(
-		array(
-			'id'               => 'home',
-			'name'             => __( 'Home', 'bizznis' ),
-			'description'      => __( 'This is the widget area that replaces default content loop on the homepage.', 'bizznis' ),
-			'_bizznis_builtin' => true,
-		)
-	);
 }
 
 /**
