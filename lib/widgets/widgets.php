@@ -7,6 +7,7 @@
 
 //* Include widget class files
 load_template( BIZZNIS_WIDGETS_DIR . '/featured-page-widget.php' );
+load_template( BIZZNIS_WIDGETS_DIR . '/page-list-widget.php' );
 
 /**
  * Register widgets for use in the Bizznis theme.
@@ -16,4 +17,5 @@ load_template( BIZZNIS_WIDGETS_DIR . '/featured-page-widget.php' );
 add_action( 'widgets_init', 'bizznis_load_widgets' );
 function bizznis_load_widgets() {
 	register_widget( 'Bizznis_Featured_Page' );
+	register_widget( 'Bizznis_Page_List' );
 }

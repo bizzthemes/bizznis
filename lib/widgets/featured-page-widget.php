@@ -57,7 +57,7 @@ class Bizznis_Featured_Page extends WP_Widget {
 		# Merge with defaults
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		echo $before_widget;
-		# Set up the author bio
+		# Set up the title
 		if ( ! empty( $instance['title'] ) ) {
 			echo $before_title . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $after_title;
 		}
