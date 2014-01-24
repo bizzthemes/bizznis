@@ -84,7 +84,7 @@ hr.div {
 	text-align: center;
 }
 
-.bizznis-layout-selector input#default-layout {
+.bizznis-layout-selector .default-layout {
 	display: inline-block;
 }
 
@@ -144,11 +144,11 @@ hr.div {
 
 .bizznis-widget-column {
 	float: left;
-	width: 250px;
+	width: 49%;
 }
 
 .bizznis-widget-column-right {
-	margin-left: 10px;
+	margin-left: 2%;
 }
 
 .bizznis-widget-column-box {
