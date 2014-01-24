@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-12 22:39+0100\n"
-"PO-Revision-Date: 2014-01-12 22:39+0100\n"
+"POT-Creation-Date: 2014-01-24 16:32+0100\n"
+"PO-Revision-Date: 2014-01-24 16:32+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -101,84 +101,84 @@ msgstr ""
 msgid "Are you sure you want to reset?"
 msgstr ""
 
-#: ../lib/admin/meta-inpost.php:18 ../lib/admin/meta-term.php:70
-#: ../lib/admin/meta-user.php:117 ../lib/admin/settings-seo.php:138
-#: ../lib/admin/settings-seo.php:173 ../lib/admin/settings-tools.php:167
-msgid "SEO Settings"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:31
-msgid "Custom Document Title"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:31 ../lib/admin/meta-inpost.php:33
-#, php-format
-msgid "Characters Used: %s"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:33
-msgid "Custom Post/Page Meta Description"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:35
-msgid "Custom Canonical URI"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:35 ../lib/admin/meta-inpost.php:37
-#: ../lib/admin/meta-inpost.php:43 ../lib/admin/meta-inpost.php:45
-#: ../lib/admin/meta-inpost.php:47 ../lib/admin/settings-general.php:273
-#: ../lib/admin/settings-seo.php:204 ../lib/admin/settings-tools.php:75
-#, php-format
-msgid "%s"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:37
-msgid "Custom Redirect URI"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:40 ../lib/admin/settings-seo.php:163
-#: ../lib/admin/settings-seo.php:193
-msgid "Robots Meta Settings"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:43 ../lib/admin/meta-inpost.php:45
-#: ../lib/admin/meta-inpost.php:47
-#, php-format
-msgid "Apply %s to this post/page"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:95
-msgid "Scripts"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:108
-msgid "Page-specific Scripts"
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:110
-#, php-format
-msgid ""
-"Suitable for custom tracking, conversion or other page-specific script. Must "
-"include %s tags."
-msgstr ""
-
-#: ../lib/admin/meta-inpost.php:148 ../lib/admin/meta-term.php:121
-#: ../lib/admin/meta-user.php:161
+#: ../lib/admin/meta-inpost.php:21 ../lib/admin/meta-term.php:70
+#: ../lib/admin/meta-user.php:119
 msgid "Layout Settings"
 msgstr ""
 
-#: ../lib/admin/meta-inpost.php:163 ../lib/admin/meta-term.php:130
-#: ../lib/admin/meta-user.php:171
+#: ../lib/admin/meta-inpost.php:36 ../lib/admin/meta-term.php:79
+#: ../lib/admin/meta-user.php:129
 #, php-format
 msgid "Default Layout set in <a href=\"%s\">Theme Settings</a>"
 msgstr ""
 
-#: ../lib/admin/meta-inpost.php:168
+#: ../lib/admin/meta-inpost.php:41
 msgid "Custom Body Class"
 msgstr ""
 
-#: ../lib/admin/meta-inpost.php:170
+#: ../lib/admin/meta-inpost.php:43
 msgid "Custom Post Class"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:77 ../lib/admin/meta-term.php:110
+#: ../lib/admin/meta-user.php:150 ../lib/admin/settings-seo.php:139
+#: ../lib/admin/settings-seo.php:174 ../lib/admin/settings-tools.php:167
+msgid "SEO Settings"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:90
+msgid "Custom Document Title"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:90 ../lib/admin/meta-inpost.php:92
+#, php-format
+msgid "Characters Used: %s"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:92
+msgid "Custom Post/Page Meta Description"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:94
+msgid "Custom Canonical URI"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:94 ../lib/admin/meta-inpost.php:96
+#: ../lib/admin/meta-inpost.php:102 ../lib/admin/meta-inpost.php:104
+#: ../lib/admin/meta-inpost.php:106 ../lib/admin/settings-general.php:273
+#: ../lib/admin/settings-seo.php:205 ../lib/admin/settings-tools.php:75
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:96
+msgid "Custom Redirect URI"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:99 ../lib/admin/settings-seo.php:164
+#: ../lib/admin/settings-seo.php:194
+msgid "Robots Meta Settings"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:102 ../lib/admin/meta-inpost.php:104
+#: ../lib/admin/meta-inpost.php:106
+#, php-format
+msgid "Apply %s to this post/page"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:154
+msgid "Scripts"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:167
+msgid "Page-specific Scripts"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:169
+#, php-format
+msgid ""
+"Suitable for custom tracking, conversion or other page-specific script. Must "
+"include %s tags."
 msgstr ""
 
 #: ../lib/admin/meta-term.php:28
@@ -201,33 +201,33 @@ msgstr ""
 msgid "Leave empty if you do not want to display any intro text."
 msgstr ""
 
-#: ../lib/admin/meta-term.php:74 ../lib/admin/meta-user.php:122
+#: ../lib/admin/meta-term.php:74 ../lib/admin/meta-user.php:124
+msgid "Choose Layout"
+msgstr ""
+
+#: ../lib/admin/meta-term.php:114 ../lib/admin/meta-user.php:155
 #, php-format
 msgid "Custom Document %s"
 msgstr ""
 
-#: ../lib/admin/meta-term.php:80 ../lib/admin/meta-user.php:128
+#: ../lib/admin/meta-term.php:120 ../lib/admin/meta-user.php:161
 #, php-format
 msgid "%s Description"
 msgstr ""
 
-#: ../lib/admin/meta-term.php:86 ../lib/admin/meta-user.php:134
-#: ../lib/admin/settings-seo.php:346
+#: ../lib/admin/meta-term.php:126 ../lib/admin/meta-user.php:167
+#: ../lib/admin/settings-seo.php:355
 msgid "Robots Meta"
 msgstr ""
 
-#: ../lib/admin/meta-term.php:89 ../lib/admin/meta-term.php:91
-#: ../lib/admin/meta-term.php:93 ../lib/admin/meta-user.php:137
-#: ../lib/admin/meta-user.php:139 ../lib/admin/meta-user.php:141
+#: ../lib/admin/meta-term.php:129 ../lib/admin/meta-term.php:131
+#: ../lib/admin/meta-term.php:133 ../lib/admin/meta-user.php:170
+#: ../lib/admin/meta-user.php:172 ../lib/admin/meta-user.php:174
 #, php-format
 msgid "Apply %s to this archive?"
 msgstr ""
 
-#: ../lib/admin/meta-term.php:125 ../lib/admin/meta-user.php:166
-msgid "Choose Layout"
-msgstr ""
-
-#: ../lib/admin/meta-user.php:15
+#: ../lib/admin/meta-user.php:15 ../lib/admin/settings-seo.php:217
 msgid "Google+"
 msgstr ""
 
@@ -255,8 +255,8 @@ msgstr ""
 msgid "Author Archive Settings"
 msgstr ""
 
-#: ../lib/admin/meta-user.php:76 ../lib/admin/meta-user.php:118
-#: ../lib/admin/meta-user.php:162
+#: ../lib/admin/meta-user.php:76 ../lib/admin/meta-user.php:120
+#: ../lib/admin/meta-user.php:151
 msgid "These settings apply to this author's archive pages."
 msgstr ""
 
@@ -654,12 +654,12 @@ msgstr ""
 msgid "Home Pages"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:272 ../lib/admin/settings-seo.php:203
+#: ../lib/admin/settings-general.php:272 ../lib/admin/settings-seo.php:204
 #: ../lib/admin/settings-tools.php:74
 msgid "For more information:"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:273 ../lib/admin/settings-seo.php:204
+#: ../lib/admin/settings-general.php:273 ../lib/admin/settings-seo.php:205
 #: ../lib/admin/settings-tools.php:75
 msgid "Get Support"
 msgstr ""
@@ -873,7 +873,7 @@ msgstr ""
 msgid "Posts Page"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:509 ../lib/admin/settings-seo.php:277
+#: ../lib/admin/settings-general.php:509 ../lib/admin/settings-seo.php:302
 msgid "Homepage"
 msgstr ""
 
@@ -885,7 +885,7 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
-#: ../lib/admin/settings-general.php:521 ../lib/admin/settings-seo.php:414
+#: ../lib/admin/settings-general.php:521 ../lib/admin/settings-seo.php:423
 msgid "Archives"
 msgstr ""
 
@@ -938,69 +938,69 @@ msgid ""
 "document source."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:139
+#: ../lib/admin/settings-seo.php:140
 msgid ""
 "Bizznis SEO (search engine optimization) is polite, and will disable itself "
 "when most popular SEO plugins (e.g., All-in-One SEO, WordPress SEO, etc.) "
 "are active."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:140
+#: ../lib/admin/settings-seo.php:141
 msgid ""
 "If you don't see an SEO Settings sub menu, then you probably have another "
 "SEO plugin active."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:141
+#: ../lib/admin/settings-seo.php:142
 msgid ""
 "If you see the menu, then opening that menu item will let you set the SEO "
 "settings for your site."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:142
+#: ../lib/admin/settings-seo.php:143
 msgid ""
 "Each page, post, and term will have its own SEO settings as well. The "
 "default settings are recommended for most users. If you wish to adjust your "
 "SEO settings, the boxes include internal descriptions."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:143
+#: ../lib/admin/settings-seo.php:144
 msgid "Below you'll find a few succinct notes on the options for each box:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:145 ../lib/admin/settings-seo.php:178
+#: ../lib/admin/settings-seo.php:146 ../lib/admin/settings-seo.php:179
 msgid "Document Title Settings"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:146
+#: ../lib/admin/settings-seo.php:147
 msgid ""
 "<strong>Append Site Description</strong> will insert the site description "
 "from your Theme Settings after the title on your home page."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:147
+#: ../lib/admin/settings-seo.php:148
 msgid ""
 "<strong>Append Site Name</strong> will put the site name from the Theme "
 "Settings after the title on inner page."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:148
+#: ../lib/admin/settings-seo.php:149
 msgid ""
 "<strong>Doctitle Append Location</strong> determines which side of the title "
 "to add the previously mentioned items."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:149
+#: ../lib/admin/settings-seo.php:150
 msgid ""
 "The <strong>Doctitle Separator</strong> is the character that will go "
 "between the title and appended text."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:151 ../lib/admin/settings-seo.php:183
+#: ../lib/admin/settings-seo.php:152 ../lib/admin/settings-seo.php:184
 msgid "Document Head Settings"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:152
+#: ../lib/admin/settings-seo.php:153
 msgid ""
 "The Relationship Link Tags are tags added by WordPress that currently have "
 "no SEO value but slow your site load down. They're disabled by default, but "
@@ -1008,18 +1008,18 @@ msgid ""
 "&#8212; then you can enable as needed here."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:153
+#: ../lib/admin/settings-seo.php:154
 msgid ""
 "You can also add support for Windows Live Writer if you use software that "
 "supports this and include a shortlink tag if this is required by any third "
 "party service."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:155 ../lib/admin/settings-seo.php:188
+#: ../lib/admin/settings-seo.php:156 ../lib/admin/settings-seo.php:189
 msgid "Homepage Settings"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:156
+#: ../lib/admin/settings-seo.php:157
 msgid ""
 "These are the homepage specific SEO settings. Note: these settings will not "
 "apply if a static page is set as the front page. If you're using a static "
@@ -1027,31 +1027,31 @@ msgid ""
 "particular page."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:157
+#: ../lib/admin/settings-seo.php:158
 msgid ""
 "You can also specify if the Site Title, Description, or your own custom text "
 "should be wrapped in an &lt;h1&gt; tag (the primary heading in HTML)."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:158
+#: ../lib/admin/settings-seo.php:159
 msgid ""
 "To add custom text you'll have to either edit a php file, or use a text "
 "widget on a widget enabled homepage."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:159
+#: ../lib/admin/settings-seo.php:160
 msgid ""
 "The home doctitle sets what will appear within the <title></title> tags "
 "(unseen in the browser) for the home page."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:160
+#: ../lib/admin/settings-seo.php:161
 msgid ""
 "The home META description fill in the meta tags for the home page. The META "
 "description is the short text blurb that appear in search engine results."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:161
+#: ../lib/admin/settings-seo.php:162
 msgid ""
 "The Homepage Robots Meta Tags tell search engines how to handle the "
 "homepage. Noindex means not to index the page at all, and it will not appear "
@@ -1059,306 +1059,305 @@ msgid ""
 "noarchive tells them not to make an archive copy of the page."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:164
+#: ../lib/admin/settings-seo.php:165
 msgid ""
 "Noarchive and noindex are explained in the home settings. Here you can "
 "select what other parts of the site to apply these options to."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:165
+#: ../lib/admin/settings-seo.php:166
 msgid ""
 "At least one archive should be indexed, but indexing multiple archives will "
 "typically result in a duplicate content penalization (multiple pages with "
 "identical content look manipulative to search engines)."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:166
+#: ../lib/admin/settings-seo.php:167
 msgid ""
 "For most sites either the home page or blog page (using the blog template) "
 "will serve as this index which is why the default is not to index "
 "categories, tags, authors, dates, or searches."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:168
+#: ../lib/admin/settings-seo.php:169
 msgid "Archives Settings"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:169
+#: ../lib/admin/settings-seo.php:170
 msgid ""
 "Canonical links will point search engines to the front page of paginated "
 "content (search engines have to choose the \"preferred link\" when there is "
 "duplicate content on pages)."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:170
+#: ../lib/admin/settings-seo.php:171
 msgid ""
 "This tells them \"this is paged content and the first page starts here\" and "
 "helps to avoid spreading keywords across multiple pages."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:198
+#: ../lib/admin/settings-seo.php:199
 msgid "SEO Archives"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:216 ../lib/admin/settings-seo.php:304
-msgid "Document Title"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:217
-#, php-format
-msgid ""
-"The document %s is the single most important element in your document source "
-"for <abbr title=\"Search engine optimization\">SEO</abbr>."
 msgstr ""
 
 #: ../lib/admin/settings-seo.php:218
 msgid ""
-"The title can, and should, be different on each page, but these options will "
-"help you control what it will look like by default."
+"Your company's Google+ Profile URL. Must be a business, not a personal "
+"account."
 msgstr ""
 
 #: ../lib/admin/settings-seo.php:222
-msgid "Title Additions"
+msgid "Publisher URL:"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:225
-#, php-format
-msgid "Add site description (tagline) to %s on home page?"
+#: ../lib/admin/settings-seo.php:230
+msgid "Section Headings"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:228
-#, php-format
-msgid "Add site name to %s on inner pages?"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:232
-msgid "Addition Location"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:236
-#: ../lib/widgets/featured-page-widget.php:150
-msgid "Left"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:239
-#: ../lib/widgets/featured-page-widget.php:151
-msgid "Right"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:241
-msgid "Determines which side the added title text will go on."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:245
-msgid "Separator"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:247
-msgid "Document Title Separator:"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:249
-msgid ""
-"If the title consists of two parts (original title and optional addition), "
-"then the separator will go in between them."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:255
-msgid "Document Head"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:256
-#, php-format
-msgid "By default, WordPress places several tags in your document %1$s. "
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:257
-msgid ""
-"Most of these tags are completely unnecessary, and provide no <abbr title="
-"\"Search engine optimization\">SEO</abbr> value whatsoever; they just make "
-"your site slower to load."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:261
-#, php-format
-msgid "Add to %s"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:264
-#, php-format
-msgid "Adjacent Posts %s link tags"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:267
-msgid "Include Windows Live Writer Support Tag?"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:270
-msgid "Include Shortlink tag?"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:271
-msgid ""
-"<span class=\"bizznis-admin-note\">Note:</span> The shortlink tag might have "
-"some use for 3rd party service discoverability, but it has no <abbr title="
-"\"Search engine optimization\">SEO</abbr> value whatsoever."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:278
-msgid "These are the homepage specific SEO settings. "
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:279
-msgid ""
-"Note: these settings will not apply if a static page is set as the front "
-"page. In that case, you'll need to set the SEO settings on that particular "
-"page."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:283
-msgid "HTML5 Headings"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:286
-msgid "Use semantic HTML5 page and section headings throughout site?"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:287
+#: ../lib/admin/settings-seo.php:231
 #, php-format
 msgid ""
 "HTML5 allows for multiple %s tags throughout the document source, provided "
 "they are the primary title for the section in which they appear."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:291
+#: ../lib/admin/settings-seo.php:235
+msgid "HTML5 Headings"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:238
+msgid "Use semantic HTML5 page and section headings throughout site?"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:244 ../lib/admin/settings-seo.php:321
+msgid "Document Title"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:245
+#, php-format
+msgid ""
+"The document %s is the single most important element in your document source "
+"for <abbr title=\"Search engine optimization\">SEO</abbr>."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:246
+msgid ""
+"The title can, and should, be different on each page, but these options will "
+"help you control what it will look like by default."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:250
+msgid "Title Additions"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:253
+#, php-format
+msgid "Add site name to %s on inner pages?"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:257
+msgid "Addition Location"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:261
+#: ../lib/widgets/featured-page-widget.php:150
+msgid "Left"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:264
+#: ../lib/widgets/featured-page-widget.php:151
+msgid "Right"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:266
+msgid "Determines which side the added title text will go on."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:270
+msgid "Separator"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:272
+msgid "Document Title Separator:"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:274
+msgid ""
+"If the title consists of two parts (original title and optional addition), "
+"then the separator will go in between them."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:280
+msgid "Document Head"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:281
+#, php-format
+msgid "By default, WordPress places several tags in your document %1$s. "
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:282
+msgid ""
+"Most of these tags are completely unnecessary, and provide no <abbr title="
+"\"Search engine optimization\">SEO</abbr> value whatsoever; they just make "
+"your site slower to load."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:286
+#, php-format
+msgid "Add to %s"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:289
+#, php-format
+msgid "Adjacent Posts %s link tags"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:292
+msgid "Include Windows Live Writer Support Tag?"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:295
+msgid "Include Shortlink tag?"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:296
+msgid ""
+"<span class=\"bizznis-admin-note\">Note:</span> The shortlink tag might have "
+"some use for 3rd party service discoverability, but it has no <abbr title="
+"\"Search engine optimization\">SEO</abbr> value whatsoever."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:303
+msgid "These are the homepage specific SEO settings. "
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:304
+msgid ""
+"Note: these settings will not apply if a static page is set as the front "
+"page. In that case, you'll need to set the SEO settings on that particular "
+"page."
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:308
 #, php-format
 msgid "Wrap in %s tags?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:294
+#: ../lib/admin/settings-seo.php:311
 msgid "Site Title"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:297
+#: ../lib/admin/settings-seo.php:314
 msgid "Site Description (Tagline)"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:300
+#: ../lib/admin/settings-seo.php:317
 msgid "Neither. I'll manually wrap my own text on the homepage"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:307
+#: ../lib/admin/settings-seo.php:324
 msgid ""
 "If you leave the document title field blank, your site&#8217;s title will be "
 "used instead."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:311
+#: ../lib/admin/settings-seo.php:328
 msgid "Meta Description"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:314
+#: ../lib/admin/settings-seo.php:332
+#, php-format
+msgid "Add site description (tagline) to %s on home page?"
+msgstr ""
+
+#: ../lib/admin/settings-seo.php:336
 msgid ""
 "The meta description can be used to determine the text used under the title "
 "on search engine results pages."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:318
+#: ../lib/admin/settings-seo.php:340
 msgid "Robots Meta Tags"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:321 ../lib/admin/settings-seo.php:324
-#: ../lib/admin/settings-seo.php:327
+#: ../lib/admin/settings-seo.php:343 ../lib/admin/settings-seo.php:346
+#: ../lib/admin/settings-seo.php:349
 #, php-format
 msgid "Apply %s to the homepage?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:331
-msgid "Author"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:335
-msgid "Select User"
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:340
-#, php-format
-msgid ""
-"User listed as the %s for the homepage. Be sure the user has entered their "
-"Google+ profile address on the profile edit screen."
-msgstr ""
-
-#: ../lib/admin/settings-seo.php:354 ../lib/admin/settings-seo.php:381
+#: ../lib/admin/settings-seo.php:363 ../lib/admin/settings-seo.php:390
 #, php-format
 msgid "Apply %s to Category Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:357 ../lib/admin/settings-seo.php:384
+#: ../lib/admin/settings-seo.php:366 ../lib/admin/settings-seo.php:393
 #, php-format
 msgid "Apply %s to Tag Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:360 ../lib/admin/settings-seo.php:387
+#: ../lib/admin/settings-seo.php:369 ../lib/admin/settings-seo.php:396
 #, php-format
 msgid "Apply %s to Author Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:363 ../lib/admin/settings-seo.php:390
+#: ../lib/admin/settings-seo.php:372 ../lib/admin/settings-seo.php:399
 #, php-format
 msgid "Apply %s to Date Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:366 ../lib/admin/settings-seo.php:393
+#: ../lib/admin/settings-seo.php:375 ../lib/admin/settings-seo.php:402
 #, php-format
 msgid "Apply %s to Search Archives?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:368
+#: ../lib/admin/settings-seo.php:377
 msgid ""
 "Depending on your situation, you may or may not want the following archive "
 "pages to be indexed by search engines. Only you can make that determination."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:376
+#: ../lib/admin/settings-seo.php:385
 #, php-format
 msgid "Apply %s to Entire Site?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:395
+#: ../lib/admin/settings-seo.php:404
 #, php-format
 msgid ""
 "Some search engines will cache pages in your site (e.g. Google Cache). The "
 "%1$s tag will prevent them from doing so."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:399
+#: ../lib/admin/settings-seo.php:408
 #, php-format
 msgid "%s and %s"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:403 ../lib/admin/settings-seo.php:406
+#: ../lib/admin/settings-seo.php:412 ../lib/admin/settings-seo.php:415
 #, php-format
 msgid "Apply %s to your site?"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:408
+#: ../lib/admin/settings-seo.php:417
 msgid ""
 "Occasionally, search engines use resources like the DMOZ and the Yahoo! "
 "Directory to find titles and descriptions for your content. Generally, you "
 "will not want them to do this."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:415
+#: ../lib/admin/settings-seo.php:424
 msgid ""
 "Point search engines to the first page of an archive, if viewing a paginated "
 "page. If you do not know what this means, leave it on."
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:419
+#: ../lib/admin/settings-seo.php:428
 msgid "Canonical Archives"
 msgstr ""
 
-#: ../lib/admin/settings-seo.php:422
+#: ../lib/admin/settings-seo.php:431
 msgid "Canonical Paginated Archives"
 msgstr ""
 
@@ -1536,7 +1535,7 @@ msgid "at"
 msgstr ""
 
 #: ../lib/frontend/comments.php:153 ../lib/frontend/post.php:175
-#: ../lib/functions/shortcodes.php:223
+#: ../lib/functions/shortcodes.php:226
 msgid "(Edit)"
 msgstr ""
 
@@ -1569,7 +1568,7 @@ msgid "on"
 msgstr ""
 
 #: ../lib/frontend/footer.php:55 ../lib/frontend/post.php:242
-#: ../lib/functions/shortcodes.php:323
+#: ../lib/functions/shortcodes.php:326
 msgid "by"
 msgstr ""
 
@@ -1661,34 +1660,25 @@ msgid ""
 "option."
 msgstr ""
 
-#: ../lib/frontend/sidebar.php:42 ../lib/functions/breadcrumb.php:27
-msgid "Home"
-msgstr ""
-
-#: ../lib/frontend/sidebar.php:43
-msgid ""
-"This is the widget area that replaces default content loop on the homepage."
-msgstr ""
-
-#: ../lib/frontend/sidebar.php:67
+#: ../lib/frontend/sidebar.php:59
 #, php-format
 msgid "Footer %d"
 msgstr ""
 
-#: ../lib/frontend/sidebar.php:68
+#: ../lib/frontend/sidebar.php:60
 #, php-format
 msgid "Footer %d widget area."
 msgstr ""
 
-#: ../lib/frontend/sidebar.php:85
+#: ../lib/frontend/sidebar.php:77
 msgid "Primary Sidebar Widget Area"
 msgstr ""
 
-#: ../lib/frontend/sidebar.php:98
+#: ../lib/frontend/sidebar.php:90
 msgid "Secondary Sidebar Widget Area"
 msgstr ""
 
-#: ../lib/frontend/sidebar.php:112
+#: ../lib/frontend/sidebar.php:104
 #, php-format
 msgid ""
 "This is the %s. You can add content to this area by visiting your <a href="
@@ -1703,51 +1693,55 @@ msgid ""
 "Please upgrade and try again."
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:35
+#: ../lib/functions/breadcrumb.php:26
+msgid "Home"
+msgstr ""
+
+#: ../lib/functions/breadcrumb.php:34
 msgid "You are here: "
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:36 ../lib/functions/breadcrumb.php:37
-#: ../lib/functions/breadcrumb.php:38 ../lib/functions/breadcrumb.php:39
-#: ../lib/functions/breadcrumb.php:41 ../lib/functions/breadcrumb.php:42
+#: ../lib/functions/breadcrumb.php:35 ../lib/functions/breadcrumb.php:36
+#: ../lib/functions/breadcrumb.php:37 ../lib/functions/breadcrumb.php:38
+#: ../lib/functions/breadcrumb.php:40 ../lib/functions/breadcrumb.php:41
 msgid "Archives for "
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:40
+#: ../lib/functions/breadcrumb.php:39
 msgid "Search for "
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:43
+#: ../lib/functions/breadcrumb.php:42
 msgid "Not found "
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:155 ../lib/functions/breadcrumb.php:224
-#: ../lib/functions/breadcrumb.php:250
+#: ../lib/functions/breadcrumb.php:153 ../lib/functions/breadcrumb.php:222
+#: ../lib/functions/breadcrumb.php:248
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:277
+#: ../lib/functions/breadcrumb.php:275
 #, php-format
 msgid "View all posts in %s"
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:305
+#: ../lib/functions/breadcrumb.php:303
 #, php-format
 msgid "View all %s"
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:365 ../lib/functions/breadcrumb.php:382
+#: ../lib/functions/breadcrumb.php:363 ../lib/functions/breadcrumb.php:380
 #, php-format
 msgid "View archives for %s"
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:388
+#: ../lib/functions/breadcrumb.php:386
 #, php-format
 msgid "View archives for %s %s"
 msgstr ""
 
-#: ../lib/functions/breadcrumb.php:432
+#: ../lib/functions/breadcrumb.php:430
 #, php-format
 msgid "View all items in %s"
 msgstr ""
@@ -1805,24 +1799,24 @@ msgstr ""
 msgid "Tagged With: "
 msgstr ""
 
-#: ../lib/functions/shortcodes.php:175 ../lib/functions/shortcodes.php:194
+#: ../lib/functions/shortcodes.php:175 ../lib/functions/shortcodes.php:197
 msgid "Filed Under: "
 msgstr ""
 
-#: ../lib/functions/shortcodes.php:247
+#: ../lib/functions/shortcodes.php:250
 msgid "Return to top of page"
 msgstr ""
 
-#: ../lib/functions/shortcodes.php:326
+#: ../lib/functions/shortcodes.php:329
 #, php-format
 msgid " <a href=\"%1$s\">%2$s</a>"
 msgstr ""
 
-#: ../lib/functions/shortcodes.php:360
+#: ../lib/functions/shortcodes.php:363
 msgid "Log in"
 msgstr ""
 
-#: ../lib/functions/shortcodes.php:363
+#: ../lib/functions/shortcodes.php:366
 msgid "Log out"
 msgstr ""
 
@@ -1923,6 +1917,7 @@ msgid "Bizznis - Featured Page"
 msgstr ""
 
 #: ../lib/widgets/featured-page-widget.php:123
+#: ../lib/widgets/page-list-widget.php:114
 msgid "Title"
 msgstr ""
 
@@ -1960,4 +1955,76 @@ msgstr ""
 
 #: ../lib/widgets/featured-page-widget.php:168
 msgid "More Text"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:39
+msgid "Displays page list"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:44
+msgid "Bizznis - Page List"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:118
+msgid "Sort by"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:120
+msgid "Page title"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:121
+msgid "Menu order"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:122
+msgid "Publish date"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:123
+msgid "Modified date"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:127
+msgid "Order by"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:129
+msgid "Ascending"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:130
+msgid "Descending"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:134
+msgid "Child Of"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:135
+msgid "- Select -"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:138
+msgid "Exclude"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:141
+msgid "Page IDs, separated by commas."
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:144
+msgid "Before link"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:147
+msgid "Sets the text or html that precedes the link text inside &lt;a&gt; tag."
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:150
+msgid "After link"
+msgstr ""
+
+#: ../lib/widgets/page-list-widget.php:153
+msgid "Sets the text or html that follows the link text inside &lt;a&gt; tag."
 msgstr ""
