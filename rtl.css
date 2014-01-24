@@ -140,6 +140,10 @@ img.alignright,
 	margin: 0 2.4rem 2.4rem 0;
 }
 
+.gallery-item {
+	float: right;
+}
+
 /* Bizznis
 --------------------------------------------- */
 

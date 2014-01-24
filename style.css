@@ -5,7 +5,7 @@ Description:		Parent Business WordPress theme, aimed at theme developers who wan
 License:			GPL version 3
 License URI:		http://gplv3.fsf.org/
 Branch:				1.0
-Version:			1.0.4
+Version:			1.0.5
 Author:				BizzThemes
 Author URI:			http://bizzthemes.com/
 Tags:				light, gray, white, one-column, two-columns, three-columns, right-sidebar, left-sidebar, responsive-layout, fluid-layout, custom-menu, featured-images, full-width-template, microformats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -232,7 +232,7 @@ blockquote::before {
 }
 
 blockquote {
-	border-left: 10px solid #f9f8f2;
+	border-left: 5px solid #e5e5e5;
 	margin: 40px;
 	margin: 4rem;
 	padding-left: 40px;
@@ -524,12 +524,15 @@ td {
 
 .site-main {
 	background-color: #fff;
+	border-top: 1px solid #e5e5e5;
+}
+
+.custom-background .site-main { /* display only when custom background is set */
+	border: none;
 	clear: both;
 	margin: 40px auto;
 	margin: 4rem auto;
 	max-width: 1220px;
-	padding: 40px 0;
-	padding: 4rem 0;
 }
 
 .site-footer {
@@ -691,7 +694,55 @@ img.alignright,
 	text-align: center;
 }
 
+.gallery {
+	margin: auto;
+}
+
+.gallery-item {
+	float: left;
+	margin-top: 10px;
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.gallery-columns-2 .gallery-item {
+	width: 50%;
+}
+
+.gallery-columns-3 .gallery-item {
+	width: 33%;
+}
+
+.gallery-columns-4 .gallery-item {
+	width: 25%;
+}
+
+.gallery-columns-5 .gallery-item {
+	width: 20%;
+}
+
+.gallery-columns-6 .gallery-item {
+	width: 16%;
+}
+
+.gallery-columns-7 .gallery-item {
+	width: 14%;
+}
+
+.gallery-columns-8 .gallery-item {
+	width: 12%;
+}
+
+.gallery-columns-9 .gallery-item {
+	width: 11%;
+}
+
+.gallery-item img {
+	border: 1px solid #e5e5e5;
+}
+
 .gallery-caption {
+	margin-left: 0;
 	margin-top: 10px;
 	margin-top: 1rem;
 }
@@ -712,8 +763,8 @@ img.alignright,
 
 .breadcrumb {
 	font-weight: 300;
-	margin-bottom: 40px;
-	margin-bottom: 4rem;
+	margin-top: 40px;
+	margin-top: 4rem;
 }
 
 /* Author box
@@ -727,8 +778,11 @@ img.alignright,
 .author-box,
 .archive-description {
 	background-color: #f9f8f2;
-	margin-bottom: 40px;
-	margin-bottom: 4rem;
+	border-left: 5px solid #333;
+	margin-left: -45px;
+	margin-left: -4.5rem;
+	margin-top: 40px;
+	margin-top: 4rem;
 	overflow: hidden;
 	padding: 40px;
 	padding: 4rem;
@@ -752,7 +806,6 @@ img.alignright,
 
 .author-box p,
 .archive-description p {
-	color: #999;
 	margin-bottom: 0px;
 }
 
@@ -976,7 +1029,7 @@ img.alignright,
 
 .menu-bizznis .sub-menu a {
 	background-color: #fff;
-	border: 1px solid #f9f8f2;
+	border: 1px solid #e5e5e5;
 	border-top: none;
 	font-size: 14px;
 	font-size: 1.4rem;
@@ -1036,8 +1089,7 @@ img.alignright,
 --------------------------------------------- */
 
 .nav-secondary {
-	border: solid #f9f8f2;
-	border-width: 1px 0;
+	border-top: 1px solid #e5e5e5;
 }
 
 /* Site Header Navigation
@@ -1051,7 +1103,7 @@ img.alignright,
 }
 
 .nav-header .sub-menu {
-	border-top: 1px solid #f9f8f2;
+	border-top: 1px solid #e5e5e5;
 }
 
 .nav-header .sub-menu .sub-menu {
@@ -1074,24 +1126,19 @@ img.alignright,
 --------------------------------------------- */
 
 .content {
-	background-color: #fff;
+	margin-bottom: 40px;
+	margin-bottom: 4rem;
 }
 
-.entry {
+article.entry { /* article is present to exclude custom post types from plugins */
+	border-bottom: 1px solid #e5e5e5;
 	padding: 40px 0;
 	padding: 4rem 0;
 }
 
-.entry:nth-of-type(1) {
-	padding-top: 0;
-}
-
-.post.entry {
-	border-bottom: 1px solid #f9f8f2;
-}
-
-.post.entry:last-child {
+.entry:last-of-type {
 	border-bottom: none;
+	padding-bottom: 0;
 }
 
 .page .content .page,
@@ -1202,17 +1249,15 @@ img.alignright,
 /* Comments
 --------------------------------------------- */
 
-.entry-comments,
 .entry-pings {
-	border-top: 1px solid #f9f8f2;
+	border-top: 1px solid #e5e5e5;
 }
 
 .entry-comments,
-.entry-pings {
-	margin-top: 40px;
-	margin-top: 4rem;
-	padding: 40px 0;
-	padding: 4rem 0;
+.entry-pings,
+.comment-respond {
+	padding-top: 40px;
+	padding-top: 4rem;
 }
 
 .comment-author,
@@ -1331,12 +1376,18 @@ img.alignright,
 	color: #999;
 }
 
+.form-submit {
+	margin: 0;
+}
+
 /* Sidebars
 ------------------------------------------------------------------------------------------------------------------ */
 
 .sidebar {
 	font-size: 14px;
 	font-size: 1.4rem;
+	margin-top: 40px;
+	margin-top: 4rem;
 }
 
 .sidebar li {
@@ -1634,15 +1685,15 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	}
 	
 	p {
-		margin: 0 0 15px;
-		margin: 0 0 1.5rem;
+		margin: 0 0 20px;
+		margin: 0 0 2rem;
 	}
 	
 	.entry,
 	.navigation,
 	.footer-creds {
-		padding: 15px 0;
-		padding: 1.5rem 0;
+		padding: 20px 0;
+		padding: 2rem 0;
 	}
 
 	.header-content {
@@ -1660,8 +1711,8 @@ only screen and (min-device-pixel-ratio : 1.5) {
 
 	.entry-footer .entry-meta {
 		margin: 0;
-		padding-top: 12px;
-		padding-top: 1.2rem;
+		padding: 10px 0;
+		padding: 1rem 0;
 	}
 
 	.footer-widgets-1 {
