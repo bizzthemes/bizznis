@@ -42,11 +42,12 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 		$settings_field = BIZZNIS_SEO_SETTINGS_FIELD;
 		$default_settings = apply_filters( 'bizznis_seo_settings_defaults',
 			array(
-				'append_description_home'      => 1,
+				'semantic_headings'            => 1,
+				'publisher_uri'                => '',
 				'append_site_title'            => 0,
 				'doctitle_sep'                 => '-',
 				'doctitle_seplocation'         => 'right',
-				'semantic_headings'            => 0,
+				'append_description_home'      => 1,
 				'home_h1_on'                   => 'title',
 				'home_doctitle'                => '',
 				'home_description'             => '',
@@ -212,6 +213,33 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 	 */
 	public function form() {
 		?>
+		<!-- Google+ -->
+		<h3><?php _e( 'Google+', 'bizznis' ); ?></h3>
+		<p class="description"><?php _e( 'Your company\'s Google+ Profile URL. Must be a business, not a personal account.', 'bizznis' ); ?></p>
+		<table class="form-table">
+			<tbody>
+				<tr valign="top">
+					<th scope="row" valign="top"><?php _e( 'Publisher URL:', 'bizznis' ); ?></th>
+					<td>
+						<input type="text" name="<?php echo $this->get_field_name( 'publisher_uri' ); ?>" id="<?php echo $this->get_field_id( 'publisher_uri' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'publisher_uri' ) ); ?>" size="80" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- HTML5 Headings -->
+		<h3><?php _e( 'Section Headings', 'bizznis' ); ?></h3>
+		<p class="description"><?php printf( __( 'HTML5 allows for multiple %s tags throughout the document source, provided they are the primary title for the section in which they appear.', 'bizznis' ), bizznis_code( 'h1' ) ); ?></p>
+		<table class="form-table">
+			<tbody>
+				<tr valign="top">
+					<th scope="row" valign="top"><?php _e( 'HTML5 Headings', 'bizznis' ); ?></th>
+					<td>
+						<label for="<?php echo $this->get_field_id( 'semantic_headings' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'semantic_headings' ); ?>" id="<?php echo $this->get_field_id( 'semantic_headings' ); ?>" value="1" <?php checked( $this->get_field_value( 'semantic_headings' ) ); ?> />
+						<?php _e( 'Use semantic HTML5 page and section headings throughout site?', 'bizznis' ); ?></label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		<!-- Document Title -->
 		<h3><?php _e( 'Document Title', 'bizznis' ); ?></h3>
 		<p class="description"><?php printf( __( 'The document %s is the single most important element in your document source for <abbr title="Search engine optimization">SEO</abbr>.', 'bizznis' ), bizznis_code( '<title>' ) ); ?></p>
@@ -221,9 +249,6 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 				<tr valign="top">
 					<th scope="row" valign="top"><?php _e( 'Title Additions', 'bizznis' ); ?></th>
 					<td>
-						<label for="<?php echo $this->get_field_id( 'append_description_home' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'append_description_home' ); ?>" id="<?php echo $this->get_field_id( 'append_description_home' ); ?>" value="1" <?php checked( $this->get_field_value( 'append_description_home' ) ); ?> />
-						<?php printf( __( 'Add site description (tagline) to %s on home page?', 'bizznis' ), bizznis_code( '<title>' ) ); ?> </label>
-						<br />
 						<label for="<?php echo $this->get_field_id( 'append_site_title' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'append_site_title' ); ?>" id="<?php echo $this->get_field_id( 'append_site_title' ); ?>" value="1" <?php checked( $this->get_field_value( 'append_site_title' ) ); ?> />
 						<?php printf( __( 'Add site name to %s on inner pages?', 'bizznis' ), bizznis_code( '<title>' ) ); ?> </label>
 					</td>
@@ -279,14 +304,6 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 		<p class="description"><?php _e( 'Note: these settings will not apply if a static page is set as the front page. In that case, you\'ll need to set the SEO settings on that particular page.', 'bizznis' ); ?></p>
 		<table class="form-table">
 			<tbody>
-				<tr valign="top">
-					<th scope="row" valign="top"><?php _e( 'HTML5 Headings', 'bizznis' ); ?></th>
-					<td>
-						<label for="<?php echo $this->get_field_id( 'semantic_headings' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'semantic_headings' ); ?>" id="<?php echo $this->get_field_id( 'semantic_headings' ); ?>" value="1" <?php checked( $this->get_field_value( 'semantic_headings' ) ); ?> />
-						<?php _e( 'Use semantic HTML5 page and section headings throughout site?', 'bizznis' ); ?></label>
-						<p class="description"><?php printf( __( 'HTML5 allows for multiple %s tags throughout the document source, provided they are the primary title for the section in which they appear.', 'bizznis' ), bizznis_code( 'h1' ) ); ?></p>
-					</td>
-				</tr>
 				<tr valign="top" id="bizznis_seo_h1_wrap">
 					<th scope="row" valign="top"><?php printf( __( 'Wrap in %s tags?', 'bizznis' ), bizznis_code( 'h1' ) ); ?></th>
 					<td>
@@ -310,7 +327,12 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 				<tr valign="top">
 					<th scope="row" valign="top"><?php _e( 'Meta Description', 'bizznis' ); ?></th>
 					<td>
-						<textarea class="large-text" name="<?php echo $this->get_field_name( 'home_description' ); ?>" id="<?php echo $this->get_field_id( 'home_description' ); ?>" rows="3" cols="70"><?php echo esc_textarea( $this->get_field_value( 'home_description' ) ); ?></textarea><br />
+						<p>
+							<label for="<?php echo $this->get_field_id( 'append_description_home' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'append_description_home' ); ?>" id="<?php echo $this->get_field_id( 'append_description_home' ); ?>" value="1" <?php checked( $this->get_field_value( 'append_description_home' ) ); ?> />
+							<?php printf( __( 'Add site description (tagline) to %s on home page?', 'bizznis' ), bizznis_code( '<title>' ) ); ?></label>
+						</p>
+						<br />
+						<textarea class="widefat" name="<?php echo $this->get_field_name( 'home_description' ); ?>" id="<?php echo $this->get_field_id( 'home_description' ); ?>" rows="3" cols="70"><?php echo esc_textarea( $this->get_field_value( 'home_description' ) ); ?></textarea><br />
 						<p class="description"><?php _e( 'The meta description can be used to determine the text used under the title on search engine results pages.', 'bizznis' ); ?></p>
 					</td>
 				</tr>
@@ -325,19 +347,6 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 						<br />
 						<label for="<?php echo $this->get_field_id( 'home_noarchive' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'home_noarchive' ); ?>" id="<?php echo $this->get_field_id( 'home_noarchive' ); ?>" value="1" <?php checked( $this->get_field_value( 'home_noarchive' ) ); ?> />
 						<?php printf( __( 'Apply %s to the homepage?', 'bizznis' ), bizznis_code( 'noarchive' ) ); ?></label>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row" valign="top"><?php _e( 'Author', 'bizznis' ); ?></th>
-					<td>
-						<?php
-						wp_dropdown_users( array(
-							'show_option_none' => __( 'Select User', 'bizznis' ),
-							'selected' => $this->get_field_value( 'home_author' ),
-							'name' => $this->get_field_name( 'home_author' ),
-						) );
-						?>
-						<p class="description"><?php printf( __( 'User listed as the %s for the homepage. Be sure the user has entered their Google+ profile address on the profile edit screen.', 'bizznis' ), bizznis_code( 'rel="author"' ) ); ?></p>
 					</td>
 				</tr>
 			</tbody>
