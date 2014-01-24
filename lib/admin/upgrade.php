@@ -83,7 +83,7 @@ function bizznis_upgrade() {
 }
 
 /**
- * Upgrade the database to version 1004.
+ * Upgrade the database to version 1005.
  *
  * @since 1.0.5
  */
