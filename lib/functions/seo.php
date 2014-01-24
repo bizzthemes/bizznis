@@ -17,6 +17,7 @@ function bizznis_disable_seo() {
 	remove_action( 'wp_head','bizznis_robots_meta' );
 	remove_action( 'wp_head','bizznis_canonical', 5 );
 	remove_action( 'wp_head', 'bizznis_rel_author' );
+	remove_action( 'wp_head', 'bizznis_rel_publisher' );
 	remove_action( 'admin_menu', 'bizznis_add_inpost_seo_box' );
 	remove_action( 'save_post', 'bizznis_inpost_seo_save', 1, 2 );
 	remove_action( 'admin_init', 'bizznis_add_taxonomy_seo_options' );

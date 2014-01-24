@@ -373,14 +373,9 @@ function bizznis_canonical() {
  */
 add_action( 'wp_head', 'bizznis_rel_author' );
 function bizznis_rel_author() {
-	# If the appropriate information has been entered for the homepage author
-	if ( is_front_page() && $gplus_url = get_user_option( 'googleplus', bizznis_get_seo_option( 'home_author' ) ) ) {
-		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
-		return;
-	}
 	global $post;
 	# If the appropriate information has been entered for an individual post/page
-	if ( is_singular() && isset( $post->post_author ) && $gplus_url = get_user_option( 'googleplus', $post->post_author ) ) {
+	if ( is_singular() && post_type_supports( $post->post_type, 'bizznis-rel-author' ) && isset( $post->post_author ) && $gplus_url = get_user_option( 'googleplus', $post->post_author ) ) {
 		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
 		return;
 	}
@@ -388,6 +383,20 @@ function bizznis_rel_author() {
 	if ( is_author() && get_query_var( 'author' ) && $gplus_url = get_user_option( 'googleplus', get_query_var( 'author' ) ) ) {
 		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
 		return;
+	}
+}
+
+/**
+ * Echo custom rel="publisher" link tag.
+ *
+ * If the appropriate information has been entered and we are viewing the front page, echo a custom rel="publisher" link.
+ *
+ * @since 1.0.5
+ */
+add_action( 'wp_head', 'bizznis_rel_publisher' );
+function bizznis_rel_publisher() {
+	if ( is_front_page() && $publisher_url = bizznis_get_seo_option( 'publisher_uri' ) ) {
+		printf( '<link rel="publisher" href="%s" />', esc_url( $publisher_url ) );
 	}
 }
 
