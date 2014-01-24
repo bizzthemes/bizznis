@@ -18,6 +18,14 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.5
+
+* Updated overall design
+* Added Page list widget
+* Updated SEO controls: added Google+ publisher meta links
+* Removed front-page.php template
+* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.4...1.0.5
+
 ### 1.0.4
 
 * Added the_post_thumbnail to process featured images
