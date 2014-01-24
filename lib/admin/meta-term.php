@@ -48,6 +48,46 @@ function bizznis_taxonomy_archive_options( $tag, $taxonomy ) {
 }
 
 /**
+ * Loop through the custom taxonomies and add the layout options to each custom taxonomy edit screen.
+ *
+ * @since 1.0.0
+ */
+add_action( 'admin_init', 'bizznis_add_taxonomy_layout_options' );
+function bizznis_add_taxonomy_layout_options() {
+	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name ) {
+		add_action( $tax_name . '_edit_form', 'bizznis_taxonomy_layout_options', 10, 2 );
+	}
+}
+
+/**
+ * Display layout picker.
+ *
+ * @since 1.0.0
+ */
+function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
+	$tax = get_taxonomy( $taxonomy );
+	?>
+	<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
+	<table class="form-table">
+		<tbody>
+			<tr>
+				<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
+				<td>
+					<div class="bizznis-layout-selector">
+						<p>
+							<input type="radio" name="meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> />
+							<label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label>
+						</p>
+						<p><?php bizznis_layout_selector( array( 'name' => 'meta[layout]', 'selected' => $tag->meta['layout'], 'type' => 'site' ) ); ?></p>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<?php
+}
+
+/**
  * Loop through the custom taxonomies and add the SEO options to each custom taxonomy edit screen.
  *
  * @since 1.0.0
@@ -91,46 +131,6 @@ function bizznis_taxonomy_seo_options( $tag, $taxonomy ) {
 					<label for="meta[nofollow]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>nofollow</code>' ); ?></label><br />
 					<input name="meta[noarchive]" id="meta[noarchive]" type="checkbox" value="1" <?php checked( $tag->meta['noarchive'] ); ?> />
 					<label for="meta[noarchive]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>noarchive</code>' ); ?></label>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<?php
-}
-
-/**
- * Loop through the custom taxonomies and add the layout options to each custom taxonomy edit screen.
- *
- * @since 1.0.0
- */
-add_action( 'admin_init', 'bizznis_add_taxonomy_layout_options' );
-function bizznis_add_taxonomy_layout_options() {
-	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name ) {
-		add_action( $tax_name . '_edit_form', 'bizznis_taxonomy_layout_options', 10, 2 );
-	}
-}
-
-/**
- * Display layout picker.
- *
- * @since 1.0.0
- */
-function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
-	$tax = get_taxonomy( $taxonomy );
-	?>
-	<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
-	<table class="form-table">
-		<tbody>
-			<tr>
-				<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
-				<td>
-					<div class="bizznis-layout-selector">
-						<p>
-							<input type="radio" name="meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> />
-							<label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label>
-						</p>
-						<p><?php bizznis_layout_selector( array( 'name' => 'meta[layout]', 'selected' => $tag->meta['layout'], 'type' => 'site' ) ); ?></p>
-					</div>
 				</td>
 			</tr>
 		</tbody>

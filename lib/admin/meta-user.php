@@ -27,10 +27,10 @@ function bizznis_add_user_profile_fields() {
 	add_action( 'edit_user_profile', 'bizznis_user_options_fields' );
 	add_action( 'show_user_profile', 'bizznis_user_archive_fields' );
 	add_action( 'edit_user_profile', 'bizznis_user_archive_fields' );
-	add_action( 'show_user_profile', 'bizznis_user_seo_fields' );
-	add_action( 'edit_user_profile', 'bizznis_user_seo_fields' );
 	add_action( 'show_user_profile', 'bizznis_user_layout_fields' );
 	add_action( 'edit_user_profile', 'bizznis_user_layout_fields' );
+	add_action( 'show_user_profile', 'bizznis_user_seo_fields' );
+	add_action( 'edit_user_profile', 'bizznis_user_seo_fields' );
 }
 
 /**
@@ -105,6 +105,39 @@ function bizznis_user_archive_fields( $user ) {
 }
 
 /**
+ * Adds author archive layout picker to the user edit screen.
+ *
+ * @since 1.0.0
+ */
+function bizznis_user_layout_fields( $user ) {
+	if ( ! current_user_can( 'edit_users', $user->ID ) ) {
+		return false;
+	}
+	$layout = get_the_author_meta( 'layout', $user->ID );
+	$layout = $layout ? $layout : '';
+	?>
+	<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
+	<p><span class="description"><?php _e( 'These settings apply to this author\'s archive pages.', 'bizznis' ); ?></span></p>
+	<table class="form-table">
+		<tbody>
+			<tr>
+				<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
+				<td>
+					<div class="bizznis-layout-selector">
+						<p>
+							<input type="radio" name="meta[layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> />
+							<label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label>
+						</p>
+						<p><?php bizznis_layout_selector( array( 'name' => 'meta[layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<?php
+}
+
+/**
  * Adds fields for author archive SEO to the user edit screen.
  *
  * @since 1.0.0
@@ -139,39 +172,6 @@ function bizznis_user_seo_fields( $user ) {
 					<label for="meta[nofollow]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>nofollow</code>' ); ?></label><br />
 					<input id="meta[noarchive]" name="meta[noarchive]" id="noarchive" type="checkbox" value="1" <?php checked( get_the_author_meta( 'noarchive', $user->ID ) ); ?> />
 					<label for="meta[noarchive]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>noarchive</code>' ); ?></label>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<?php
-}
-
-/**
- * Adds author archive layout picker to the user edit screen.
- *
- * @since 1.0.0
- */
-function bizznis_user_layout_fields( $user ) {
-	if ( ! current_user_can( 'edit_users', $user->ID ) ) {
-		return false;
-	}
-	$layout = get_the_author_meta( 'layout', $user->ID );
-	$layout = $layout ? $layout : '';
-	?>
-	<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
-	<p><span class="description"><?php _e( 'These settings apply to this author\'s archive pages.', 'bizznis' ); ?></span></p>
-	<table class="form-table">
-		<tbody>
-			<tr>
-				<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
-				<td>
-					<div class="bizznis-layout-selector">
-						<p>
-							<input type="radio" name="meta[layout]" id="default-layout" value="" <?php checked( $layout, '' ); ?> />
-							<label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label>
-						</p>
-						<p><?php bizznis_layout_selector( array( 'name' => 'meta[layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
-					</div>
 				</td>
 			</tr>
 		</tbody>

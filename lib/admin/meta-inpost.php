@@ -6,6 +6,65 @@
 */
 
 /**
+ * Register a new meta box to the post or page edit screen, so that the user can
+ * set layout options on a per-post or per-page basis.
+ *
+ * @since 1.0.0
+ */
+add_action( 'admin_menu', 'bizznis_add_inpost_layout_box' );
+function bizznis_add_inpost_layout_box() {
+	if ( ! current_theme_supports( 'bizznis-inpost-layouts' ) ) {
+		return;
+	}
+	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
+		if ( post_type_supports( $type, 'bizznis-layouts' ) ) {
+			add_meta_box( 'bizznis_inpost_layout_box', __( 'Layout Settings', 'bizznis' ), 'bizznis_inpost_layout_box', $type, 'normal', 'core' );
+		}
+	}
+}
+
+/**
+ * Callback for in-post layout meta box.
+ *
+ * @since 1.0.0
+ */
+function bizznis_inpost_layout_box() {
+	wp_nonce_field( 'bizznis_inpost_layout_save', 'bizznis_inpost_layout_nonce' );
+	$layout = bizznis_get_custom_field( '_bizznis_layout' );
+	?>
+	<div class="bizznis-layout-selector">
+		<p><input type="radio" name="bizznis_layout[_bizznis_layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
+
+		<p><?php bizznis_layout_selector( array( 'name' => 'bizznis_layout[_bizznis_layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
+	</div>
+	<br class="clear" />
+	<p><label for="bizznis_custom_body_class"><b><?php _e( 'Custom Body Class', 'bizznis' ); ?></b></label></p>
+	<p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_body_class]" id="bizznis_custom_body_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_body_class' ) ); ?>" /></p>
+	<p><label for="bizznis_custom_post_class"><b><?php _e( 'Custom Post Class', 'bizznis' ); ?></b></label></p>
+	<p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_post_class]" id="bizznis_custom_post_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_post_class' ) ); ?>" /></p>
+	<?php
+}
+
+/**
+ * Save the layout options when we save a post or page.
+ *
+ * @since 1.0.0
+ */
+add_action( 'save_post', 'bizznis_inpost_layout_save', 1, 2 );
+function bizznis_inpost_layout_save( $post_id, $post ) {
+	if ( ! isset( $_POST['bizznis_layout'] ) ) {
+		return;
+	}
+	$data = wp_parse_args( $_POST['bizznis_layout'], array(
+		'_bizznis_layout'            => '',
+		'_bizznis_custom_body_class' => '',
+		'_bizznis_post_class'        => '',
+	) );
+	$data = array_map( 'bizznis_sanitize_html_classes', $data );
+	bizznis_save_custom_fields( $data, 'bizznis_inpost_layout_save', 'bizznis_inpost_layout_nonce', $post, $post_id );
+}
+
+/**
  * Register a new meta box to the post or page edit screen, so that 
  * the user can set SEO options on a per-post or per-page basis.
  *
@@ -31,7 +90,7 @@ function bizznis_inpost_seo_box() {
 	<p><label for="bizznis_title"><b><?php _e( 'Custom Document Title', 'bizznis' ); ?></b> <abbr title="&lt;title&gt; Tag">[?]</abbr> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'bizznis' ), '<span id="bizznis_title_chars">'. strlen( bizznis_get_custom_field( '_bizznis_title' ) ) .'</span>' ); ?></span></label></p>
 	<p><input class="large-text" type="text" name="bizznis_seo[_bizznis_title]" id="bizznis_title" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_title' ) ); ?>" /></p>
 	<p><label for="bizznis_description"><b><?php _e( 'Custom Post/Page Meta Description', 'bizznis' ); ?></b> <abbr title="&lt;meta name=&quot;description&quot; /&gt;">[?]</abbr> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'bizznis' ), '<span id="bizznis_description_chars">'. strlen( bizznis_get_custom_field( '_bizznis_description' ) ) .'</span>' ); ?></span></label></p>
-	<p><textarea class="large-text" name="bizznis_seo[_bizznis_description]" id="bizznis_description" rows="4" cols="4"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_description' ) ); ?></textarea></p>
+	<p><textarea class="widefat" name="bizznis_seo[_bizznis_description]" id="bizznis_description" rows="4" cols="4"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_description' ) ); ?></textarea></p>
 	<p><label for="bizznis_canonical"><b><?php _e( 'Custom Canonical URI', 'bizznis' ); ?></b> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://www.mattcutts.com/blog/canonical-link-tag/' ); ?>" target="_blank" title="&lt;link rel=&quot;canonical&quot; /&gt;">[?]</a></label></p>
 	<p><input class="large-text" type="text" name="bizznis_seo[_bizznis_canonical_uri]" id="bizznis_canonical" value="<?php echo esc_url( bizznis_get_custom_field( '_bizznis_canonical_uri' ) ); ?>" /></p>
 	<p><label for="bizznis_redirect"><b><?php _e( 'Custom Redirect URI', 'bizznis' ); ?></b> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=93633' ); ?>" target="_blank" title="301 Redirect">[?]</a></label></p>
@@ -106,7 +165,7 @@ function bizznis_inpost_scripts_box() {
 	wp_nonce_field( 'bizznis_inpost_scripts_save', 'bizznis_inpost_scripts_nonce' );
 	?>
 	<p><label for="bizznis_scripts" class="screen-reader-text"><b><?php _e( 'Page-specific Scripts', 'bizznis' ); ?></b></label></p>
-	<p><textarea class="large-text" rows="4" cols="4" name="bizznis_seo[_bizznis_scripts]" id="bizznis_scripts"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_scripts' ) ); ?></textarea></p>
+	<p><textarea class="widefat" rows="4" cols="4" name="bizznis_seo[_bizznis_scripts]" id="bizznis_scripts"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_scripts' ) ); ?></textarea></p>
 	<p><?php printf( __( 'Suitable for custom tracking, conversion or other page-specific script. Must include %s tags.', 'bizznis' ), bizznis_code( 'script' ) ); ?></p>
 	<?php
 }
@@ -131,63 +190,3 @@ function bizznis_inpost_scripts_save( $post_id, $post ) {
 	) );
 	bizznis_save_custom_fields( $data, 'bizznis_inpost_scripts_save', 'bizznis_inpost_scripts_nonce', $post, $post_id );
 }
-
-/**
- * Register a new meta box to the post or page edit screen, so that the user can
- * set layout options on a per-post or per-page basis.
- *
- * @since 1.0.0
- */
-add_action( 'admin_menu', 'bizznis_add_inpost_layout_box' );
-function bizznis_add_inpost_layout_box() {
-	if ( ! current_theme_supports( 'bizznis-inpost-layouts' ) ) {
-		return;
-	}
-	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
-		if ( post_type_supports( $type, 'bizznis-layouts' ) ) {
-			add_meta_box( 'bizznis_inpost_layout_box', __( 'Layout Settings', 'bizznis' ), 'bizznis_inpost_layout_box', $type, 'normal', 'core' );
-		}
-	}
-}
-
-/**
- * Callback for in-post layout meta box.
- *
- * @since 1.0.0
- */
-function bizznis_inpost_layout_box() {
-	wp_nonce_field( 'bizznis_inpost_layout_save', 'bizznis_inpost_layout_nonce' );
-	$layout = bizznis_get_custom_field( '_bizznis_layout' );
-	?>
-	<div class="bizznis-layout-selector">
-		<p><input type="radio" name="bizznis_layout[_bizznis_layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
-
-		<p><?php bizznis_layout_selector( array( 'name' => 'bizznis_layout[_bizznis_layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
-	</div>
-	<br class="clear" />
-	<p><label for="bizznis_custom_body_class"><b><?php _e( 'Custom Body Class', 'bizznis' ); ?></b></label></p>
-	<p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_body_class]" id="bizznis_custom_body_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_body_class' ) ); ?>" /></p>
-	<p><label for="bizznis_custom_post_class"><b><?php _e( 'Custom Post Class', 'bizznis' ); ?></b></label></p>
-	<p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_post_class]" id="bizznis_custom_post_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_post_class' ) ); ?>" /></p>
-	<?php
-}
-
-/**
- * Save the layout options when we save a post or page.
- *
- * @since 1.0.0
- */
-add_action( 'save_post', 'bizznis_inpost_layout_save', 1, 2 );
-function bizznis_inpost_layout_save( $post_id, $post ) {
-	if ( ! isset( $_POST['bizznis_layout'] ) ) {
-		return;
-	}
-	$data = wp_parse_args( $_POST['bizznis_layout'], array(
-		'_bizznis_layout'            => '',
-		'_bizznis_custom_body_class' => '',
-		'_bizznis_post_class'        => '',
-	) );
-	$data = array_map( 'bizznis_sanitize_html_classes', $data );
-	bizznis_save_custom_fields( $data, 'bizznis_inpost_layout_save', 'bizznis_inpost_layout_nonce', $post, $post_id );
-}
-
