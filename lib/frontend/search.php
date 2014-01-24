@@ -18,6 +18,7 @@ function bizznis_search_form() {
 	$onblur  = "onblur=\"if (this.value == '') {this.value = '$search_text';}\"";
 	# Empty label, by default. Filterable.
 	$label = apply_filters( 'bizznis_search_form_label', '' );
-	$form = sprintf( '<form method="get" class="search-form" action="%s" role="search">%s<input type="search" name="s" placeholder="%s" /><input type="submit" value="%s" /></form>', home_url( '/' ), $label, $search_text, esc_attr( $button_text ) );
+	$value_or_placeholder = ( get_search_query() == '' ) ? 'placeholder' : 'value';
+	$form = sprintf( '<form method="get" class="search-form" action="%s" role="search">%s<input type="search" name="s" %s="%s" /><input type="submit" value="%s" /></form>', home_url( '/' ), esc_html( $label ), $value_or_placeholder, esc_attr( $search_text ), esc_attr( $button_text ) );
 	return apply_filters( 'bizznis_search_form', $form, $search_text, $button_text, $label );
 }

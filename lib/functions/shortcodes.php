@@ -177,6 +177,9 @@ function bizznis_post_categories_shortcode( $atts ) {
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_categories' );
 	$cats = get_the_category_list( trim( $atts['sep'] ) . ' ' );
+	if ( empty( $cats ) ) {
+		return;
+	}
 	$output = sprintf( '<span %s>', bizznis_attr( 'entry-categories' ) ) . $atts['before'] . $cats . $atts['after'] . '</span>';
 	return apply_filters( 'bizznis_post_categories_shortcode', $output, $atts );
 }
@@ -266,7 +269,7 @@ function bizznis_footer_copyright_shortcode( $atts ) {
 		'first'     => '',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'footer_copyright' );
-	$output = $atts['before'] . $atts['copyright'] . ' ';
+	$output = $atts['before'] . $atts['copyright'] . '&nbsp;';
 	if ( '' != $atts['first'] && date( 'Y' ) != $atts['first'] ) {
 		$output .= $atts['first'] . '&#x02013;';
 	}
