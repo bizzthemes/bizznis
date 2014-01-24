@@ -63,7 +63,7 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				'breadcrumb_attachment'		=> 0,
 				'content_archive'           => 'full',
 				'content_archive_thumbnail' => 0,
-				'posts_nav'                 => 'prev-next',
+				'posts_nav'                 => 'numeric',
 				'blog_cat'                  => '',
 				'blog_cat_exclude'          => '',
 				'blog_cat_num'              => 10,
@@ -564,14 +564,14 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				<tr>
 					<th scope="row" valign="top"><?php printf( __( '%s scripts', 'bizznis' ), '<code>wp_head()</code>' ); ?></th>
 					<td>
-						<textarea name="<?php echo $this->get_field_name( 'header_scripts' ); ?>" id="<?php echo $this->get_field_id( 'header_scripts' ); ?>" class="large-text" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'header_scripts' ) ); ?></textarea>
+						<textarea name="<?php echo $this->get_field_name( 'header_scripts' ); ?>" id="<?php echo $this->get_field_id( 'header_scripts' ); ?>" class="widefat" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'header_scripts' ) ); ?></textarea>
 						<p class="description"><?php printf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'bizznis' ), '<code>wp_head()</code>', '<code>&lt;/head&gt;</code>' ); ?></p>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row" valign="top"><?php printf( __( '%s scripts', 'bizznis' ), '<code>wp_footer()</code>' ); ?></th>
 					<td>
-						<textarea name="<?php echo $this->get_field_name( 'footer_scripts' ); ?>" id="<?php echo $this->get_field_id( 'footer_scripts' ); ?>" class="large-text" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'footer_scripts' ) ); ?></textarea>
+						<textarea name="<?php echo $this->get_field_name( 'footer_scripts' ); ?>" id="<?php echo $this->get_field_id( 'footer_scripts' ); ?>" class="widefat" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'footer_scripts' ) ); ?></textarea>
 						<p class="description"><?php printf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'bizznis' ), '<code>wp_footer()</code>', '<code>&lt;/body&gt;</code>' ); ?></p>
 					</td>
 				</tr>
