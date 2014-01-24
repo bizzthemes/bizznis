@@ -101,10 +101,10 @@ class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.0.4' );
+		define( 'PARENT_THEME_VERSION', 		'1.0.5' );
 		define( 'PARENT_THEME_BRANCH', 			'1.0' );
-		define( 'PARENT_DB_VERSION', 			'1004' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1388577600' ) );
+		define( 'PARENT_DB_VERSION', 			'1005' );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1390392000' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
@@ -185,8 +185,8 @@ class Bizznis_Init {
 			'header-selector'		=> '.title-area',
 		) );
 		add_theme_support( 'custom-background', array(
-			'default-color' => 'f9f8f2',
-			'default-image' => BIZZNIS_IMAGES_URL . '/background.png',
+			// 'default-color' => 'f9f8f2',
+			// 'default-image' => BIZZNIS_IMAGES_URL . '/background.png',
 		) );
 		add_theme_support( 'bizznis-footer-widgets', 4 );
 		add_editor_style();
@@ -199,7 +199,7 @@ class Bizznis_Init {
 	 * @since 1.0.0
 	 */
 	public function post_type_support() {
-		add_post_type_support( 'post', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts' ) );
+		add_post_type_support( 'post', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts', 'bizznis-rel-author' ) );
 		add_post_type_support( 'page', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts' ) );
 	}
 	
