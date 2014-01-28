@@ -5,7 +5,7 @@ Description:		Parent Business WordPress theme, aimed at theme developers who wan
 License:			GPL version 3
 License URI:		http://gplv3.fsf.org/
 Branch:				1.0
-Version:			1.0.5
+Version:			1.0.6
 Author:				BizzThemes
 Author URI:			http://bizzthemes.com/
 Tags:				light, gray, white, one-column, two-columns, three-columns, right-sidebar, left-sidebar, responsive-layout, fluid-layout, custom-menu, featured-images, full-width-template, microformats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -763,8 +763,8 @@ img.alignright,
 
 .breadcrumb {
 	font-weight: 300;
-	margin-top: 40px;
-	margin-top: 4rem;
+	margin-bottom: 40px;
+	margin-bottom: 4rem;
 }
 
 /* Author box
@@ -781,8 +781,8 @@ img.alignright,
 	border-left: 5px solid #333;
 	margin-left: -45px;
 	margin-left: -4.5rem;
-	margin-top: 40px;
-	margin-top: 4rem;
+	margin-bottom: 40px;
+	margin-bottom: 4rem;
 	overflow: hidden;
 	padding: 40px;
 	padding: 4rem;
@@ -1126,8 +1126,8 @@ img.alignright,
 --------------------------------------------- */
 
 .content {
-	margin-bottom: 40px;
-	margin-bottom: 4rem;
+	margin: 40px 0;
+	margin: 4rem 0;
 }
 
 article.entry { /* article is present to exclude custom post types from plugins */
@@ -1136,14 +1136,18 @@ article.entry { /* article is present to exclude custom post types from plugins 
 	padding: 4rem 0;
 }
 
+.entry:first-of-type {
+	padding-top: 0;
+}
+
 .entry:last-of-type {
 	border-bottom: none;
-	padding-bottom: 0;
 }
 
 .page .content .page,
 .single .content .entry {
 	border-bottom: none;
+	padding-bottom: 0;
 }
 
 .entry-content ol,
@@ -1215,8 +1219,9 @@ article.entry { /* article is present to exclude custom post types from plugins 
 
 .archive-pagination,
 .entry-pagination {
-	margin-top: 40px;
-	margin-top: 4rem;
+	border-top: 1px solid #e5e5e5;
+	padding-top: 40px;
+	padding-top: 4rem;
 }
 
 .archive-pagination li {
@@ -1256,8 +1261,8 @@ article.entry { /* article is present to exclude custom post types from plugins 
 .entry-comments,
 .entry-pings,
 .comment-respond {
-	padding-top: 40px;
-	padding-top: 4rem;
+	padding-bottom: 40px;
+	padding-bottom: 4rem;
 }
 
 .comment-author,

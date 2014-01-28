@@ -18,36 +18,35 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.6
+
+* Polished overall design
+
 ### 1.0.5
 
 * Updated overall design
 * Added Page list widget
 * Updated SEO controls: added Google+ publisher meta links
 * Removed front-page.php template
-* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.4...1.0.5
 
 ### 1.0.4
 
 * Added the_post_thumbnail to process featured images
-* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.3...1.0.4
 
 ### 1.0.3
 
 * Added editor-style file to match TinyMCE with actual content
 * Added theme settings to admin bar on front
-* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.2...1.0.3
 
 ### 1.0.2
 
 * Added theme settings menu to admin bar on front
 * Restructured theme settings from metaboxes to from fields
-* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.1...1.0.2
 
 ### 1.0.1
 
 * Updated screenshot images of the theme
 * Fixed outbound links to theme support pages
-* Detailed: https://github.com/bizzthemes/bizznis/compare/1.0.0...1.0.1
 
 ### 1.0.0
 

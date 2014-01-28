@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-24 16:32+0100\n"
-"PO-Revision-Date: 2014-01-24 16:32+0100\n"
+"POT-Creation-Date: 2014-01-28 16:43+0100\n"
+"PO-Revision-Date: 2014-01-28 16:43+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -1630,6 +1630,10 @@ msgstr ""
 
 #: ../lib/frontend/post.php:350 ../lib/frontend/post.php:422
 msgid "Next Page"
+msgstr ""
+
+#: ../lib/frontend/search.php:15
+msgid "Search this website"
 msgstr ""
 
 #: ../lib/frontend/sidebar.php:18

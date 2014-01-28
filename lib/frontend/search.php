@@ -12,7 +12,7 @@
  */
 add_filter( 'get_search_form', 'bizznis_search_form' );
 function bizznis_search_form() {
-	$search_text = get_search_query() ? esc_attr( apply_filters( 'the_search_query', get_search_query() ) ) : apply_filters( 'bizznis_search_text', esc_attr__( 'Search this website', 'bizznis' ) . '&#x02026;' );
+	$search_text = get_search_query() ? esc_attr( apply_filters( 'the_search_query', get_search_query() ) ) : apply_filters( 'bizznis_search_text', __( 'Search this website', 'bizznis' ) . '&#x02026;' );
 	$button_text = apply_filters( 'bizznis_search_button_text', esc_attr__( 'Search', 'bizznis' ) );
 	$onfocus = "onfocus=\"if (this.value == '$search_text') {this.value = '';}\"";
 	$onblur  = "onblur=\"if (this.value == '') {this.value = '$search_text';}\"";
