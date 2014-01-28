@@ -214,21 +214,20 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 	public function form() {
 		?>
 		<!-- Google+ -->
-		<h3><?php _e( 'Google+', 'bizznis' ); ?></h3>
-		<p class="description"><?php _e( 'Your company\'s Google+ Profile URL. Must be a business, not a personal account.', 'bizznis' ); ?></p>
+		<!--<h3><?php _e( 'Google+', 'bizznis' ); ?></h3>-->
 		<table class="form-table">
 			<tbody>
 				<tr valign="top">
-					<th scope="row" valign="top"><?php _e( 'Publisher URL:', 'bizznis' ); ?></th>
+					<th scope="row" valign="top"><?php _e( 'Google+:', 'bizznis' ); ?></th>
 					<td>
 						<input type="text" name="<?php echo $this->get_field_name( 'publisher_uri' ); ?>" id="<?php echo $this->get_field_id( 'publisher_uri' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'publisher_uri' ) ); ?>" size="80" />
+						<p class="description"><?php _e( 'Your company\'s Google+ Profile URL. Must be a business, not a personal account.', 'bizznis' ); ?></p>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 		<!-- HTML5 Headings -->
-		<h3><?php _e( 'Section Headings', 'bizznis' ); ?></h3>
-		<p class="description"><?php printf( __( 'HTML5 allows for multiple %s tags throughout the document source, provided they are the primary title for the section in which they appear.', 'bizznis' ), bizznis_code( 'h1' ) ); ?></p>
+		<!--<h3><?php _e( 'Section Headings', 'bizznis' ); ?></h3>-->
 		<table class="form-table">
 			<tbody>
 				<tr valign="top">
@@ -236,6 +235,7 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 					<td>
 						<label for="<?php echo $this->get_field_id( 'semantic_headings' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'semantic_headings' ); ?>" id="<?php echo $this->get_field_id( 'semantic_headings' ); ?>" value="1" <?php checked( $this->get_field_value( 'semantic_headings' ) ); ?> />
 						<?php _e( 'Use semantic HTML5 page and section headings throughout site?', 'bizznis' ); ?></label>
+						<p class="description"><?php printf( __( 'HTML5 allows for multiple %s tags throughout the document source, provided they are the primary title for the section in which they appear.', 'bizznis' ), bizznis_code( 'h1' ) ); ?></p>
 					</td>
 				</tr>
 			</tbody>
