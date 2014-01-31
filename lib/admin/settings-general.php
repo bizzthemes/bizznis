@@ -41,7 +41,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		$settings_field = BIZZNIS_SETTINGS_FIELD;
 		$default_settings = apply_filters( 'bizznis_theme_settings_defaults',
 			array(
-				'update'                    => 1,
 				'blog_title'                => 'text',
 				'style_selection'			=> '',
 				'header_right'              => 0,
@@ -51,8 +50,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				'nav_extras_twitter_text'   => __( 'Follow me on Twitter', 'bizznis' ),
 				'comments_pages'            => 0,
 				'comments_posts'            => 1,
-				'trackbacks_pages'          => 0,
-				'trackbacks_posts'          => 1,
 				'breadcrumb_home'           => 0,
 				'breadcrumb_front_page'     => 0,
 				'breadcrumb_posts_page'     => 0,
@@ -100,10 +97,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 				'content_archive_thumbnail',
 				'redirect_feed',
 				'redirect_comments_feed',
-				'trackbacks_posts',
-				'trackbacks_pages',
-				'update',
-				'update_email',
 			)
 		);
 		bizznis_add_option_filter(
@@ -167,8 +160,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		$information_help =
 			'<h3>' . __( 'Information' , 'bizznis' ) . '</h3>' .
 			'<p>'  . __( 'The information field allows you to see the current Bizznis theme information.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'You can also set to enable automatic updates and get email notification, when update is available. This does not mean the updates happen automatically without your permission; it will just notify you that an update is available. You must select it to perform the update.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'If you provide an email address and select to notify that email address when the update is available, your site will email you when the update can be performed.' , 'bizznis' ) . '</p>';
 		$layout_help =
 			'<h3>' . __( 'Default Layout' , 'bizznis' ) . '</h3>' .
 			'<p>'  . __( 'This lets you select the default layout for your entire site. On most of the child themes you\'ll see these options:' , 'bizznis' ) . '</p>' .
@@ -206,12 +197,12 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 			'<h3>' . __( 'Breadcrumbs' , 'bizznis' ) . '</h3>' .
 			'<p>'  . __( 'This field lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.' , 'bizznis' ) . '</p>';
 		$comments_help =
-			'<h3>' . __( 'Comments and Trackbacks' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This allows to decide whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.' , 'bizznis' ) . '</p>' .
-			'<p>'  . __( 'Even If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.' , 'bizznis' ) . '</p>';
+			'<h3>' . __( 'Comments' , 'bizznis' ) . '</h3>' .
+			'<p>'  . __( 'This allows to decide whether comments are enabled for posts and pages.' , 'bizznis' ) . '</p>' .
+			'<p>'  . __( 'Even If you enable comments here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.' , 'bizznis' ) . '</p>';
 		$scripts_help =
 			'<h3>' . __( 'Header and Footer Scripts' , 'bizznis' ) . '</h3>' .
-			'<p>'  . __( 'This provides you with two fields that will output HTML scripts to either header or the footer of your website. These will appear on every page of the site and are a great way to add analytic code and other scripts. You cannot use PHP in these fields. If you need to use PHP then add it via hooks inside a child theme.' , 'bizznis' ) . '</p>';
+			'<p>'  . __( 'This provides you with two fields that will output HTML scripts to either header or the footer of your website. These will appear on every page of the site and are a great way to add scripts. You cannot use PHP in these fields. If you need to use PHP then add it via hooks inside a child theme.' , 'bizznis' ) . '</p>';
 		$home_help =
 			'<h3>' . __( 'How Home Pages Work' , 'bizznis' ) . '</h3>' .
 			'<p>'  . __( 'Most Bizznis child themes include a custom home page.' , 'bizznis' ) . '</p>' .
@@ -294,30 +285,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 						<p><em><?php _e( 'Version:', 'bizznis' ); ?></em> <?php echo $this->get_field_value( 'theme_version' ); ?> &#x000B7; <em><?php _e( 'Released:', 'bizznis' ); ?></em> <?php echo PARENT_THEME_RELEASE_DATE; ?></p>
 					</td>
 				</tr>
-				<?php if ( current_theme_supports( 'bizznis-auto-updates' ) ) { ?>
-				<tr valign="top">
-					<th scope="row" valign="top"><?php _e( 'Automatic Updates', 'bizznis' ); ?></th>
-					<td>
-						<p>
-							<input type="checkbox" name="<?php echo $this->get_field_name( 'update' ); ?>" id="<?php echo $this->get_field_id( 'update' ); ?>" value="1"<?php checked( $this->get_field_value( 'update' ) ) . disabled( is_super_admin(), 0 ); ?> />
-							<label for="<?php echo $this->get_field_id( 'update' ); ?>"><?php _e( 'Enable Automatic Updates', 'bizznis' ); ?></label>
-						</p>
-						<div id="bizznis_update_notification_setting">
-							<p>
-								<input type="checkbox" name="<?php echo $this->get_field_name( 'update_email' ); ?>" id="<?php echo $this->get_field_id( 'update_email' ); ?>" value="1"<?php checked( $this->get_field_value( 'update_email' ) ) . disabled( is_super_admin(), 0 ); ?> />
-								<label for="<?php echo $this->get_field_id( 'update_email' ); ?>"><?php _e( 'Notify by Email when update is available', 'bizznis' ); ?></label>
-							</p>
-							<div id="bizznis_update_notification_email">
-								<p>
-									<label for="<?php echo $this->get_field_id( 'update_email_address' ); ?>"><?php _e( 'Enter Email Address:', 'bizznis' ); ?></label>
-									<input type="text" name="<?php echo $this->get_field_name( 'update_email_address' ); ?>" id="<?php echo $this->get_field_id( 'update_email_address' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'update_email_address' ) ); ?>" size="27" <?php disabled( 0, is_super_admin() ); ?> />
-								</p>
-								<p class="description"><?php _e( 'If you provide an email address above, you will be notified via email when a new version of Bizznis is available.', 'bizznis' ); ?></p>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<?php } ?>
 			</tbody>
 		</table>
 		<!-- Default Layout -->
@@ -542,15 +509,6 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 						<label for="<?php echo $this->get_field_id( 'comments_posts' ); ?>" title="Enable comments on posts"><?php _e( 'on posts?', 'bizznis' ); ?></label>
 						<input type="checkbox" name="<?php echo $this->get_field_name( 'comments_pages' ); ?>" id="<?php echo $this->get_field_id( 'comments_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_pages' ) ); ?> />
 						<label for="<?php echo $this->get_field_id( 'comments_pages' ); ?>" title="Enable comments on pages"><?php _e( 'on pages?', 'bizznis' ); ?></label>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row" valign="top"><?php _e( 'Enable Trackbacks', 'bizznis' ); ?></th>
-					<td>
-						<input type="checkbox" name="<?php echo $this->get_field_name( 'trackbacks_posts' ); ?>" id="<?php echo $this->get_field_id( 'trackbacks_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_posts' ) ); ?> />
-						<label for="<?php echo $this->get_field_id( 'trackbacks_posts' ); ?>" title="Enable trackbacks on posts"><?php _e( 'on posts?', 'bizznis' ); ?></label>
-						<input type="checkbox" name="<?php echo $this->get_field_name( 'trackbacks_pages' ); ?>" id="<?php echo $this->get_field_id( 'trackbacks_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_pages' ) ); ?> />
-						<label for="<?php echo $this->get_field_id( 'trackbacks_pages' ); ?>" title="Enable trackbacks on pages"><?php _e( 'on pages?', 'bizznis' ); ?></label>
 					</td>
 				</tr>
 			</tbody>
