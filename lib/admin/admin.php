@@ -14,12 +14,12 @@
 abstract class Bizznis_Admin {
 	
 	# Properties
-	public $pagehook; 			#name of the page hook when the menu is registered.
-	public $page_id; 			#ID of the admin menu and settings page.
-	public $settings_field; 	#name of the settings field in the options table.
-	public $default_settings; 	#associative array (field name => values) for the default settings on this admin page.
-	public $menu_ops; 			#associative array of configuration options for the admin menu(s).
-	public $page_ops; 			#associative array of configuration options for the settings page.
+	public $pagehook; 			# name of the page hook when the menu is registered.
+	public $page_id; 			# ID of the admin menu and settings page.
+	public $settings_field; 	# name of the settings field in the options table.
+	public $default_settings; 	# associative array (field name => values) for the default settings on this admin page.
+	public $menu_ops; 			# associative array of configuration options for the admin menu(s).
+	public $page_ops; 			# associative array of configuration options for the settings page.
 	
 	/**
 	 * Call this method in a subclass constructor to create an admin menu and settings page.

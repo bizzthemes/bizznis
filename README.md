@@ -21,6 +21,9 @@ Changelog
 ### 1.0.6
 
 * Polished overall design
+* Moved theme SEO into a plugin
+* Removed theme link in footer, only theme author link by default
+* Removed themu update email notification feature
 
 ### 1.0.5
 

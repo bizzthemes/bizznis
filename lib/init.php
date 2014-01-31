@@ -104,7 +104,7 @@ class Bizznis_Init {
 		define( 'PARENT_THEME_VERSION', 		'1.0.6' );
 		define( 'PARENT_THEME_BRANCH', 			'1.0' );
 		define( 'PARENT_DB_VERSION', 			'1006' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1390938300' ) );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1391104800' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
@@ -162,7 +162,6 @@ class Bizznis_Init {
 		add_theme_support( 'bizznis-admin-menu' );
 		add_theme_support( 'bizznis-seo-settings-menu' );
 		add_theme_support( 'bizznis-tools-settings-menu' );
-		add_theme_support( 'bizznis-auto-updates' );
 		add_theme_support( 'bizznis-breadcrumbs' );
 		add_theme_support( 'bizznis-responsive-viewport' ); #html5
 		# Maybe add support for Bizznis menus
