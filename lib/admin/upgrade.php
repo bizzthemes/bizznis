@@ -14,12 +14,7 @@
  *
  * @since 1.0.0
  */
-function bizznis_update_check() {	
-	# If updates are disabled
-	if ( ! bizznis_get_option( 'update' ) || ! current_theme_supports( 'bizznis-auto-updates' ) ) {
-		add_filter( 'http_request_args', 'bizznis_prevent_theme_update', 5, 2 );
-		return false;
-	}
+function bizznis_update_check() {
 	# Check the updates transient
 	$bizznis_update = get_site_transient('update_themes');
 	if ( ! isset( $bizznis_update->response ) ) {
@@ -170,43 +165,6 @@ function bizznis_update_nag() {
 }
 
 /**
- * Sends out update notification email.
- *
- * Does several checks before finally sending out a notification email to the
- * specified email address, alerting it to a Bizznis update available for that install.
- *
- * @since 1.0.0
- */
-add_action( 'init', 'bizznis_update_email' );
-function bizznis_update_email() {
-	# Pull email options from DB
-	$email_on = bizznis_get_option( 'update_email' );
-	$email    = bizznis_get_option( 'update_email_address' );
-	# If we're not supposed to send an email, or email is blank / invalid, stop!
-	if ( ! $email_on || ! is_email( $email ) ) {
-		return;
-	}
-	# Check for updates
-	$update_check = bizznis_update_check();
-	# If no new version is available, stop!
-	if ( ! $update_check ) {
-		return;
-	}
-	# If we've already sent an email for this version, stop!
-	if ( get_option( 'bizznis-update-email' ) == $update_check['new_version'] ) {
-		return;
-	}
-	# Let's send an email!
-	$subject  = sprintf( __( 'Bizznis %s is available for %s', 'bizznis' ), esc_html( $update_check['new_version'] ), home_url() );
-	$message  = sprintf( __( 'Bizznis %s is now available. We have provided 1-click updates for this theme, so please log into your dashboard and update at your earliest convenience.', 'bizznis' ), esc_html( $update_check['new_version'] ) );
-	$message .= "\n\n" . wp_login_url();
-	# Update the option so we don't send emails on every pageload!
-	update_option( 'bizznis-update-email', $update_check['new_version'], TRUE );
-	# Send that puppy!
-	wp_mail( sanitize_email( $email ), $subject, $message );
-}
-
-/**
  * Converts array of keys from Bizznis options to vestigial options.
  * This is done for backwards compatibility.
  *
@@ -237,25 +195,4 @@ function _bizznis_vestige( $keys = array(), $setting = BIZZNIS_SETTINGS_FIELD ) 
 	# Insert into options table
 	update_option( 'bizznis-vestige', $vestige );
 	update_option( $setting, $options );
-}
-
-/**
- * Disable WordPress theme update checks
- * If there is a theme in the repo with the same name, 
- * this prevents WP from prompting an update.
- *
- * @link http://markjaquith.wordpress.com/2009/12/14/excluding-your-plugin-or-theme-from-update-checks/
- * @author Mark Jaquith
- * @since 1.0.0
- * 
- */
-function bizznis_prevent_theme_update( $r, $url ) {
-    if ( 0 !== strpos( $url, 'http://api.wordpress.org/themes/update-check' ) ) {
-		return $r; # Not a theme update request. Bail immediately.
-	}
-	$themes = unserialize( $r['body']['themes'] );
-	unset( $themes[ get_option( 'template' ) ] );
-	unset( $themes[ get_option( 'stylesheet' ) ] );
-	$r['body']['themes'] = serialize( $themes );
-	return $r;
 }
