@@ -6,6 +6,7 @@
 */
 
 //* Template Name: Blog
+//* Template Description: Displays the latest posts loop on a page.
 
 /**
  * Modify content loop args, return all posts
