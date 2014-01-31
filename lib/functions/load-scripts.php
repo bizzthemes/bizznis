@@ -21,12 +21,12 @@ function bizznis_load_scripts() {
 /**
  * Load the html5 shiv for IE8 and below. Can't enqueue with IE conditionals.
  *
- * @since 2.0.0
+ * @since 1.0.6
  *
  */
 add_action( 'wp_head', 'bizznis_html5_ie_fix' );
 function bizznis_html5_ie_fix() {
-	echo '<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->' . "\n";
+	echo '<!--[if lt IE 9]><script src="' . BIZZNIS_ADMIN_JS_URL . '/html5shiv.js"></script><![endif]-->' . "\n";
 }
 
 /**
@@ -73,8 +73,6 @@ function bizznis_load_admin_js() {
 	# Toggles	
 	$toggles = array(
 		// Checkboxes - when checked, show extra settings
-		'update'                    => array( '#bizznis-settings\\[update\\]', '#bizznis_update_notification_setting', '_checked' ),
-		'update_email'              => array( '#bizznis-settings\\[update_email\\]', '#bizznis_update_notification_email', '_checked' ),
 		'nav'                       => array( '#bizznis-settings\\[nav\\]', '#bizznis_nav_settings', '_checked' ),
 		'content_archive_thumbnail' => array( '#bizznis-settings\\[content_archive_thumbnail\\]', '#bizznis_image_size', '_checked' ),
 		'nav_extras_enable'         => array( '#bizznis-settings\\[nav_extras_enable\\]', '#bizznis_nav_extras_settings', '_checked' ),
