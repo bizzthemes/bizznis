@@ -74,10 +74,6 @@ function bizznis_do_comments() {
 add_action( 'bizznis_comments', 'bizznis_do_pings', 10 );
 function bizznis_do_pings() {
 	global $wp_query;
-	# Stop here if trackbacks are off for this post type
-	if ( ( is_page() && ! bizznis_get_option( 'trackbacks_pages' ) ) || ( is_single() && ! bizznis_get_option( 'trackbacks_posts' ) ) ) {
-		return;
-	}
 	# If have pings
 	if ( have_comments() && !empty( $wp_query->comments_by_type['pings'] ) ) {
 		printf( '<div %s>', bizznis_attr( 'entry-pings' ) );
