@@ -163,10 +163,12 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 				'label'          => __( 'Theme Settings', 'bizznis' ),
 				'settings-field' => BIZZNIS_SETTINGS_FIELD,
 			),
+			/* Disabled SEO options:
 			'seo' => array(
 				'label' => __( 'SEO Settings', 'bizznis' ),
 				'settings-field' => BIZZNIS_SEO_SETTINGS_FIELD,
 			)
+			*/
 		);
 		return (array) apply_filters( 'bizznis_export_options', $options );
 	}

@@ -92,7 +92,7 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
  *
  * @since 1.0.0
  */
-add_action( 'admin_init', 'bizznis_add_taxonomy_seo_options' );
+// Disabled SEO options: add_action( 'admin_init', 'bizznis_add_taxonomy_seo_options' );
 function bizznis_add_taxonomy_seo_options() {
 	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name ) {
 		add_action( $tax_name . '_edit_form', 'bizznis_taxonomy_seo_options', 10, 2 );

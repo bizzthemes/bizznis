@@ -29,8 +29,8 @@ function bizznis_add_user_profile_fields() {
 	add_action( 'edit_user_profile', 'bizznis_user_archive_fields' );
 	add_action( 'show_user_profile', 'bizznis_user_layout_fields' );
 	add_action( 'edit_user_profile', 'bizznis_user_layout_fields' );
-	add_action( 'show_user_profile', 'bizznis_user_seo_fields' );
-	add_action( 'edit_user_profile', 'bizznis_user_seo_fields' );
+	// Disabled SEO options: add_action( 'show_user_profile', 'bizznis_user_seo_fields' );
+	// Disabled SEO options: add_action( 'edit_user_profile', 'bizznis_user_seo_fields' );
 }
 
 /**
@@ -51,8 +51,10 @@ function bizznis_user_options_fields( $user ) {
 				<td>
 					<input id="meta[bizznis_admin_menu]" name="meta[bizznis_admin_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_admin_menu', $user->ID ) ); ?> />
 					<label for="meta[bizznis_admin_menu]"><?php _e( 'Enable Bizznis Admin Menus?', 'bizznis' ); ?></label><br />
+					<!-- Disabled SEO options:
 					<input id="meta[bizznis_seo_settings_menu]" name="meta[bizznis_seo_settings_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_seo_settings_menu', $user->ID ) ); ?> />
 					<label for="meta[bizznis_seo_settings_menu]"><?php _e( 'Enable SEO Settings?', 'bizznis' ); ?></label><br />
+					-->
 					<input id="meta[bizznis_tools_settings_menu]" name="meta[bizznis_tools_settings_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_tools_settings_menu', $user->ID ) ); ?> />
 					<label for="meta[bizznis_tools_settings_menu]"><?php _e( 'Enable Import/Export Tools?', 'bizznis' ); ?></label><br />
 				</td>

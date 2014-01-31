@@ -70,7 +70,7 @@ function bizznis_inpost_layout_save( $post_id, $post ) {
  *
  * @since 1.0.0
  */
-add_action( 'admin_menu', 'bizznis_add_inpost_seo_box' );
+// Disabled SEO options: add_action( 'admin_menu', 'bizznis_add_inpost_seo_box' );
 function bizznis_add_inpost_seo_box() {
 	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
 		if ( post_type_supports( $type, 'bizznis-seo' ) ) {
@@ -166,7 +166,7 @@ function bizznis_inpost_scripts_box() {
 	?>
 	<p><label for="bizznis_scripts" class="screen-reader-text"><b><?php _e( 'Page-specific Scripts', 'bizznis' ); ?></b></label></p>
 	<p><textarea class="widefat" rows="4" cols="4" name="bizznis_seo[_bizznis_scripts]" id="bizznis_scripts"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_scripts' ) ); ?></textarea></p>
-	<p><?php printf( __( 'Suitable for custom tracking, conversion or other page-specific script. Must include %s tags.', 'bizznis' ), bizznis_code( 'script' ) ); ?></p>
+	<p><?php printf( __( 'Suitable for page-specific script. Must include %s tags.', 'bizznis' ), bizznis_code( 'script' ) ); ?></p>
 	<?php
 }
 
