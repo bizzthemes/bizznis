@@ -43,7 +43,7 @@ function bizznis_load_admin_scripts( $hook_suffix ) {
 		bizznis_load_admin_js();
 	}
 	# If we're on a Bizznis admin screen
-	if ( bizznis_is_menu_page( 'bizznis' ) || bizznis_is_menu_page( 'bizznis-seo' ) || bizznis_is_menu_page( 'design-settings' ) ) {
+	if ( bizznis_is_menu_page( 'bizznis' ) || bizznis_is_menu_page( 'bizznis-seo' ) ) {
 		bizznis_load_admin_js();
 	}		
 	global $post;
