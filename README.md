@@ -1,14 +1,14 @@
-Parent Business Theme for WordPress
+Parent Business Theme for WordPress Developers
 ----
 
 Developed and owned by Željan Topić, http://bizzthemes.com/
+----
 
 Install
 ----
 	1. Upload the theme folder via FTP to your wp-content/themes/ directory.
 	2. Go to your WordPress dashboard and select Appearance.
-	3. Be sure to activate the Bizznis child theme, and not the Bizznis parent theme.
-	4. Inside your WordPress dashboard, go to Appearance > Theme Settings and configure them to your liking.
+	3. Inside your WordPress dashboard, go to Appearance > Theme Settings and configure them to your liking.
 
 Support
 ----
@@ -17,6 +17,11 @@ Please visit http://bizzthemes.com/support/ for theme support.
 
 Changelog
 ----
+
+### 1.0.7
+
+* Removed default mobile responsive nav menu
+* Created a bizznis.pot language file instead of en_EN.po
 
 ### 1.0.6
 
