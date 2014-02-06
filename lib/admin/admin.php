@@ -34,7 +34,7 @@ abstract class Bizznis_Admin {
 		$this->settings_field   = $this->settings_field   ? $this->settings_field   : (string) $settings_field;
 		$this->default_settings = $this->default_settings ? $this->default_settings : (array) $default_settings;		
 		# Default page ops
-		$this->page_ops = wp_parse_args( 
+		$this->page_ops = wp_parse_args(
 			$this->page_ops,
 			array(
 				'screen_icon'       => 'options-general',
@@ -55,7 +55,6 @@ abstract class Bizznis_Admin {
 		}
 		# Theme options actions
 		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 5 ); 						# create the theme options menu
-		add_action( 'admin_menu', array( $this, 'maybe_hide_theme_menu' ), 5 ); 					# hide the theme options menu
 		add_action( 'admin_init', array( $this, 'register_settings' ) ); 							# set up settings
 		add_action( 'admin_notices', array( $this, 'notices' ) ); 									# set up notices
 		add_action( 'admin_init', array( $this, 'settings_init' ) ); 								# load the page content (metaboxes or custom form)
@@ -68,7 +67,7 @@ abstract class Bizznis_Admin {
 	 * @since 1.0.0
 	 */
 	public function maybe_add_theme_menu() {
-		# Maybe add theme menu
+		# Add theme menu
 		if ( isset( $this->menu_ops['theme_menu'] ) && is_array( $this->menu_ops['theme_menu'] ) ) {
 			$menu = wp_parse_args( $this->menu_ops['theme_menu'],
 				array(
@@ -79,18 +78,10 @@ abstract class Bizznis_Admin {
 			);
 			$this->pagehook = add_theme_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );
 		}
-	}
-	
-	/**
-	 * Possibly hide a theme menu.
-	 *
-	 * @since 1.0.0
-	 */
-	public function maybe_hide_theme_menu() {
-		# Hide theme menu if not viewing/browsing it
+		# Hide theme menu
 		if ( isset( $this->menu_ops['theme_menu']['menu_hide'] ) && ! bizznis_is_menu_page( $this->page_id ) ) {
 			remove_submenu_page( 'themes.php', $this->page_id );
-		}
+		}	
 	}
 
 	/**
@@ -219,7 +210,6 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 		<div class="wrap bizznis-admin bizznis-form">
 		<form method="post" action="options.php">
 			<?php settings_fields( $this->settings_field ); ?>
-			<?php screen_icon( $this->page_ops['screen_icon'] ); ?>
 			<h2>
 				<?php do_action( 'bizznis_admin_title_left', $this->pagehook ); ?>
 				<?php echo esc_html( get_admin_page_title() ); ?>

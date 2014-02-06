@@ -99,6 +99,7 @@ function bizznis_link_to_theme_settings( $wp_admin_bar ) {
 	) );
 	# Get current user
 	$user = wp_get_current_user();
+	/* Disabled SEO options:
 	if ( current_theme_supports( 'bizznis-seo-settings-menu' ) && get_the_author_meta( 'bizznis_seo_settings_menu', $user->ID ) ) {
 		$wp_admin_bar->add_node( array(
 			'id'    	=> 'theme-seo',
@@ -107,6 +108,7 @@ function bizznis_link_to_theme_settings( $wp_admin_bar ) {
 			'parent'	=> 'site-name',
 		) );
 	}
+	*/
 	if ( current_theme_supports( 'bizznis-tools-settings-menu' ) && get_the_author_meta( 'bizznis_tools_settings_menu', $user->ID ) ) {
 		$wp_admin_bar->add_node( array(
 			'id'    	=> 'theme-tools',

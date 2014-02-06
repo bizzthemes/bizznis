@@ -23,7 +23,6 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 		$page_id = 'bizznis-tools';
 		$menu_ops = array(
 			'theme_menu' => array(
-				'parent_slug' => 'bizznis',
 				'page_title'  => __( 'Theme Import/Export Tools', 'bizznis' ),
 				'menu_title'  => __( 'Theme Tools', 'bizznis' ),
 				'capability'  => 'edit_theme_options',
@@ -86,7 +85,6 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 	public function admin() {
 		?>
 		<div class="wrap">
-			<?php screen_icon( 'tools' ); ?>
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 			<table class="form-table">
 				<tbody>

@@ -116,6 +116,14 @@ function bizznis_is_menu_page( $pagehook = '' ) {
 	if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == $pagehook ) {
 		return true;
 	}
+	# May be too early for $page_hook
+	if ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == $pagehook ) {
+		return true;
+	}
+	# May be too early for $page_hook
+	if ( isset( $_REQUEST['section'] ) && $_REQUEST['section'] == $pagehook ) {
+		return true;
+	}
 	return false;
 }
 

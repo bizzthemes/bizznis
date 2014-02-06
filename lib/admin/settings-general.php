@@ -22,9 +22,9 @@ class Bizznis_Admin_Settings extends Bizznis_Admin_Form {
 		$menu_ops = apply_filters( 'bizznis_theme_settings_menu_ops',
 			array( 
 				'theme_menu' => array(
-					'page_title' => __( 'Theme Settings', 'bizznis' ),
-					'menu_title' => __( 'Theme Settings', 'bizznis' ),
-					'capability' => 'edit_theme_options',
+					'page_title' 	=> __( 'Theme Settings', 'bizznis' ),
+					'menu_title' 	=> __( 'Theme Settings', 'bizznis' ),
+					'capability' 	=> 'edit_theme_options',
 				)
 			)
 		);
