@@ -5,7 +5,7 @@ Description:		Parent Business WordPress theme, aimed at theme developers who wan
 License:			GPL version 3
 License URI:		http://gplv3.fsf.org/
 Branch:				1.0
-Version:			1.0.6
+Version:			1.0.7
 Author:				BizzThemes
 Author URI:			http://bizzthemes.com/
 Tags:				light, gray, white, one-column, two-columns, three-columns, right-sidebar, left-sidebar, responsive-layout, fluid-layout, custom-menu, featured-images, full-width-template, microformats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -1110,15 +1110,6 @@ img.alignright,
 	margin: -55px 0 0 199px;
 }
 
-/* Mobile Navigation
---------------------------------------------- */
-
-#nav-bizznis-toggle,
-#nav-bizznis-secondary-toggle,
-.nav-bizznis-toggle { 
-	display: none;
-}
-
 /* Content Area
 ------------------------------------------------------------------------------------------------------------------ */
 
@@ -1761,133 +1752,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 --------------------------------------------- */
 
 @media only screen and (max-width: 767px){
-	
-	/* Nav toggle button
-	-------------------- */
-	
-	.nav-bizznis-toggle {
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		cursor: pointer;
-		display: inline-block;
-		position: relative;
-		user-select: none;
-	}
-	
-	.nav-bizznis-toggle::after {
-		background-color: #f9f8f2;
-		color: #1e1e1d;
-		content: attr(data-open);
-		display: block;
-		margin: 15px 0;
-		margin: 1.5rem 0;
-		padding: 10px 15px;
-		padding: 1rem 1.5rem;
-		width: 100%;
-	}
-	
-	.nav-bizznis-toggle:hover:after{
-		background-color: #f2f0ea;
-		color: #1e1e1d;
-	}
-	
-	#nav-bizznis-toggle:checked+.nav-bizznis-toggle::after,
-	#nav-bizznis-secondary-toggle:checked+.nav-bizznis-toggle::after {
-		content: attr(data-close);
-	}
-	
-	#nav-bizznis-toggle:checked ~ .menu-bizznis,
-	#nav-bizznis-toggle:checked ~ .menu-bizznis-extra,
-	#nav-bizznis-secondary-toggle:checked ~ .menu-bizznis,
-	#nav-bizznis-secondary-toggle:checked ~ .menu-bizznis-extra	{ 
-		display: block;
-	}
-	
-	/* Nav toggle items
-	-------------------- */
-	
-	.nav-bizznis-toggle ~ .menu-bizznis,
-	.nav-bizznis-toggle ~ .menu-bizznis-extra { 
-		clear: both;
-		display: none;
-		float: none;
-		font-size: 18px;
-		font-size: 1.8rem;
-	}
-	
-	.nav-bizznis-toggle ~ .right { 
-		margin-bottom: 20px;
-		margin-bottom: 2rem;
-	}
-	
-	.nav-bizznis-toggle ~ .menu-bizznis .menu-item {
-		display: block;
-		margin: 0;
-		padding: 0;
-		text-align: center;
-	}
-	
-	.nav-bizznis-toggle ~ .menu-bizznis a {
-		display: inline-block;
-	}
-	
-	.nav-bizznis-toggle ~ .menu-primary a,
-	.nav-bizznis-toggle ~ .menu-bizznis-extra,
-	.nav-bizznis-toggle ~ .menu-bizznis-extra a {
-		color: #999;
-	}
-
-	.nav-bizznis-toggle ~ .menu-primary a:hover,
-	.nav-bizznis-toggle ~ .menu-primary .current-menu-item > a,
-	.nav-bizznis-toggle ~ .menu-bizznis-extra a:hover {
-		color: #fff;
-	}
-	
-	.nav-bizznis-toggle ~ .search { 
-		padding: 0;
-	}
-	
-	.nav-bizznis-toggle ~ .menu-bizznis .sub-menu {
-		background-color: #f9f8f2;
-		background-color: rgba(255, 255, 255, 0.1);
-		display: none;
-		left: auto;
-		position: relative;
-		width: 100%;
-	}
-	
-	.nav-bizznis-toggle ~ .menu-bizznis .sub-menu .sub-menu {
-		margin: 0;
-	}
-	
-	.nav-bizznis-toggle ~ .menu-bizznis .menu-item:hover > .sub-menu {
-		display: block;
-		left: auto;
-		opacity: 1;
-	}
-	
-	.nav-bizznis-toggle ~ .menu-bizznis .sub-menu a {
-		background-color: transparent;
-		border: none;
-		width: auto;
-	}
-	
-	.nav-bizznis-toggle ~ .menu-bizznis .sub-menu:after {
-		border: solid transparent;
-		border-color: transparent;
-		border-bottom-color: #f9f8f2;
-		border-bottom-color: rgba(255, 255, 255, 0.1);
-		border-width: 10px;
-		bottom: 100%;
-		content: " ";
-		height: 0;
-		left: 50%;
-		margin-left: -10px;
-		margin-left: -1rem;
-		position: absolute;
-		pointer-events: none;
-		width: 0;
-	}
 	
 	/* Nav non-toggle items
 	-------------------- */

@@ -154,34 +154,6 @@ function bizznis_nav_right( $menu = '', $args = '' ) {
 }
 
 /**
- * Collapse primary menu for mobile screen
- *
- * @since 1.0.0
- */
-add_filter( 'nav_primary_before', 'bizznis_mobile_right', 10, 2 );
-function bizznis_mobile_right( $menu = '', $args = '' ) {
-	# show mobile menu toggle
-	$menu .= '<input type="checkbox" id="nav-bizznis-toggle">';
-	$menu .= '<label for="nav-bizznis-toggle" class="nav-bizznis-toggle" data-open="' . apply_filters( 'bizznis_toggle_open_text', __( 'Menu', 'bizznis' ) ) . '" data-close="' . apply_filters( 'bizznis_toggle_close_text', __( 'Close Menu', 'bizznis' ) ) . '"></label>';
-	return $menu;
-}
-
-/**
- * Collapse secondary menu for mobile screen
- *
- * Optionally call it inside a Child theme
- *
- * @since 1.0.0
- */
-// add_filter( 'nav_secondary_before', 'bizznis_secondary_mobile_right', 10, 2 );
-function bizznis_secondary_mobile_right( $menu = '', $args = '' ) {
-	# show mobile menu toggle
-	$menu .= '<input type="checkbox" id="nav-bizznis-secondary-toggle">';
-	$menu .= '<label for="nav-bizznis-secondary-toggle" class="nav-bizznis-toggle" data-open="' . apply_filters( 'bizznis_toggle_open_text', __( 'Menu', 'bizznis' ) ) . '" data-close="' . apply_filters( 'bizznis_toggle_close_text', __( 'Close Menu', 'bizznis' ) ) . '"></label>';
-	return $menu;
-}
-
-/**
  * Sets a common class, `.bizznis-nav-menu`, for the custom menu widget if used in the header sidebar.
  *
  * @since 1.0.0
