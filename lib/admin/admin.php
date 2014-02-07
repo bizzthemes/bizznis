@@ -57,8 +57,8 @@ abstract class Bizznis_Admin {
 		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 5 ); 						# create the theme options menu
 		add_action( 'admin_init', array( $this, 'register_settings' ) ); 							# set up settings
 		add_action( 'admin_notices', array( $this, 'notices' ) ); 									# set up notices
-		add_action( 'admin_init', array( $this, 'settings_init' ) ); 								# load the page content (metaboxes or custom form)
-		add_filter( 'pre_update_option_' . $this->settings_field, array( $this, 'save' ), 10, 2 ); 	#add a sanitizer/validator
+		add_action( 'admin_init', array( $this, 'settings_init' ) ); 								# load the page content
+		add_filter( 'pre_update_option_' . $this->settings_field, array( $this, 'save' ), 10, 2 ); 	# add a sanitizer/validator
 	}
 	
 	/**
@@ -216,8 +216,6 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 				<?php do_action( 'bizznis_admin_title_right', $this->pagehook ); ?>
 			</h2>
 			<?php do_action( $this->pagehook . '_settings_page_form', $this->pagehook ); ?>
-			<?php do_action( 'bizznis_admin_after_form', $this->pagehook ); ?>
-			<!-- Allow developers to add their own options -->
 			<?php do_settings_fields( $this->page_id, 'default' ); ?>
 			<?php do_settings_sections( $this->page_id );?>
 			<p class="submit bottom-buttons">
@@ -238,135 +236,6 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 	 */
 	public function settings_init() {
 		add_action( $this->pagehook . '_settings_page_form', array( $this, 'form' ) );
-		if ( method_exists( $this, 'help' ) ) {
-			add_action( 'load-' . $this->pagehook, array( $this, 'help' ) );
-		}
-	}
-
-}
-
-/**
- * Abstract subclass of Bizznis_Admin which adds support for registering and displaying metaboxes.
- *
- * @since 1.0.0
- */
-abstract class Bizznis_Admin_Boxes extends Bizznis_Admin {
-
-	/**
-	 * Register the metaboxes.
-	 *
-	 * @since 1.0.0
-	 */
-	abstract public function metaboxes();
-
-	/**
-	 * Include the necessary sortable metabox scripts.
-	 *
-	 * @since 1.0.0
-	 */
-	public function scripts() {
-		wp_enqueue_script( 'common' );
-		wp_enqueue_script( 'wp-lists' );
-		wp_enqueue_script( 'postbox' );
-	}
-	
-	/**
-	 * Use this as the settings admin callback to create an admin page with sortable metaboxes.
-	 *
-	 * @since 1.0.0
-	 */
-	public function admin() {
-		global $wp_meta_boxes;
-		$screen = get_current_screen();
-		?>
-		<div class="wrap bizznis-admin bizznis-metaboxes">
-		<form method="post" action="options.php">
-			<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
-			<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
-			<?php settings_fields( $this->settings_field ); ?>
-			<?php screen_icon( $this->page_ops['screen_icon'] ); ?>
-			<h2>
-				<?php do_action( 'bizznis_admin_title_left', $this->pagehook ); ?>
-				<?php echo esc_html( get_admin_page_title() ); ?>
-				<?php do_action( 'bizznis_admin_title_right', $this->pagehook ); ?>
-			</h2>
-			<div id="dashboard-widgets-wrap">
-				<div id="dashboard-widgets" class="metabox-holder">
-					<?php do_action( 'bizznis_admin_before_metaboxes', $this->pagehook ); ?>
-					<div id='postbox-container-1' class='postbox-container'>
-					<?php  do_meta_boxes( $this->pagehook, 'main', null ); ?>
-					</div>
-					<div id='postbox-container-2' class='postbox-container'>
-					<?php do_meta_boxes( $this->pagehook, 'column2', null ); ?>
-					</div>
-					<div id='postbox-container-3' class='postbox-container'>
-					<?php do_meta_boxes( $this->pagehook, 'column3', null ); ?>
-					</div>
-					<div id='postbox-container-4' class='postbox-container'>
-					<?php do_meta_boxes( $this->pagehook, 'column4', null ); ?>
-					</div>
-					<?php do_action( 'bizznis_admin_after_metaboxes', $this->pagehook ); ?>
-				</div>
-			</div>
-			<p class="submit bottom-buttons">
-				<?php
-				submit_button( $this->page_ops['save_button_text'], 'primary', 'submit', false );
-				submit_button( $this->page_ops['reset_button_text'], 'secondary', $this->get_field_name( 'reset' ), false, array( 'onclick' => 'return bizznis_confirm(\'' . esc_js( __( 'Are you sure you want to reset?', 'bizznis' ) ) . '\');' ) );
-				?>
-			</p>
-		</form>
-		</div>
-		<script type="text/javascript">
-			//<![CDATA[
-			jQuery(document).ready( function ($) {
-				// close postboxes that should be closed
-				$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-				// postboxes setup
-				postboxes.add_postbox_toggles('<?php echo $this->pagehook; ?>');
-			});
-			//]]>
-		</script>
-		<?php
-	}
-	
-	/**
-	 * Echo out the do_meta_boxes() and wrapping markup.
-	 *
-	 * This method can be overwritten in a child class, to adjust the markup surrounding the metaboxes, and optionally
-	 * call do_meta_boxes() with other contexts. The overwritten method MUST contain div elements with classes of
-	 * metabox-holder and postbox-container.
-	 *
-	 * @since 1.0.0
-	 */
-	public function do_metaboxes() {
-
-		global $wp_meta_boxes;
-
-		?>
-		<div class="metabox-holder">
-			<div class="postbox-container">
-				<?php
-				do_action( 'bizznis_admin_before_metaboxes', $this->pagehook );
-				do_meta_boxes( $this->pagehook, 'main', null );
-				if ( isset( $wp_meta_boxes[$this->pagehook]['column2'] ) ) {
-					do_meta_boxes( $this->pagehook, 'column2', null );
-				}
-				do_action( 'bizznis_admin_after_metaboxes', $this->pagehook );
-				?>
-			</div>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Initialize the settings page, by enqueuing scripts
-	 *
-	 * @since 1.0.0
-	 */
-	public function settings_init() {
-		add_action( 'load-' . $this->pagehook, array( $this, 'scripts' ) );
-		add_action( 'load-' . $this->pagehook, array( $this, 'metaboxes' ) );
-		add_action( $this->pagehook . '_settings_page_boxes', array( $this, 'do_metaboxes' ) );
 		if ( method_exists( $this, 'help' ) ) {
 			add_action( 'load-' . $this->pagehook, array( $this, 'help' ) );
 		}
