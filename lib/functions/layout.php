@@ -162,7 +162,7 @@ function bizznis_site_layout( $use_cache = true ) {
 	}
 	global $wp_query;
 	# If viewing a singular page or post
-	if ( is_singular() ) {
+	if ( is_singular() || is_home() ) {
 		$custom_field = bizznis_get_custom_field( '_bizznis_layout' );
 		$site_layout  = $custom_field ? $custom_field : bizznis_get_option( 'site_layout' );
 	}
