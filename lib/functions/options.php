@@ -97,10 +97,11 @@ function bizznis_custom_field( $field, $output_pattern = '%s' ) {
  * @since 1.0.0
  */
 function bizznis_get_custom_field( $field ) {
+	global $wp_query;
 	if ( null === get_the_ID() ) {
 		return '';
 	}
-	$custom_field = get_post_meta( get_the_ID(), $field, true );
+	$custom_field = get_post_meta( ( is_admin() ? get_the_ID() : $wp_query->get_queried_object_id() ), $field, true );	
 	if ( ! $custom_field ) {
 		return '';
 	}
