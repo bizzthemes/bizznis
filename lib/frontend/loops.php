@@ -13,7 +13,7 @@
 add_action( 'bizznis_loop', 'bizznis_do_loop' );
 function bizznis_do_loop() {
 	global $wp_query, $more;
-	$args = apply_filters( 'bizznis_loop_args', array() ); # Filtered args
+	$args = apply_filters( 'bizznis_loop_args', wp_parse_args( bizznis_get_custom_field( 'query_args' ), array() ) ); # Filtered args in custom fields
 	if ( $args ) {
 		$wp_query = new WP_Query( $args );
 	}
