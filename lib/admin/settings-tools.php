@@ -23,9 +23,9 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 		$page_id = 'bizznis-tools';
 		$menu_ops = array(
 			'theme_menu' => array(
-				'page_title'  => __( 'Theme Import/Export Tools', 'bizznis' ),
-				'menu_title'  => __( 'Theme Tools', 'bizznis' ),
-				'capability'  => 'edit_theme_options',
+				'page_title'  	=> __( 'Theme Import/Export Tools', 'bizznis' ),
+				'menu_title'  	=> __( 'Theme Tools', 'bizznis' ),
+				'capability'  	=> 'edit_theme_options',
 			)
 		);
 		$this->create( $page_id, $menu_ops );
@@ -71,7 +71,7 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 		# Add help sidebar
 		$screen->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
-			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
+			'<p><a href="' . sprintf( '%s', 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
 		);
 	}
 

@@ -91,19 +91,19 @@ function bizznis_inpost_seo_box() {
 	<p><input class="large-text" type="text" name="bizznis_seo[_bizznis_title]" id="bizznis_title" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_title' ) ); ?>" /></p>
 	<p><label for="bizznis_description"><b><?php _e( 'Custom Post/Page Meta Description', 'bizznis' ); ?></b> <abbr title="&lt;meta name=&quot;description&quot; /&gt;">[?]</abbr> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'bizznis' ), '<span id="bizznis_description_chars">'. strlen( bizznis_get_custom_field( '_bizznis_description' ) ) .'</span>' ); ?></span></label></p>
 	<p><textarea class="widefat" name="bizznis_seo[_bizznis_description]" id="bizznis_description" rows="4" cols="4"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_description' ) ); ?></textarea></p>
-	<p><label for="bizznis_canonical"><b><?php _e( 'Custom Canonical URI', 'bizznis' ); ?></b> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://www.mattcutts.com/blog/canonical-link-tag/' ); ?>" target="_blank" title="&lt;link rel=&quot;canonical&quot; /&gt;">[?]</a></label></p>
+	<p><label for="bizznis_canonical"><b><?php _e( 'Custom Canonical URI', 'bizznis' ); ?></b> <a href="<?php printf( '%s', 'http://www.mattcutts.com/blog/canonical-link-tag/' ); ?>" target="_blank" title="&lt;link rel=&quot;canonical&quot; /&gt;">[?]</a></label></p>
 	<p><input class="large-text" type="text" name="bizznis_seo[_bizznis_canonical_uri]" id="bizznis_canonical" value="<?php echo esc_url( bizznis_get_custom_field( '_bizznis_canonical_uri' ) ); ?>" /></p>
-	<p><label for="bizznis_redirect"><b><?php _e( 'Custom Redirect URI', 'bizznis' ); ?></b> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=93633' ); ?>" target="_blank" title="301 Redirect">[?]</a></label></p>
+	<p><label for="bizznis_redirect"><b><?php _e( 'Custom Redirect URI', 'bizznis' ); ?></b> <a href="<?php printf( '%s', 'http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=93633' ); ?>" target="_blank" title="301 Redirect">[?]</a></label></p>
 	<p><input class="large-text" type="text" name="bizznis_seo[redirect]" id="bizznis_redirect" value="<?php echo esc_url( bizznis_get_custom_field( 'redirect' ) ); ?>" /></p>
 	<br />
 	<p><b><?php _e( 'Robots Meta Settings', 'bizznis' ); ?></b></p>
 	<p>
 		<label for="bizznis_noindex"><input type="checkbox" name="bizznis_seo[_bizznis_noindex]" id="bizznis_noindex" value="1" <?php checked( bizznis_get_custom_field( '_bizznis_noindex' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'noindex' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
+		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'noindex' ) ); ?> <a href="<?php printf( '%s', 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
 		<label for="bizznis_nofollow"><input type="checkbox" name="bizznis_seo[_bizznis_nofollow]" id="bizznis_nofollow" value="1" <?php checked( bizznis_get_custom_field( '_bizznis_nofollow' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'nofollow' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
+		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'nofollow' ) ); ?> <a href="<?php printf( '%s', 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
 		<label for="bizznis_noarchive"><input type="checkbox" name="bizznis_seo[_bizznis_noarchive]" id="bizznis_noarchive" value="1" <?php checked( bizznis_get_custom_field( '_bizznis_noarchive' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'noarchive' ) ); ?> <a href="<?php printf( __( '%s', 'bizznis' ), 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label>
+		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'noarchive' ) ); ?> <a href="<?php printf( '%s', 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label>
 	</p>
 	<?php
 }

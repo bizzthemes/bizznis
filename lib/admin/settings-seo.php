@@ -22,7 +22,6 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 		$menu_ops = apply_filters( 'bizznis_seo_settings_menu_ops',
 			array(
 				'theme_menu' => array(
-					'parent_slug' => 'bizznis',
 					'page_title'  => __( 'Theme SEO', 'bizznis' ),
 					'menu_title'  => __( 'Theme SEO', 'bizznis' ),
 					'capability'  => 'edit_theme_options',
@@ -202,7 +201,7 @@ class Bizznis_Admin_SEO_Settings extends Bizznis_Admin_Form {
 		# Add help sidebar
 		$screen->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'bizznis' ) . '</strong></p>' .
-			'<p><a href="' . sprintf( __( '%s', 'bizznis' ), 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
+			'<p><a href="' . sprintf( '%s', 'http://bizzthemes.com/support/' ) . '" target="_blank" title="' . __( 'Get Support', 'bizznis' ) . '">' . __( 'Get Support', 'bizznis' ) . '</a></p>'
 		);
 	}
 
