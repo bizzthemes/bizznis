@@ -197,7 +197,7 @@ function bizznis_responsive_viewport() {
  *
  * @since 1.0.0
  */
-add_action( 'wp_head', 'bizznis_robots_meta', 1 );
+// Disabled SEO options: add_action( 'wp_head', 'bizznis_robots_meta', 1 );
 function bizznis_robots_meta() {
 	global $wp_query;
 	# If the blog is private, then following logic is unnecessary as WP will insert noindex and nofollow
@@ -331,7 +331,7 @@ function bizznis_do_meta_pingback() {
  *
  * @since 1.0.0
  */
-add_action( 'wp_head', 'bizznis_canonical', 5 );
+// Disabled SEO options: add_action( 'wp_head', 'bizznis_canonical', 5 );
 function bizznis_canonical() {
 	# Remove the WordPress canonical
 	remove_action( 'wp_head', 'rel_canonical' );
