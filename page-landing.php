@@ -6,6 +6,7 @@
 */
 
 //* Template Name: Landing
+
 //* Template Description: Removes header, footer and forces full width layout.
 
 /**
