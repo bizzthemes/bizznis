@@ -18,6 +18,11 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.8
+
+* Removed seo meta tags
+* Removed blog template
+
 ### 1.0.7
 
 * Removed default mobile responsive nav menu

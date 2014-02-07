@@ -101,10 +101,10 @@ class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.0.7' );
+		define( 'PARENT_THEME_VERSION', 		'1.0.8' );
 		define( 'PARENT_THEME_BRANCH', 			'1.0' );
-		define( 'PARENT_DB_VERSION', 			'1007' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1391706000' ) );
+		define( 'PARENT_DB_VERSION', 			'1008' );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1391792400' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
