@@ -304,9 +304,6 @@ function bizznis_load_favicon() {
 	elseif ( file_exists( CHILD_DIR . '/images/favicon.jpg' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.jpg';
 	}
-	else {
-		$favicon = BIZZNIS_IMAGES_URL . '/favicon.ico';
-	}
 	# URL to favicon is filtered via 'bizznis_favicon_url' before being echoed.
 	$favicon = apply_filters( 'bizznis_favicon_url', $favicon );
 	if ( $favicon ) {
@@ -321,9 +318,7 @@ function bizznis_load_favicon() {
  */
 add_action( 'wp_head', 'bizznis_do_meta_pingback' );
 function bizznis_do_meta_pingback() {
-	if ( 'open' == get_option( 'default_ping_status' ) ) {
-		echo '<link rel="pingback" href="' . get_bloginfo( 'pingback_url' ) . '" />' . "\n";
-	}
+	echo '<link rel="pingback" href="' . get_bloginfo( 'pingback_url' ) . '" />' . "\n";
 }
 
 /**
