@@ -18,6 +18,11 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.9
+* Removed pingback options checking
+* Removed theme about page
+* Removed default shortcode
+
 ### 1.0.8
 
 * Removed seo meta tags

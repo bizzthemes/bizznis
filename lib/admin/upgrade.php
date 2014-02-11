@@ -70,39 +70,24 @@ function bizznis_upgrade() {
 		update_option( BIZZNIS_SETTINGS_FIELD, $settings );
 	}
 	*/
-	# UPDATE DB TO VERSION 1008
-	if ( bizznis_get_option( 'db_version', null, false ) < '1008' ) {
-		bizznis_upgrade_1008();
+	# UPDATE DB TO VERSION 1009
+	if ( bizznis_get_option( 'db_version', null, false ) < '1009' ) {
+		bizznis_upgrade_1009();
 	}
 	do_action( 'bizznis_upgrade' );
 }
 
 /**
- * Upgrade the database to version 1008.
+ * Upgrade the database to version 1009.
  *
- * @since 1.0.8
+ * @since 1.0.9
  */
-function bizznis_upgrade_1008() {
+function bizznis_upgrade_1009() {
 	# Update Settings
 	_bizznis_update_settings( array(
-		'theme_version' => '1.0.8',
-		'db_version'    => '1008',
+		'theme_version' => '1.0.9',
+		'db_version'    => '1009',
 	) );
-}
-
-/**
- * Redirects the user back to the theme settings page, refreshing the data and
- * notifying the user that they have successfully updated.
- *
- * @since 1.0.0
- */
-add_action( 'bizznis_upgrade', 'bizznis_upgrade_redirect' );
-function bizznis_upgrade_redirect() {
-	if ( ! is_admin() || ! current_user_can( 'edit_theme_options' ) ) {
-		return;
-	}
-	bizznis_admin_redirect( 'bizznis-about' );
-	exit;
 }
 
 /**
