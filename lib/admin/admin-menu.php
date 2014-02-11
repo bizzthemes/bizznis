@@ -62,8 +62,6 @@ function bizznis_add_admin_submenus() {
 	if ( current_theme_supports( 'bizznis-tools-settings-menu' ) && get_the_author_meta( 'bizznis_tools_settings_menu', $user->ID ) ) {
 		$_bizznis_admin_tools = new Bizznis_Admin_Import_Export;
 	}
-	# Add the about page (no menu)
-	new Bizznis_Admin_About;
 }
 
 /**
