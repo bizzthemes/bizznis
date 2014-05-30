@@ -24,158 +24,7 @@ function bizznis_doctitle_wrap( $title ) {
 add_action( 'wp_head', 'wp_title', 1 );
 add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
 function bizznis_default_title( $title, $sep, $seplocation ) {
-	global $wp_query;
-	if ( is_feed() ) {
-		return trim( $title );
-	}
-	# Separator definition
-	$sep = bizznis_get_seo_option( 'doctitle_sep' ) ? bizznis_get_seo_option( 'doctitle_sep' ) : '-';
-	$seplocation = bizznis_get_seo_option( 'doctitle_seplocation' ) ? bizznis_get_seo_option( 'doctitle_seplocation' ) : 'right';
-	# If viewing the home page
-	if ( is_front_page() ) {
-		#* Determine the doctitle
-		$title = bizznis_get_seo_option( 'home_doctitle' ) ? bizznis_get_seo_option( 'home_doctitle' ) : get_bloginfo( 'name' );
-		#* Append site description, if necessary
-		$title = bizznis_get_seo_option( 'append_description_home' ) ? $title . " $sep " . get_bloginfo( 'description' ) : $title;
-	}
-	# if viewing a post / page / attachment
-	if ( is_singular() ) {
-		# The User Defined Title (Bizznis)
-		if ( bizznis_get_custom_field( '_bizznis_title' ) ) {
-			$title = bizznis_get_custom_field( '_bizznis_title' );
-		}
-		# All-in-One SEO Pack Title (latest, vestigial)
-		elseif ( bizznis_get_custom_field( '_aioseop_title' ) ) {
-			$title = bizznis_get_custom_field( '_aioseop_title' );
-		}
-		# Headspace Title (vestigial)
-		elseif ( bizznis_get_custom_field( '_headspace_page_title' ) ) {
-			$title = bizznis_get_custom_field( '_headspace_page_title' );
-		}
-		# Thesis Title (vestigial)
-		elseif ( bizznis_get_custom_field( 'thesis_title' ) ) {
-			$title = bizznis_get_custom_field( 'thesis_title' );
-		}
-		# SEO Title Tag (vestigial)
-		elseif ( bizznis_get_custom_field( 'title_tag' ) ) {
-			$title = bizznis_get_custom_field( 'title_tag' );
-		}
-		# All-in-One SEO Pack Title (old, vestigial)
-		elseif ( bizznis_get_custom_field( 'title' ) ) {
-			$title = bizznis_get_custom_field( 'title' );
-		}
-	}
-	if ( is_category() ) {
-		// $term = get_term( get_query_var('cat'), 'category' );
-		$term  = $wp_query->get_queried_object();
-		$title = ! empty( $term->meta['doctitle'] ) ? $term->meta['doctitle'] : $title;
-	}
-	if ( is_tag() ) {
-		// $term = get_term( get_query_var('tag_id'), 'post_tag' );
-		$term  = $wp_query->get_queried_object();
-		$title = ! empty( $term->meta['doctitle'] ) ? $term->meta['doctitle'] : $title;
-	}
-	if ( is_tax() ) {
-		$term  = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
-		$title = ! empty( $term->meta['doctitle'] ) ? wp_kses_stripslashes( wp_kses_decode_entities( $term->meta['doctitle'] ) ) : $title;
-	}
-	if ( is_author() ) {
-		$user_title = get_the_author_meta( 'doctitle', (int) get_query_var( 'author' ) );
-		$title      = $user_title ? $user_title : $title;
-	}
-	# If we don't want site name appended, or if we're on the home page
-	if ( ! bizznis_get_seo_option( 'append_site_title' ) || is_front_page() ) {
-		return esc_html( trim( $title ) );
-	}
-	# Else append the site name
-	$title = 'right' == $seplocation ? $title . " $sep " . get_bloginfo( 'name' ) : get_bloginfo( 'name' ) . " $sep " . $title;
 	return esc_html( trim( $title ) );
-}
-
-/**
- * Remove unnecessary code that WordPress puts in the 'head'.
- *
- * @since 1.0.0
- */
-add_action( 'get_header', 'bizznis_doc_head_control' );
-function bizznis_doc_head_control() {
-	remove_action( 'wp_head', 'wp_generator' );
-	if ( ! bizznis_get_seo_option( 'head_adjacent_posts_rel_link' ) ) {
-		remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
-	}
-	if ( ! bizznis_get_seo_option( 'head_wlwmanifest_link' ) ) {
-		remove_action( 'wp_head', 'wlwmanifest_link' );
-	}
-	if ( ! bizznis_get_seo_option( 'head_shortlink' ) ) {
-		remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
-	}
-	if ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) {
-		remove_action( 'wp_head', 'feed_links_extra', 3 );
-	}
-	if ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) {
-		remove_action( 'wp_head', 'feed_links_extra', 3 );
-	}
-}
-
-/**
- * Output the meta description based on contextual criteria.
- *
- * @since 1.0.0
- */
-add_action( 'wp_head', 'bizznis_seo_meta_description', 1 );
-function bizznis_seo_meta_description() {
-	global $wp_query;
-	# Output nothing if description isn't present.
-	$description = '';
-	# If we're on the home page
-	if ( is_front_page() ) {
-		$description = bizznis_get_seo_option( 'home_description' ) ? bizznis_get_seo_option( 'home_description' ) : get_bloginfo( 'description' );
-	}
-	# If we're on a single post / page / attachment
-	if ( is_singular() ) {
-		# Description is set via custom field
-		if ( bizznis_get_custom_field( '_bizznis_description' ) ) {
-			$description = bizznis_get_custom_field( '_bizznis_description' );
-		}
-		# All-in-One SEO Pack (latest, vestigial)
-		elseif ( bizznis_get_custom_field( '_aioseop_description' ) ) {
-			$description = bizznis_get_custom_field( '_aioseop_description' );
-		}
-		# Headspace2 (vestigial)
-		elseif ( bizznis_get_custom_field( '_headspace_description' ) ) {
-			$description = bizznis_get_custom_field( '_headspace_description' );
-		}
-		# Thesis (vestigial)
-		elseif ( bizznis_get_custom_field( 'thesis_description' ) ) {
-			$description = bizznis_get_custom_field( 'thesis_description' );
-		}
-		# All-in-One SEO Pack (old, vestigial)
-		elseif ( bizznis_get_custom_field( 'description' ) ) {
-			$description = bizznis_get_custom_field( 'description' );
-		}
-	}
-	if ( is_category() ) {
-		// $term = get_term( get_query_var('cat'), 'category' );
-		$term = $wp_query->get_queried_object();
-		$description = ! empty( $term->meta['description'] ) ? $term->meta['description'] : '';
-	}
-	if ( is_tag() ) {
-		// $term = get_term( get_query_var('tag_id'), 'post_tag' );
-		$term = $wp_query->get_queried_object();
-		$description = ! empty( $term->meta['description'] ) ? $term->meta['description'] : '';
-	}
-	if ( is_tax() ) {
-		$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
-		$description = ! empty( $term->meta['description'] ) ? wp_kses_stripslashes( wp_kses_decode_entities( $term->meta['description'] ) ) : '';
-	}
-	if ( is_author() ) {
-		$user_description = get_the_author_meta( 'meta_description', (int) get_query_var( 'author' ) );
-		$description = $user_description ? $user_description : '';
-	}
-	# Add the description if one exists
-	if ( $description ) {
-		echo '<meta name="description" content="' . esc_attr( $description ) . '" />' . "\n";
-	}
 }
 
 /**
@@ -193,100 +42,12 @@ function bizznis_responsive_viewport() {
 }
 
 /**
- * Output the 'index', 'follow', 'noodp', 'noydir', 'noarchive' robots meta code in the document 'head'.
- *
- * @since 1.0.0
- */
-// Disabled SEO options: add_action( 'wp_head', 'bizznis_robots_meta', 1 );
-function bizznis_robots_meta() {
-	global $wp_query;
-	# If the blog is private, then following logic is unnecessary as WP will insert noindex and nofollow
-	if ( 0 == get_option( 'blog_public' ) ) {
-		return;
-	}
-	# Defaults
-	$meta = array(
-		'noindex'   => '',
-		'nofollow'  => '',
-		'noarchive' => bizznis_get_seo_option( 'noarchive' ) ? 'noarchive' : '',
-		'noodp'     => bizznis_get_seo_option( 'noodp' ) ? 'noodp' : '',
-		'noydir'    => bizznis_get_seo_option( 'noydir' ) ? 'noydir' : '',
-	);
-	# Check home page SEO settings, set noindex, nofollow and noarchive
-	if ( is_front_page() ) {
-		$meta['noindex']   = bizznis_get_seo_option( 'home_noindex' ) ? 'noindex' : $meta['noindex'];
-		$meta['nofollow']  = bizznis_get_seo_option( 'home_nofollow' ) ? 'nofollow' : $meta['nofollow'];
-		$meta['noarchive'] = bizznis_get_seo_option( 'home_noarchive' ) ? 'noarchive' : $meta['noarchive'];
-	}
-	if ( is_category() ) {
-		$term = $wp_query->get_queried_object();
-		$meta['noindex']   = $term->meta['noindex'] ? 'noindex' : $meta['noindex'];
-		$meta['nofollow']  = $term->meta['nofollow'] ? 'nofollow' : $meta['nofollow'];
-		$meta['noarchive'] = $term->meta['noarchive'] ? 'noarchive' : $meta['noarchive'];
-		$meta['noindex']   = bizznis_get_seo_option( 'noindex_cat_archive' ) ? 'noindex' : $meta['noindex'];
-		$meta['noarchive'] = bizznis_get_seo_option( 'noarchive_cat_archive' ) ? 'noarchive' : $meta['noarchive'];
-		# noindex paged archives, if canonical archives is off
-		$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-		$meta['noindex'] = $paged > 1 && ! bizznis_get_seo_option( 'canonical_archives' ) ? 'noindex' : $meta['noindex'];
-	}
-	if ( is_tag() ) {
-		$term = $wp_query->get_queried_object();
-		$meta['noindex']   = $term->meta['noindex'] ? 'noindex' : $meta['noindex'];
-		$meta['nofollow']  = $term->meta['nofollow'] ? 'nofollow' : $meta['nofollow'];
-		$meta['noarchive'] = $term->meta['noarchive'] ? 'noarchive' : $meta['noarchive'];
-		$meta['noindex']   = bizznis_get_seo_option( 'noindex_tag_archive' ) ? 'noindex' : $meta['noindex'];
-		$meta['noarchive'] = bizznis_get_seo_option( 'noarchive_tag_archive' ) ? 'noarchive' : $meta['noarchive'];
-		# noindex paged archives, if canonical archives is off
-		$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-		$meta['noindex'] = $paged > 1 && ! bizznis_get_seo_option( 'canonical_archives' ) ? 'noindex' : $meta['noindex'];
-	}
-	if ( is_tax() ) {
-		$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
-		$meta['noindex']   = $term->meta['noindex'] ? 'noindex' : $meta['noindex'];
-		$meta['nofollow']  = $term->meta['nofollow'] ? 'nofollow' : $meta['nofollow'];
-		$meta['noarchive'] = $term->meta['noarchive'] ? 'noarchive' : $meta['noarchive'];
-		# noindex paged archives, if canonical archives is off
-		$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-		$meta['noindex'] = $paged > 1 && ! bizznis_get_seo_option( 'canonical_archives' ) ? 'noindex' : $meta['noindex'];
-	}
-	if ( is_author() ) {
-		$meta['noindex']   = get_the_author_meta( 'noindex', (int) get_query_var( 'author' ) ) ? 'noindex' : $meta['noindex'];
-		$meta['nofollow']  = get_the_author_meta( 'nofollow', (int) get_query_var( 'author' ) ) ? 'nofollow' : $meta['nofollow'];
-		$meta['noarchive'] = get_the_author_meta( 'noarchive', (int) get_query_var( 'author' ) ) ? 'noarchive' : $meta['noarchive'];
-		$meta['noindex']   = bizznis_get_seo_option( 'noindex_author_archive' ) ? 'noindex' : $meta['noindex'];
-		$meta['noarchive'] = bizznis_get_seo_option( 'noarchive_author_archive' ) ? 'noarchive' : $meta['noarchive'];
-		# noindex paged archives, if canonical archives is off
-		$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-		$meta['noindex'] = $paged > 1 && ! bizznis_get_seo_option( 'canonical_archives' ) ? 'noindex' : $meta['noindex'];
-	}
-	if ( is_date() ) {
-		$meta['noindex']   = bizznis_get_seo_option( 'noindex_date_archive' ) ? 'noindex' : $meta['noindex'];
-		$meta['noarchive'] = bizznis_get_seo_option( 'noarchive_date_archive' ) ? 'noarchive' : $meta['noarchive'];
-	}
-	if ( is_search() ) {
-		$meta['noindex']   = bizznis_get_seo_option( 'noindex_search_archive' ) ? 'noindex' : $meta['noindex'];
-		$meta['noarchive'] = bizznis_get_seo_option( 'noarchive_search_archive' ) ? 'noarchive' : $meta['noarchive'];
-	}
-	if ( is_singular() ) {
-		$meta['noindex']   = bizznis_get_custom_field( '_bizznis_noindex' ) ? 'noindex' : $meta['noindex'];
-		$meta['nofollow']  = bizznis_get_custom_field( '_bizznis_nofollow' ) ? 'nofollow' : $meta['nofollow'];
-		$meta['noarchive'] = bizznis_get_custom_field( '_bizznis_noarchive' ) ? 'noarchive' : $meta['noarchive'];
-	}
-	# Strip empty array items
-	$meta = array_filter( $meta );
-	# Add meta if any exist
-	if ( $meta ) {
-		printf( '<meta name="robots" content="%s" />' . "\n", implode( ',', $meta ) );
-	}
-}
-
-/**
  * Echo favicon link if one is found.
  *
  * @since 1.0.0
  */
 add_action( 'wp_head', 'bizznis_load_favicon' );
-function bizznis_load_favicon() {
+function bizznis_load_favicon( $favicon = '' ) {
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( 'bizznis_pre_load_favicon', false );
 	if ( $pre !== false ) {
@@ -322,46 +83,6 @@ function bizznis_do_meta_pingback() {
 }
 
 /**
- * Echo custom canonical link tag.
- *
- * @since 1.0.0
- */
-// Disabled SEO options: add_action( 'wp_head', 'bizznis_canonical', 5 );
-function bizznis_canonical() {
-	# Remove the WordPress canonical
-	remove_action( 'wp_head', 'rel_canonical' );
-	global $wp_query;
-	# Output nothing if canonical isn't present.
-	$canonical = '';
-	if ( is_front_page() ) {
-		$canonical = trailingslashit( home_url() );
-	}
-	if ( is_singular() ) {
-		if ( ! $id = $wp_query->get_queried_object_id() ) {
-			return;
-		}
-		$cf = bizznis_get_custom_field( '_bizznis_canonical_uri' );
-		$canonical = $cf ? $cf : get_permalink( $id );
-	}
-	if ( is_category() || is_tag() || is_tax() ) {
-		if ( ! $id = $wp_query->get_queried_object_id() ) {
-			return;
-		}
-		$taxonomy = $wp_query->queried_object->taxonomy;
-		$canonical = bizznis_get_seo_option( 'canonical_archives' ) ? get_term_link( (int) $id, $taxonomy ) : 0;
-	}
-	if ( is_author() ) {
-		if ( ! $id = $wp_query->get_queried_object_id() ) {
-			return;
-		}
-		$canonical = bizznis_get_seo_option( 'canonical_archives' ) ? get_author_posts_url( $id ) : 0;
-	}
-	if ( $canonical ) {
-		printf( '<link rel="canonical" href="%s" />' . "\n", esc_url( apply_filters( 'bizznis_canonical', $canonical ) ) );
-	}
-}
-
-/**
  * Echo custom rel="author" link tag.
  *
  * @since 1.0.0
@@ -378,20 +99,6 @@ function bizznis_rel_author() {
 	if ( is_author() && get_query_var( 'author' ) && $gplus_url = get_user_option( 'googleplus', get_query_var( 'author' ) ) ) {
 		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
 		return;
-	}
-}
-
-/**
- * Echo custom rel="publisher" link tag.
- *
- * If the appropriate information has been entered and we are viewing the front page, echo a custom rel="publisher" link.
- *
- * @since 1.0.5
- */
-add_action( 'wp_head', 'bizznis_rel_publisher' );
-function bizznis_rel_publisher() {
-	if ( is_front_page() && $publisher_url = bizznis_get_seo_option( 'publisher_uri' ) ) {
-		printf( '<link rel="publisher" href="%s" />', esc_url( $publisher_url ) );
 	}
 }
 
@@ -480,16 +187,13 @@ function bizznis_custom_header_style() {
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_site_title', 'bizznis_seo_site_title' );
-function bizznis_seo_site_title() {
+add_action( 'bizznis_site_title', 'bizznis_site_title' );
+function bizznis_site_title() {
 	# Set what goes inside the wrapping tags
 	$inside = sprintf( '<a href="%s" title="%s">%s</a>', trailingslashit( home_url() ), esc_attr( get_bloginfo( 'name' ) ), get_bloginfo( 'name' ) );
 	# Determine which wrapping tags to use
-	$wrap = is_home() && 'title' == bizznis_get_seo_option( 'home_h1_on' ) ? 'h1' : 'p';
-	# A little fallback, in case an SEO plugin is active
-	$wrap = is_home() && ! bizznis_get_seo_option( 'home_h1_on' ) ? 'h1' : $wrap;
-	# And finally, $wrap in h1 if HTML5 & semantic headings enabled
-	$wrap = bizznis_get_seo_option( 'semantic_headings' ) ? 'h1' : $wrap;
+	$wrap = is_home() ? 'h1' : 'p';
+	$wrap = apply_filters( 'bizznis_semantic_title_wrap', $wrap );
 	# Build the title
 	$title  = sprintf( "<{$wrap} %s>", bizznis_attr( 'site-title' ) ). $inside ."</{$wrap}>";
 	# Echo (filtered)
@@ -501,14 +205,12 @@ function bizznis_seo_site_title() {
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_site_title', 'bizznis_seo_site_description' );
-function bizznis_seo_site_description() {
+add_action( 'bizznis_site_title', 'bizznis_site_description' );
+function bizznis_site_description() {
 	# Set what goes inside the wrapping tags
 	$inside = esc_html( get_bloginfo( 'description' ) );
 	# Determine which wrapping tags to use
-	$wrap = is_home() && 'description' == bizznis_get_seo_option( 'home_h1_on' ) ? 'h1' : 'p';
-	# And finally, $wrap in h2 if HTML5 & semantic headings enabled
-	$wrap = bizznis_get_seo_option( 'semantic_headings' ) ? 'h2' : $wrap;
+	$wrap = apply_filters( 'bizznis_semantic_description_wrap', 'p' );
 	# Build the description
 	$description  = sprintf( "<{$wrap} %s>", bizznis_attr( 'site-description' ) ). $inside ."</{$wrap}>";
 	# Output (filtered)

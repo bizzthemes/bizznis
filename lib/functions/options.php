@@ -65,24 +65,6 @@ function bizznis_option( $key, $setting = null, $use_cache = true ) {
 }
 
 /**
- * Return SEO options from the SEO options database.
- *
- * @since 1.0.0
- */
-function bizznis_get_seo_option( $key, $use_cache = true ) {
-	return bizznis_get_option( $key, BIZZNIS_SEO_SETTINGS_FIELD, $use_cache );
-}
-
-/**
- * Echo an SEO option from the SEO options database.
- *
- * @since 1.0.0
- */
-function bizznis_seo_option( $key, $use_cache = true ) {
-	bizznis_option( $key, BIZZNIS_SEO_SETTINGS_FIELD, $use_cache );
-}
-
-/**
  * Echo data from a post or page custom field.
  *
  * @since 1.0.0

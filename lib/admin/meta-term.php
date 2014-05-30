@@ -88,57 +88,6 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 }
 
 /**
- * Loop through the custom taxonomies and add the SEO options to each custom taxonomy edit screen.
- *
- * @since 1.0.0
- */
-// Disabled SEO options: add_action( 'admin_init', 'bizznis_add_taxonomy_seo_options' );
-function bizznis_add_taxonomy_seo_options() {
-	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name ) {
-		add_action( $tax_name . '_edit_form', 'bizznis_taxonomy_seo_options', 10, 2 );
-	}
-}
-
-/**
- * Display title, description and robots meta SEO fields.
- *
- * @since 1.0.0
- */
-function bizznis_taxonomy_seo_options( $tag, $taxonomy ) {
-	$tax = get_taxonomy( $taxonomy );
-	?>
-	<h3><?php _e( 'SEO Settings', 'bizznis' ); ?></h3>
-	<table class="form-table">
-		<tbody>
-			<tr class="form-field">
-				<th scope="row" valign="top"><label for="meta[doctitle]"><?php printf( __( 'Custom Document %s', 'bizznis' ), '<code>&lt;title&gt;</code>' ); ?></label></th>
-				<td>
-					<input name="meta[doctitle]" id="meta[doctitle]" type="text" value="<?php echo esc_attr( $tag->meta['doctitle'] ); ?>" size="40" />
-				</td>
-			</tr>
-			<tr class="form-field">
-				<th scope="row" valign="top"><label for="meta[description]"><?php printf( __( '%s Description', 'bizznis' ), '<code>META</code>' ); ?></label></th>
-				<td>
-					<textarea name="meta[description]" id="meta[description]" rows="3" cols="50"><?php echo esc_html( $tag->meta['description'] ); ?></textarea>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><?php _e( 'Robots Meta', 'bizznis' ); ?></th>
-				<td>
-					<input name="meta[noindex]" id="meta[noindex]" type="checkbox" value="1" <?php checked( $tag->meta['noindex'] ); ?> />
-					<label for="meta[noindex]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>noindex</code>' ); ?></label><br />
-					<input name="meta[nofollow]" id="meta[nofollow]" type="checkbox" value="1" <?php checked( $tag->meta['nofollow'] ); ?> />
-					<label for="meta[nofollow]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>nofollow</code>' ); ?></label><br />
-					<input name="meta[noarchive]" id="meta[noarchive]" type="checkbox" value="1" <?php checked( $tag->meta['noarchive'] ); ?> />
-					<label for="meta[noarchive]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>noarchive</code>' ); ?></label>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<?php
-}
-
-/**
  * Save term meta data.
  *
  * @since 1.0.0

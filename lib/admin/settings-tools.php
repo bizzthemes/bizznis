@@ -161,12 +161,6 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 				'label'          => __( 'Theme Settings', 'bizznis' ),
 				'settings-field' => BIZZNIS_SETTINGS_FIELD,
 			),
-			/* Disabled SEO options:
-			'seo' => array(
-				'label' => __( 'SEO Settings', 'bizznis' ),
-				'settings-field' => BIZZNIS_SEO_SETTINGS_FIELD,
-			)
-			*/
 		);
 		return (array) apply_filters( 'bizznis_export_options', $options );
 	}
@@ -182,7 +176,7 @@ class Bizznis_Admin_Import_Export extends Bizznis_Admin_Basic {
 	 */
 	protected function export_checkboxes() {
 		if ( ! $options = $this->get_export_options() ) {
-			# Not even the Bizznis theme / seo export options were returned from the filter
+			# Not even the Bizznis theme export options were returned from the filter
 			printf( '<p><em>%s</em></p>', __( 'No export options available.', 'bizznis' ) );
 			return;
 		}

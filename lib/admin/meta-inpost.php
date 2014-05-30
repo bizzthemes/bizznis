@@ -65,79 +65,6 @@ function bizznis_inpost_layout_save( $post_id, $post ) {
 }
 
 /**
- * Register a new meta box to the post or page edit screen, so that 
- * the user can set SEO options on a per-post or per-page basis.
- *
- * @since 1.0.0
- */
-// Disabled SEO options: add_action( 'admin_menu', 'bizznis_add_inpost_seo_box' );
-function bizznis_add_inpost_seo_box() {
-	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
-		if ( post_type_supports( $type, 'bizznis-seo' ) ) {
-			add_meta_box( 'bizznis_inpost_seo_box', __( 'SEO Settings', 'bizznis' ), 'bizznis_inpost_seo_box', $type, 'normal', 'core' );
-		}
-	}
-}
-
-/**
- * Callback for in-post SEO meta box.
- *
- * @since 1.0.0
- */
-function bizznis_inpost_seo_box() {
-	wp_nonce_field( 'bizznis_inpost_seo_save', 'bizznis_inpost_seo_nonce' );
-	?>
-	<p><label for="bizznis_title"><b><?php _e( 'Custom Document Title', 'bizznis' ); ?></b> <abbr title="&lt;title&gt; Tag">[?]</abbr> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'bizznis' ), '<span id="bizznis_title_chars">'. strlen( bizznis_get_custom_field( '_bizznis_title' ) ) .'</span>' ); ?></span></label></p>
-	<p><input class="large-text" type="text" name="bizznis_seo[_bizznis_title]" id="bizznis_title" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_title' ) ); ?>" /></p>
-	<p><label for="bizznis_description"><b><?php _e( 'Custom Post/Page Meta Description', 'bizznis' ); ?></b> <abbr title="&lt;meta name=&quot;description&quot; /&gt;">[?]</abbr> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'bizznis' ), '<span id="bizznis_description_chars">'. strlen( bizznis_get_custom_field( '_bizznis_description' ) ) .'</span>' ); ?></span></label></p>
-	<p><textarea class="widefat" name="bizznis_seo[_bizznis_description]" id="bizznis_description" rows="4" cols="4"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_description' ) ); ?></textarea></p>
-	<p><label for="bizznis_canonical"><b><?php _e( 'Custom Canonical URI', 'bizznis' ); ?></b> <a href="<?php printf( '%s', 'http://www.mattcutts.com/blog/canonical-link-tag/' ); ?>" target="_blank" title="&lt;link rel=&quot;canonical&quot; /&gt;">[?]</a></label></p>
-	<p><input class="large-text" type="text" name="bizznis_seo[_bizznis_canonical_uri]" id="bizznis_canonical" value="<?php echo esc_url( bizznis_get_custom_field( '_bizznis_canonical_uri' ) ); ?>" /></p>
-	<p><label for="bizznis_redirect"><b><?php _e( 'Custom Redirect URI', 'bizznis' ); ?></b> <a href="<?php printf( '%s', 'http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=93633' ); ?>" target="_blank" title="301 Redirect">[?]</a></label></p>
-	<p><input class="large-text" type="text" name="bizznis_seo[redirect]" id="bizznis_redirect" value="<?php echo esc_url( bizznis_get_custom_field( 'redirect' ) ); ?>" /></p>
-	<br />
-	<p><b><?php _e( 'Robots Meta Settings', 'bizznis' ); ?></b></p>
-	<p>
-		<label for="bizznis_noindex"><input type="checkbox" name="bizznis_seo[_bizznis_noindex]" id="bizznis_noindex" value="1" <?php checked( bizznis_get_custom_field( '_bizznis_noindex' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'noindex' ) ); ?> <a href="<?php printf( '%s', 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
-		<label for="bizznis_nofollow"><input type="checkbox" name="bizznis_seo[_bizznis_nofollow]" id="bizznis_nofollow" value="1" <?php checked( bizznis_get_custom_field( '_bizznis_nofollow' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'nofollow' ) ); ?> <a href="<?php printf( '%s', 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label><br />
-		<label for="bizznis_noarchive"><input type="checkbox" name="bizznis_seo[_bizznis_noarchive]" id="bizznis_noarchive" value="1" <?php checked( bizznis_get_custom_field( '_bizznis_noarchive' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'bizznis' ), bizznis_code( 'noarchive' ) ); ?> <a href="<?php printf( '%s', 'http://yoast.com/articles/robots-meta-tags/' ); ?>" target="_blank">[?]</a></label>
-	</p>
-	<?php
-}
-
-/**
- * Save the SEO settings when we save a post or page.
- *
- * @since 1.0.0
- */
-add_action( 'save_post', 'bizznis_inpost_seo_save', 1, 2 );
-function bizznis_inpost_seo_save( $post_id, $post ) {
-	if ( ! isset( $_POST['bizznis_seo'] ) ) {
-		return;
-	}
-	# Merge user submitted options with fallback defaults
-	$data = wp_parse_args( $_POST['bizznis_seo'], array(
-		'_bizznis_title'         => '',
-		'_bizznis_description'   => '',
-		'_bizznis_canonical_uri' => '',
-		'redirect'               => '',
-		'_bizznis_noindex'       => 0,
-		'_bizznis_nofollow'      => 0,
-		'_bizznis_noarchive'     => 0,
-	) );
-	# Sanitize the title, description, and tags
-	foreach ( (array) $data as $key => $value ) {
-		if ( in_array( $key, array( '_bizznis_title', '_bizznis_description' ) ) ) {
-			$data[ $key ] = strip_tags( $value );
-		}
-	}
-	bizznis_save_custom_fields( $data, 'bizznis_inpost_seo_save', 'bizznis_inpost_seo_nonce', $post, $post_id );
-}
-
-/**
  * Register a new meta box to the post or page edit screen, so that the user can 
  * apply scripts on a per-post or per-page basis.
  *
@@ -165,7 +92,7 @@ function bizznis_inpost_scripts_box() {
 	wp_nonce_field( 'bizznis_inpost_scripts_save', 'bizznis_inpost_scripts_nonce' );
 	?>
 	<p><label for="bizznis_scripts" class="screen-reader-text"><b><?php _e( 'Page-specific Scripts', 'bizznis' ); ?></b></label></p>
-	<p><textarea class="widefat" rows="4" cols="4" name="bizznis_seo[_bizznis_scripts]" id="bizznis_scripts"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_scripts' ) ); ?></textarea></p>
+	<p><textarea class="widefat" rows="4" cols="4" name="bizznis_scripts[_bizznis_scripts]" id="bizznis_scripts"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_scripts' ) ); ?></textarea></p>
 	<p><?php printf( __( 'Suitable for page-specific script. Must include %s tags.', 'bizznis' ), bizznis_code( 'script' ) ); ?></p>
 	<?php
 }
@@ -177,15 +104,14 @@ function bizznis_inpost_scripts_box() {
  */
 add_action( 'save_post', 'bizznis_inpost_scripts_save', 1, 2 );
 function bizznis_inpost_scripts_save( $post_id, $post ) {
-	if ( ! isset( $_POST['bizznis_seo'] ) ) {
+	if ( ! isset( $_POST['bizznis_scripts'] ) ) {
 		return;
 	}
 	# If user doesn't have unfiltered html capability, don't try to save
 	if ( ! current_user_can( 'unfiltered_html' ) ) {
 		return;
 	}
-	# Merge user submitted options with fallback defaults
-	$data = wp_parse_args( $_POST['bizznis_seo'], array(
+	$data = wp_parse_args( $_POST['bizznis_scripts'], array(
 		'_bizznis_scripts' => '',
 	) );
 	bizznis_save_custom_fields( $data, 'bizznis_inpost_scripts_save', 'bizznis_inpost_scripts_nonce', $post, $post_id );

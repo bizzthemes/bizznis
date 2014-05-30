@@ -38,7 +38,8 @@ add_filter( 'bizznis_pre_get_option_site_layout', 'bizznis_wc_archive_layout' );
 function bizznis_wc_archive_layout( $layout ) {
 	$shop_page_id = get_option( 'woocommerce_shop_page_id' );
 	$layout = get_post_meta( $shop_page_id, '_bizznis_layout', true );
-	return $layout;
+	if ( $layout )
+		return $layout;
 }
 
 /**

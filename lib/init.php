@@ -56,7 +56,6 @@ class Bizznis_Init {
 	if ( is_admin() ) {
 		load_template( BIZZNIS_ADMIN_DIR . '/admin.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-general.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/settings-seo.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/settings-tools.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-inpost.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-term.php' );
@@ -74,7 +73,6 @@ class Bizznis_Init {
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/markup.php' );
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/layout.php' );
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/formatting.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/seo.php' );
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/widgetize.php' );
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/shortcodes.php' );
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/deprecated.php' );
@@ -100,9 +98,9 @@ class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.0.9' );
+		define( 'PARENT_THEME_VERSION', 		'1.1.0' );
 		define( 'PARENT_THEME_BRANCH', 			'1.0' );
-		define( 'PARENT_DB_VERSION', 			'1009' );
+		define( 'PARENT_DB_VERSION', 			'11000' );
 		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1392134400' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
@@ -139,7 +137,6 @@ class Bizznis_Init {
 		define( 'BIZZNIS_INT_BBP_URL', 			BIZZNIS_INT_URL . 	'/bbpress' );
 		# Settings Field (for DB storage)
 		define( 'BIZZNIS_SETTINGS_FIELD', 		apply_filters( 'bizznis_settings_field', 'bizznis-settings' ) );
-		define( 'BIZZNIS_SEO_SETTINGS_FIELD', 	apply_filters( 'bizznis_seo_settings_field', 'bizznis-seo-settings' ) );
 	}
 	
 	/**
@@ -159,7 +156,6 @@ class Bizznis_Init {
 		add_theme_support( 'bizznis-inpost-layouts' );
 		add_theme_support( 'bizznis-archive-layouts' );
 		add_theme_support( 'bizznis-admin-menu' );
-		add_theme_support( 'bizznis-seo-settings-menu' );
 		add_theme_support( 'bizznis-tools-settings-menu' );
 		add_theme_support( 'bizznis-breadcrumbs' );
 		add_theme_support( 'bizznis-responsive-viewport' ); #html5
@@ -197,8 +193,8 @@ class Bizznis_Init {
 	 * @since 1.0.0
 	 */
 	public function post_type_support() {
-		add_post_type_support( 'post', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts', 'bizznis-rel-author' ) );
-		add_post_type_support( 'page', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts' ) );
+		add_post_type_support( 'post', array( 'bizznis-scripts', 'bizznis-layouts', 'bizznis-rel-author' ) );
+		add_post_type_support( 'page', array( 'bizznis-scripts', 'bizznis-layouts' ) );
 	}
 	
 	/**

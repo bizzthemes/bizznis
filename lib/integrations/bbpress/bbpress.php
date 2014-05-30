@@ -214,8 +214,8 @@ class Bizznis_BBP {
 	 * @since 1.0.0
 	 */
 	public function post_type_support() {
-		add_post_type_support( 'forum', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts' ) );
-		add_post_type_support( 'topic', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts' ) );
+		add_post_type_support( 'forum', array( 'bizznis-scripts', 'bizznis-layouts' ) );
+		add_post_type_support( 'topic', array( 'bizznis-scripts', 'bizznis-layouts' ) );
 	}
 
 }

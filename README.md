@@ -18,6 +18,9 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.0.9.1
+* Fixed favicon not defined notice
+
 ### 1.0.9
 * Removed pingback options checking
 * Removed theme about page

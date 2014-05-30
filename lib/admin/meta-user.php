@@ -29,8 +29,6 @@ function bizznis_add_user_profile_fields() {
 	add_action( 'edit_user_profile', 'bizznis_user_archive_fields' );
 	add_action( 'show_user_profile', 'bizznis_user_layout_fields' );
 	add_action( 'edit_user_profile', 'bizznis_user_layout_fields' );
-	// Disabled SEO options: add_action( 'show_user_profile', 'bizznis_user_seo_fields' );
-	// Disabled SEO options: add_action( 'edit_user_profile', 'bizznis_user_seo_fields' );
 }
 
 /**
@@ -51,10 +49,6 @@ function bizznis_user_options_fields( $user ) {
 				<td>
 					<input id="meta[bizznis_admin_menu]" name="meta[bizznis_admin_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_admin_menu', $user->ID ) ); ?> />
 					<label for="meta[bizznis_admin_menu]"><?php _e( 'Enable Bizznis Admin Menus?', 'bizznis' ); ?></label><br />
-					<!-- Disabled SEO options:
-					<input id="meta[bizznis_seo_settings_menu]" name="meta[bizznis_seo_settings_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_seo_settings_menu', $user->ID ) ); ?> />
-					<label for="meta[bizznis_seo_settings_menu]"><?php _e( 'Enable SEO Settings?', 'bizznis' ); ?></label><br />
-					-->
 					<input id="meta[bizznis_tools_settings_menu]" name="meta[bizznis_tools_settings_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_tools_settings_menu', $user->ID ) ); ?> />
 					<label for="meta[bizznis_tools_settings_menu]"><?php _e( 'Enable Import/Export Tools?', 'bizznis' ); ?></label><br />
 				</td>
@@ -140,48 +134,6 @@ function bizznis_user_layout_fields( $user ) {
 }
 
 /**
- * Adds fields for author archive SEO to the user edit screen.
- *
- * @since 1.0.0
- */
-function bizznis_user_seo_fields( $user ) {
-	if ( ! current_user_can( 'edit_users', $user->ID ) ) {
-		return false;
-	}
-	?>
-	<h3><?php _e( 'SEO Settings', 'bizznis' ); ?></h3>
-	<p><span class="description"><?php _e( 'These settings apply to this author\'s archive pages.', 'bizznis' ); ?></span></p>
-	<table class="form-table">
-		<tbody>
-			<tr>
-				<th scope="row" valign="top"><label for="doctitle"><?php printf( __( 'Custom Document %s', 'bizznis' ), '<code>&lt;title&gt;</code>' ); ?></label></th>
-				<td>
-					<input name="meta[doctitle]" id="doctitle" type="text" value="<?php echo esc_attr( get_the_author_meta( 'doctitle', $user->ID ) ); ?>" class="regular-text" />
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><label for="meta-description"><?php printf( __( '%s Description', 'bizznis' ), '<code>META</code>' ); ?></label></th>
-				<td>
-					<textarea name="meta[meta_description]" id="meta-description" rows="5" cols="30"><?php echo esc_textarea( get_the_author_meta( 'meta_description', $user->ID ) ); ?></textarea>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><?php _e( 'Robots Meta', 'bizznis' ); ?></th>
-				<td>
-					<input id="meta[noindex]" name="meta[noindex]" id="noindex" type="checkbox" value="1" <?php checked( get_the_author_meta( 'noindex', $user->ID ) ); ?> />
-					<label for="meta[noindex]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>noindex</code>' ); ?></label><br />
-					<input id="meta[nofollow]" name="meta[nofollow]" id="nofollow" type="checkbox" value="1" <?php checked( get_the_author_meta( 'nofollow', $user->ID ) ); ?> />
-					<label for="meta[nofollow]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>nofollow</code>' ); ?></label><br />
-					<input id="meta[noarchive]" name="meta[noarchive]" id="noarchive" type="checkbox" value="1" <?php checked( get_the_author_meta( 'noarchive', $user->ID ) ); ?> />
-					<label for="meta[noarchive]"><?php printf( __( 'Apply %s to this archive?', 'bizznis' ), '<code>noarchive</code>' ); ?></label>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<?php
-}
-
-/**
  * Adds / updates user meta when user edit page is saved.
  *
  * @since 1.0.0
@@ -200,7 +152,6 @@ function bizznis_user_meta_save( $user_id ) {
 		array(
 			'bizznis_admin_menu'         	=> '',
 			'bizznis_settings_menu'  	 	=> '',
-			'bizznis_seo_settings_menu'  	=> '',
 			'bizznis_tools_settings_menu'	=> '',
 			'bizznis_author_box_single'  	=> '',
 			'bizznis_author_box_archive' 	=> '',
@@ -227,9 +178,8 @@ function bizznis_user_meta_save( $user_id ) {
  *
  * @since 1.0.0
  */
-add_filter( 'get_the_author_bizznis_admin_menu',         'bizznis_user_meta_default_on', 10, 2 );
-add_filter( 'get_the_author_bizznis_seo_settings_menu',  'bizznis_user_meta_default_on', 10, 2 );
-add_filter( 'get_the_author_bizznis_tools_settings_menu', 		 'bizznis_user_meta_default_on', 10, 2 );
+add_filter( 'get_the_author_bizznis_admin_menu',         	'bizznis_user_meta_default_on', 10, 2 );
+add_filter( 'get_the_author_bizznis_tools_settings_menu', 	'bizznis_user_meta_default_on', 10, 2 );
 function bizznis_user_meta_default_on( $value, $user_id ) {
 	# Get the name of the field by removing the prefix from the active filter
 	$field = str_replace( 'get_the_author_', '', current_filter() );

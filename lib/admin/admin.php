@@ -26,7 +26,7 @@ abstract class Bizznis_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create( $page_id = '', $menu_ops = array(), $page_ops = array(), $settings_field = '', $default_settings = array() ) {	
+	public function create( $page_id = '', $menu_ops = array(), $page_ops = array(), $settings_field = '', $default_settings = array() ) {
 		# Set the properties
 		$this->page_id          = $this->page_id          ? $this->page_id          : (string) $page_id;
 		$this->menu_ops         = $this->menu_ops         ? $this->menu_ops         : (array) $menu_ops;
@@ -54,7 +54,7 @@ abstract class Bizznis_Admin {
 			wp_die( sprintf( __( 'You cannot use %s to create two menus in the same subclass. Please use separate subclasses for each menu.', 'bizznis' ), 'Bizznis_Admin' ) );
 		}
 		# Theme options actions
-		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 5 ); 						# create the theme options menu
+		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 15 ); 					# create the theme options menu
 		add_action( 'admin_init', array( $this, 'register_settings' ) ); 							# set up settings
 		add_action( 'admin_notices', array( $this, 'notices' ) ); 									# set up notices
 		add_action( 'admin_init', array( $this, 'settings_init' ) ); 								# load the page content
@@ -67,6 +67,7 @@ abstract class Bizznis_Admin {
 	 * @since 1.0.0
 	 */
 	public function maybe_add_theme_menu() {
+	
 		# Add theme menu
 		if ( isset( $this->menu_ops['theme_menu'] ) && is_array( $this->menu_ops['theme_menu'] ) ) {
 			$menu = wp_parse_args( $this->menu_ops['theme_menu'],

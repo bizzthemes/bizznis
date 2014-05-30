@@ -132,7 +132,7 @@ class Bizznis_WC {
 	 * @since 1.0.0
 	 */
 	public function post_type_support() {
-		add_post_type_support( 'product', array( 'bizznis-seo', 'bizznis-scripts', 'bizznis-layouts' ) );
+		add_post_type_support( 'product', array( 'bizznis-scripts', 'bizznis-layouts' ) );
 	}
 
 }

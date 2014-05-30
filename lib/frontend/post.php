@@ -124,7 +124,7 @@ function bizznis_do_post_title() {
 	# Wrap in H1 on singular pages
 	$wrap = is_singular() ? 'h1' : 'h2';
 	# Also, if HTML5 with semantic headings, wrap in H1
-	$wrap = bizznis_get_seo_option( 'semantic_headings' ) ? 'h1' : $wrap;
+	$wrap = apply_filters( 'bizznis_entry_header_wrap', $wrap );
 	# Build the output
 	$output = sprintf( "<{$wrap} %s>", bizznis_attr( 'entry-title' ) );
 	$output .= "{$title}";
