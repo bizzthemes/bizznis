@@ -63,7 +63,11 @@ function bizznis_load_admin_js() {
 		'confirmReset'            => __( 'Are you sure you want to reset?', 'bizznis' ),
 	);
 	wp_localize_script( 'bizznis_admin_js', 'bizznisL10n', $strings );
-	# Toggles	
+	# Toggles
+	$toggles = array();
+	/*
+	* Deprecated since 1.1.0
+	*
 	$toggles = array(
 		// Checkboxes - when checked, show extra settings
 		'nav'                       => array( '#bizznis-settings\\[nav\\]', '#bizznis_nav_settings', '_checked' ),
@@ -74,5 +78,6 @@ function bizznis_load_admin_js() {
 		'nav_extras'                => array( '#bizznis-settings\\[nav_extras\\]', '#bizznis_nav_extras_twitter', 'twitter' ),
 		'content_archive'           => array( '#bizznis-settings\\[content_archive\\]', '#bizznis_content_limit_setting', 'full' ),
 	);
+	*/
 	wp_localize_script( 'bizznis_admin_js', 'bizznis_toggles', apply_filters( 'bizznis_toggles', $toggles ) );
 }

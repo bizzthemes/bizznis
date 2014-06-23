@@ -23,7 +23,7 @@ function bizznis_load_stylesheet() {
 function bizznis_enqueue_main_stylesheet() {
 	$version = defined( 'CHILD_THEME_VERSION' ) && CHILD_THEME_VERSION ? CHILD_THEME_VERSION : PARENT_THEME_VERSION;
 	$handle  = defined( 'CHILD_THEME_NAME' ) && CHILD_THEME_NAME ? sanitize_title_with_dashes( CHILD_THEME_NAME ) : 'child-theme';
-	wp_enqueue_style( $handle, get_stylesheet_uri(), false, $version ); 
+	wp_enqueue_style( $handle, get_stylesheet_uri(), false, $version );
 }
 
 /**

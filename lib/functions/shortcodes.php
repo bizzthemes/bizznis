@@ -43,6 +43,95 @@ function bizznis_post_time_shortcode( $atts ) {
 }
 
 /**
+ * Produce the post last modified date.
+ *
+ * Supported shortcode attributes are:
+ *  * after (output after date, default is empty string),
+ *  * before (output before date, default is empty string),
+ *  * format (date format, default is value in date_format option field),
+ *  * label (text following 'before' output, but before date).
+ *
+ * Output passes through 'bizznis_post_modified_date_shortcode' filter before returning.
+ *
+ * @since 1.1.0
+ *
+ * @param array|string $atts Shortcode attributes. Empty string if no attributes.
+ * @return string Shortcode output
+ */
+add_shortcode( 'post_modified_date', 'bizznis_post_modified_date_shortcode' );
+function bizznis_post_modified_date_shortcode( $atts ) {
+	$defaults = array(
+		'after'  => '',
+		'before' => '',
+		'format' => get_option( 'date_format' ),
+		'label'  => '',
+	);
+	$atts = shortcode_atts( $defaults, $atts, 'post_modified_date' );
+	$display = ( 'relative' === $atts['format'] ) ? bizznis_human_time_diff( get_the_modified_time( 'U' ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'bizznis' ) : get_the_modified_time( $atts['format'] );
+	$output = sprintf( '<time %s>', bizznis_attr( 'entry-modified-time' ) ) . $atts['before'] . $atts['label'] . $display . $atts['after'] . '</time>';
+	/**
+	 * Change the output of the post_modified_date shortcode.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $output Markup containing post last modification date.
+	 * @param array $atts {
+	 *     Shortcode attributes after mergining with default values.
+	 *
+	 *     @type string $after Output after date.
+	 *     @type string $before Output before date.
+	 *     @type string $format Date format, could be 'relative'.
+	 *     @type string $label Text following 'before' output, but before date.
+	 * }
+	 */
+	return apply_filters( 'bizznis_post_modified_date_shortcode', $output, $atts );
+}
+
+/**
+ * Produce the post last modified time.
+ *
+ * Supported shortcode attributes are:
+ *  * after (output after time, default is empty string),
+ *  * before (output before time, default is empty string),
+ *  * format (date format, default is value in date_format option field),
+ *  * label (text following 'before' output, but before time).
+ *
+ * Output passes through 'bizznis_post_modified_time_shortcode' filter before returning.
+ *
+ * @since 1.1.0
+ *
+ * @param array|string $atts Shortcode attributes. Empty string if no attributes.
+ * @return string Shortcode output
+ */
+add_shortcode( 'post_modified_time', 'bizznis_post_modified_time_shortcode' );
+function bizznis_post_modified_time_shortcode( $atts ) {
+	$defaults = array(
+		'after'  => '',
+		'before' => '',
+		'format' => get_option( 'time_format' ),
+		'label'  => '',
+	);
+	$atts = shortcode_atts( $defaults, $atts, 'post_modified_time' );
+	$output = sprintf( '<time %s>', bizznis_attr( 'entry-modified-time' ) ) . $atts['before'] . $atts['label'] . get_the_modified_time( $atts['format'] ) . $atts['after'] . '</time>';
+	/**
+	 * Change the output of the post_modified_time shortcode.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $output Markup containing post last modification time.
+	 * @param array $atts {
+	 *     Shortcode attributes after mergining with default values.
+	 *
+	 *     @type string $after Output after time.
+	 *     @type string $before Output before time.
+	 *     @type string $format Date format, could be 'relative'.
+	 *     @type string $label Text following 'before' output, but before time.
+	 * }
+	 */
+	return apply_filters( 'bizznis_post_modified_time_shortcode', $output, $atts );
+}
+
+/**
  * Produces the author of the post (unlinked display name).
  *
  * @since 1.0.0
@@ -191,7 +280,6 @@ function bizznis_post_categories_shortcode( $atts ) {
  */
 add_shortcode( 'post_terms', 'bizznis_post_terms_shortcode' );
 function bizznis_post_terms_shortcode( $atts ) {
-	global $post;
 	$defaults = array(
 			'after'    => '',
 			'before'   => __( 'Filed Under: ', 'bizznis' ),
@@ -199,7 +287,7 @@ function bizznis_post_terms_shortcode( $atts ) {
 			'taxonomy' => 'category',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_terms' );
-	$terms = get_the_term_list( $post->ID, $atts['taxonomy'], $atts['before'], trim( $atts['sep'] ) . ' ', $atts['after'] );
+	$terms = get_the_term_list( get_the_ID(), $atts['taxonomy'], $atts['before'], trim( $atts['sep'] ) . ' ', $atts['after'] );
 	if ( is_wp_error( $terms ) ) {
 		return;
 	}
@@ -342,7 +430,7 @@ function bizznis_footer_wordpress_link_shortcode( $atts ) {
 		'before' => '',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'footer_wordpress_link' );
-	$output = sprintf( '%s<a href="%s" title="%s">%s</a>%s', $atts['before'], 'http://wordpress.org/', 'WordPress', 'WordPress', $atts['after'] );
+	$output = sprintf( '%s<a href="%s">%s</a>%s', $atts['before'], 'http://wordpress.org/', 'WordPress', $atts['after'] );
 	return apply_filters( 'bizznis_footer_wordpress_link_shortcode', $output, $atts );
 }
 

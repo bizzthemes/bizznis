@@ -16,7 +16,7 @@ class Bizznis_Settings_Sanitizer {
 	static $instance;
 
 	# Holds list of all options as array.
-	var $options = array();
+	public $options = array();
 
 	/**
 	 * Constructor.
@@ -25,8 +25,14 @@ class Bizznis_Settings_Sanitizer {
 	 */
 	function __construct() {
 		self::$instance =& $this;
-		# Announce that the sanitizer is ready, and pass the object (for advanced use)
-		do_action_ref_array( 'bizznis_settings_sanitizer_init', array( &$this ) );
+		/**
+		 * Fires when Bizznis_Settings_Sanitizer is initialized.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param Bizznis_Settings_Sanitizer $this The Bizznis_Settings_Sanitizer object.
+		 */
+		do_action_ref_array( 'bizznis_settings_sanitizer_init', array( $this ) );
 	}
 
 	/**
@@ -74,7 +80,15 @@ class Bizznis_Settings_Sanitizer {
 			'safe_html'                => array( $this, 'safe_html'                ),
 			'requires_unfiltered_html' => array( $this, 'requires_unfiltered_html' ),
 			'url'                      => array( $this, 'url'                      ),
+			'email_address'            => array( $this, 'email_address'            ),
 		);
+		/**
+		 * Filter the available sanitization filter types.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param array $default_filters Array with keys of sanitization types, and values of the filter function name as a callback
+		 */
 		return apply_filters( 'bizznis_available_sanitizer_filters', $default_filters );
 	}
 
@@ -136,12 +150,24 @@ class Bizznis_Settings_Sanitizer {
 	}
 
 	/**
-	 * Makes URLs safe
+	 * Safe URLs
 	 *
 	 * @since 1.0.0
 	 */
 	function url( $new_value ) {
 		return esc_url_raw( $new_value );
+	}
+	
+	/**
+	 * Makes Email Addresses safe, via sanitize_email()
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $new_value String, an email address, possibly unsafe
+	 * @return string String a safe email address
+	 */
+	function email_address( $new_value ) {
+		return sanitize_email( $new_value );
 	}
 
 	/**
@@ -151,6 +177,63 @@ class Bizznis_Settings_Sanitizer {
 	 */
 	function safe_html( $new_value ) {
 		return wp_kses_post( $new_value );
+	}
+	
+	/**
+	 * Sanitize a string to allow only tags in the allowedtags array.
+	 *
+	 * @since 1.1.0
+	 */
+	function safe_text( $new_value ) {
+		global $allowedtags;
+		return wp_kses( $new_value , $allowedtags );
+	}
+	
+	/**
+	 * Sanitizes a hex color.
+	 *
+	 * This is a copy of the core function for use when the customizer is not being shown.
+	 *
+	 * @since  1.1.0.
+	 */
+	function hex_color( $new_value ) {
+		if ( '' === $new_value ) {
+			return '';
+		}
+		# 3 or 6 hex digits, or the empty string.
+		if ( preg_match('|^#([A-Fa-f0-9]{3}){1,2}$|', $new_value ) ) {
+			return $new_value;
+		}
+		return null;
+	}
+	
+	/**
+	 * Sanitizes a hex color without a hash. Use sanitize_hex_color() when possible.
+	 *
+	 * This is a copy of the core function for use when the customizer is not being shown.
+	 *
+	 * @since  1.1.0.
+	 */
+	function hex_color_no_hash( $new_value ) {
+		$new_value = ltrim( $new_value, '#' );
+		if ( '' === $new_value ) {
+			return '';
+		}
+		return sanitize_hex_color( '#' . $new_value ) ? $new_value : null;
+	}
+	
+	/**
+	 * Ensures that any hex color is properly hashed.
+	 *
+	 * This is a copy of the core function for use when the customizer is not being shown.
+	 *
+	 * @since  1.1.0.
+	 */
+	function maybe_hash_hex_color( $new_value ) {
+		if ( $unhashed = sanitize_hex_color_no_hash( $new_value ) ) {
+			return '#' . $unhashed;
+		}
+		return $new_value;
 	}
 
 	/**

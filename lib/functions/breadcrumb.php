@@ -50,7 +50,25 @@ class Bizznis_Breadcrumb {
 	 * @since 1.0.0
 	 */
 	public function get_output( $args = array() ) {
-		// Merge and filter user and default arguments
+		/**
+		 * Filter the Bizznis breadcrumb arguments.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array $args {
+		 *      Arguments for generating breadcrumbs.
+		 *
+		 *      @type string $home                    Homepage link text.
+		 *      @type string $sep                     Separator.
+		 *      @type string $list_set                List format separator.
+		 *      @type string $prefix                  Prefix before breadcrumb list.
+		 *      @type string $suffix                  Suffix after breadcrump list.
+		 *      @type bool   $heirarchial_attachments Whether attachments are hierarchical.
+		 *      @type bool   $heirarchial_categories  Whether categories are hierarchical.
+		 *      @type array $labels                   Labels including the following keys: 'prefix', 'author', 'category',
+		 *                                            'tag', 'date', 'search', 'tax', 'post_type', '404'.
+		 * }
+		 */
 		$this->args = apply_filters( 'bizznis_breadcrumb_args', wp_parse_args( $args, $this->args ) );
 		return $this->args['prefix'] . $this->args['labels']['prefix'] . $this->build_crumbs() . $this->args['suffix'];
 	}
@@ -89,6 +107,16 @@ class Bizznis_Breadcrumb {
 		elseif ( is_singular() ) {
 			$crumbs[] = $this->get_single_crumb();
 		}
+		/**
+		 * Filter the Bizznis breadcrumbs.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param string $crumbs HTML markup for the breadcrumbs.
+		 * @param array  $args   Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
+		$crumbs = apply_filters( 'bizznis_build_crumbs', $crumbs, $this->args );
+
 		return join( $this->args['sep'], array_filter( array_unique( $crumbs ) ) );
 	}
 
@@ -122,6 +150,14 @@ class Bizznis_Breadcrumb {
 		elseif ( is_post_type_archive() ) {
 			$crumb = $this->get_post_type_crumb();
 		}
+		/**
+		 * Filter the Bizznis archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the archive breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_archive_crumb', $crumb, $this->args );
 	}
 
@@ -140,6 +176,14 @@ class Bizznis_Breadcrumb {
 		else {
 			$crumb = $this->get_cpt_crumb();
 		}
+		/**
+		 * Filter the Bizznis single breadcrumb.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param string $crumb HTML markup for the single breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_single_crumb', $crumb, $this->args );
 	}
 
@@ -151,6 +195,14 @@ class Bizznis_Breadcrumb {
 	protected function get_home_crumb() {
 		$url   = $this->page_shown_on_front() ? get_permalink( get_option( 'page_on_front' ) ) : trailingslashit( home_url() );
 		$crumb = ( is_home() && is_front_page() ) ? $this->args['home'] : $this->get_breadcrumb_link( $url, sprintf( __( 'View %s', 'bizznis' ), $this->args['home'] ), $this->args['home'] );
+		/**
+		 * Filter the Bizznis home breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the home breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_home_crumb', $crumb, $this->args );
 	}
 
@@ -164,6 +216,14 @@ class Bizznis_Breadcrumb {
 		if ( $this->page_shown_on_front() ) {
 			$crumb = get_the_title( get_option( 'page_for_posts' ) );
 		}
+		/**
+		 * Filter the Bizznis blog posts breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the blog posts breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_blog_crumb', $crumb, $this->args );
 	}
 
@@ -174,6 +234,14 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_search_crumb() {
 		$crumb = $this->args['labels']['search'] . '"' . esc_html( apply_filters( 'the_search_query', get_search_query() ) ) . '"';
+		/**
+		 * Filter the Search page breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the search page breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_search_crumb', $crumb, $this->args );
 	}
 
@@ -184,6 +252,14 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_404_crumb() {
 		$crumb = $this->args['labels']['404'];
+		/**
+		 * Filter the 404 page breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the 404 page breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_404_crumb', $crumb, $this->args );
 	}
 
@@ -229,6 +305,14 @@ class Bizznis_Breadcrumb {
 				$crumb = join( $this->args['sep'], $crumbs );
 			}
 		}
+		/**
+		 * Filter the content page breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the content page breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_page_crumb', $crumb, $this->args );
 	}
 
@@ -238,7 +322,7 @@ class Bizznis_Breadcrumb {
 	 * @since 1.0.0
 	 */
 	protected function get_attachment_crumb() {
-		global $post;
+		$post = get_post();
 		$crumb = '';
 		if ( $this->args['heirarchial_attachments'] ) {
 			# If showing attachment parent
@@ -260,8 +344,7 @@ class Bizznis_Breadcrumb {
 	 * @since 1.0.0
 	 */
 	protected function get_post_crumb() {
-		global $post;
-		$categories = get_the_category( $post->ID );
+		$categories = get_the_category();
 		if ( 1 == count( $categories ) ) {
 			# If in single category, show it, and any parent categories
 			$crumb = $this->get_term_parents( $categories[0]->cat_ID, 'category', true ) . $this->args['sep'];
@@ -279,7 +362,7 @@ class Bizznis_Breadcrumb {
 				$crumb = join( $this->args['list_sep'], $crumbs ) . $this->args['sep'];
 			} else {
 				# Show parent categories - see if one is marked as primary and try to use that
-				$primary_category_id = get_post_meta( $post->ID, '_category_permalink', true ); # support for sCategory Permalink plugin
+				$primary_category_id = get_post_meta( get_the_ID(), '_category_permalink', true ); # support for sCategory Permalink plugin
 				if ( $primary_category_id ) {
 					$crumb = $this->get_term_parents( $primary_category_id, 'category', true ) . $this->args['sep'];
 				} else {
@@ -316,6 +399,14 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_category_crumb() {
 		$crumb = $this->args['labels']['category'] . $this->get_term_parents( get_query_var( 'cat' ), 'category' );
+		/**
+		 * Filter the category archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the category archive crumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_category_crumb', $crumb, $this->args );
 	}
 
@@ -326,6 +417,14 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_tag_crumb() {
 		$crumb = $this->args['labels']['tag'] . single_term_title( '', false );
+		/**
+		 * Filter the tag archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the tag archive crumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_tag_crumb', $crumb, $this->args );
 	}
 
@@ -338,6 +437,14 @@ class Bizznis_Breadcrumb {
 		global $wp_query;
 		$term  = $wp_query->get_queried_object();
 		$crumb = $this->args['labels']['tax'] . $this->get_term_parents( $term->term_id, $term->taxonomy );
+		/**
+		 * Filter the taxonomy archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the taxonomy archive breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_tax_crumb', $crumb, $this->args );
 
 	}
@@ -349,6 +456,14 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_year_crumb() {
 		$crumb = $this->args['labels']['date'] . get_query_var( 'year' );
+		/**
+		 * Filter the year archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the year archive breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_year_crumb', $crumb, $this->args );
 	}
 
@@ -365,6 +480,14 @@ class Bizznis_Breadcrumb {
 			$this->args['sep']
 		);
 		$crumb .= $this->args['labels']['date'] . single_month_title( ' ', false );
+		/**
+		 * Filter the month archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the month archive breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_month_crumb', $crumb, $this->args );
 	}
 
@@ -388,6 +511,14 @@ class Bizznis_Breadcrumb {
 			$this->args['sep']
 		);
 		$crumb .= $this->args['labels']['date'] . get_query_var( 'day' ) . date( 'S', mktime( 0, 0, 0, 1, get_query_var( 'day' ) ) );
+		/**
+		 * Filter the day archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the day archive breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_day_crumb', $crumb, $this->args );
 	}
 
@@ -399,6 +530,14 @@ class Bizznis_Breadcrumb {
 	protected function get_author_crumb() {
 		global $wp_query;
 		$crumb = $this->args['labels']['author'] . esc_html( $wp_query->queried_object->display_name );
+		/**
+		 * Filter the author archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the author archive crumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_author_crumb', $crumb, $this->args );
 	}
 
@@ -409,6 +548,14 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_post_type_crumb() {
 		$crumb = $this->args['labels']['post_type'] . esc_html( post_type_archive_title( '', false ) );
+		/**
+		 * Filter the post type archive breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $crumb HTML markup for the post type archive breadcrumb.
+		 * @param array  $args  Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
 		return apply_filters( 'bizznis_post_type_crumb', $crumb, $this->args );
 	}
 
@@ -438,13 +585,32 @@ class Bizznis_Breadcrumb {
 	 * Return anchor link for a single crumb.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $url URL for href attribute
+	 * @param string $title title attribute (unused)
+	 * @param string $content linked content
+	 * @param string $sep Separator
+	 * @return string HTML markup for anchor link and optional separator.
 	 */
-	protected function get_breadcrumb_link( $url, $title, $content, $sep = false ) {
-		$link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $url ), esc_attr( $title ), esc_html( $content ) );
+	protected function get_breadcrumb_link( $url, $title = '', $content, $sep = false ) {
+		$link = sprintf( '<a href="%s">%s</a>', esc_attr( $url ), esc_html( $content ) );
+		/**
+		 * Filter the anchor link for a single breadcrumb.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $link    HTML markup for anchor link, before optional separator is added.
+		 * @param string $url     URL for href attribute.
+		 * @param string $title   Title attribute.
+		 * @param string $content Link content.
+		 * @param array  $args    Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
+		 */
+		$link = apply_filters( 'bizznis_breadcrumb_link', $link, $url, $title, $content, $this->args );
 		if ( $sep ) {
 			$link .= $sep;
 		}
 		return $link;
+
 	}
 
 	/**

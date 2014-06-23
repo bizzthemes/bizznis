@@ -145,7 +145,7 @@ function bizznis_get_default_layout() {
  *
  * @since 1.0.0
  */
-function bizznis_site_layout( $use_cache = true ) {
+function bizznis_site_layout( $use_cache = true ) {	
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( 'bizznis_site_layout', null );
 	if ( null !== $pre ) {
@@ -213,8 +213,8 @@ function bizznis_layout_selector( $args = array() ) {
 	foreach ( bizznis_get_layouts( $args['type'] ) as $id => $data ) {
 		$class = $id == $args['selected'] ? ' selected' : '';
 		$output .= sprintf(
-			'<label title="%1$s" class="box%2$s"><img src="%3$s" alt="%1$s" /><br /> <input type="radio" name="%4$s" id="%5$s" value="%5$s" %6$s /></label>',
-            esc_attr( $data['label'] ),
+			'<label class="box%2$s"><img src="%3$s" alt="%1$s" /><br /> <input type="radio" name="%4$s" id="%5$s" value="%5$s" %6$s /></label>',
+			esc_attr( $data['label'] ),
 			esc_attr( $class ),
 			esc_url( $data['img'] ),
 			esc_attr( $args['name'] ),

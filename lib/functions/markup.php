@@ -18,7 +18,7 @@ function bizznis_parse_attr( $context, $attributes = array() ) {
 	# Custom attributes
     $attributes = wp_parse_args( $attributes, $defaults );
     # Return contextual filter
-    return apply_filters( 'bizznis_attr_' . $context, $attributes, $context );
+    return apply_filters( "bizznis_attr_{$context}", $attributes, $context );
 }
 
 /**
@@ -43,7 +43,7 @@ function bizznis_attr( $context, $attributes = array() ) {
 		}
         $output .= sprintf( '%s="%s" ', esc_html( $key ), esc_attr( $value ) );
     }
-    $output = apply_filters( 'bizznis_attr_' . $context . '_output', $output, $attributes, $context );
+    $output = apply_filters( "bizznis_attr_{$context}_output", $output, $attributes, $context );
 	# Return all atrubutes
     return trim( $output );
 }
@@ -176,12 +176,11 @@ function bizznis_attributes_content( $attributes ) {
  */
 add_filter( 'bizznis_attr_entry', 'bizznis_attributes_entry' );
 function bizznis_attributes_entry( $attributes ) {
-	global $post;
 	$attributes['class']     	= join( ' ', get_post_class() );
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/CreativeWork';
 	# Blog posts microdata
-	if ( 'post' == $post->post_type ) {
+	if ( 'post' == get_post_type() ) {
 		$attributes['itemtype']  	= 'http://schema.org/BlogPosting';
 		# If main query,
 		if ( is_main_query() )
@@ -197,7 +196,7 @@ function bizznis_attributes_entry( $attributes ) {
  */
 add_filter( 'bizznis_attr_entry-image', 'bizznis_attributes_entry_image' );
 function bizznis_attributes_entry_image( $attributes ) {
-	$attributes['class']    	= 'alignleft post-image entry-image';
+	$attributes['class']    	= bizznis_get_option( 'image_alignment' ) . ' post-image entry-image';
 	$attributes['itemprop'] 	= 'image';
 	return $attributes;
 }
@@ -209,7 +208,7 @@ function bizznis_attributes_entry_image( $attributes ) {
  */
 add_filter( 'bizznis_attr_entry-image-widget', 'bizznis_attributes_entry_image_widget' );
 function bizznis_attributes_entry_image_widget( $attributes ) {
-	global $post;
+	$attributes['class']    	= 'entry-image attachment-' . get_post_type();
 	$attributes['itemprop'] 	= 'image';
 	return $attributes;
 }
@@ -271,6 +270,22 @@ function bizznis_attributes_entry_time( $attributes ) {
 	$attributes['itemprop'] 	= 'datePublished';
 	$attributes['datetime'] 	= get_the_time( 'c' );
 	return $attributes;
+}
+
+/**
+ * Add attributes for modified time element for an entry.
+ *
+ * @since 1.1.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_entry-modified-time', 'bizznis_attributes_entry_modified_time' );
+function bizznis_attributes_entry_modified_time( $attributes ) {
+	$attributes['itemprop'] = 'dateModified';
+	$attributes['datetime'] = get_the_modified_time( 'c' );
+	return $attributes;
+
 }
 
 /**
@@ -341,9 +356,67 @@ function bizznis_attributes_comment( $attributes ) {
  */
 add_filter( 'bizznis_attr_comment-author', 'bizznis_attributes_comment_author' );
 function bizznis_attributes_comment_author( $attributes ) {
-	$attributes['itemprop']  	= 'creator';
-	$attributes['itemscope'] 	= 'itemscope';
-	$attributes['itemtype']  	= 'http://schema.org/Person';
+	$attributes['itemprop']  = 'creator';
+	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemtype']  = 'http://schema.org/Person';
+	return $attributes;
+}
+
+/**
+ * Add attributes for comment author link element.
+ *
+ * @since 1.1.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_comment-author-link', 'bizznis_attributes_comment_author_link' );
+function bizznis_attributes_comment_author_link( $attributes ) {
+	$attributes['rel']      = 'external nofollow';
+	$attributes['itemprop'] = 'url';
+	return $attributes;
+}
+
+/**
+ * Add attributes for comment time element.
+ *
+ * @since 1.1.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_comment-time', 'bizznis_attributes_comment_time' );
+function bizznis_attributes_comment_time( $attributes ) {
+	$attributes['datetime'] = esc_attr( get_comment_time( 'c' ) );
+	$attributes['itemprop'] = 'commentTime';
+	return $attributes;
+}
+
+/**
+ * Add attributes for comment time link element.
+ *
+ * @since 1.1.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_comment-time-link', 'bizznis_attributes_comment_time_link' );
+function bizznis_attributes_comment_time_link( $attributes ) {
+	$attributes['itemprop'] = 'url';
+	return $attributes;
+}
+
+/**
+ * Add attributes for comment content container.
+ *
+ * @since 1.1.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_comment-content', 'bizznis_attributes_comment_content' );
+function bizznis_attributes_comment_content( $attributes ) {
+	$attributes['itemprop'] = 'commentText';
 	return $attributes;
 }
 

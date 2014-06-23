@@ -10,12 +10,11 @@
  *
  * @since 1.0.0
  */
-function bizznis_get_image_id( $index = 0 ) {
-	global $post;
+function bizznis_get_image_id( $index = 0, $post_id = null ) {
 	$image_ids = array_keys(
 		get_children(
 			array(
-				'post_parent'    => $post->ID,
+				'post_parent'    => $post_id ? $post_id : get_the_ID(),
 				'post_type'	     => 'attachment',
 				'post_mime_type' => 'image',
 				'orderby'        => 'menu_order',
@@ -35,31 +34,36 @@ function bizznis_get_image_id( $index = 0 ) {
  * @since 1.0.0
  */
 function bizznis_get_image( $args = array() ) {
-	global $post;
-	$defaults = apply_filters( 'bizznis_get_image_default_args', array(
+	$defaults = array(
+		'post_id'  => null,
 		'format'   => 'html',
 		'size'     => 'full',
 		'num'      => 0,
 		'attr'     => '',
 		'fallback' => 'first-attached',
 		'context'  => '',
-	) );
+	);
+	/**
+	 * A filter on the default parameters used by `bizznis_get_image()`.
+	 *
+	 * @since unknown
+	 */
+	$defaults = apply_filters( 'bizznis_get_image_default_args', $defaults, $args );
 	$args = wp_parse_args( $args, $defaults );
 	# Allow child theme to short-circuit this function
-	$pre = apply_filters( 'bizznis_pre_get_image', false, $args, $post );
+	$pre = apply_filters( 'bizznis_pre_get_image', false, $args, get_post() );
 	if ( false !== $pre ) {
 		return $pre;
 	}
 	# Check for post image (native WP)
 	if ( has_post_thumbnail() && ( 0 === $args['num'] ) ) {
-		$id = get_post_thumbnail_id();
-		// $html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
-		$html = get_the_post_thumbnail( $post->ID, $args['size'], $args['attr'] );
+		$id = get_post_thumbnail_id( $args['post_id'] );
+		$html = get_the_post_thumbnail( $args['post_id'], $args['size'], $args['attr'] );
 		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
 	}
 	# Else if first-attached, pull the first (default) image attachment
 	elseif ( 'first-attached' == $args['fallback'] ) {
-		$id = bizznis_get_image_id( $args['num'] );
+		$id = bizznis_get_image_id( $args['num'], $args['post_id'] );
 		$html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
 		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
 	}
@@ -150,4 +154,12 @@ function bizznis_get_image_sizes() {
 	);
 	$additional_sizes = bizznis_get_additional_image_sizes();
 	return array_merge( $builtin_sizes, $additional_sizes );
+}
+
+function bizznis_get_image_sizes_for_customizer() {
+	$sizes = array();
+	foreach ( (array) bizznis_get_image_sizes() as $name => $size ) {
+		$sizes[ $name ] = $name . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')';
+	}
+	return $sizes;
 }

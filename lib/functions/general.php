@@ -134,10 +134,7 @@ function bizznis_is_menu_page( $pagehook = '' ) {
  */
 function bizznis_is_customizer() {
 	global $wp_customize;
-	if ( isset( $wp_customize ) ) {
-		return true;
-	}
-	return false;
+	return is_a( $wp_customize, 'WP_Customize_Manager' ) && $wp_customize->is_preview(); 
 }
 
 /**
@@ -147,8 +144,7 @@ function bizznis_is_customizer() {
  */
 function bizznis_get_global_post_type_name( $post_type_name = '' ) {
 	if ( ! $post_type_name ) {
-		global $wp_query;
-		$post_type_name = get_post_type( $wp_query->get_queried_object_id() );
+		$post_type_name = get_post_type();
 	}
 	return $post_type_name;
 }
@@ -165,6 +161,5 @@ function bizznis_plugin_install_link( $plugin_slug = '', $text = '' ) {
 	else {
 		$url = admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
 	}
-	$title_text = sprintf( __( 'Install %s', 'bizznis' ), $text );
-	return sprintf( '<a href="%s" class="thickbox" title="%s">%s</a>', esc_url( $url ), esc_attr( $title_text ), esc_html( $text ) );
+	return sprintf( '<a href="%s" class="thickbox">%s</a>', esc_url( $url ), esc_html( $text ) );
 }
