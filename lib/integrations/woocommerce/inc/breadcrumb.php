@@ -107,7 +107,6 @@ add_filter( 'bizznis_single_crumb', 'bizznis_wc_get_single_crumb', 10, 2 );
 function bizznis_wc_get_single_crumb( $crumb, $args ) {
 	# Are we on a single product page?
 	if ( is_singular( 'product' ) ) {
-		global $post;
 		$crumb = '';
 		$prepend = '';
 		# Should we prepend crumb with 'shop' page link?
@@ -119,7 +118,7 @@ function bizznis_wc_get_single_crumb( $crumb, $args ) {
 			$prepend = bizznis_wc_get_crumb_link( get_permalink( $shop_id ), $shop_title, $shop_title, $args['sep'] );
 		}
 		$crumb .= $prepend;
-		if ( $terms = wp_get_object_terms( $post->ID, 'product_cat' ) ) {
+		if ( $terms = wp_get_object_terms( get_the_ID(), 'product_cat' ) ) {
 			$term = current( $terms );
 			$parents = array();
 			$parent = $term->parent;

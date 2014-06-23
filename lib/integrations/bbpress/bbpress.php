@@ -13,7 +13,7 @@
 class Bizznis_BBP {
 	
 	/**
-	 * Fires up constants, WP supported functions and translation strings
+	 * Fires up WP supported functions and translation strings
 	 *
 	 * @since 1.0.0
 	 */
@@ -21,10 +21,8 @@ class Bizznis_BBP {
 		# Stop here, if plugin is not activated
 		if ( ! in_array( 'bbpress/bbpress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) return;
 		# load them all
-		$this->bbp_register_sidebar();
 		$this->bbp_post_actions();
 		$this->bbp_forum_layout();
-		$this->constants();
 		$this->theme_support();
 		$this->post_type_support();
 	}
@@ -41,53 +39,6 @@ class Bizznis_BBP {
 		if ( ! current_theme_supports( 'bizznis-bbpress' ) ) {
 			return;
 		}
-		# Environment is OK, let's go!
-		load_template( BIZZNIS_BBP_INC_DIR . '/settings.php' );
-	}
-	
-	/**
-	 * Register forum specific sidebar if enabled
-	 *
-	 * @since 1.0.0
-	 */
-	public function bbp_register_sidebar() {
-		# Register sidebar if option checked
-		if ( bizznis_get_option( 'bizznis_bbp_sidebar' ) ) {
-			bizznis_register_sidebar( array( 
-				'id'          => 'sidebar-bbpress', 
-				'name'        => __( 'Forums Sidebar', 'bizznis' ), 
-				'description' => __( 'This is the primary sidebar used on all bbPress pages.', 'bizznis' )
-				) 
-			);
-		}
-		# Replace the primary sidebar
-		add_action( 'bizznis_before', array( $this, 'check_bbp_sidebar' ) );
-	}
-	
-	/**
-	 * Setup bbPress specific sidebar on bbPress pages if enabled
-	 *
-	 * @since 1.0.0
-	 */
-	public function check_bbp_sidebar() {
-		if ( is_bbpress() && bizznis_get_option( 'bizznis_bbp_sidebar' ) ) {
-			# Remove the default Bizznis sidebar
-			remove_action( 'bizznis_sidebar', 'bizznis_do_sidebar' );
-			# Load up the bbPress sidebar
-			add_action( 'bizznis_sidebar', array( $this, 'load_bbp_sidebar' ) );
-		}
-	}
-
-	/**
-	 * Loads text instructions when bbPress specific sidebar is empty
-	 *
-	 * @since 1.0.0
-	 */
-	public function load_bbp_sidebar() {
-		# Throw up placeholder content if the sidebar is active but empty
-		if ( ! dynamic_sidebar( 'sidebar-bbpress' ) && current_user_can( 'edit_theme_options' )  ) {
-			bizznis_default_widget_area_content( __( 'bbPress Sidebar Widget Area', 'bizznis' ) );
-		}
 	}
 	
 	/**
@@ -96,11 +47,6 @@ class Bizznis_BBP {
 	 * @since 1.0.0
 	 */
 	public function bbp_post_actions() {
-		# Remove forum/topic descriptions
-		if ( bizznis_get_option( 'bizznis_bbp_desc' ) ) {
-			add_filter( 'bbp_get_single_forum_description', '__return_false' );
-			add_filter( 'bbp_get_single_topic_description', '__return_false' );
-		}
 		# Manipulate with bizznis hooks
 		add_action( 'bizznis_before', array( $this, 'bizznis_post_actions' ) );
 	}
@@ -159,43 +105,36 @@ class Bizznis_BBP {
 	 *
 	 * @since 1.0.0
 	 */
-	public function bbp_select_layout( $layout ) {
+	public function bbp_select_layout() {
 		# Stop here, if not on a bbpress template
 		if ( ! is_bbpress() ) {
-			return $layout;
+			return bizznis_get_default_layout();
 		}
-		# Set some defaults
-		$forum_id = bbp_get_forum_id();
 		# For some reason, if we use the cached version, weird things seem to happen.
-		$retval   = bizznis_get_option( 'site_layout', null, false ); 
+		$retval   = bizznis_get_default_layout();
 		$parent   = false;
+		# Check and see if a layout has been set for the parent topic
+		$topic_id = bbp_get_topic_id();
+		if ( ! empty( $forum_id ) ) {
+			$parent = esc_attr( get_post_meta( $topic_id, '_bizznis_layout' , true ) );
+			if ( !empty( $parent ) ) {
+				return apply_filters( 'bizznis_bbp_layout', $parent );
+			}
+		}
 		# Check and see if a layout has been set for the parent forum
-		if ( !empty( $forum_id ) ) {
+		$forum_id = bbp_get_forum_id();
+		if ( ! empty( $forum_id ) ) {
 			$parent = esc_attr( get_post_meta( $forum_id, '_bizznis_layout' , true ) );
 			if ( !empty( $parent ) ) {
 				return apply_filters( 'bizznis_bbp_layout', $parent );
 			}
 		}
-		# Second, see if a layout has been defined in the bbPress Bizznis settings
+		# Check if a layout has been defined in the bbPress Bizznis settings
 		if ( empty( $parent ) || ( bizznis_get_option( 'bizznis_bbp_layout' ) !== 'bizznis-default' ) ) {
 			$retval = bizznis_get_option( 'bizznis_bbp_layout' );
 		}
 		# Filter the return value
-		return apply_filters( 'bizznis_bbp_layout', $retval, $forum_id, $parent );
-	}
-	
-	/**
-	 * Defines theme constants throughout the template
-	 *
-	 * @since 1.0.0
-	 */
-	private function constants() {
-		# Directory Locations
-		define( 'BIZZNIS_BBP_INC_DIR', 			BIZZNIS_INT_BBP_DIR . 	'/inc' );
-		define( 'BIZZNIS_BBP_TEMPLATES_DIR', 	BIZZNIS_INT_BBP_DIR . 	'/templates' );
-		# URL Locations
-		define( 'BIZZNIS_BBP_INC_URL', 			BIZZNIS_INT_BBP_URL . 	'/inc' );
-		define( 'BIZZNIS_BBP_TEMPLATES_URL', 	BIZZNIS_INT_BBP_URL . 	'/templates' );
+		return apply_filters( 'bizznis_bbp_layout', $retval, $parent );
 	}
 	
 	/**

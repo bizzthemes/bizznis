@@ -21,7 +21,6 @@ class Bizznis_WC {
 		# Stop here, if plugin is not activated
 		if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) return;
 		# load them all
-		$this->wc_register_sidebar();
 		$this->constants();
 		$this->theme_support();
 		$this->post_type_support();
@@ -51,55 +50,9 @@ class Bizznis_WC {
 			load_template( BIZZNIS_WC_INC_DIR . '/breadcrumb.php' );
 		}
 		load_template( BIZZNIS_WC_INC_DIR . '/template-loader.php' );
-		load_template( BIZZNIS_WC_INC_DIR . '/settings.php' );
 		# Take control of shop template loading
 		remove_filter( 'template_include', array( &$woocommerce, 'template_loader' ) );
 		add_filter( 'template_include', 'bizznis_wc_template_loader', 20 );
-	}
-	
-	/**
-	 * Register forum specific sidebar if enabled
-	 *
-	 * @since 1.0.0
-	 */
-	public function wc_register_sidebar() {
-		# Register sidebar if option checked
-		if ( bizznis_get_option( 'bizznis_wc_sidebar' ) ) {
-			bizznis_register_sidebar( array( 
-				'id'          => 'sidebar-woocommerce', 
-				'name'        => __( 'Shop Sidebar', 'bizznis' ), 
-				'description' => __( 'This is the primary sidebar used on all WooCommerce shop pages.', 'bizznis' )
-				) 
-			);
-		}
-		# Replace the primary sidebar
-		add_action( 'bizznis_before', array( $this, 'check_wc_sidebar' ) );
-	}
-	
-	/**
-	 * Setup shop specific sidebar on bbPress pages if enabled
-	 *
-	 * @since 1.0.0
-	 */
-	public function check_wc_sidebar() {
-		if ( is_woocommerce() && bizznis_get_option( 'bizznis_wc_sidebar' ) ) {
-			# Remove the default Bizznis sidebar
-			remove_action( 'bizznis_sidebar', 'bizznis_do_sidebar' );
-			# Load up the WooCommerce sidebar
-			add_action( 'bizznis_sidebar', array( $this, 'load_wc_sidebar' ) );
-		}
-	}
-
-	/**
-	 * Loads text instructions when shop specific sidebar is empty
-	 *
-	 * @since 1.0.0
-	 */
-	public function load_wc_sidebar() {
-		// Throw up placeholder content if the sidebar is active but empty
-		if ( ! dynamic_sidebar( 'sidebar-woocommerce' ) && current_user_can( 'edit_theme_options' )  ) {
-			bizznis_default_widget_area_content( __( 'Shop Sidebar Widget Area', 'bizznis' ) );
-		}
 	}
 	
 	/**
