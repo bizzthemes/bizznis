@@ -5,34 +5,46 @@
 	Please do all modifications in the form of a child theme.
 */
 
+add_filter( 'wp_title', 'bizznis_doctitle_wrap', 20 );
 /**
  * Wraps the page title in a 'title' element.
  *
  * @since 1.0.0
  */
-add_filter( 'wp_title', 'bizznis_doctitle_wrap', 20 );
+if ( ! function_exists( 'bizznis_doctitle_wrap' ) ) :
 function bizznis_doctitle_wrap( $title ) {
 	# Only applies, if not currently in admin, or for a feed.
+	remove_filter( 'wp_title', 'bizznis_doctitle_wrap', 20 );
 	return is_feed() || is_admin() ? $title : sprintf( "<title>%s</title>\n", $title );
 }
+endif;
 
+add_action( 'wp_head', 'wp_title', 1 );
+add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
 /**
  * Return filtered post title.
  *
  * @since 1.0.0
  */
-add_action( 'wp_head', 'wp_title', 1 );
-add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
+if ( ! function_exists( 'bizznis_default_title' ) ) :
 function bizznis_default_title( $title, $sep, $seplocation ) {
+	if ( is_front_page() ) {
+		#* Determine the doctitle
+		$title = get_bloginfo( 'name' );
+		#* Append site description, if necessary
+		$title = $title . " - " . get_bloginfo( 'description' );
+	}
 	return esc_html( trim( $title ) );
 }
+endif;
 
+add_action( 'wp_head', 'bizznis_responsive_viewport', 1 );
 /**
  * Optionally output the responsive CSS viewport tag.
  *
  * @since 1.0.0
  */
-add_action( 'wp_head', 'bizznis_responsive_viewport', 1 );
+if ( ! function_exists( 'bizznis_responsive_viewport' ) ) :
 function bizznis_responsive_viewport() {
 	# Child theme needs to support 'bizznis-responsive-viewport'.
 	if ( ! current_theme_supports( 'bizznis-responsive-viewport' ) ) {
@@ -40,13 +52,15 @@ function bizznis_responsive_viewport() {
 	}
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1" />' . "\n";
 }
+endif;
 
+add_action( 'wp_head', 'bizznis_load_favicon' );
 /**
  * Echo favicon link if one is found.
  *
  * @since 1.0.0
  */
-add_action( 'wp_head', 'bizznis_load_favicon' );
+if ( ! function_exists( 'bizznis_load_favicon' ) ) :
 function bizznis_load_favicon( $favicon = '' ) {
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( 'bizznis_pre_load_favicon', false );
@@ -71,25 +85,29 @@ function bizznis_load_favicon( $favicon = '' ) {
 		echo '<link rel="Shortcut Icon" href="' . esc_url( $favicon ) . '" type="image/x-icon" />' . "\n";
 	}
 }
+endif;
 
+add_action( 'wp_head', 'bizznis_do_meta_pingback' );
 /**
  * Adds the pingback meta tag to the head so that other sites can know how to send a pingback to our site.
  *
  * @since 1.0.0
  */
-add_action( 'wp_head', 'bizznis_do_meta_pingback' );
+if ( ! function_exists( 'bizznis_do_meta_pingback' ) ) :
 function bizznis_do_meta_pingback() {
 	echo '<link rel="pingback" href="' . get_bloginfo( 'pingback_url' ) . '" />' . "\n";
 }
+endif;
 
+add_action( 'wp_head', 'bizznis_rel_author' );
 /**
  * Echo custom rel="author" link tag.
  *
  * @since 1.0.0
  */
-add_action( 'wp_head', 'bizznis_rel_author' );
+if ( ! function_exists( 'bizznis_rel_author' ) ) :
 function bizznis_rel_author() {
-	global $post;
+	$post = get_post();
 	# If the appropriate information has been entered for an individual post/page
 	if ( is_singular() && post_type_supports( $post->post_type, 'bizznis-rel-author' ) && isset( $post->post_author ) && $gplus_url = get_user_option( 'googleplus', $post->post_author ) ) {
 		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
@@ -101,14 +119,16 @@ function bizznis_rel_author() {
 		return;
 	}
 }
+endif;
 
+add_filter( 'bizznis_header_scripts', 'do_shortcode' );
+add_action( 'wp_head', 'bizznis_header_scripts' );
 /**
  * Echo header scripts in to wp_head().
  *
  * @since 1.0.0
  */
-add_filter( 'bizznis_header_scripts', 'do_shortcode' );
-add_action( 'wp_head', 'bizznis_header_scripts' );
+if ( ! function_exists( 'bizznis_header_scripts' ) ) :
 function bizznis_header_scripts() {
 	# Applies 'bizznis_header_scripts' filter on value stored in header_scripts setting.
 	echo apply_filters( 'bizznis_header_scripts', bizznis_get_option( 'header_scripts' ) );
@@ -117,13 +137,15 @@ function bizznis_header_scripts() {
 		bizznis_custom_field( '_bizznis_scripts' );
 	}
 }
+endif;
 
+add_action( 'after_setup_theme', 'bizznis_custom_header' );
 /**
  * Activate the custom header feature.
  *
  * @since 1.0.0
  */
-add_action( 'after_setup_theme', 'bizznis_custom_header' );
+if ( ! function_exists( 'bizznis_custom_header' ) ) :
 function bizznis_custom_header() {
 	$wp_custom_header = get_theme_support( 'custom-header' );
 	# Stop here if not active (Bizznis of WP custom header)
@@ -132,18 +154,16 @@ function bizznis_custom_header() {
 	}
 	# Blog title option is obsolete when custom header is active
 	add_filter( 'bizznis_pre_get_option_blog_title', '__return_empty_array' );
-	# Stop here if WP custom header is active
-	if ( $wp_custom_header ) {
-		return;
-	}
 }
+endif;
 
+add_action( 'wp_head', 'bizznis_custom_header_style' );
 /**
  * Custom header callback.
  *
  * @since 1.0.0
  */
-add_action( 'wp_head', 'bizznis_custom_header_style' );
+if ( ! function_exists( 'bizznis_custom_header_style' ) ) :
 function bizznis_custom_header_style() {
 	# Stop here if custom header not supported
 	if ( ! current_theme_supports( 'custom-header' ) ) {
@@ -181,16 +201,22 @@ function bizznis_custom_header_style() {
 		printf( '<style type="text/css">%s</style>' . "\n", $output );
 	}
 }
+endif;
 
+add_action( 'bizznis_site_title', 'bizznis_site_title' );
 /**
  * Echo the site title into the header.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_site_title', 'bizznis_site_title' );
+if ( ! function_exists( 'bizznis_site_title' ) ) :
 function bizznis_site_title() {
+	# Stop here if title is hiden
+	if ( bizznis_get_option( 'hide_site_title' ) ) {
+		return;
+	}
 	# Set what goes inside the wrapping tags
-	$inside = sprintf( '<a href="%s" title="%s">%s</a>', trailingslashit( home_url() ), esc_attr( get_bloginfo( 'name' ) ), get_bloginfo( 'name' ) );
+	$inside = sprintf( '<a href="%s">%s</a>', trailingslashit( home_url() ), get_bloginfo( 'name' ) );
 	# Determine which wrapping tags to use
 	$wrap = is_home() ? 'h1' : 'p';
 	$wrap = apply_filters( 'bizznis_semantic_title_wrap', $wrap );
@@ -199,14 +225,20 @@ function bizznis_site_title() {
 	# Echo (filtered)
 	echo apply_filters( 'bizznis_seo_title', $title, $inside, $wrap );
 }
+endif;
 
+add_action( 'bizznis_site_title', 'bizznis_site_description' );
 /**
  * Echo the site description into the header.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_site_title', 'bizznis_site_description' );
+if ( ! function_exists( 'bizznis_site_description' ) ) :
 function bizznis_site_description() {
+	# Stop here if tagline is hiden
+	if ( bizznis_get_option( 'hide_tagline' ) ) {
+		return;
+	}
 	# Set what goes inside the wrapping tags
 	$inside = esc_html( get_bloginfo( 'description' ) );
 	# Determine which wrapping tags to use
@@ -217,7 +249,9 @@ function bizznis_site_description() {
 	$output = $inside ? apply_filters( 'bizznis_seo_description', $description, $inside, $wrap ) : '';
 	echo $output;
 }
+endif;
 
+// add_filter( 'bizznis_show_header_content', 'bizznis_hide_header_content' );
 /**
  * Hide header content on all pages except homepage
  *
@@ -225,10 +259,11 @@ function bizznis_site_description() {
  *
  * @since 1.0.0
  */
-// add_filter( 'bizznis_show_header_content', 'bizznis_hide_header_content' );
+if ( ! function_exists( 'bizznis_hide_header_content' ) ) :
 function bizznis_hide_header_content() {
 	# hide header content on all pages except homepage and when primary menu location is not active
 	if ( is_home() || is_front_page() || ! has_nav_menu( 'primary' ) ) {
 		return true;
 	}
 }
+endif;

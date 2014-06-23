@@ -12,18 +12,21 @@
  *
  * @since 1.0.0
  */
+if ( ! function_exists( 'bizznis' ) ) :
 function bizznis() {
 	get_header();
 	do_action( 'bizznis_main' );
 	get_footer();
 }
+endif;
 
+add_action( 'bizznis_header', 'bizznis_do_header' );
 /**
  * Echo the header structure
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_header', 'bizznis_do_header' );
+if ( ! function_exists( 'bizznis_do_header' ) ) :
 function bizznis_do_header() {
 	global $wp_registered_sidebars;
 	do_action( 'bizznis_before_header' );
@@ -54,13 +57,15 @@ function bizznis_do_header() {
 	echo '</header>'; #end .site-header
 	do_action( 'bizznis_after_header' );
 }
+endif;
 
+add_action( 'bizznis_main', 'bizznis_do_main' );
 /**
  * Echo the main structure
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_main', 'bizznis_do_main' );
+if ( ! function_exists( 'bizznis_do_main' ) ) :
 function bizznis_do_main() {
 	do_action( 'bizznis_before_content_sidebar_wrap' );
 	printf( '<div %s>', bizznis_attr( 'content-sidebar-wrap' ) );
@@ -72,13 +77,15 @@ function bizznis_do_main() {
 	echo '</div>'; #end .main-content-sidebar
 	do_action( 'bizznis_after_content_sidebar_wrap' );
 }
+endif;
 
+add_action( 'bizznis_footer', 'bizznis_do_footer' );
 /**
  * Echo the footer structure.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_footer', 'bizznis_do_footer' );
+if ( ! function_exists( 'bizznis_do_footer' ) ) :
 function bizznis_do_footer() {
 	global $wp_registered_sidebars;
 	do_action( 'bizznis_before_footer' );
@@ -91,3 +98,4 @@ function bizznis_do_footer() {
 	echo '</footer>'; #end .site-footer
 	do_action( 'bizznis_after_footer' );
 }
+endif;

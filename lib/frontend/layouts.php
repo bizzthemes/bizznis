@@ -5,12 +5,13 @@
 	Please do all modifications in the form of a child theme.
 */
 
+add_action( 'bizznis_init', 'bizznis_create_initial_layouts', 0 );
 /**
  * Register Bizznis default layouts.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_init', 'bizznis_create_initial_layouts', 0 );
+if ( ! function_exists( 'bizznis_create_initial_layouts' ) ) :
 function bizznis_create_initial_layouts() {
 	# Common path to default layout images
 	$url = BIZZNIS_ADMIN_IMAGES_URL . '/layouts/';
@@ -18,11 +19,12 @@ function bizznis_create_initial_layouts() {
 		'content-sidebar' => array(
 			'label'   => __( 'Content-Sidebar', 'bizznis' ),
 			'img'     => $url . 'cs.png',
-			'default' => true,
+			'default' => is_rtl() ? false : true,
 		),
 		'sidebar-content' => array(
 			'label' => __( 'Sidebar-Content', 'bizznis' ),
 			'img'   => $url . 'sc.png',
+			'default' => is_rtl() ? true : false,
 		),
 		'content-sidebar-sidebar' => array(
 			'label' => __( 'Content-Sidebar-Sidebar', 'bizznis' ),
@@ -45,13 +47,15 @@ function bizznis_create_initial_layouts() {
 		bizznis_register_layout( $layout_id, $layout_args );
 	}
 }
+endif;
 
+add_action( 'bizznis_after_content', 'bizznis_get_sidebar' );
 /**
  * Output the sidebar.php file if layout allows for it.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_after_content', 'bizznis_get_sidebar' );
+if ( ! function_exists( 'bizznis_get_sidebar' ) ) :
 function bizznis_get_sidebar() {
 	$site_layout = bizznis_site_layout();
 	# Don't load sidebar on pages that don't need it
@@ -60,13 +64,15 @@ function bizznis_get_sidebar() {
 	}
 	get_sidebar();
 }
+endif;
 
+add_action( 'bizznis_after_content_sidebar_wrap', 'bizznis_get_sidebar_alt', 15 );
 /**
  * Output the sidebar_alt.php file if layout allows for it.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_after_content_sidebar_wrap', 'bizznis_get_sidebar_alt', 15 );
+if ( ! function_exists( 'bizznis_get_sidebar_alt' ) ) :
 function bizznis_get_sidebar_alt() {
 	$site_layout = bizznis_site_layout();
 	# Don't load sidebar-alt on pages that don't need it
@@ -75,13 +81,15 @@ function bizznis_get_sidebar_alt() {
 	}
 	get_sidebar( 'alt' );
 }
+endif;
 
+add_filter( 'body_class', 'bizznis_custom_body_class', 15 );
 /**
  * Add custom field body class(es) to the body classes.
  *
  * @since 1.0.0
  */
-add_filter( 'body_class', 'bizznis_custom_body_class', 15 );
+if ( ! function_exists( 'bizznis_custom_body_class' ) ) :
 function bizznis_custom_body_class( array $classes ) {
 	# It accepts values from a per-post or per-page custom field, and only outputs when viewing a singular page.
 	$new_class = is_singular() ? bizznis_get_custom_field( '_bizznis_custom_body_class' ) : null;
@@ -90,13 +98,15 @@ function bizznis_custom_body_class( array $classes ) {
 	}
 	return $classes;
 }
+endif;
 
+add_filter( 'body_class', 'bizznis_header_body_classes' );
 /**
  * Add header-* classes to the body class. We can use pseudo-variables in our CSS file, which helps us achieve multiple header layouts with minimal code.
  *
  * @since 1.0.0
  */
-add_filter( 'body_class', 'bizznis_header_body_classes' );
+if ( ! function_exists( 'bizznis_header_body_classes' ) ) :
 function bizznis_header_body_classes( array $classes ) {
 	if ( current_theme_supports( 'custom-header' ) ) {
 		if ( get_theme_support( 'custom-header', 'default-text-color' ) != get_header_textcolor() || get_theme_support( 'custom-header', 'default-image' ) != get_header_image() ) {
@@ -111,13 +121,15 @@ function bizznis_header_body_classes( array $classes ) {
 	}
 	return $classes;
 }
+endif;
 
+add_filter( 'body_class', 'bizznis_background_body_classes' );
 /**
  * Add background-* classes to the body class. We can use pseudo-variables in our CSS file, which helps us achieve multiple background layouts with minimal code.
  *
  * @since 1.0.0
  */
-add_filter( 'body_class', 'bizznis_background_body_classes' );
+if ( ! function_exists( 'bizznis_background_body_classes' ) ) :
 function bizznis_background_body_classes( array $classes ) {
 	if ( current_theme_supports( 'custom-background' ) ) {
 		if ( get_theme_mod( 'background_color' ) || get_background_image() ) {
@@ -126,13 +138,15 @@ function bizznis_background_body_classes( array $classes ) {
 	}
 	return $classes;
 }
+endif;
 
+add_filter( 'body_class', 'bizznis_layout_body_classes' );
 /**
  * Add site layout classes to the body classes. We can use pseudo-variables in our CSS file, which helps us achieve multiple site layouts with minimal code.
  *
  * @since 1.0.0
  */
-add_filter( 'body_class', 'bizznis_layout_body_classes' );
+if ( ! function_exists( 'bizznis_layout_body_classes' ) ) :
 function bizznis_layout_body_classes( array $classes ) {
 	$site_layout = bizznis_site_layout();
 	if ( $site_layout ) {
@@ -140,7 +154,9 @@ function bizznis_layout_body_classes( array $classes ) {
 	}
 	return $classes;
 }
+endif;
 
+add_filter( 'body_class', 'bizznis_style_selector_body_classes' );
 /**
  * Add style selector classes to the body classes.
  *
@@ -148,7 +164,7 @@ function bizznis_layout_body_classes( array $classes ) {
  *
  * @since 1.0.0
  */
-add_filter( 'body_class', 'bizznis_style_selector_body_classes' );
+if ( ! function_exists( 'bizznis_style_selector_body_classes' ) ) :
 function bizznis_style_selector_body_classes( array $classes ) {
 	$current = bizznis_get_option( 'style_selection' );
 	if ( $current ) {
@@ -156,13 +172,15 @@ function bizznis_style_selector_body_classes( array $classes ) {
 	}
 	return $classes;
 }
+endif;
 
+add_filter( 'content_width', 'bizznis_content_width', 10, 3 );
 /**
  * Filter the content width based on the user selected layout.
  *
  * @since 1.0.0
  */
-add_filter( 'content_width', 'bizznis_content_width', 10, 3 );
+if ( ! function_exists( 'bizznis_content_width' ) ) :
 function bizznis_content_width( $default, $small, $large ) {
 	switch ( bizznis_site_layout( 0 ) ) {
 		case 'full-width-content':
@@ -178,6 +196,7 @@ function bizznis_content_width( $default, $small, $large ) {
 	}
 	return $width;
 }
+endif;
 
 /**
  * Remove Gallery Inline Styling, generated by WordPress

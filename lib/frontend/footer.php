@@ -5,12 +5,13 @@
 	Please do all modifications in the form of a child theme.
 */
 
+add_action( 'bizznis_footer_top', 'bizznis_footer_widget_areas', 5 );
 /**
  * Echo the markup necessary to facilitate the footer widget areas.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_footer_top', 'bizznis_footer_widget_areas', 5 );
+if ( ! function_exists( 'bizznis_footer_widget_areas' ) ) :
 function bizznis_footer_widget_areas() {
 	$footer_widgets = get_theme_support( 'bizznis-footer-widgets' );
 	if ( ! $footer_widgets || ! isset( $footer_widgets[0] ) || ! is_numeric( $footer_widgets[0] ) ) {
@@ -41,14 +42,16 @@ function bizznis_footer_widget_areas() {
 	}
 	echo apply_filters( 'bizznis_footer_widget_areas', $output, $footer_widgets );
 }
+endif;
 
+add_filter( 'bizznis_footer_output', 'do_shortcode', 20 );
+add_action( 'bizznis_footer_inner', 'bizznis_footer_credits' );
 /**
  * Echo the markup necessary to facilitate the footer credits.
  *
  * @since 1.0.0
  */
-add_filter( 'bizznis_footer_output', 'do_shortcode', 20 );
-add_action( 'bizznis_footer_inner', 'bizznis_footer_credits' );
+if ( ! function_exists( 'bizznis_footer_credits' ) ) :
 function bizznis_footer_credits() {
 	# Build the text strings. Includes shortcodes
 	$backtotop_text = '[footer_backtotop]';
@@ -63,14 +66,17 @@ function bizznis_footer_credits() {
 	$output .= '</div>';
 	echo apply_filters( 'bizznis_footer_output', $output, $backtotop_text, $creds_text );
 }
+endif;
 
+add_filter( 'bizznis_footer_scripts', 'do_shortcode' );
+add_action( 'wp_footer', 'bizznis_footer_scripts' );
 /**
  * Echo the footer scripts, defined in Theme Settings.
  *
  * @since 1.0.0
  */
-add_filter( 'bizznis_footer_scripts', 'do_shortcode' );
-add_action( 'wp_footer', 'bizznis_footer_scripts' );
+if ( ! function_exists( 'bizznis_footer_scripts' ) ) :
 function bizznis_footer_scripts() {
 	echo apply_filters( 'bizznis_footer_scripts', bizznis_option( 'footer_scripts' ) );
 }
+endif;

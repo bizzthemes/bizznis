@@ -5,13 +5,14 @@
 	Please do all modifications in the form of a child theme.
 */
 
+add_filter( 'bizznis_term_intro_text_output', 'wpautop' );
+add_action( 'bizznis_loop', 'bizznis_do_taxonomy_title_description', 5 );
 /**
  * Add custom headline and / or description to category / tag / taxonomy archive pages.
  *
  * @since 1.0.0
  */
-add_filter( 'bizznis_term_intro_text_output', 'wpautop' );
-add_action( 'bizznis_loop', 'bizznis_do_taxonomy_title_description', 5 );
+if ( ! function_exists( 'bizznis_do_taxonomy_title_description' ) ) :
 function bizznis_do_taxonomy_title_description() {
 	global $wp_query;
 	# Stop here if the page is not a category, tag or taxonomy term archive
@@ -38,14 +39,16 @@ function bizznis_do_taxonomy_title_description() {
 		printf( '<div class="archive-description taxonomy-description">%s</div>', $headline . $intro_text );
 	}
 }
+endif;
 
+add_filter( 'bizznis_author_intro_text_output', 'wpautop' );
+add_action( 'bizznis_loop', 'bizznis_do_author_title_description', 5 );
 /**
  * Add custom headline and description to author archive pages.
  *
  * @since 1.0.0
  */
-add_filter( 'bizznis_author_intro_text_output', 'wpautop' );
-add_action( 'bizznis_loop', 'bizznis_do_author_title_description', 5 );
+if ( ! function_exists( 'bizznis_do_author_title_description' ) ) :
 function bizznis_do_author_title_description() {	
 	# Stop here if we're not on an author archive page
 	if ( ! is_author() ) {
@@ -65,13 +68,15 @@ function bizznis_do_author_title_description() {
 		printf( '<div class="archive-description author-description">%s</div>', $headline . $intro_text );
 	}
 }
+endif;
 
+add_action( 'bizznis_loop', 'bizznis_do_author_box_archive', 5 );
 /**
  * Add author box to the top of author archive.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_loop', 'bizznis_do_author_box_archive', 5 );
+if ( ! function_exists( 'bizznis_do_author_box_archive' ) ) :
 function bizznis_do_author_box_archive() {
 	if ( ! is_author() || get_query_var( 'paged' ) >= 2 ) {
 		return;
@@ -80,3 +85,4 @@ function bizznis_do_author_box_archive() {
 		bizznis_author_box( 'archive' );
 	}
 }
+endif;

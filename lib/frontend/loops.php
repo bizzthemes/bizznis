@@ -5,12 +5,13 @@
 	Please do all modifications in the form of a child theme.
 */
 
+add_action( 'bizznis_loop', 'bizznis_do_loop' );
 /**
  * Attach a loop to the 'bizznis_loop' output hook so we can get some front-end output.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_loop', 'bizznis_do_loop' );
+if ( ! function_exists( 'bizznis_do_loop' ) ) :
 function bizznis_do_loop() {
 	global $wp_query, $more;
 	$args = apply_filters( 'bizznis_loop_args', wp_parse_args( bizznis_get_custom_field( 'query_args' ), array() ) ); # Filtered args in custom fields
@@ -22,6 +23,7 @@ function bizznis_do_loop() {
 	bizznis_loop_entry();
 	wp_reset_query();
 }
+endif;
 
 /**
  * Standard loop, meant to be executed without modification in most circumstances where 
@@ -29,8 +31,11 @@ function bizznis_do_loop() {
  *
  * @since 1.0.0
  */
+if ( ! function_exists( 'bizznis_loop_entry' ) ) :
 function bizznis_loop_entry() {
-	if ( have_posts() ) : while ( have_posts() ) : the_post();
+	if ( have_posts() ) :
+		do_action( 'bizznis_before_while' );
+		while ( have_posts() ) : the_post();
 			do_action( 'bizznis_before_entry' );
 			printf( '<article %s>', bizznis_attr( 'entry' ) );
 				do_action( 'bizznis_entry_header' );
@@ -46,6 +51,7 @@ function bizznis_loop_entry() {
 		do_action( 'bizznis_loop_else' );
 	endif; # end loop
 }
+endif;
 
 //* MARKUP for the GRID LOOP VIEW
 
@@ -54,6 +60,7 @@ function bizznis_loop_entry() {
  *
  * @since 1.0.0
  */
+if ( ! function_exists( 'bizznis_loop_grid' ) ) :
 function bizznis_loop_grid( $args = array() ) {
 	# Global vars
 	global $_bizznis_loop_args;
@@ -102,12 +109,14 @@ function bizznis_loop_grid( $args = array() ) {
 	remove_filter( 'post_class', 'bizznis_loop_grid_post_class' );
 	remove_action( 'bizznis_entry_content', 'bizznis_loop_grid_content' );
 }
+endif;
 
 /**
  * Filter the post classes to output custom classes for the feature and grid layout.
  *
  * @since 1.0.0
  */
+if ( ! function_exists( 'bizznis_loop_grid_post_class' ) ) :
 function bizznis_loop_grid_post_class( array $classes ) {
 	global $_bizznis_loop_args, $wp_query;
 	$grid_classes = array();
@@ -128,12 +137,14 @@ function bizznis_loop_grid_post_class( array $classes ) {
 	}
 	return array_merge( $classes, apply_filters( 'bizznis_loop_grid_post_class', $grid_classes ) );
 }
+endif;
 
 /**
  * Output specially formatted content, based on the grid loop args.
  *
  * @since 1.0.0
  */
+if ( ! function_exists( 'bizznis_loop_grid_content' ) ) :
 function bizznis_loop_grid_content() {
 	global $_bizznis_loop_args;
 	if ( in_array( 'bizznis-feature', get_post_class() ) ) {
@@ -171,15 +182,18 @@ function bizznis_loop_grid_content() {
 	}
 
 }
+endif;
 
+add_action( 'bizznis_after_entry', 'bizznis_add_id_to_global_exclude' );
 /**
  * Modify the global $_bizznis_displayed_ids each time a loop iterates.
  *
  * @since 1.0.0
  */
-add_action( 'bizznis_after_entry', 'bizznis_add_id_to_global_exclude' );
+if ( ! function_exists( 'bizznis_add_id_to_global_exclude' ) ) :
 function bizznis_add_id_to_global_exclude() {
 	global $_bizznis_displayed_ids;
 	# Add each ID to a global array, which can be used any time by other loops to prevent posts from being displayed twice on a page.
 	$_bizznis_displayed_ids[] = get_the_ID();
 }
+endif;

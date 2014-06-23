@@ -5,12 +5,13 @@
 	Please do all modifications in the form of a child theme.
 */
 
+add_filter( 'get_search_form', 'bizznis_search_form' );
 /**
  * Replace the default search form with a Bizznis-specific form.
  *
  * @since 1.0.0
  */
-add_filter( 'get_search_form', 'bizznis_search_form' );
+if ( ! function_exists( 'bizznis_search_form' ) ) :
 function bizznis_search_form() {
 	$search_text = get_search_query() ? esc_attr( apply_filters( 'the_search_query', get_search_query() ) ) : apply_filters( 'bizznis_search_text', __( 'Search this website', 'bizznis' ) . '&#x02026;' );
 	$button_text = apply_filters( 'bizznis_search_button_text', esc_attr__( 'Search', 'bizznis' ) );
@@ -22,3 +23,4 @@ function bizznis_search_form() {
 	$form = sprintf( '<form method="get" class="search-form" action="%s" role="search">%s<input type="search" name="s" %s="%s" /><input type="submit" value="%s" /></form>', home_url( '/' ), esc_html( $label ), $value_or_placeholder, esc_attr( $search_text ), esc_attr( $button_text ) );
 	return apply_filters( 'bizznis_search_form', $form, $search_text, $button_text, $label );
 }
+endif;
