@@ -6,33 +6,67 @@
 */
 
 /**
- * Expedites the widget area registration process by taking common things, before / after_widget, 
- * before / after_title and doing them automatically.
+ * Expedites the widget area registration process by taking common things, before / after_widget, before / after_title,
+ * and doing them automatically.
+ *
+ * See the WP function `register_sidebar()` for the list of supports $args keys.
  *
  * A typical usage is:
- * bizznis_register_sidebar(
- * 	   array(
- * 		   'id'          => 'my-sidebar',
- * 		   'name'        => __( 'My Sidebar', 'my-theme-text-domain' ),
- * 		   'description' => __( 'A description of the intended purpose or location', 'my-theme-text-domain' ),
+ *
+ * ~~~
+ * bizznis_register_widget_area(
+ *     array(
+ *         'id'          => 'my-sidebar',
+ *         'name'        => __( 'My Sidebar', 'my-theme-text-domain' ),
+ *         'description' => __( 'A description of the intended purpose or location', 'my-theme-text-domain' ),
  *     )
  * );
+ * ~~~
  *
- * @since 1.0.0
+ * @since 1.1.0
+ *
+ * @uses bizznis_markup() Contextual markup.
+ *
+ * @param string|array $args Name, ID, description and other widget area arguments.
+ *
+ * @return string The sidebar ID that was added.
  */
-function bizznis_register_sidebar( $args ) {
-	$defaults = (array) apply_filters(
-		'bizznis_register_sidebar_defaults',
-		array(
-			'before_widget' => '<section id="%1$s" class="widget %2$s"><div class="widget-wrap">',
-			'after_widget'  => '</div></section>',
-			'before_title'  => '<h4 class="widgettitle">',
-			'after_title'   => "</h4>\n",
-		),
-		$args
+function bizznis_register_widget_area( $args ) {
+	$defaults = array(
+		'before_widget' => '<section id="%1$s" class="widget %2$s"><div class="widget-wrap">',
+		'after_widget'  => '</div></section>',
+		'before_title'  => '<h4 class="widget-title widgettitle">',
+		'after_title'   => "</h4>\n",
 	);
+	/**
+	 * A filter on the default parameters used by `bizznis_register_widget_area()`. For backward compatibility.
+	 *
+	 * @since 1.0.1
+	 */
+	$defaults = apply_filters( 'bizznis_register_sidebar_defaults', $defaults, $args );
+	/**
+	 * A filter on the default parameters used by `bizznis_register_widget_area()`.
+	 *
+	 * @since 1.1.0
+	 */
+	$defaults = apply_filters( 'bizznis_register_widget_area_defaults', $defaults, $args );
 	$args = wp_parse_args( $args, $defaults );
 	return register_sidebar( $args );
+}
+
+/**
+ * An alias for `bizznis_register_widget_area()`.
+ *
+ * @since 1.0.0
+ * 
+ * @uses bizznis_register_widget_area()
+ *
+ * @param string|array $args Name, ID, description and other widget area arguments.
+ *
+ * @return string The sidebar ID that was added.
+ */
+function bizznis_register_sidebar( $args ) {
+	return bizznis_register_widget_area( $args );
 }
 
 /**
