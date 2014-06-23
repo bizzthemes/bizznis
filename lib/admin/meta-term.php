@@ -88,6 +88,52 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 }
 
 /**
+ * Merge term meta data into options table.
+ *
+ * @since 1.0.0
+ */
+add_filter( 'get_term', 'bizznis_get_term_filter', 10, 2 ); #wp
+function bizznis_get_term_filter( $term, $taxonomy ) {
+	# Stop here, if $term is not object
+	if ( ! is_object( $term ) ) {
+		return $term;
+	}
+	$db = get_option( 'bizznis-term-meta' );
+	$term_meta = isset( $db[$term->term_id] ) ? $db[$term->term_id] : array();
+	$term->meta = wp_parse_args( $term_meta, apply_filters( 'bizznis_term_meta_defaults', array(
+		'headline'            => '',
+		'intro_text'          => '',
+		'display_title'       => 0, //* vestigial
+		'display_description' => 0, //* vestigial
+		'doctitle'            => '',
+		'description'         => '',
+		'layout'              => '',
+		'noindex'             => 0,
+		'nofollow'            => 0,
+		'noarchive'           => 0,
+	) ) );
+	# Sanitize term meta
+	foreach ( $term->meta as $field => $value ) {
+		$term->meta[$field] = apply_filters( 'bizznis_term_meta_' . $field, stripslashes_deep( wp_kses_decode_entities( $value ) ), $term, $taxonomy );
+	}
+	$term->meta = apply_filters( 'bizznis_term_meta', $term->meta, $term, $taxonomy );
+	return $term;
+}
+
+/**
+ * Add Bizznis term-meta data to functions that return multiple terms.
+ *
+ * @since 1.0.0
+ */
+add_filter( 'get_terms', 'bizznis_get_terms_filter', 10, 2 ); #wp
+function bizznis_get_terms_filter( array $terms, $taxonomy ) {
+	foreach( $terms as $term ) {
+		$term = bizznis_get_term_filter( $term, $taxonomy );
+	}
+	return $terms;
+}
+
+/**
  * Save term meta data.
  *
  * @since 1.0.0

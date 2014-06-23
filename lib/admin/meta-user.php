@@ -49,8 +49,6 @@ function bizznis_user_options_fields( $user ) {
 				<td>
 					<input id="meta[bizznis_admin_menu]" name="meta[bizznis_admin_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_admin_menu', $user->ID ) ); ?> />
 					<label for="meta[bizznis_admin_menu]"><?php _e( 'Enable Bizznis Admin Menus?', 'bizznis' ); ?></label><br />
-					<input id="meta[bizznis_tools_settings_menu]" name="meta[bizznis_tools_settings_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_tools_settings_menu', $user->ID ) ); ?> />
-					<label for="meta[bizznis_tools_settings_menu]"><?php _e( 'Enable Import/Export Tools?', 'bizznis' ); ?></label><br />
 				</td>
 			</tr>
 		</tbody>
@@ -152,7 +150,6 @@ function bizznis_user_meta_save( $user_id ) {
 		array(
 			'bizznis_admin_menu'         	=> '',
 			'bizznis_settings_menu'  	 	=> '',
-			'bizznis_tools_settings_menu'	=> '',
 			'bizznis_author_box_single'  	=> '',
 			'bizznis_author_box_archive' 	=> '',
 			'headline'                   	=> '',
@@ -179,7 +176,6 @@ function bizznis_user_meta_save( $user_id ) {
  * @since 1.0.0
  */
 add_filter( 'get_the_author_bizznis_admin_menu',         	'bizznis_user_meta_default_on', 10, 2 );
-add_filter( 'get_the_author_bizznis_tools_settings_menu', 	'bizznis_user_meta_default_on', 10, 2 );
 function bizznis_user_meta_default_on( $value, $user_id ) {
 	# Get the name of the field by removing the prefix from the active filter
 	$field = str_replace( 'get_the_author_', '', current_filter() );

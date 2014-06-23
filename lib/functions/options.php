@@ -10,9 +10,18 @@
  *
  * @since 1.0.0
  */
-function bizznis_get_option( $key, $setting = null, $use_cache = true ) {
+function bizznis_get_option( $key, $setting = null, $use_cache = true ) {	
 	# The default is set here, so it doesn't have to be repeated in the function arguments for bizznis_option() too.
 	$setting = $setting ? $setting : BIZZNIS_SETTINGS_FIELD;
+	# Allow child theme to short-circuit this function
+	$pre = apply_filters( "bizznis_pre_get_option_{$key}", null, $setting );
+	if ( null !== $pre ) {
+		return $pre;
+	}
+	# Bypass cache if viewing site in customizer
+	if ( bizznis_is_customizer() ) {
+		$use_cache = false;
+	}
 	# If we need to bypass the cache
 	if ( ! $use_cache ) {
 		$options = get_option( $setting );
@@ -24,11 +33,6 @@ function bizznis_get_option( $key, $setting = null, $use_cache = true ) {
 	# Setup caches
 	static $settings_cache = array();
 	static $options_cache  = array();
-	# Allow child theme to short-circuit this function
-	$pre = apply_filters( 'bizznis_pre_get_option_' . $key, null, $setting );
-	if ( null !== $pre ) {
-		return $pre;
-	}
 	# Check options cache
 	if ( isset( $options_cache[$setting][$key] ) ) {
 		# Option has been cached
@@ -97,6 +101,9 @@ function bizznis_get_custom_field( $field ) {
  * @since 1.0.0
  */
 function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $post, $post_id ) {
+	if ( ! empty( $deprecated ) ) {
+		_deprecated_argument( __FUNCTION__, '1.1.0' );
+	}
 	# Verify the nonce
 	if ( ! isset( $_POST[ $nonce_name ] ) || ! wp_verify_nonce( $_POST[ $nonce_name ], $nonce_action ) ) {
 		return;
@@ -112,7 +119,7 @@ function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
 		return;
 	}
 	# Don't save if WP is creating a revision (same as DOING_AUTOSAVE?)
-	if ( 'revision' == $post->post_type ) {
+	if ( 'revision' == get_post_type( $post ) ) {
 		return;
 	}
 	# Check that the user is allowed to edit the post
@@ -132,57 +139,15 @@ function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
 }
 
 /**
- * Merge term meta data into options table.
+ * Takes an array of new settings, merges them with the old settings, and pushes them into the database.
  *
- * @since 1.0.0
- */
-add_filter( 'get_term', 'bizznis_get_term_filter', 10, 2 ); #wp
-function bizznis_get_term_filter( $term, $taxonomy ) {
-	# Stop here, if $term is not object
-	if ( ! is_object( $term ) ) {
-		return $term;
-	}
-	$db = get_option( 'bizznis-term-meta' );
-	$term_meta = isset( $db[$term->term_id] ) ? $db[$term->term_id] : array();
-	$term->meta = wp_parse_args( $term_meta, apply_filters( 'bizznis_term_meta_defaults', array(
-		'headline'            => '',
-		'intro_text'          => '',
-		'display_title'       => 0, //* vestigial
-		'display_description' => 0, //* vestigial
-		'doctitle'            => '',
-		'description'         => '',
-		'layout'              => '',
-		'noindex'             => 0,
-		'nofollow'            => 0,
-		'noarchive'           => 0,
-	) ) );
-	# Sanitize term meta
-	foreach ( $term->meta as $field => $value ) {
-		$term->meta[$field] = apply_filters( 'bizznis_term_meta_' . $field, stripslashes_deep( wp_kses_decode_entities( $value ) ), $term, $taxonomy );
-	}
-	$term->meta = apply_filters( 'bizznis_term_meta', $term->meta, $term, $taxonomy );
-	return $term;
-}
-
-/**
- * Add Bizznis term-meta data to functions that return multiple terms.
+ * @since 1.1.0
  *
- * @since 1.0.0
- */
-add_filter( 'get_terms', 'bizznis_get_terms_filter', 10, 2 ); #wp
-function bizznis_get_terms_filter( array $terms, $taxonomy ) {
-	foreach( $terms as $term ) {
-		$term = bizznis_get_term_filter( $term, $taxonomy );
-	}
-	return $terms;
-}
-
-/**
- * Takes an array of new settings, merges them with the old settings,
- * and pushes them into the database.
+ * @uses BIZZNIS_SETTINGS_FIELD
  *
- * @since 1.0.0
+ * @param string|array $new     New settings. Can be a string, or an array.
+ * @param string       $setting Optional. Settings field name. Default is BIZZNIS_SETTINGS_FIELD.
  */
-function _bizznis_update_settings( $new = '', $setting = BIZZNIS_SETTINGS_FIELD ) {
-	update_option( $setting, wp_parse_args( $new, get_option( $setting ) ) );
+function bizznis_update_settings( $new = '', $setting = BIZZNIS_SETTINGS_FIELD ) {
+	return update_option( $setting, wp_parse_args( $new, get_option( $setting ) ) );
 }
