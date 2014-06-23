@@ -5,4 +5,35 @@
 	Please do all modifications in the form of a child theme.
 */
 
-//* Silence is golden.
+/**
+ * Deprecated. Push individual setting (or group of setting) into an options db entry stored as an array.
+ *
+ * @since 1.0.0
+ * @deprecated 1.1.0
+ */
+function _bizznis_update_settings( $new, $setting = null ) {
+	_deprecated_function( __FUNCTION__, '2.1.0', "bizznis_update_setting" );
+	bizznis_update_settings( $new, $setting );
+}
+
+/**
+ * Deprecated. Ouput site title.
+ *
+ * @since 1.0.0
+ * @deprecated 1.1.0
+ */
+function bizznis_seo_site_title() {
+	_deprecated_function( __FUNCTION__, '2.1.0', "bizznis_update_setting" );
+	bizznis_site_title();
+}
+
+/**
+ * Deprecated. Ouput site tagline.
+ *
+ * @since 1.0.0
+ * @deprecated 1.1.0
+ */
+function bizznis_seo_site_description() {
+	_deprecated_function( __FUNCTION__, '2.1.0', "bizznis_update_setting" );
+	bizznis_site_description();
+}
