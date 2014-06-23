@@ -84,7 +84,7 @@ function bizznis_upgrade() {
  */
 function bizznis_upgrade_11000() {
 	# Update Settings
-	_bizznis_update_settings( array(
+	bizznis_update_settings( array(
 		'theme_version' => '1.1.0',
 		'db_version'    => '11000',
 	) );

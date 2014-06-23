@@ -37,7 +37,6 @@ abstract class Bizznis_Admin {
 		$this->page_ops = wp_parse_args(
 			$this->page_ops,
 			array(
-				'screen_icon'       => 'options-general',
 				'save_button_text'  => __( 'Save Settings', 'bizznis' ),
 				'reset_button_text' => __( 'Reset Settings', 'bizznis' ),
 				'saved_notice_text' => __( 'Settings saved.', 'bizznis' ),
@@ -50,39 +49,24 @@ abstract class Bizznis_Admin {
 			return;
 		}
 		# Check to make sure there we are only creating one menu per subclass
-		if ( isset( $this->menu_ops['theme_menu'] ) && ( isset( $this->menu_ops['theme_submenu'] ) ) || isset( $this->menu_ops['submenu'] ) && ( isset( $this->menu_ops['main_menu'] ) || isset( $this->menu_ops['first_submenu'] ) ) ) {
+		if ( isset( $this->menu_ops['theme_menu'] ) ) {
 			wp_die( sprintf( __( 'You cannot use %s to create two menus in the same subclass. Please use separate subclasses for each menu.', 'bizznis' ), 'Bizznis_Admin' ) );
 		}
 		# Theme options actions
-		add_action( 'admin_menu', array( $this, 'maybe_add_theme_menu' ), 15 ); 					# create the theme options menu
-		add_action( 'admin_init', array( $this, 'register_settings' ) ); 							# set up settings
-		add_action( 'admin_notices', array( $this, 'notices' ) ); 									# set up notices
-		add_action( 'admin_init', array( $this, 'settings_init' ) ); 								# load the page content
-		add_filter( 'pre_update_option_' . $this->settings_field, array( $this, 'save' ), 10, 2 ); 	# add a sanitizer/validator
-	}
-	
-	/**
-	 * Possibly create a new theme menu.
-	 *
-	 * @since 1.0.0
-	 */
-	public function maybe_add_theme_menu() {
-	
-		# Add theme menu
-		if ( isset( $this->menu_ops['theme_menu'] ) && is_array( $this->menu_ops['theme_menu'] ) ) {
-			$menu = wp_parse_args( $this->menu_ops['theme_menu'],
-				array(
-					'page_title' => '',
-					'menu_title' => '',
-					'capability' => 'edit_theme_options'
-				)
-			);
-			$this->pagehook = add_theme_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'admin' ) );
-		}
-		# Hide theme menu
-		if ( isset( $this->menu_ops['theme_menu']['menu_hide'] ) && ! bizznis_is_menu_page( $this->page_id ) ) {
-			remove_submenu_page( 'themes.php', $this->page_id );
-		}	
+		//* set up settings
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		//* set up notices
+		add_action( 'admin_notices', array( $this, 'notices' ) );
+		//* add feedback link
+		add_action( 'admin_title_right', array( $this, 'feedback_link' ), 15 );
+		//* load the page content
+		add_action( 'admin_init', array( $this, 'settings_init' ) );
+		//* Load help tab
+		add_action( 'admin_init', array( $this, 'load_help' ) );
+		//* Load contextual assets (registered admin page)
+		add_action( 'admin_init', array( $this, 'load_assets' ) );
+		//* add a sanitizer/validator
+		add_filter( 'pre_update_option_' . $this->settings_field, array( $this, 'save' ), 10, 2 );
 	}
 
 	/**
@@ -130,6 +114,18 @@ abstract class Bizznis_Admin {
 			echo '<div id="message" class="updated"><p><strong>' . $this->page_ops['error_notice_text'] . '</strong></p></div>';
 		}
 	}
+	
+	/**
+	 * Add the feedback link to admin navigation
+	 *
+	 * @since 1.0.0
+	 */
+	public function feedback_link() {
+		if ( ! bizznis_is_menu_page( $this->page_id ) ) {
+			return;
+		}
+		printf( __( '<a href="%s" target="_blank" class="feedback" title="Report a Bug">Report a Bug</a>', 'bizznis' ), esc_url( 'https://github.com/bizzthemes/bizznis/issues' ) );
+	}
 
 	/**
 	 * Save method. Override this method to modify form data (for validation, sanitization, etc.) 
@@ -148,6 +144,33 @@ abstract class Bizznis_Admin {
 	 * @since 1.0.0
 	 */
 	abstract public function settings_init();
+	
+	/**
+	 * Load the optional help method, if one exists.
+	 *
+	 * @since 1.1.0
+	 */
+	public function load_help() {
+		if ( method_exists( $this, 'help' ) ) {
+			add_action( "load-{$this->pagehook}", array( $this, 'help' ) );
+		}
+	}
+
+	/**
+	 * Load script and stylesheet assets via scripts() and styles() methods, if they exist.
+	 *
+	 * @since 1.1.0
+	 */
+	public function load_assets() {
+		//* Hook scripts method
+		if ( method_exists( $this, 'scripts' ) ) {
+			add_action( "load-{$this->pagehook}", array( $this, 'scripts' ) );
+		}
+		//* Hook styles method
+		if ( method_exists( $this, 'styles' ) ) {
+			add_action( "load-{$this->pagehook}", array( $this, 'styles' ) );
+		}
+	}
 
 	/**
 	 * Output the main admin page. This method must be re-defined in the extended class, 
@@ -165,6 +188,20 @@ abstract class Bizznis_Admin {
 	protected function get_field_name( $name ) {
 		return sprintf( '%s[%s]', $this->settings_field, $name );
 	}
+	
+	/**
+	 * Echo constructed name attributes in form fields.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @uses Genesis_Admin:get_field_name() Construct name attributes for use in form fields.
+	 *
+	 * @param string $name Field name base
+	 * @return string Full field name
+	 */
+	protected function field_name( $name ) {
+		echo $this->get_field_name( $name );
+	}
 
 	/**
 	 * Helper function that constructs id attributes for use in form fields.
@@ -173,6 +210,20 @@ abstract class Bizznis_Admin {
 	 */
 	protected function get_field_id( $id ) {
 		return sprintf( '%s[%s]', $this->settings_field, $id );
+	}
+	
+	/**
+	 * Echo constructed id attributes in form fields.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @uses Genesis_Admin::get_field_id() Constructs id attributes for use in form fields.
+	 *
+	 * @param string $id Field id base
+	 * @return string Full field id
+	 */
+	protected function field_id( $id ) {
+		echo $this->get_field_id( $id );
 	}
 
 	/**
@@ -183,6 +234,20 @@ abstract class Bizznis_Admin {
 	 */
 	protected function get_field_value( $key ) {
 		return bizznis_get_option( $key, $this->settings_field );
+	}
+	
+	/**
+	 * Echo a setting value from this form's settings field for use in form fields.
+	 *
+	 * @uses Genesis_Admin::get_field_value() Constructs value attributes for use in form fields.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $key Field key
+	 * @return string Field value
+	 */
+	protected function field_value( $key ) {
+		echo $this->get_field_value( $key );
 	}
 
 }
@@ -212,11 +277,11 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 		<form method="post" action="options.php">
 			<?php settings_fields( $this->settings_field ); ?>
 			<h2>
-				<?php do_action( 'bizznis_admin_title_left', $this->pagehook ); ?>
+				<?php do_action( 'admin_title_left', $this->pagehook ); ?>
 				<?php echo esc_html( get_admin_page_title() ); ?>
-				<?php do_action( 'bizznis_admin_title_right', $this->pagehook ); ?>
+				<?php do_action( 'admin_title_right', $this->pagehook ); ?>
 			</h2>
-			<?php do_action( $this->pagehook . '_settings_page_form', $this->pagehook ); ?>
+			<?php do_action( "{$this->pagehook}_settings_page_form", $this->pagehook ); ?>
 			<?php do_settings_fields( $this->page_id, 'default' ); ?>
 			<?php do_settings_sections( $this->page_id );?>
 			<p class="submit bottom-buttons">
@@ -236,10 +301,7 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 	 * @since 1.0.0
 	 */
 	public function settings_init() {
-		add_action( $this->pagehook . '_settings_page_form', array( $this, 'form' ) );
-		if ( method_exists( $this, 'help' ) ) {
-			add_action( 'load-' . $this->pagehook, array( $this, 'help' ) );
-		}
+		add_action( "{$this->pagehook}_settings_page_form", array( $this, 'form' ) );
 	}
 
 }
@@ -258,10 +320,6 @@ abstract class Bizznis_Admin_Basic extends Bizznis_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function settings_init() {
-		if ( method_exists( $this, 'help' ) ) {
-			add_action( 'load-' . $this->pagehook, array( $this, 'help' ) );
-		}
-	}
+	public function settings_init() {}
 
 }
