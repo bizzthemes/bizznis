@@ -10,6 +10,7 @@
  *
  * @since 1.0.0
  */
+if ( ! class_exists( 'Bizznis_Page_List' ) ) :
 class Bizznis_Page_List extends WP_Widget {
 
 	/**
@@ -155,3 +156,4 @@ class Bizznis_Page_List extends WP_Widget {
 		<?php
 	}
 }
+endif;

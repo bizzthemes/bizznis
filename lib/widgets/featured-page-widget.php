@@ -10,6 +10,7 @@
  *
  * @since 1.0.0
  */
+if ( ! class_exists( 'Bizznis_Featured_Page' ) ) :
 class Bizznis_Featured_Page extends WP_Widget {
 
 	/**
@@ -68,10 +69,10 @@ class Bizznis_Featured_Page extends WP_Widget {
 				'format'  => 'html',
 				'size'    => $instance['image_size'],
 				'context' => 'featured-page-widget',
-				'attr'    => bizznis_parse_attr( 'entry-image-widget', array( 'class' => 'entry-image attachment-' . get_post_type( $wp_query->post->ID ) . ' ' . esc_attr( $instance['image_alignment'] ) ) ),
+				'attr'    => bizznis_parse_attr( 'entry-image-widget' ),
 			) );
 			if ( $instance['show_image'] && $image ) {
-				printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $image );
+				printf( '<a href="%s" title="%s" class="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), esc_attr( $instance['image_alignment'] ), $image );
 			}
 			if ( ! empty( $instance['show_title'] ) ) {
 				printf( '<header class="entry-header"><h2 class="entry-title"><a href="%s" title="%s">%s</a></h2></header>', get_permalink(), the_title_attribute( 'echo=0' ), get_the_title() );
@@ -135,9 +136,8 @@ class Bizznis_Featured_Page extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'image_size' ); ?>"><?php _e( 'Image Size', 'bizznis' ); ?>:</label>
 			<select id="<?php echo $this->get_field_id( 'image_size' ); ?>" class="bizznis-image-size-selector" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
-				<option value="thumbnail">thumbnail (<?php echo absint( get_option( 'thumbnail_size_w' ) ); ?>x<?php echo absint( get_option( 'thumbnail_size_h' ) ); ?>)</option>
 				<?php
-				$sizes = bizznis_get_additional_image_sizes();
+				$sizes = bizznis_get_image_sizes();
 				foreach ( (array) $sizes as $name => $size )
 					echo '<option value="' . esc_attr( $name ) . '" ' . selected( $name, $instance['image_size'], FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . 'x' . absint( $size['height'] ) . ')</option>';
 				?>
@@ -171,3 +171,4 @@ class Bizznis_Featured_Page extends WP_Widget {
 		<?php
 	}
 }
+endif;

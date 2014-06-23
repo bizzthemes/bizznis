@@ -9,13 +9,15 @@
 load_template( BIZZNIS_WIDGETS_DIR . '/featured-page-widget.php' );
 load_template( BIZZNIS_WIDGETS_DIR . '/page-list-widget.php' );
 
+add_action( 'widgets_init', 'bizznis_load_widgets' );
 /**
  * Register widgets for use in the Bizznis theme.
  *
  * @since 1.0.0
  */
-add_action( 'widgets_init', 'bizznis_load_widgets' );
+if ( ! function_exists( 'bizznis_load_widgets' ) ) :
 function bizznis_load_widgets() {
 	register_widget( 'Bizznis_Featured_Page' );
 	register_widget( 'Bizznis_Page_List' );
 }
+endif;
