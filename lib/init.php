@@ -10,7 +10,7 @@
  *
  * @since 1.0.0
  */
-class Bizznis_Init {
+final class Bizznis_Init {
 	
 	/**
 	 * Fires up constants, WP supported functions and translation strings
@@ -49,20 +49,21 @@ class Bizznis_Init {
 		load_template( BIZZNIS_FRONTEND_DIR . '/post.php' );
 		load_template( BIZZNIS_FRONTEND_DIR . '/loops.php' );
 		load_template( BIZZNIS_FRONTEND_DIR . '/comments.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/sidebar.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/widget-area.php' );
 		load_template( BIZZNIS_FRONTEND_DIR . '/archive.php' );
 		load_template( BIZZNIS_FRONTEND_DIR . '/search.php' );
 		# Load Admin
 	if ( is_admin() ) {
 		load_template( BIZZNIS_ADMIN_DIR . '/admin.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/settings-general.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/settings-tools.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-inpost.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-term.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-user.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/upgrade.php' );
 	}
-		load_template( BIZZNIS_ADMIN_DIR . '/admin-menu.php' ); #also loaded on front
+		# Load Customizer
+		load_template( BIZZNIS_ADMIN_DIR . '/customizer.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/customizer-controls.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/customizer-helpers.php' );
 		# Load Functions
 		require_if_theme_supports( 'bizznis-breadcrumbs', BIZZNIS_FUNCTIONS_DIR . '/breadcrumb.php' ); #optional
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/compat.php' );
@@ -76,6 +77,7 @@ class Bizznis_Init {
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/widgetize.php' );
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/shortcodes.php' );
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/deprecated.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/menu.php' );
 		# Load Widgets
 		load_template( BIZZNIS_WIDGETS_DIR 	 . '/widgets.php' );
 		# Load Integrations
@@ -101,7 +103,7 @@ class Bizznis_Init {
 		define( 'PARENT_THEME_VERSION', 		'1.1.0' );
 		define( 'PARENT_THEME_BRANCH', 			'1.0' );
 		define( 'PARENT_DB_VERSION', 			'11000' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1392134400' ) );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1402826400' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
@@ -152,11 +154,11 @@ class Bizznis_Init {
 			'search-form',
 			'comment-form',
 			'comment-list',
+			'gallery',
+			'caption',
 		) );
 		add_theme_support( 'bizznis-inpost-layouts' );
 		add_theme_support( 'bizznis-archive-layouts' );
-		add_theme_support( 'bizznis-admin-menu' );
-		add_theme_support( 'bizznis-tools-settings-menu' );
 		add_theme_support( 'bizznis-breadcrumbs' );
 		add_theme_support( 'bizznis-responsive-viewport' ); #html5
 		# Maybe add support for Bizznis menus
@@ -170,19 +172,12 @@ class Bizznis_Init {
 		# Turn on custom header image / custom logo
 		# Turn on custom background image / color
 	if ( ! is_child_theme() ) {
-		add_theme_support( 'custom-header', array(
-			'width'					=> 320,
-			'flex-width'			=> true,
-			'height'				=> 80,
-			'flex-height'			=> true,
-			'default-text-color'	=> '333333',
-			'header-selector'		=> '.title-area',
-		) );
 		add_theme_support( 'custom-background', array(
 			'default-color' => 'f9f8f2',
 			'default-image' => BIZZNIS_IMAGES_URL . '/background.png',
 		) );
 		add_theme_support( 'bizznis-footer-widgets', 4 );
+		add_theme_support( 'bizznis-after-entry-widgets' );
 		add_editor_style();
 	}
 	}
