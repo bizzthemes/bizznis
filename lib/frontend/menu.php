@@ -5,130 +5,63 @@
 	Please do all modifications in the form of a child theme.
 */
 
-/**
- * Determine if a child theme supports a particular Bizznis nav menu.
- *
- * @since 1.0.0
- */
-function bizznis_nav_menu_supported( $menu ) {
-	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
-		return false;
-	}
-	$menus = get_theme_support( 'bizznis-menus' );
-	if ( array_key_exists( $menu, (array) $menus[0] ) ) {
-		return true;
-	}
-	return false;
-}
-
-/**
- * Register the custom menu locations, if theme has support for them.
- *
- * Does the `bizznis_register_nav_menus` action.
- *
- * @since 1.0.0
- */
-add_action( 'after_setup_theme', 'bizznis_register_nav_menus' );
-function bizznis_register_nav_menus() {
-	# Stop here if menus not supported
-	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
-		return;
-	}
-	$menus = get_theme_support( 'bizznis-menus' );
-	# Register supported menus
-	foreach ( (array) $menus[0] as $id => $name ) {
-		register_nav_menu( $id, $name );
-	}
-}
-
+add_action( 'bizznis_header_top', 'bizznis_do_nav' );
 /**
  * Echo the "Primary Navigation" menu.
  *
- * The preferred option for creating menus is the Custom Menus feature in WordPress. There is also a fallback to using
- * the Bizznis wrapper functions for creating a menu of Pages, or a menu of Categories (maintained only for backwards
- * compatibility).
- *
- * Either output can be filtered via `bizznis_do_nav`.
+ * Applies the `bizznis_primary_nav` and legacy `bizznis_do_nav` filters.
  *
  * @since 1.0.0
+ *
+ * @uses bizznis_nav_menu() Display a navigation menu.
+ * @uses bizznis_nav_menu_supported() Checks for support of specific nav menu.
  */
-add_action( 'bizznis_header_top', 'bizznis_do_nav' );
+if ( ! function_exists( 'bizznis_do_nav' ) ) :
 function bizznis_do_nav() {
-	# Stop here if menu not supported
+	# Do nothing if menu not supported
 	if ( ! bizznis_nav_menu_supported( 'primary' ) ) {
 		return;
 	}
-	# If menu is assigned to theme location, output
-	if ( has_nav_menu( 'primary' ) ) {
-		$args = array(
-			'theme_location' => 'primary',
-			'container'      => '',
-			'menu_class'     => 'menu menu-bizznis menu-primary',
-			'echo'           => 0,
-		);
-		$nav  = apply_filters( 'nav_primary_before', '', $args );
-		$nav .= wp_nav_menu( $args );
-		$nav .= apply_filters( 'nav_primary_after', '', $args );
-		# Do nothing if there is nothing to show
-		if ( ! $nav ) {
-			return;
-		}
-		$nav_markup_open = sprintf( '<nav %s>', bizznis_attr( 'nav-primary', array( 'class' => 'nav-bizznis nav-primary' ) ) );
-		$nav_markup_open .= sprintf( '<div %s>', bizznis_attr( 'nav-primary-container', array( 'class' => 'wrap' ) ) );
-		$nav_markup_close = '</div>';
-		$nav_markup_close .= '</nav>';
-		$nav_output = $nav_markup_open . $nav . $nav_markup_close;
-		echo apply_filters( 'bizznis_do_nav', $nav_output, $nav, $args );
-	}
+	$class = 'menu menu-bizznis menu-primary';
+	bizznis_nav_menu( array(
+		'theme_location' => 'primary',
+		'menu_class'     => $class,
+	) );
 }
+endif;
 
+add_action( 'bizznis_header_bottom', 'bizznis_do_subnav' );
 /**
  * Echo the "Secondary Navigation" menu.
  *
- * The preferred option for creating menus is the Custom Menus feature in WordPress. There is also a fallback to using
- * the Bizznis wrapper functions for creating a menu of Pages, or a menu of Categories (maintained only for backwards
- * compatibility).
- *
- * Either output can be filtered via `bizznis_do_subnav`.
+ * Applies the `bizznis_secondary_nav` and legacy `bizznis_do_subnav` filters.
  *
  * @since 1.0.0
+ *
+ * @uses bizznis_nav_menu() Display a navigation menu.
+ * @uses bizznis_nav_menu_supported() Checks for support of specific nav menu.
  */
-add_action( 'bizznis_header_bottom', 'bizznis_do_subnav' );
+if ( ! function_exists( 'bizznis_do_subnav' ) ) :
 function bizznis_do_subnav() {
 	# Do nothing if menu not supported
 	if ( ! bizznis_nav_menu_supported( 'secondary' ) ) {
 		return;
 	}
-	# If menu is assigned to theme location, output
-	if ( has_nav_menu( 'secondary' ) ) {
-		$args = array(
-			'theme_location' => 'secondary',
-			'container'      => '',
-			'menu_class'     => 'menu menu-bizznis menu-secondary',
-			'echo'           => 0,
-		);
-		$subnav  = apply_filters( 'nav_secondary_before', '', $args );
-		$subnav .= wp_nav_menu( $args );
-		$subnav .= apply_filters( 'nav_secondary_after', '', $args );
-		# Do nothing if there is nothing to show
-		if ( ! $subnav ) {
-			return;
-		}
-		$subnav_markup_open = sprintf( '<nav %s>', bizznis_attr( 'nav-secondary', array( 'class' => 'nav-bizznis nav-secondary' ) ) );
-		$subnav_markup_open .= sprintf( '<div %s>', bizznis_attr( 'nav-secondary-container', array( 'class' => 'wrap' ) ) );
-		$subnav_markup_close = '</div>';
-		$subnav_markup_close .= '</nav>';
-		$subnav_output = $subnav_markup_open . $subnav . $subnav_markup_close;
-		echo apply_filters( 'bizznis_do_subnav', $subnav_output, $subnav, $args );
-	}
+	$class = 'menu menu-bizznis menu-secondary';
+	bizznis_nav_menu( array(
+		'theme_location' => 'secondary',
+		'menu_class'     => $class,
+	) );
 }
+endif;
 
+add_filter( 'nav_primary_after', 'bizznis_nav_right', 10, 2 );
 /**
  * Filter the Primary Navigation menu items, appending either RSS links, search form, twitter link, or today's date.
  *
  * @since 1.0.0
  */
-add_filter( 'nav_primary_after', 'bizznis_nav_right', 10, 2 );
+if ( ! function_exists( 'bizznis_nav_right' ) ) :
 function bizznis_nav_right( $menu = '', $args = '' ) {
 	# Stop here if extras not enabled
 	if ( ! bizznis_get_option( 'nav_extras_enable' ) ) {
@@ -152,41 +85,28 @@ function bizznis_nav_right( $menu = '', $args = '' ) {
 	}
 	return $menu;
 }
+endif;
 
 /**
  * Sets a common class, `.bizznis-nav-menu`, for the custom menu widget if used in the header sidebar.
  *
  * @since 1.0.0
  */
+if ( ! function_exists( 'bizznis_header_menu_args' ) ) :
 function bizznis_header_menu_args( $args ) {
 	$args['container']   = '';
 	$args['menu_class'] .= ' menu-bizznis';
 	return $args;
 }
+endif;
 
 /**
  * Wrap the header navigation menu in its own nav tags with markup API.
  *
  * @since 1.0.0
  */
+if ( ! function_exists( 'bizznis_header_menu_wrap' ) ) :
 function bizznis_header_menu_wrap( $menu ) {
 	return sprintf( '<nav %s>', bizznis_attr( 'nav-header', array( 'class' => 'nav-bizznis nav-header' ) ) ) . $menu . '</nav>';
 }
-
-/**
- * Add navigation menu description
- *
- * Optionally call it inside a child theme
- *
- * @since 1.0.0
- */
-// add_filter( 'walker_nav_menu_start_el', 'bizznis_add_menu_description', 10, 2 );
-function bizznis_add_menu_description( $item_output, $item ) {
-	$description = $item->post_content;
-	if ( ' ' !== $description ) {
-		return preg_replace( '/(<a.*?>[^<]*?)</', '$1' . '<span class="menu-description">' . $description . '</span><', $item_output);
-	}
-	 else {
-		return $item_output;
-	}
-}
+endif;
