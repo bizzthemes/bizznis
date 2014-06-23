@@ -203,7 +203,7 @@ Site Header
 }
 
 .menu-bizznis .sub-menu .sub-menu {
-	margin: -54px 199px 0 0;
+	margin: -57px 249px 0 0;
 }
 
 .menu-bizznis .menu-item:hover > .sub-menu {
@@ -256,18 +256,16 @@ Site Header
 	margin-right: auto;
 }
 
-.comment-body {
-	margin-left: 0;
-	margin-right: 60px;
-	margin-right: 6rem;
+.comment-list li li {
+	margin-left: -40px;
+	margin-right: 0;
+	padding-left: 0;
+	padding-right: 40px;
 }
 
 .entry-comments .children {
 	border-left: none;
 	border-right: 1px dotted #999;
-	padding-left: 0;
-	padding-right: 30px;
-	padding-right: 3rem;
 }
 
 .comment-author {
@@ -279,4 +277,16 @@ Site Header
 .comment .avatar {
 	margin: 0 0 24px 16px;
 	margin: 0 0 2.4rem 1.6rem;
+}
+
+.comment-respond label {
+	margin-left: 12px;
+	margin-right: 0;
+}
+
+.comment-list .comment-respond:after {
+	margin-left: 0;
+	margin-right: -30px;
+	left: 10%;
+	right: 0;
 }
