@@ -18,6 +18,14 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.1.0
+* Moved all theme settings to customizer
+* Moved all SEO to a plugin
+* Moved all Import/export tools to a plugin
+* Removed all globals and made everything load at least 30% faster
+* Removed all clutter code and optimized the site structure
+* More HTML5 declarations inside comments and posts
+
 ### 1.0.9.1
 * Fixed favicon not defined notice
 
