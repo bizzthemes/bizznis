@@ -108,14 +108,12 @@ blockquote::before {
 
 .alignleft .avatar {
 	margin-left: 24px;
-	margin-left: 2.4rem;
 	margin-right: auto;
 }
 
 .alignright .avatar {
 	margin-left: auto;
 	margin-right: 24px;
-	margin-right: 2.4rem;
 }
 
 .alignleft {
@@ -131,13 +129,11 @@ blockquote::before {
 img.alignleft,
 .wp-caption.alignleft {
 	margin: 0 0 24px 24px;
-	margin: 0 0 2.4rem 2.4rem;
 }
 
 img.alignright,
 .wp-caption.alignright {
 	margin: 0 24px 24px 0;
-	margin: 0 2.4rem 2.4rem 0;
 }
 
 .gallery-item {
@@ -149,7 +145,6 @@ img.alignright,
 
 .author-box .avatar {
 	margin-left: 24px;
-	margin-left: 2.4rem;
 	margin-right: auto;
 }
 
@@ -239,12 +234,10 @@ Site Header
 .entry-content ul li {
 	margin-left: auto;
 	margin-right: 40px;
-	margin-right: 4rem;
 }
 
 .entry-meta .entry-comments::before {
 	margin: 0 2px 0 6px;
-	margin: 0 0.2rem 0 0.6rem;
 }
 
 /* Comments
@@ -252,7 +245,6 @@ Site Header
 
 #respond label {
 	margin-left: 12px;
-	margin-left: 1.2rem;
 	margin-right: auto;
 }
 
@@ -271,12 +263,10 @@ Site Header
 .comment-author {
 	margin-right: 0;
 	margin-left: 5px;
-	margin-left: .5rem;
 }
 
 .comment .avatar {
 	margin: 0 0 24px 16px;
-	margin: 0 0 2.4rem 1.6rem;
 }
 
 .comment-respond label {

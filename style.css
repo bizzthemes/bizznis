@@ -5,7 +5,7 @@ Description:		Parent Business WordPress theme, aimed at theme developers who wan
 License:			GPL version 3
 License URI:		http://gplv3.fsf.org/
 Branch:				1.0
-Version:			1.1.0
+Version:			1.1.1
 Author:				BizzThemes
 Author URI:			http://bizzthemes.com/
 Tags:				light, gray, white, one-column, two-columns, three-columns, right-sidebar, left-sidebar, responsive-layout, fluid-layout, custom-menu, featured-images, full-width-template, microformats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -39,6 +39,8 @@ Text Domain:		bizznis
 			- Secondary Sidebar
 	Common Classes
 		- WordPress
+		- Search form
+		- Avatar
 		- Bizznis
 			- Breadcrumb
 			- Author box
@@ -55,7 +57,6 @@ Text Domain:		bizznis
 		- Primary Navigation
 		- Secondary Navigation
 		- Site Header Navigation
-		- Mobile Navigation
 	Content Area
 		- Entries
 		- Pagination
@@ -73,7 +74,6 @@ Text Domain:		bizznis
 	Media Queries
 		- Retina ready
 		- Responsive width
-		- Responsive Menu
 
 */
 
@@ -89,15 +89,13 @@ Text Domain:		bizznis
 /* normalize.css v3.0.1 | MIT License | git.io/normalize
 --------------------------------------------- */
 
-html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background:0 0}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#333}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background:0 0}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#333}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
 
 /* Box Sizing
 --------------------------------------------- */
 
 *,
 input[type="search"] {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing:    border-box;
 	box-sizing:         border-box;
 }
 
@@ -143,22 +141,12 @@ input[type="search"] {
 /* Typographical Elements
 --------------------------------------------- */
 
-html {
-	font-size: 62.5%; /* 10px browser default */
-	-webkit-font-smoothing: antialiased;
-}
-
 body {
 	background-color: #f9f8f2;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 18px;
-	font-size: 1.8rem;
 	line-height: 1.625;
 	margin: 0;
-}
-
-body > div { 
-	font-size: 1.8rem; /* fix for Chrome browser */
 }
 
 a,
@@ -199,7 +187,6 @@ a:hover {
 
 p {
 	margin: 0 0 24px;
-	margin: 0 0 2.4rem;
 	padding: 0;
 }
 
@@ -247,37 +234,30 @@ h6 {
 	font-weight: 400;
 	line-height: 1.2;
 	margin: 0 0 10px;
-	margin: 0 0 1rem;
 }
 
 h1 {
 	font-size: 36px;
-	font-size: 3.6rem;
 }
 
 h2 {
 	font-size: 30px;
-	font-size: 3rem;
 }
 
 h3 {
 	font-size: 24px;
-	font-size: 2.4rem;
 }
 
 h4 {
 	font-size: 20px;
-	font-size: 2rem;
 }
 
 h5 {
 	font-size: 18px;
-	font-size: 1.8rem;
 }
 
 h6 {
 	font-size: 16px;
-	font-size: 1.6rem;
 }
 
 /* Objects
@@ -313,7 +293,6 @@ img {
 .gallery-caption {
 	margin-left: 0;
 	margin-top: 10px;
-	margin-top: 1rem;
 }
 
 .gallery-columns-2 .gallery-item {
@@ -369,7 +348,6 @@ textarea {
 	color: #333;
 	max-width: 100%;
 	padding: 10px;
-	padding: 1rem;
 }
 
 input:focus,
@@ -405,7 +383,6 @@ input[type="submit"],
 	color: #fff;
 	cursor: pointer;
 	padding: 10px 15px;
-	padding: 1rem 1.5rem;
 	width: auto;
 }
 
@@ -442,7 +419,6 @@ table {
 	border-spacing: 0;
 	line-height: 2;
 	margin-bottom: 40px;
-	margin-bottom: 4rem;
 	width: 100%;
 }
 
@@ -458,7 +434,6 @@ th {
 td {
 	border-top: 1px solid #ddd;
 	padding: 6px 0;
-	padding: .6rem 0;
 }
 
 th {
@@ -544,13 +519,11 @@ th {
 	border: none;
 	clear: both;
 	margin: 40px auto;
-	margin: 4rem auto;
 	max-width: 1280px;
 }
 
 .site-footer {
 	font-size: 16px;
-	font-size: 1.6rem;
 }
 
 /* Column Widths and Positions
@@ -657,7 +630,6 @@ img.centered,
 .aligncenter {
 	display: block;
 	margin: 0 auto 24px;
-	margin: 0 auto 2.4rem
 }
 
 .wp-caption {
@@ -671,26 +643,22 @@ img.centered,
 img.alignnone,
 .alignnone {
 	margin-bottom: 24px;
-	margin-bottom: 2.4rem;
 }
 
 a.alignleft,
 img.alignleft,
 .wp-caption.alignleft {
 	margin: 0 24px 24px 0;
-	margin: 0 2.4rem 2.4rem 0;
 }
 
 a.alignright,
 img.alignright,
 .wp-caption.alignright {
 	margin: 0 0 24px 24px;
-	margin: 0 0 2.4rem 2.4rem;
 }
 
 .wp-caption-text {
 	font-size: 14px;
-	font-size: 1.4rem;
 	font-weight: 600;
 	text-align: center;
 }
@@ -723,7 +691,6 @@ img.alignright,
 
 .header-content .search-form {
 	margin-top: 17px;
-	margin-top: 1.7rem;
 }
 
 .entry-content .search-form {
@@ -740,17 +707,14 @@ img.alignright,
 
 .comment .avatar {
 	margin: 0 24px 24px 0;
-	margin: 0 2.4rem 2.4rem 0;
 }
 
 .alignleft .avatar {
 	margin-right: 24px;
-	margin-right: 2.4rem;
 }
 
 .alignright .avatar {
 	margin-left: 24px;
-	margin-left: 2.4rem;
 }
 
 /* Bizznis
@@ -762,7 +726,6 @@ img.alignright,
 .breadcrumb {
 	font-weight: 300;
 	margin-bottom: 40px;
-	margin-bottom: 4rem;
 }
 
 /* Author box
@@ -777,21 +740,17 @@ img.alignright,
 .archive-description {
 	background-color: #f9f8f2;
 	margin-bottom: 40px;
-	margin-bottom: 4rem;
 	overflow: hidden;
 	padding: 40px;
-	padding: 4rem;
 }
 
 .author-box .author-body {
 	margin-left: 80px;
-	margin-left: 8rem;
 }
 
 .author-box .author-box-title {
 	display: block;
 	font-size: 20px;
-	font-size: 2rem;
 	padding: 0;
 }
 
@@ -811,12 +770,10 @@ img.alignright,
 
 .entry-header {
 	margin-bottom: 20px;
-	margin-bottom: 2rem;
 }
 
 .entry-title {
 	font-size: 38px;
-	font-size: 3.8rem;
 	font-weight: 600;
 	line-height: 1.38;
 }
@@ -824,7 +781,6 @@ img.alignright,
 .widget-title {
 	font-weight: 400;
 	margin-bottom: 20px;
-	margin-bottom: 2rem;
 }
 
 .entry-title a,
@@ -842,7 +798,6 @@ img.alignright,
 
 .archive-title {
 	font-size: 20px;
-	font-size: 2rem;
 }
 
 .search .archive-title {
@@ -858,7 +813,6 @@ img.alignright,
 
 .header-content {
 	padding: 40px 0;
-	padding: 4rem 0;
 }
 
 /* Title area
@@ -871,7 +825,6 @@ img.alignright,
 
 .site-title {
 	font-size: 40px;
-	font-size: 4rem;
 	font-weight: 600;
 	line-height: 1;
 	margin: 0;
@@ -879,7 +832,6 @@ img.alignright,
 
 .site-description {
 	font-size: 20px;
-	font-size: 2rem;
 	margin-bottom: 0;
 }
 
@@ -959,18 +911,15 @@ img.alignright,
 	border: none;
 	display: block;
 	padding: 20px 15px;
-	padding: 2rem 1.5rem;
 	position: relative;
 }
 
 .nav-bizznis .date {
 	padding: 20px 15px;
-	padding: 2rem 1.5rem;
 }
 
 .nav-bizznis .search {
 	padding: 10px 0 0;
-	padding: 1rem 0;
 }
 
 /* Navigation menu
@@ -992,7 +941,6 @@ img.alignright,
 	color: #333;
 	display: block;
 	padding: 20px 15px;
-	padding: 2rem 1.5rem;
 	position: relative;
 }
 
@@ -1034,9 +982,7 @@ img.alignright,
 	border: 1px solid #e5e5e5;
 	border-top: none;
 	font-size: 16px;
-	font-size: 1.6rem;
 	padding: 16px 20px;
-	padding: 1.6rem 2rem;
 	position: relative;
 	width: 250px;
 }
@@ -1099,7 +1045,6 @@ img.alignright,
 .nav-header .menu-bizznis {
 	float: none;
 	margin-top: 10px;
-	margin-top: 1rem;
 	text-transform: uppercase;
 }
 
@@ -1119,13 +1064,11 @@ img.alignright,
 
 .content {
 	margin: 40px 0;
-	margin: 4rem 0;
 }
 
 article.entry { /* article is present to exclude custom post types from plugins */
 	border-bottom: 1px dotted #e5e5e5;
 	padding: 40px 0;
-	padding: 4rem 0;
 }
 
 .entry:first-of-type {
@@ -1150,13 +1093,11 @@ article.entry { /* article is present to exclude custom post types from plugins 
 .entry-content ul,
 .quote-caption {
 	margin-bottom: 24px;
-	margin-bottom: 2.4rem;
 }
 
 .entry-content ol li,
 .entry-content ul li {
 	margin-left: 40px;
-	margin-left: 4rem;
 }
 
 .entry-content ol ol,
@@ -1186,7 +1127,6 @@ article.entry { /* article is present to exclude custom post types from plugins 
 .entry-comments-link::before {
 	content: "\2014";
 	margin: 0 6px 0 2px;
-	margin: 0 0.6rem 0 0.2rem;
 }
 
 .entry-categories,
@@ -1199,7 +1139,6 @@ article.entry { /* article is present to exclude custom post types from plugins 
 	content: ".";
 	display: block;
 	height: 10px;
-	height: 1rem;
 	visibility: hidden;
 }
 
@@ -1210,7 +1149,6 @@ article.entry { /* article is present to exclude custom post types from plugins 
 .entry-pagination {
 	border-top: 1px dotted #e5e5e5;
 	padding-top: 40px;
-	padding-top: 4rem;
 }
 
 .archive-pagination li {
@@ -1221,7 +1159,6 @@ article.entry { /* article is present to exclude custom post types from plugins 
 	cursor: pointer;
 	display: inline-block;
 	padding: 5px 10px;
-	padding: .5rem 1rem;
 }
 
 .archive-pagination li a:hover,
@@ -1232,12 +1169,10 @@ article.entry { /* article is present to exclude custom post types from plugins 
 
 .entry-pagination {
 	margin: 0 0 40px 0;
-	margin: 0 0 4rem 0;
 }
 
 .post-navigation {
 	padding: 0 0 40px 0;
-	padding: 0 0 4rem 0;
 }
 
 /* Comments
@@ -1250,7 +1185,6 @@ article.entry { /* article is present to exclude custom post types from plugins 
 .comment-author {
 	margin-bottom: 0;
 	margin-right: 5px;
-	margin-right: .5rem;
 }
 
 .comment-author .says {
@@ -1269,20 +1203,16 @@ article.entry { /* article is present to exclude custom post types from plugins 
 	border-left: 4px solid #D54E21;
 	background-color: #FEFAF7;
 	padding: 5px 10px;
-	padding: .5rem 1rem;
 }
 
 .comment-respond {
 	padding-top: 40px;
-	padding-top: 4rem;
 	position: relative;
 }
 
 .children .comment-respond {
 	margin: 40px 0 -40px 0;
-	margin: 4rem 0 -4rem 0;
 	padding: 40px;
-	padding: 4rem;
 	background: #fff;
 }
 
@@ -1314,7 +1244,6 @@ article.entry { /* article is present to exclude custom post types from plugins 
 .comment-respond label {
 	display: block;
 	margin-right: 12px;
-	margin-right: 1.2rem;
 }
 
 .comment-list,
@@ -1322,21 +1251,23 @@ article.entry { /* article is present to exclude custom post types from plugins 
 	padding-left: 0;
 }
 
-.comment-list li,
-.ping-list li {
+.comment-list li.comment {
 	list-style-type: none;
 	margin-top: 40px;
-	margin-top: 4rem;
 	padding: 40px;
-	padding: 4rem;
 	width: 100%;
 }
 
-.comment-list li li {
-	margin-right: -40px;
-	margin-right: -4rem;
+.ping-list li.pingback {
+	list-style-type: none;
+	margin-top: 40px;
+	width: 100%;
+}
+
+.comment-list li li.comment {
 	padding-bottom: 0;
 	padding-right: 0;
+	padding-top: 0;
 }
 
 li.comment {
@@ -1351,13 +1282,31 @@ li.comment {
 .bypostauthor {
 }
 
+.entry-pings  {
+	padding-top: 40px;
+}
+
 .entry-pings .reply {
 	display: none;
 }
 
+.comment-content ol,
+.comment-content ul {
+	margin-bottom: 24px;
+}
+
+.comment-content ol li,
+.comment-content ul li {
+	margin-left: 40px;
+}
+
+.comment-content ol ol,
+.comment-content ul ul {
+	margin-bottom: 0;
+}
+
 .form-allowed-tags {
 	font-size: 14px;
-	font-size: 1.4rem;
 }
 
 .form-allowed-tags code {
@@ -1373,16 +1322,13 @@ li.comment {
 
 .sidebar {
 	font-size: 16px;
-	font-size: 1.6rem;
 	margin-top: 40px;
-	margin-top: 4rem;
 }
 
 .sidebar li,
 .after-entry li {
 	list-style-type: none;
 	margin-bottom: 10px;
-	margin-bottom: 1rem;
 	word-wrap: break-word;
 }
 
@@ -1391,9 +1337,7 @@ li.comment {
 .after-entry li ul,
 .after-entry li ol {
 	margin-left: 20px;
-	margin-left: 2rem;
 	margin-top: 10px;
-	margin-top: 1rem;
 }
 
 .sidebar li ul li,
@@ -1412,9 +1356,7 @@ li.comment {
 .after-entry .widget {
 	background-color: #f9f8f2;
 	margin-bottom: 40px;
-	margin-bottom: 4rem;
 	padding: 40px;
-	padding: 4rem;
 }
 
 /* Site Footer
@@ -1429,7 +1371,6 @@ li.comment {
 	color: #9e9d95;
 	clear: both;
 	padding-top: 40px;
-	padding-top: 4rem;
 }
 
 .footer-widgets a {
@@ -1450,7 +1391,6 @@ li.comment {
 .footer-widgets-1,
 .footer-widgets-2 {
 	margin-right: 40px;
-	margin-right: 4rem;
 }
 
 .footer-widgets-1,
@@ -1466,13 +1406,11 @@ li.comment {
 .footer-widgets li {
 	list-style-type: none;
 	margin-bottom: 7px;
-	margin-bottom: .7rem;
 	word-wrap: break-word;
 }
 
 .footer-widgets .widget {
 	margin-bottom: 40px;
-	margin-bottom: 4rem;
 }
 
 /* Footer Creds
@@ -1482,7 +1420,6 @@ li.comment {
 	background-color: #1e1e1d;
 	color: #9e9d95;
 	padding: 40px 0;
-	padding: 4rem 0;
 }
 
 .footer-creds p {
@@ -1505,14 +1442,11 @@ li.comment {
 
 .featured-content .entry {
 	margin-bottom: 20px;
-	margin-bottom: 2rem;
 	padding: 0 0 24px;
-	padding: 0 0 2.4rem;
 }
 
 .featured-content .entry-title {
 	font-size: 24px;
-	font-size: 2.4rem;
 	line-height: 1.2;
 }
 
@@ -1528,9 +1462,7 @@ div.gform_wrapper textarea,
 div.gform_wrapper select,
 div.gform_wrapper .ginput_complex label {
 	font-size: 16px;
-	font-size: 1.6rem;
 	padding: 10px;
-	padding: 1rem;
 }
 
 div.gform_wrapper .ginput_complex label {
@@ -1539,18 +1471,15 @@ div.gform_wrapper .ginput_complex label {
 
 div.gform_wrapper .top_label .gfield_label {
 	margin: 0 0 10px 0;
-	margin: 0 0 1rem 0;
 }
 
 div.gform_wrapper li,
 div.gform_wrapper form li {
 	margin: 16px 0 0;
-	margin: 1.6rem 0 0;
 }
 
 div.gform_wrapper .gform_footer input[type="submit"] {
 	font-size: 14px;
-	font-size: 1.4rem;
 }
 
 /* External Scripts
@@ -1655,7 +1584,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	.entry {
 		margin: 0;
 		padding: 20px 0;
-		padding: 2rem 0;
 	}
 	
 	.content,
@@ -1663,7 +1591,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	.sidebar .widget,
 	.footer-widgets .widget {
 		margin-bottom: 20px;
-		margin-bottom: 2rem;
 	}
 	
 	.nav-bizznis,
@@ -1681,33 +1608,27 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	
 	p {
 		margin: 0 0 20px;
-		margin: 0 0 2rem;
 	}
 	
 	.entry,
 	.navigation,
 	.footer-creds {
 		padding: 20px 0;
-		padding: 2rem 0;
 	}
 
 	.header-content {
 		padding-bottom: 40px;
-		padding-bottom: 4rem;
 		padding-top: 40px;
-		padding-top: 4rem;
 	}
 	
 	.footer-creds,
 	.footer-widgets {
 		padding: 20px 5%;
-		padding: 2rem 5%;
 	}
 
 	.entry-footer .entry-meta {
 		margin: 0;
 		padding: 10px 0;
-		padding: 1rem 0;
 	}
 
 	.footer-widgets-1 {
@@ -1716,7 +1637,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	
 	.comment-respond, .entry-pings {
 		padding-top: 20px;
-		padding-top: 2rem;
 	}
 
 }
@@ -1746,7 +1666,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	.nav-bizznis > .first > a,
 	.nav-bizznis > .last > a {
 		padding: 16px;
-		padding: 1.6rem;
 	}
 	
 }
