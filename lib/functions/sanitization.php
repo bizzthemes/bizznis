@@ -23,7 +23,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function __construct() {
+	public function __construct() {
 		self::$instance =& $this;
 		/**
 		 * Fires when Bizznis_Settings_Sanitizer is initialized.
@@ -40,7 +40,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function add_filter( $filter, $option, array $suboption = null ) {
+	public function add_filter( $filter, $option, array $suboption = null ) {
 		if ( is_array( $suboption ) ) {
 			foreach ( $suboption as $so ) {
 				$this->options[$option][$so] = $filter;
@@ -59,7 +59,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function do_filter( $filter, $new_value, $old_value ) {
+	public function do_filter( $filter, $new_value, $old_value ) {
 		$available_filters = $this->get_available_filters();
 		if ( ! in_array( $filter, array_keys( $available_filters ) ) ) {
 			return $new_value;
@@ -72,12 +72,16 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function get_available_filters() {
+	public function get_available_filters() {
 		$default_filters = array(
 			'one_zero'                 => array( $this, 'one_zero'                 ),
 			'no_html'                  => array( $this, 'no_html'                  ),
 			'absint'                   => array( $this, 'absint'                   ),
 			'safe_html'                => array( $this, 'safe_html'                ),
+			'safe_text'                => array( $this, 'safe_text'                ),
+			'hex_color'                => array( $this, 'hex_color'                ),
+			'hex_color_no_hash'        => array( $this, 'hex_color_no_hash'        ),
+			'maybe_hash_hex_color'     => array( $this, 'maybe_hash_hex_color'     ),
 			'requires_unfiltered_html' => array( $this, 'requires_unfiltered_html' ),
 			'url'                      => array( $this, 'url'                      ),
 			'email_address'            => array( $this, 'email_address'            ),
@@ -97,7 +101,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function sanitize( $new_value, $option ) {
+	public function sanitize( $new_value, $option ) {
 		if ( !isset( $this->options[$option] ) ) {
 			# We are not filtering this option at all
 			return $new_value;
@@ -127,7 +131,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function one_zero( $new_value ) {
+	protected function one_zero( $new_value ) {
 		return (int) (bool) $new_value;
 	}
 
@@ -136,7 +140,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function absint( $new_value ) {
+	protected function absint( $new_value ) {
 		return absint( $new_value );
 	}
 
@@ -145,7 +149,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function no_html( $new_value ) {
+	protected function no_html( $new_value ) {
 		return strip_tags( $new_value );
 	}
 
@@ -154,7 +158,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function url( $new_value ) {
+	protected function url( $new_value ) {
 		return esc_url_raw( $new_value );
 	}
 	
@@ -166,7 +170,7 @@ class Bizznis_Settings_Sanitizer {
 	 * @param string $new_value String, an email address, possibly unsafe
 	 * @return string String a safe email address
 	 */
-	function email_address( $new_value ) {
+	protected function email_address( $new_value ) {
 		return sanitize_email( $new_value );
 	}
 
@@ -175,7 +179,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function safe_html( $new_value ) {
+	protected function safe_html( $new_value ) {
 		return wp_kses_post( $new_value );
 	}
 	
@@ -184,7 +188,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.1.0
 	 */
-	function safe_text( $new_value ) {
+	protected function safe_text( $new_value ) {
 		global $allowedtags;
 		return wp_kses( $new_value , $allowedtags );
 	}
@@ -196,7 +200,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since  1.1.0.
 	 */
-	function hex_color( $new_value ) {
+	protected function hex_color( $new_value ) {
 		if ( '' === $new_value ) {
 			return '';
 		}
@@ -214,7 +218,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since  1.1.0.
 	 */
-	function hex_color_no_hash( $new_value ) {
+	protected function hex_color_no_hash( $new_value ) {
 		$new_value = ltrim( $new_value, '#' );
 		if ( '' === $new_value ) {
 			return '';
@@ -229,7 +233,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since  1.1.0.
 	 */
-	function maybe_hash_hex_color( $new_value ) {
+	protected function maybe_hash_hex_color( $new_value ) {
 		if ( $unhashed = sanitize_hex_color_no_hash( $new_value ) ) {
 			return '#' . $unhashed;
 		}
@@ -241,7 +245,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	function requires_unfiltered_html( $new_value, $old_value ) {
+	protected function requires_unfiltered_html( $new_value, $old_value ) {
 		if ( current_user_can( 'unfiltered_html' ) ) {
 			return $new_value;
 		}
@@ -267,11 +271,20 @@ function bizznis_add_option_filter( $filter, $option, $suboption = null ) {
 }
 
 /**
+ * Adds string sanitization on the fly.
+ *
+ * @since 1.1.1
+ */
+function bizznis_add_string_filter( $filter, $new_value, $old_value = null ) {
+	return Bizznis_Settings_Sanitizer::$instance->do_filter( $filter, $new_value, $old_value );
+}
+
+/**
  * Instantiate the Sanitizer.
  *
  * @since 1.0.0
  */
-add_action( 'admin_init', 'bizznis_settings_sanitizer_init' );
+add_action( 'init', 'bizznis_settings_sanitizer_init' );
 function bizznis_settings_sanitizer_init() {
 	new Bizznis_Settings_Sanitizer;
 }
