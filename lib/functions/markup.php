@@ -113,34 +113,10 @@ function bizznis_attributes_header_widget_area( $attributes ) {
  *
  * @since 1.0.0
  */
-add_filter( 'bizznis_attr_nav-top', 'bizznis_attributes_nav_top' );
-function bizznis_attributes_nav_top( $attributes ) {
-	$attributes['role']      	= 'navigation';
-	$attributes['itemscope'] 	= 'itemscope';
-	$attributes['itemtype']  	= 'http://schema.org/SiteNavigationElement';
-	return $attributes;
-}
-
-/**
- * Add attributes for primary navigation element.
- *
- * @since 1.0.0
- */
-add_filter( 'bizznis_attr_nav-primary', 'bizznis_attributes_nav_primary' );
-function bizznis_attributes_nav_primary( $attributes ) {
-	$attributes['role']      	= 'navigation';
-	$attributes['itemscope'] 	= 'itemscope';
-	$attributes['itemtype']  	= 'http://schema.org/SiteNavigationElement';
-	return $attributes;
-}
-
-/**
- * Add attributes for secondary navigation element.
- *
- * @since 1.0.0
- */
-add_filter( 'bizznis_attr_nav-secondary', 'bizznis_attributes_nav_secondary' );
-function bizznis_attributes_nav_secondary( $attributes ) {
+add_filter( 'bizznis_attr_nav-header', 'bizznis_attributes_nav' );
+add_filter( 'bizznis_attr_nav-primary', 'bizznis_attributes_nav' );
+add_filter( 'bizznis_attr_nav-secondary', 'bizznis_attributes_nav' );
+function bizznis_attributes_nav( $attributes ) {
 	$attributes['role']      	= 'navigation';
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/SiteNavigationElement';
