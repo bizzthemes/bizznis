@@ -5,21 +5,20 @@
 	Please do all modifications in the form of a child theme.
 */
 
-add_filter( 'wp_title', 'bizznis_doctitle_wrap', 20 );
+add_action( 'wp_head', 'bizznis_do_title', 1 );
 /**
- * Wraps the page title in a 'title' element.
+ * Output the title, wrapped in title tags.
  *
- * @since 1.0.0
+ * @since 1.1.1
  */
-if ( ! function_exists( 'bizznis_doctitle_wrap' ) ) :
-function bizznis_doctitle_wrap( $title ) {
-	# Only applies, if not currently in admin, or for a feed.
-	remove_filter( 'wp_title', 'bizznis_doctitle_wrap', 20 );
-	return is_feed() || is_admin() ? $title : sprintf( "<title>%s</title>\n", $title );
+if ( ! function_exists( 'bizznis_do_title' ) ) :
+function bizznis_do_title() {
+	echo '<title>';
+	wp_title();
+	echo '</title>' . "\n";
 }
 endif;
 
-add_action( 'wp_head', 'wp_title', 1 );
 add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
 /**
  * Return filtered post title.
@@ -157,7 +156,7 @@ function bizznis_custom_header() {
 }
 endif;
 
-add_action( 'wp_head', 'bizznis_custom_header_style' );
+add_action( 'bizznis_css', 'bizznis_custom_header_style' );
 /**
  * Custom header callback.
  *
@@ -169,14 +168,17 @@ function bizznis_custom_header_style() {
 	if ( ! current_theme_supports( 'custom-header' ) ) {
 		return;
 	}
+	
 	# Stop here if user specifies their own callback
 	if ( get_theme_support( 'custom-header', 'wp-head-callback' ) ) {
 		return;
 	}
+	
 	# Output nothing if header style isn't present.
 	$output = '';
 	$header_image = get_header_image();
 	$text_color   = get_header_textcolor();
+	
 	# If no options set, don't waste the output. Stop here.
 	if ( empty( $header_image ) && ! display_header_text() && $text_color == get_theme_support( 'custom-header', 'default-text-color' ) ) {
 		return;
@@ -184,22 +186,47 @@ function bizznis_custom_header_style() {
 	$header_selector = get_theme_support( 'custom-header', 'header-selector' );
 	$title_selector  = '.custom-header .site-title';
 	$desc_selector   = '.custom-header .site-description';
+	
 	# Header selector fallback
 	if ( ! $header_selector ) {
 		$header_selector = '.custom-header .title-area';
 	}
+	
 	# Header image CSS, if exists
 	if ( $header_image ) {
-		$output .= sprintf( '%s { background-image: url(%s) !important; background-repeat: no-repeat; background-position: center center; min-width: %spx; min-height: %spx; }', $header_selector, esc_url( $header_image ), get_custom_header()->width, get_custom_header()->height );
-		$output .= sprintf( '%s a { min-width: %spx; min-height: %spx; }', $title_selector, get_custom_header()->width, get_custom_header()->height );
+		
+		bizznis_get_css()->add( array(
+			'selectors'    => array( $header_selector ),
+			'declarations' => array(
+				'background-image'    => 'url("' . esc_url( $header_image ) . '")',
+				'background-repeat'   => 'no-repeat',
+				'background-position' => 'center center',
+				'min-width'			  => get_custom_header()->width . 'px',
+				'min-height'		  => get_custom_header()->height . 'px',
+			)
+		) );
+		
+		bizznis_get_css()->add( array(
+			'selectors'    => array( $title_selector . ' a' ),
+			'declarations' => array(
+				'min-width'			  => get_custom_header()->width . 'px',
+				'min-height'		  => get_custom_header()->height . 'px',
+			)
+		) );
+	
 	}
 	# Header text color CSS, if showing text
 	if ( display_header_text() && $text_color != get_theme_support( 'custom-header', 'default-text-color' ) ) {
-		$output .= sprintf( '%2$s a, %2$s a:hover, %3$s { color: #%1$s !important; }', esc_html( $text_color ), esc_html( $title_selector ), esc_html( $desc_selector ) );
+		
+		bizznis_get_css()->add( array(
+			'selectors'    => array( $title_selector . ' a', $title_selector . ' a:hover', $desc_selector ),
+			'declarations' => array(
+				'color'		  		 => bizznis_add_string_filter( 'maybe_hash_hex_color', $text_color ),
+			)
+		) );
+
 	}
-	if ( $output ) {
-		printf( '<style type="text/css">%s</style>' . "\n", $output );
-	}
+
 }
 endif;
 

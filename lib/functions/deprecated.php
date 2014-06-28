@@ -6,13 +6,26 @@
 */
 
 /**
+ * Deprecated. Wraps the page title in a 'title' element.
+ *
+ * @since 1.0.0
+ * @deprecated 1.1.0
+ */
+function bizznis_doctitle_wrap( $title ) {
+	_deprecated_function( __FUNCTION__, '1.1.1', "bizznis_update_setting" );
+	# Only applies, if not currently in admin, or for a feed.
+	remove_filter( 'wp_title', 'bizznis_doctitle_wrap', 20 );
+	return is_feed() || is_admin() ? $title : sprintf( "<title>%s</title>\n", $title );
+}
+
+/**
  * Deprecated. Push individual setting (or group of setting) into an options db entry stored as an array.
  *
  * @since 1.0.0
  * @deprecated 1.1.0
  */
 function _bizznis_update_settings( $new, $setting = null ) {
-	_deprecated_function( __FUNCTION__, '2.1.0', "bizznis_update_setting" );
+	_deprecated_function( __FUNCTION__, '1.1.0', "bizznis_update_setting" );
 	bizznis_update_settings( $new, $setting );
 }
 
@@ -23,7 +36,7 @@ function _bizznis_update_settings( $new, $setting = null ) {
  * @deprecated 1.1.0
  */
 function bizznis_seo_site_title() {
-	_deprecated_function( __FUNCTION__, '2.1.0', "bizznis_update_setting" );
+	_deprecated_function( __FUNCTION__, '1.1.0', "bizznis_update_setting" );
 	bizznis_site_title();
 }
 
@@ -34,6 +47,6 @@ function bizznis_seo_site_title() {
  * @deprecated 1.1.0
  */
 function bizznis_seo_site_description() {
-	_deprecated_function( __FUNCTION__, '2.1.0', "bizznis_update_setting" );
+	_deprecated_function( __FUNCTION__, '1.1.0', "bizznis_update_setting" );
 	bizznis_site_description();
 }
