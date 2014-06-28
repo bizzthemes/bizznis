@@ -194,7 +194,7 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_home_crumb() {
 		$url   = $this->page_shown_on_front() ? get_permalink( get_option( 'page_on_front' ) ) : trailingslashit( home_url() );
-		$crumb = ( is_home() && is_front_page() ) ? $this->args['home'] : $this->get_breadcrumb_link( $url, sprintf( __( 'View %s', 'bizznis' ), $this->args['home'] ), $this->args['home'] );
+		$crumb = ( is_home() && is_front_page() ) ? $this->args['home'] : $this->get_breadcrumb_link( $url, '', $this->args['home'] );
 		/**
 		 * Filter the Bizznis home breadcrumb.
 		 *
@@ -295,7 +295,7 @@ class Bizznis_Breadcrumb {
 						$crumbs,
 						$this->get_breadcrumb_link(
 							get_permalink( $ancestor ),
-							sprintf( __( 'View %s', 'bizznis' ), get_the_title( $ancestor ) ),
+							'',
 							get_the_title( $ancestor )
 						)
 					);
@@ -329,7 +329,7 @@ class Bizznis_Breadcrumb {
 			$attachment_parent = get_post( $post->post_parent );
 			$crumb = $this->get_breadcrumb_link(
 				get_permalink( $post->post_parent ),
-				sprintf( __( 'View %s', 'bizznis' ), $attachment_parent->post_title ),
+				'',
 				$attachment_parent->post_title,
 				$this->args['sep']
 			);
@@ -355,7 +355,7 @@ class Bizznis_Breadcrumb {
 				foreach ( $categories as $category ) {
 					$crumbs[] = $this->get_breadcrumb_link(
 						get_category_link( $category->term_id ),
-						sprintf( __( 'View all posts in %s', 'bizznis' ), $category->name ),
+						'',
 						$category->name
 					);
 				}
@@ -383,9 +383,12 @@ class Bizznis_Breadcrumb {
 		$post_type = get_query_var( 'post_type' );
 		$post_type_object = get_post_type_object( $post_type );
 		if ( $cpt_archive_link = get_post_type_archive_link( $post_type ) ) {
-			$crumb = $this->get_breadcrumb_link( $cpt_archive_link, sprintf( __( 'View all %s', 'bizznis' ), $post_type_object->labels->name ), $post_type_object->labels->name );
-		}
-		else {
+			$crumb = $this->get_breadcrumb_link(
+				$cpt_archive_link,
+				'',
+				$post_type_object->labels->name
+			);
+		} else {
 			$crumb = $post_type_object->labels->name;
 		}
 		$crumb .= $this->args['sep'] . single_post_title( '', false );
@@ -473,10 +476,11 @@ class Bizznis_Breadcrumb {
 	 * @since 1.0.0
 	 */
 	protected function get_month_crumb() {
+		$year = get_query_var( 'm' ) ? mb_substr( get_query_var( 'm' ), 0, 4 ) : get_query_var( 'year' );
 		$crumb = $this->get_breadcrumb_link(
-			get_year_link( get_query_var( 'year' ) ),
-			sprintf( __( 'View archives for %s', 'bizznis' ), get_query_var( 'year' ) ),
-			get_query_var( 'year' ),
+			get_year_link( $year ),
+			'',
+			$year,
 			$this->args['sep']
 		);
 		$crumb .= $this->args['labels']['date'] . single_month_title( ' ', false );
@@ -498,16 +502,19 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_day_crumb() {
 		global $wp_locale;
+		$year  = get_query_var( 'm' ) ? mb_substr( get_query_var( 'm' ), 0, 4 ) : get_query_var( 'year' );
+		$month = get_query_var( 'm' ) ? mb_substr( get_query_var( 'm' ), 4, 2 ) : get_query_var( 'monthnum' );
+		$day   = get_query_var( 'm' ) ? mb_substr( get_query_var( 'm' ), 6, 2 ) : get_query_var( 'day' );
 		$crumb  = $this->get_breadcrumb_link(
-			get_year_link( get_query_var( 'year' ) ),
-			sprintf( __( 'View archives for %s', 'bizznis' ), get_query_var( 'year' ) ),
-			get_query_var( 'year' ),
+			get_year_link( $year ),
+			'',
+			$year,
 			$this->args['sep']
 		);
 		$crumb .= $this->get_breadcrumb_link(
-			get_month_link( get_query_var( 'year' ), get_query_var( 'monthnum' ) ),
-			sprintf( __( 'View archives for %s %s', 'bizznis' ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), get_query_var( 'year' ) ),
-			$wp_locale->get_month( get_query_var( 'monthnum' ) ),
+			get_month_link( $year, $month ),
+			'',
+			$wp_locale->get_month( $month ),
 			$this->args['sep']
 		);
 		$crumb .= $this->args['labels']['date'] . get_query_var( 'day' ) . date( 'S', mktime( 0, 0, 0, 1, get_query_var( 'day' ) ) );
@@ -574,7 +581,11 @@ class Bizznis_Breadcrumb {
 			$chain[]   = $this->get_term_parents( $parent->parent, $taxonomy, true, $visited );
 		}
 		if ( $link && !is_wp_error( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ) ) ) {
-			$chain[] = $this->get_breadcrumb_link( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ), sprintf( __( 'View all items in %s', 'bizznis' ), $parent->name ), $parent->name );
+			$chain[] = $this->get_breadcrumb_link(
+				get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ),
+				'',
+				$parent->name
+			);
 		} else {
 			$chain[] = $parent->name;
 		}
@@ -592,8 +603,9 @@ class Bizznis_Breadcrumb {
 	 * @param string $sep Separator
 	 * @return string HTML markup for anchor link and optional separator.
 	 */
-	protected function get_breadcrumb_link( $url, $title = '', $content, $sep = false ) {
-		$link = sprintf( '<a href="%s">%s</a>', esc_attr( $url ), esc_html( $content ) );
+	protected function get_breadcrumb_link( $url, $title, $content, $sep = false ) {
+		$title = $title ? ' title="' . esc_attr( $title ) . '"' : '';
+		$link = sprintf( '<a href="%s"%s>%s</a>', esc_attr( $url ), $title, esc_html( $content ) );
 		/**
 		 * Filter the anchor link for a single breadcrumb.
 		 *
