@@ -173,3 +173,65 @@ function bizznis_human_time_diff( $older_date, $newer_date = false ) {
 function bizznis_code( $content ) {
 	return '<code>' . esc_html( $content ) . '</code>';
 }
+
+/**
+ * Sanitizes a hex color.
+ *
+ * This is a copy of the core function for use when the customizer is not being shown.
+ *
+ * @since  1.1.1.
+ *
+ * @param  string         $color    The proposed color.
+ * @return string|null              The sanitized color.
+ */
+if ( ! function_exists( 'sanitize_hex_color' ) ) :
+function sanitize_hex_color( $color ) {
+	if ( '' === $color ) {
+		return '';
+	}
+	# 3 or 6 hex digits, or the empty string.
+	if ( preg_match('|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) ) {
+		return $color;
+	}
+	return null;
+}
+endif;
+
+/**
+ * Sanitizes a hex color without a hash. Use sanitize_hex_color() when possible.
+ *
+ * This is a copy of the core function for use when the customizer is not being shown.
+ *
+ * @since  1.1.1.
+ *
+ * @param  string         $color    The proposed color.
+ * @return string|null              The sanitized color.
+ */
+if ( ! function_exists( 'sanitize_hex_color_no_hash' ) ) :
+function sanitize_hex_color_no_hash( $color ) {
+	$color = ltrim( $color, '#' );
+	if ( '' === $color ) {
+		return '';
+	}
+	return sanitize_hex_color( '#' . $color ) ? $color : null;
+}
+endif;
+
+/**
+ * Ensures that any hex color is properly hashed.
+ *
+ * This is a copy of the core function for use when the customizer is not being shown.
+ *
+ * @since  1.1.1.
+ *
+ * @param  string         $color    The proposed color.
+ * @return string|null              The sanitized color.
+ */
+if ( ! function_exists( 'maybe_hash_hex_color' ) ) :
+function maybe_hash_hex_color( $color ) {
+	if ( $unhashed = sanitize_hex_color_no_hash( $color ) ) {
+		return '#' . $unhashed;
+	}
+	return $color;
+}
+endif;
