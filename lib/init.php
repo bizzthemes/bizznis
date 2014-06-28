@@ -25,74 +25,6 @@ final class Bizznis_Init {
 	}
 	
 	/**
-	 * Loads all the parent theme files
-	 *
-	 * @since 1.0.0
-	 */
-	public function launch() {
-		# Run the hook before bizznis framework is loaded
-		do_action( 'bizznis_pre_load' );
-		# Stop here, if necessary
-	if ( defined( 'BIZZNIS_LOAD_FRAMEWORK' ) && BIZZNIS_LOAD_FRAMEWORK === false ) {
-		return;
-	}
-		# Stop here, if WP is old
-	if ( version_compare( $GLOBALS['wp_version'], '3.6', '<' ) ) {
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/back-compat.php' );
-	}
-		# Load Theme
-		load_template( BIZZNIS_FRONTEND_DIR . '/structure.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/header.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/footer.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/menu.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/layouts.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/post.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/loops.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/comments.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/widget-area.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/archive.php' );
-		load_template( BIZZNIS_FRONTEND_DIR . '/search.php' );
-		# Load Admin
-	if ( is_admin() ) {
-		load_template( BIZZNIS_ADMIN_DIR . '/admin.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/meta-inpost.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/meta-term.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/meta-user.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/upgrade.php' );
-	}
-		# Load Customizer
-		load_template( BIZZNIS_ADMIN_DIR . '/customizer.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/customizer-controls.php' );
-		load_template( BIZZNIS_ADMIN_DIR . '/customizer-helpers.php' );
-		# Load Functions
-		require_if_theme_supports( 'bizznis-breadcrumbs', BIZZNIS_FUNCTIONS_DIR . '/breadcrumb.php' ); #optional
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/compat.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/sanitization.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/general.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/options.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/image.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/markup.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/layout.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/formatting.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/widgetize.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/shortcodes.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/deprecated.php' );
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/menu.php' );
-		# Load Widgets
-		load_template( BIZZNIS_WIDGETS_DIR 	 . '/widgets.php' );
-		# Load Integrations
-		load_template( BIZZNIS_INT_WC_DIR 	 . '/woocommerce.php' );
-		load_template( BIZZNIS_INT_BBP_DIR 	 . '/bbpress.php' );
-		# Load Javascript
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/load-scripts.php' );
-		# Load CSS
-		load_template( BIZZNIS_FUNCTIONS_DIR . '/load-styles.php' );
-		# Load allowed tags
-		global $_bizznis_formatting_allowedtags;
-		$_bizznis_formatting_allowedtags = bizznis_formatting_allowedtags();
-	}
-	
-	/**
 	 * Defines theme constants throughout the template
 	 *
 	 * @since 1.0.0
@@ -100,10 +32,10 @@ final class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.1.0' );
-		define( 'PARENT_THEME_BRANCH', 			'1.0' );
-		define( 'PARENT_DB_VERSION', 			'11000' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1402826400' ) );
+		define( 'PARENT_THEME_VERSION', 		'1.1.1' );
+		define( 'PARENT_THEME_BRANCH', 			'1.1' );
+		define( 'PARENT_DB_VERSION', 			'1110' );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1403956800' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
@@ -176,6 +108,7 @@ final class Bizznis_Init {
 			'default-color' => 'f9f8f2',
 			'default-image' => BIZZNIS_IMAGES_URL . '/background.png',
 		) );
+		# add_theme_support( 'custom-header' );
 		add_theme_support( 'bizznis-footer-widgets', 4 );
 		add_theme_support( 'bizznis-after-entry-widgets' );
 		add_editor_style();
@@ -198,10 +131,84 @@ final class Bizznis_Init {
 	 * @since 1.0.0
 	 */
 	public function i18n() {
-		if ( ! defined( 'BIZZNIS_LANGUAGES_DIR' ) ) { #So we can define with a child theme
+		# Load from WP languages directory
+		if ( $loaded = load_theme_textdomain( 'bizznis', trailingslashit( WP_LANG_DIR ) . 'bizznis' ) ) {
+			define( 'BIZZNIS_LANGUAGES_DIR', trailingslashit( WP_LANG_DIR ) . 'bizznis' );
+		}
+		# So we can define with a child theme
+		if ( ! defined( 'BIZZNIS_LANGUAGES_DIR' ) ) {
 			define( 'BIZZNIS_LANGUAGES_DIR', get_template_directory() . '/lib/languages' );
 		}
 		load_theme_textdomain( 'bizznis', BIZZNIS_LANGUAGES_DIR );
+	}
+	
+	/**
+	 * Loads all the parent theme files
+	 *
+	 * @since 1.0.0
+	 */
+	public function launch() {
+		# Run the hook before bizznis framework is loaded
+		do_action( 'bizznis_pre_load' );
+		# Stop here, if necessary
+	if ( defined( 'BIZZNIS_LOAD_FRAMEWORK' ) && BIZZNIS_LOAD_FRAMEWORK === false ) {
+		return;
+	}
+		# Stop here, if WP is old
+	if ( version_compare( $GLOBALS['wp_version'], '3.6', '<' ) ) {
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/back-compat.php' );
+	}
+		# Load Theme
+		load_template( BIZZNIS_FRONTEND_DIR . '/structure.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/header.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/footer.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/menu.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/layouts.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/post.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/loops.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/comments.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/widget-area.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/archive.php' );
+		load_template( BIZZNIS_FRONTEND_DIR . '/search.php' );
+		# Load Admin
+	if ( is_admin() ) {
+		load_template( BIZZNIS_ADMIN_DIR . '/admin.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/meta-inpost.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/meta-term.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/meta-user.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/upgrade.php' );
+	}
+		# Load Customizer
+		load_template( BIZZNIS_ADMIN_DIR . '/customizer.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/customizer-controls.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/customizer-css.php' );
+		load_template( BIZZNIS_ADMIN_DIR . '/customizer-display.php' );
+		# Load Functions
+		require_if_theme_supports( 'bizznis-breadcrumbs', BIZZNIS_FUNCTIONS_DIR . '/breadcrumb.php' ); #optional
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/compat.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/sanitization.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/general.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/options.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/image.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/markup.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/layout.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/formatting.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/widgetize.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/shortcodes.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/deprecated.php' );
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/menu.php' );
+		# Load Widgets
+		load_template( BIZZNIS_WIDGETS_DIR 	 . '/widgets.php' );
+		# Load Integrations
+		load_template( BIZZNIS_INT_WC_DIR 	 . '/woocommerce.php' );
+		load_template( BIZZNIS_INT_BBP_DIR 	 . '/bbpress.php' );
+		# Load Javascript
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/load-scripts.php' );
+		# Load CSS
+		load_template( BIZZNIS_FUNCTIONS_DIR . '/load-styles.php' );
+		# Load allowed tags
+		global $_bizznis_formatting_allowedtags;
+		$_bizznis_formatting_allowedtags = bizznis_formatting_allowedtags();
 	}
 
 }
