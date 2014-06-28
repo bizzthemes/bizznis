@@ -44,7 +44,6 @@ function bizznis_get_nav_menu( $args = array() ) {
 		return;
 	}
 	$sanitized_location = sanitize_key( $args['theme_location'] );
-	$nav = wp_nav_menu( $args );
 	
 	$nav  = apply_filters( "nav_{$sanitized_location}_before", '', $args );
 	$nav .= wp_nav_menu( $args );
@@ -95,41 +94,4 @@ function bizznis_get_nav_menu( $args = array() ) {
  */
 function bizznis_nav_menu( $args ) {
 	echo bizznis_get_nav_menu( $args );
-}
-
-/**
- * Register the custom menu locations, if theme has support for them.
- *
- * Does the `bizznis_register_nav_menus` action.
- *
- * @since 1.0.0
- */
-add_action( 'after_setup_theme', 'bizznis_register_nav_menus' );
-function bizznis_register_nav_menus() {
-	# Stop here if menus not supported
-	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
-		return;
-	}
-	$menus = get_theme_support( 'bizznis-menus' );
-	# Register supported menus
-	register_nav_menus( (array) $menus[0] );
-	do_action( 'bizznis_register_nav_menus' );
-}
-
-/**
- * Add navigation menu description
- *
- * Optionally call it inside a child theme
- *
- * @since 1.0.0
- */
-// add_filter( 'walker_nav_menu_start_el', 'bizznis_add_menu_description', 10, 2 );
-function bizznis_add_menu_description( $item_output, $item ) {
-	$description = $item->post_content;
-	if ( ' ' !== $description ) {
-		return preg_replace( '/(<a.*?>[^<]*?)</', '$1' . '<span class="menu-description">' . $description . '</span><', $item_output);
-	}
-	 else {
-		return $item_output;
-	}
 }

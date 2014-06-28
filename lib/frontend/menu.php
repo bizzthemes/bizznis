@@ -5,6 +5,25 @@
 	Please do all modifications in the form of a child theme.
 */
 
+/**
+ * Register the custom menu locations, if theme has support for them.
+ *
+ * Does the `bizznis_register_nav_menus` action.
+ *
+ * @since 1.0.0
+ */
+add_action( 'after_setup_theme', 'bizznis_register_nav_menus' );
+function bizznis_register_nav_menus() {
+	# Stop here if menus not supported
+	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
+		return;
+	}
+	$menus = get_theme_support( 'bizznis-menus' );
+	# Register supported menus
+	register_nav_menus( (array) $menus[0] );
+	do_action( 'bizznis_register_nav_menus' );
+}
+
 add_action( 'bizznis_header_top', 'bizznis_do_nav' );
 /**
  * Echo the "Primary Navigation" menu.
@@ -110,3 +129,21 @@ function bizznis_header_menu_wrap( $menu ) {
 	return sprintf( '<nav %s>', bizznis_attr( 'nav-header', array( 'class' => 'nav-bizznis nav-header' ) ) ) . $menu . '</nav>';
 }
 endif;
+
+/**
+ * Add navigation menu description
+ *
+ * Optionally call it inside a child theme
+ *
+ * @since 1.0.0
+ */
+// add_filter( 'walker_nav_menu_start_el', 'bizznis_add_menu_description', 10, 2 );
+function bizznis_add_menu_description( $item_output, $item ) {
+	$description = $item->post_content;
+	if ( ' ' !== $description ) {
+		return preg_replace( '/(<a.*?>[^<]*?)</', '$1' . '<span class="menu-description">' . $description . '</span><', $item_output);
+	}
+	 else {
+		return $item_output;
+	}
+}
