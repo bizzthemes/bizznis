@@ -51,17 +51,26 @@ class Bizznis_Featured_Page extends WP_Widget {
 	 * Echo the widget content.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @global WP_Query $wp_query Query object.
+	 * @global integer  $more
+	 *
+	 * @param array $args Display arguments including before_title, after_title, before_widget, and after_widget.
+	 * @param array $instance The settings for the particular instance of the widget
 	 */
 	function widget( $args, $instance ) {
 		global $wp_query;
-		extract( $args );
+		
 		# Merge with defaults
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
-		echo $before_widget;
+		
+		echo $args['before_widget'];
+		
 		# Set up the title
 		if ( ! empty( $instance['title'] ) ) {
-			echo $before_title . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $after_title;
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
 		}
+		
 		$wp_query = new WP_Query( array( 'page_id' => $instance['page_id'] ) );
 		if ( have_posts() ) : while ( have_posts() ) : the_post();
 			printf( '<article %s>', bizznis_attr( 'entry', array( 'class' => implode( ' ', get_post_class() ) ) ) );
@@ -75,14 +84,17 @@ class Bizznis_Featured_Page extends WP_Widget {
 				printf( '<a href="%s" title="%s" class="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), esc_attr( $instance['image_alignment'] ), $image );
 			}
 			if ( ! empty( $instance['show_title'] ) ) {
-				printf( '<header class="entry-header"><h2 class="entry-title"><a href="%s" title="%s">%s</a></h2></header>', get_permalink(), the_title_attribute( 'echo=0' ), get_the_title() );
+				$title = get_the_title() ? get_the_title() : __( '(no title)', 'bizznis' );
+				printf( '<header class="entry-header"><h2 class="entry-title"><a href="%s">%s</a></h2></header>', get_permalink(), esc_html( $title ) );
 			}
 			if ( ! empty( $instance['show_content'] ) ) {
 				echo '<div class="entry-content">';
 				if ( empty( $instance['content_limit'] ) ) {
 					global $more;
+					$orig_more = $more;
 					$more = 0;
 					the_content( $instance['more_text'] );
+					$more = $orig_more;
 				} else {
 					the_content_limit( (int) $instance['content_limit'], esc_html( $instance['more_text'] ) );
 				}
@@ -91,9 +103,11 @@ class Bizznis_Featured_Page extends WP_Widget {
 			echo  '</article>';
 			endwhile;
 		endif;
+		
 		# Restore original query
 		wp_reset_query();
-		echo $after_widget;
+		
+		echo $args['after_widget'];
 	}
 
 	/**

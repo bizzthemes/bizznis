@@ -52,13 +52,15 @@ class Bizznis_Page_List extends WP_Widget {
 	 */
 	function widget( $args, $instance ) {
 		global $wp_query;
-		extract( $args );
+
 		# Merge with defaults
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
+		
 		# Bulletproof ordering
 		if ( $instance['sort_column'] == 'menu_order' ) {
 			$instance['sort_column'] = 'menu_order, post_title';
 		}
+		
 		# Get page list
 		$out = wp_list_pages( apply_filters('widget_pages_list_args', array(
 			'title_li'			=> '',
@@ -70,21 +72,23 @@ class Bizznis_Page_List extends WP_Widget {
 			'link_before'		=> $instance['link_before'],
 			'link_after'		=> $instance['link_after']
 		) ) );
+		
 		# stop if nothing to show
 		if ( empty( $out ) ) {
 			return;
 		}
+		
 		# start
-		echo $before_widget;
+		echo $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
-			echo $before_title . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $after_title;
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
 		}
 		?>
 		<ul>
 			<?php echo $out; ?>
 		</ul>
 		<?php
-		echo $after_widget;
+		echo $args['after_widget'];
 		# end
 	}
 
