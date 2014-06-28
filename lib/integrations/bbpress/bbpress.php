@@ -165,7 +165,7 @@ class Bizznis_BBP {
  * @since 1.0.0
  */
 add_action( 'bbp_after_setup_theme', 'bizznis_bbp_integration' );
-function bizznis_bbp_integration() {
+function bizznis_bbp_integration() {		
 	$bizznis = new Bizznis_BBP; #ready, set, go!
 	$bizznis->launch();
 }
