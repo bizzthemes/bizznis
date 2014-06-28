@@ -18,6 +18,12 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.1.1
+* Fixed breadcrumbs
+* Fixed double DB menu query
+* Added custom CSS support to customizer
+* Removed rem units from CSS styling
+
 ### 1.1.0
 * Moved all theme settings to customizer
 * Moved all SEO to a plugin
