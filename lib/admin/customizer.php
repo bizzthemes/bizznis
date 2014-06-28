@@ -6,7 +6,10 @@
 */
 
 /**
- * 
+ * This class creates customizer settings and is extended by subclasses that 
+ * define specific types of customizer settings.
+ *
+ * @since 1.1.0
  */
 abstract class Bizznis_Customizer_Base {
 		
@@ -73,7 +76,9 @@ abstract class Bizznis_Customizer_Base {
 }
 
 /**
- * 
+ * Subclass of Bizznis_Customizer_Base which adds support for general theme settings.
+ *
+ * @since 1.1.0
  */
 class Bizznis_Customizer extends Bizznis_Customizer_Base {
 
@@ -239,6 +244,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		$this->custom_scripts( $wp_customize );
 		$this->header( $wp_customize );
 		$this->background( $wp_customize );
+		$this->color( $wp_customize );
 		
 	}
 
@@ -377,6 +383,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		if ( ! current_theme_supports( 'bizznis-menus' ) && ! bizznis_nav_menu_supported( 'primary' ) ) {
 			return;
 		}
+		
 		//* Nav Extras Selector
 		if ( ! has_nav_menu( 'primary' ) ) {
 			return;
@@ -400,13 +407,13 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		
 		//* Setting key and default value array
 		$settings = array(
-			'nav_extras_enable'       => 0,
-			'nav_extras'       	      => 'date',
-			'nav_extras_twitter_id'   => '',
-			'nav_extras_twitter_text' => '',
+			'nav_extras_enable',
+			'nav_extras',
+			'nav_extras_twitter_id',
+			'nav_extras_twitter_text',
 		);
 
-		foreach ( $settings as $setting => $default ) {
+		foreach ( $settings as $setting ) {
 
 			$wp_customize->add_setting(
 				$this->get_field_name( $setting ),
@@ -492,14 +499,14 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		);
 		
 		$settings = array(
-			'breadcrumb_home'       => 'Homepage',
-			'breadcrumb_front_page' => 'Front Page',
-			'breadcrumb_posts_page' => 'Posts Page',
-			'breadcrumb_single'     => 'Single',
-			'breadcrumb_page'       => 'Page',
-			'breadcrumb_archive'    => 'Archive',
-			'breadcrumb_404'        => '404',
-			'breadcrumb_attachment' => 'Attachment/Media',
+			'breadcrumb_home'       => __( 'Homepage', 'bizznis' ),
+			'breadcrumb_front_page' => __( 'Front Page', 'bizznis' ),
+			'breadcrumb_posts_page' => __( 'Posts Page', 'bizznis' ),
+			'breadcrumb_single'     => __( 'Single', 'bizznis' ),
+			'breadcrumb_page'       => __( 'Page', 'bizznis' ),
+			'breadcrumb_archive'    => __( 'Archive', 'bizznis' ),
+			'breadcrumb_404'        => __( '404', 'bizznis' ),
+			'breadcrumb_attachment' => __( 'Attachment/Media', 'bizznis' ),
 		);
 
 		foreach ( $settings as $setting => $label ) {
@@ -588,15 +595,15 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 
 		//* Setting key and default value array
 		$settings = array(
-			'content_archive'           => 'full',
-			'content_archive_limit'     => '',
-			'content_archive_thumbnail' => 0,
-			'image_size'                => '',
-			'image_alignment'           => 'alignleft',
-			'posts_nav'                 => 'numeric',
+			'content_archive',
+			'content_archive_limit',
+			'content_archive_thumbnail',
+			'image_size',
+			'image_alignment',
+			'posts_nav',
 		);
 
-		foreach ( $settings as $setting => $default ) {
+		foreach ( $settings as $setting ) {
 
 			$wp_customize->add_setting(
 				$this->get_field_name( $setting ),
@@ -760,6 +767,9 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		//* Allows these settings to update asynchronously in the Preview pane.
 		$wp_customize->get_setting( 'blogname' )->transport        = 'postMessage';
 		$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
+		
+		//* Move Header Color to Header section
+		$wp_customize->get_control( 'header_textcolor' )->section = 'header_image';
 	
 		//* Header Selector
 		if ( current_theme_supports( 'bizznis-custom-header' ) || current_theme_supports( 'custom-header' ) ) {
@@ -771,12 +781,12 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		
 		//* Setting key and default value array
 		$settings = array(
-			'blog_title'          => 'text',
-			'hide_site_title'     => 0,
-			'hide_tagline' 	      => 0,
+			'blog_title',
+			'hide_site_title',
+			'hide_tagline',
 		);
 
-		foreach ( $settings as $setting => $default ) {
+		foreach ( $settings as $setting ) {
 
 			$wp_customize->add_setting(
 				$this->get_field_name( $setting ),
@@ -847,7 +857,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		);
 		
 	}
-	
+		
 	private function background( $wp_customize ) {
 	
 		//* Color Selector
@@ -872,14 +882,60 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		$wp_customize->get_control( 'background_attachment' )->priority = $priority->add();
 		
 	}
+	
+	private function color( $wp_customize ) {
+	
+		//* Color Selector
+		if ( is_child_theme() ) {
+			return;
+		}
+		
+		//* Setting the priority
+		$priority = new Bizznis_Prioritizer( 120, 1 );
+		
+		//* Setting key and default value array
+		$settings = array(
+			'primary_color' 	=> __( 'Primary Color', 'bizznis' ),
+			'link_color' 	    => __( 'Link Color', 'bizznis' ),
+			'text_color' 		=> __( 'Text Color', 'bizznis' ),
+			'detail_color' 		=> __( 'Detail Color', 'bizznis' ),
+		);
+
+		foreach ( $settings as $setting => $label ) {
+
+			$wp_customize->add_setting(
+				'bizznis_' . $setting,
+				array(
+					'default' => '',
+					'type'    => 'theme_mod',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Color_Control(
+					$wp_customize,
+					'bizznis_' . $setting,
+					array(
+						'section'  => 'colors',
+						'settings' => 'bizznis_' . $setting,
+						'label'    => $label,
+						'priority' => $priority->add()
+					)
+				)
+			);
+
+		}
+		
+	}
 
 }
 
 /**
- * 
+ * Initiate Bizznis_Customizer class.
+ *
+ * @since 1.1.0
  */
-add_action( 'init', 'bizznis_customizer_init' );
+add_action( 'after_setup_theme', 'bizznis_customizer_init' );
 function bizznis_customizer_init() {
 	new Bizznis_Customizer;
 }
-

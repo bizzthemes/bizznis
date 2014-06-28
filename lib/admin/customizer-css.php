@@ -262,3 +262,77 @@ function bizznis_get_css() {
 	return Bizznis_CSS::instance();
 }
 
+/**
+ * Make sure the 'bizznis_css' action only runs once.
+ *
+ * @since  1.1.1.
+ *
+ * @return void
+ */
+add_action( 'admin_init', 'bizznis_add_customizations' );
+function bizznis_add_customizations() {
+	do_action( 'bizznis_css' );
+}
+
+/**
+ * Generates the style tag and CSS needed for the theme options.
+ *
+ * By using the "bizznis_css" filter, different components can print CSS in the header. It is organized this way to
+ * ensure that there is only one "style" tag and not a proliferation of them.
+ *
+ * @since  1.1.0.
+ *
+ * @return void
+ */
+add_action( 'wp_head', 'bizznis_display_customizations', 11 );
+function bizznis_display_customizations() {
+	do_action( 'bizznis_css' );
+
+	# Echo the rules
+	$css = bizznis_get_css()->build();
+	if ( ! empty( $css ) ) {
+		echo "\n<!-- Begin One Custom CSS -->\n<style type=\"text/css\" id=\"bizznis-one-custom-css\">\n";
+		echo $css;
+		echo "\n</style>\n<!-- End One Custom CSS -->\n";
+	}
+}
+
+/**
+ * Generates the theme option CSS as an Ajax response
+ *
+ * @since  1.1.0.
+ *
+ * @return void
+ */
+add_action( 'wp_ajax_bizznis-css', 'bizznis_ajax_display_customizations' );
+function bizznis_ajax_display_customizations() {
+	# Make sure this is an Ajax request
+	if ( ! defined( 'DOING_AJAX' ) || true !== DOING_AJAX ) {
+		return;
+	}
+	
+	# Set the content type
+	header( "Content-Type: text/css" );
+	
+	# Echo the rules
+	echo bizznis_get_css()->build();
+
+	# End the Ajax response
+	die();
+}
+
+/**
+ * Make sure theme option CSS is added to TinyMCE last, to override other styles.
+ *
+ * @since  1.1.0.
+ *
+ * @param  string    $stylesheets    List of stylesheets added to TinyMCE.
+ * @return string                    Modified list of stylesheets.
+ */
+add_filter( 'mce_css', 'bizznis_mce_css', 99 );
+function bizznis_mce_css( $stylesheets ) {
+	if ( bizznis_get_css()->build() ) {
+		$stylesheets .= ',' . add_query_arg( 'action', 'bizznis-css', admin_url( 'admin-ajax.php' ) );
+	}
+	return $stylesheets;
+}
