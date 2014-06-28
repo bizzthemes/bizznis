@@ -893,9 +893,23 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		//* Setting the priority
 		$priority = new Bizznis_Prioritizer( 120, 1 );
 		
+		$wp_customize->add_control(
+			new Bizznis_Customize_Misc_Control(
+				$wp_customize,
+				'color_info',
+				array(
+					'section'     => 'colors',
+					'type'        => 'info',
+					'description' => __( 'Note that this color control was added only for the proof of concept. You should add your own CSS controls inside your child themes, where you can and add much more CSS styling options.', 'bizznis' ),
+					'priority'    => $priority->add()
+				)
+			)
+		);
+		
 		//* Setting key and default value array
 		$settings = array(
 			'primary_color' 	=> __( 'Primary Color', 'bizznis' ),
+			'secondary_color' 	=> __( 'Secondary Color', 'bizznis' ),
 			'link_color' 	    => __( 'Link Color', 'bizznis' ),
 			'text_color' 		=> __( 'Text Color', 'bizznis' ),
 			'detail_color' 		=> __( 'Detail Color', 'bizznis' ),

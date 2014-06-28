@@ -27,6 +27,7 @@ function bizznis_css_add_rules() {
 	 */
 	// Get and escape options
 	$color_primary   = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_primary_color' ) );
+	$color_secondary = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_secondary_color' ) );
 	$color_link      = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_link_color' ) );
 	$color_text      = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_text_color' ) );
 	$color_detail    = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_detail_color' ) );
@@ -35,14 +36,81 @@ function bizznis_css_add_rules() {
 	if ( $color_primary ) {
 		bizznis_get_css()->add( array(
 			'selectors'    => array( 
+				'.color-primary-color',
 				'.entry-title a',
-				'.widget-title',
-				'.widget-title a',
-				'.menu-bizznis a',
+				'.nav-secondary a',
 			),
 			'declarations' => array(
 				'color' => $color_primary
 			)
+		) );
+		bizznis_get_css()->add( array(
+			'selectors'    => array(
+				'.color-primary-background',
+				'.nav-primary',
+				'.footer-widgets',
+				'.footer-creds',
+			),
+			'declarations' => array(
+				'background-color' => $color_primary
+			)
+		) );
+		bizznis_get_css()->add( array(
+			'selectors'    => array(
+				'input',
+				'select',
+				'textarea',
+				'.color-primary-border',
+				'.site-main',
+				'.menu-bizznis .sub-menu a',
+				'.nav-secondary',
+				'.nav-header .sub-menu',
+				'article.entry',
+				'.archive-pagination',
+				'.entry-pagination',
+				'.entry-pings',
+			),
+			'declarations' => array(
+				'border-color' => $color_primary
+			)
+		) );
+	}
+	
+	// Secondary color
+	if ( $color_secondary ) {
+		bizznis_get_css()->add( array(
+			'selectors'    => array( 
+				'.nav-primary',
+				'.nav-primary a',
+				'.footer-widgets',
+				'.footer-widgets a',
+				'.footer-creds',
+				'.footer-creds a',
+			),
+			'declarations' => array(
+				'color' => $color_secondary
+			)
+		) );
+		bizznis_get_css()->add( array(
+			'selectors'    => array(
+				'.author-box',
+				'.archive-description',
+				'li.comment',
+				'.sidebar .widget',
+				'.after-entry .widget',
+			),
+			'declarations' => array(
+				'background-color' => $color_secondary
+			)
+		) );
+		bizznis_get_css()->add( array(
+			'selectors'    => array(
+				'.footer-widgets',
+			),
+			'declarations' => array(
+				'border-color' => $color_secondary
+			),
+			'media'        => 'screen and (min-width: 800px)' # Also define media query if needed
 		) );
 	}
 
@@ -75,7 +143,11 @@ function bizznis_css_add_rules() {
 	// Detail color
 	if ( $color_detail ) {
 		bizznis_get_css()->add( array(
-			'selectors'    => array( '.bizznis_detail_color-text', '.entry-meta', '.breadcrumb' ),
+			'selectors'    => array(
+				'.bizznis_detail_color-text',
+				'.entry-meta',
+				'.breadcrumb',
+			),
 			'declarations' => array(
 				'color' => $color_detail
 			)
