@@ -51,8 +51,7 @@ class Bizznis_Page_List extends WP_Widget {
 	 * @since 1.0.0
 	 */
 	function widget( $args, $instance ) {
-		global $wp_query;
-
+	
 		# Merge with defaults
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		
