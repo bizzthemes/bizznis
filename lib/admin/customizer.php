@@ -900,7 +900,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				array(
 					'section'     => 'colors',
 					'type'        => 'info',
-					'description' => __( 'You should add your own CSS controls inside your child themes, where you can and add much more CSS styling options.', 'bizznis' ),
+					'description' => __( 'You should add your own CSS controls inside your child theme, where you can and add much more CSS styling options.', 'bizznis' ),
 					'priority'    => $priority->add()
 				)
 			)
