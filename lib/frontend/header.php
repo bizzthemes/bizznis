@@ -14,7 +14,7 @@ add_action( 'wp_head', 'bizznis_do_title', 1 );
 if ( ! function_exists( 'bizznis_do_title' ) ) :
 function bizznis_do_title() {
 	echo '<title>';
-	wp_title();
+	wp_title( '' );
 	echo '</title>' . "\n";
 }
 endif;
