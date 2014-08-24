@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bizznis Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-28 18:20+0100\n"
-"PO-Revision-Date: 2014-06-28 18:21+0100\n"
+"POT-Creation-Date: 2014-08-24 17:14+0100\n"
+"PO-Revision-Date: 2014-08-24 17:14+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -93,265 +93,249 @@ msgstr ""
 msgid "Follow us on Twitter"
 msgstr ""
 
-#: ../lib/admin/customizer.php:265
+#: ../lib/admin/customizer.php:262
 msgid "Custom Styles"
 msgstr ""
 
-#: ../lib/admin/customizer.php:280
+#: ../lib/admin/customizer.php:277
 msgid "Default"
 msgstr ""
 
-#: ../lib/admin/customizer.php:291
+#: ../lib/admin/customizer.php:288
 msgid "Select Color Style"
 msgstr ""
 
-#: ../lib/admin/customizer.php:310
+#: ../lib/admin/customizer.php:307
 msgid "Site Layout"
 msgstr ""
 
-#: ../lib/admin/customizer.php:326
+#: ../lib/admin/customizer.php:323
 msgid "Select Default Layout"
 msgstr ""
 
-#: ../lib/admin/customizer.php:342
+#: ../lib/admin/customizer.php:339
 msgid ""
 "This layout can also be overridden in the post/page/term layout options on "
 "each post/page/term."
 msgstr ""
 
-#: ../lib/admin/customizer.php:366
+#: ../lib/admin/customizer.php:363
 msgid "Select bbPress Layout"
 msgstr ""
 
-#: ../lib/admin/customizer.php:402
+#: ../lib/admin/customizer.php:396
 msgid "Primary Menu Extra"
 msgstr ""
 
-#: ../lib/admin/customizer.php:431
+#: ../lib/admin/customizer.php:425
 msgid "Enable Extras on Right Side?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:442
+#: ../lib/admin/customizer.php:436
 msgid "Display the following"
 msgstr ""
 
-#: ../lib/admin/customizer.php:447
+#: ../lib/admin/customizer.php:441
 msgid "Today's date"
 msgstr ""
 
-#: ../lib/admin/customizer.php:448
+#: ../lib/admin/customizer.php:442
 msgid "Search form"
 msgstr ""
 
-#: ../lib/admin/customizer.php:449
+#: ../lib/admin/customizer.php:443
 msgid "Twitter link"
 msgstr ""
 
-#: ../lib/admin/customizer.php:458
+#: ../lib/admin/customizer.php:452
 msgid "Enter Twitter ID"
 msgstr ""
 
-#: ../lib/admin/customizer.php:468
+#: ../lib/admin/customizer.php:462
 msgid "Twitter Link Text"
 msgstr ""
 
-#: ../lib/admin/customizer.php:494
+#: ../lib/admin/customizer.php:488
 msgid "Breadcrumbs"
 msgstr ""
 
-#: ../lib/admin/customizer.php:495
+#: ../lib/admin/customizer.php:489
 msgid ""
 "Breadcrumbs are a great way of letting your visitors find out where they are "
 "on your site with just a glance."
 msgstr ""
 
-#: ../lib/admin/customizer.php:502
+#: ../lib/admin/customizer.php:496
 msgid "Homepage"
 msgstr ""
 
-#: ../lib/admin/customizer.php:503
+#: ../lib/admin/customizer.php:497
 msgid "Front Page"
 msgstr ""
 
-#: ../lib/admin/customizer.php:504
+#: ../lib/admin/customizer.php:498
 msgid "Posts Page"
 msgstr ""
 
-#: ../lib/admin/customizer.php:505
+#: ../lib/admin/customizer.php:499
 msgid "Single"
 msgstr ""
 
-#: ../lib/admin/customizer.php:506 ../lib/widgets/featured-page-widget.php:142
+#: ../lib/admin/customizer.php:500 ../lib/widgets/featured-page-widget.php:142
 msgid "Page"
 msgstr ""
 
-#: ../lib/admin/customizer.php:507
+#: ../lib/admin/customizer.php:501
 msgid "Archive"
 msgstr ""
 
-#: ../lib/admin/customizer.php:508
+#: ../lib/admin/customizer.php:502
 msgid "404"
 msgstr ""
 
-#: ../lib/admin/customizer.php:509
+#: ../lib/admin/customizer.php:503
 msgid "Attachment/Media"
 msgstr ""
 
-#: ../lib/admin/customizer.php:545
+#: ../lib/admin/customizer.php:539
 msgid "Comments and Trackbacks"
 msgstr ""
 
-#: ../lib/admin/customizer.php:551
+#: ../lib/admin/customizer.php:545
 msgid "Enable Comments on Posts?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:552
+#: ../lib/admin/customizer.php:546
 msgid "Enable Comments on Pages?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:553
+#: ../lib/admin/customizer.php:547
 msgid "Enable Trackbacks on Posts?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:554
+#: ../lib/admin/customizer.php:548
 msgid "Enable Trackbacks on Pages?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:590
+#: ../lib/admin/customizer.php:584
 msgid "Content Archives"
 msgstr ""
 
-#: ../lib/admin/customizer.php:591
+#: ../lib/admin/customizer.php:585
 msgid ""
 "These options will affect any blog listings page, including archive, author, "
 "blog, category, search, and tag pages."
 msgstr ""
 
-#: ../lib/admin/customizer.php:621
+#: ../lib/admin/customizer.php:615
 msgid "Select one of the following"
 msgstr ""
 
-#: ../lib/admin/customizer.php:626
+#: ../lib/admin/customizer.php:620
 msgid "Display post content"
 msgstr ""
 
-#: ../lib/admin/customizer.php:627
+#: ../lib/admin/customizer.php:621
 msgid "Display post excerpts"
 msgstr ""
 
-#: ../lib/admin/customizer.php:636
+#: ../lib/admin/customizer.php:630
 msgid "Limit content to how many characters? (0 for no limit)"
 msgstr ""
 
-#: ../lib/admin/customizer.php:650
+#: ../lib/admin/customizer.php:644
 msgid "Featured image"
 msgstr ""
 
-#: ../lib/admin/customizer.php:659
+#: ../lib/admin/customizer.php:653
 msgid "Display the featured image?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:670
+#: ../lib/admin/customizer.php:664
 msgid "Featured image size"
 msgstr ""
 
-#: ../lib/admin/customizer.php:682
+#: ../lib/admin/customizer.php:676
 msgid "Featured image alignment"
 msgstr ""
 
-#: ../lib/admin/customizer.php:687
+#: ../lib/admin/customizer.php:681
 msgid "- None -"
 msgstr ""
 
-#: ../lib/admin/customizer.php:688 ../lib/widgets/featured-page-widget.php:164
+#: ../lib/admin/customizer.php:682 ../lib/widgets/featured-page-widget.php:164
 msgid "Left"
 msgstr ""
 
-#: ../lib/admin/customizer.php:689 ../lib/widgets/featured-page-widget.php:165
+#: ../lib/admin/customizer.php:683 ../lib/widgets/featured-page-widget.php:165
 msgid "Right"
 msgstr ""
 
-#: ../lib/admin/customizer.php:698
+#: ../lib/admin/customizer.php:692
 msgid "Navigation technique"
 msgstr ""
 
-#: ../lib/admin/customizer.php:703
+#: ../lib/admin/customizer.php:697
 msgid "Previous / Next"
 msgstr ""
 
-#: ../lib/admin/customizer.php:704
+#: ../lib/admin/customizer.php:698
 msgid "Numeric"
 msgstr ""
 
-#: ../lib/admin/customizer.php:720 ../lib/admin/meta-inpost.php:81
-msgid "Scripts"
-msgstr ""
-
-#: ../lib/admin/customizer.php:727 ../lib/admin/customizer.php:731
-#, php-format
-msgid "%s scripts"
-msgstr ""
-
-#: ../lib/admin/customizer.php:728 ../lib/admin/customizer.php:732
-#, php-format
-msgid ""
-"The %1$s hook executes immediately before the closing %2$s tag in the "
-"document source."
-msgstr ""
-
-#: ../lib/admin/customizer.php:804
+#: ../lib/admin/customizer.php:745
 msgid "Display Option"
 msgstr ""
 
-#: ../lib/admin/customizer.php:809
+#: ../lib/admin/customizer.php:750
 msgid "Site Title &amp; Tagline"
 msgstr ""
 
-#: ../lib/admin/customizer.php:810
+#: ../lib/admin/customizer.php:751
 msgid "Image logo"
 msgstr ""
 
-#: ../lib/admin/customizer.php:823
+#: ../lib/admin/customizer.php:764
 msgid ""
 "This option will either pick the header image logo.png in your child theme's "
 "style.css file or show site title and tagline."
 msgstr ""
 
-#: ../lib/admin/customizer.php:836
+#: ../lib/admin/customizer.php:777
 msgid "Remove Site Title?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:851
+#: ../lib/admin/customizer.php:792
 msgid "Remove Tagline?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:872
+#: ../lib/admin/customizer.php:813
 msgid "Background"
 msgstr ""
 
-#: ../lib/admin/customizer.php:903
+#: ../lib/admin/customizer.php:844
 msgid ""
-"You should add your own CSS controls inside your child themes, where you can "
+"You should add your own CSS controls inside your child theme, where you can "
 "and add much more CSS styling options."
 msgstr ""
 
-#: ../lib/admin/customizer.php:911
+#: ../lib/admin/customizer.php:852
 msgid "Primary Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:912
+#: ../lib/admin/customizer.php:853
 msgid "Secondary Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:913
+#: ../lib/admin/customizer.php:854
 msgid "Link Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:914
+#: ../lib/admin/customizer.php:855
 msgid "Text Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:915
+#: ../lib/admin/customizer.php:856
 msgid "Detail Color"
 msgstr ""
 
@@ -372,6 +356,10 @@ msgstr ""
 
 #: ../lib/admin/meta-inpost.php:43
 msgid "Custom Post Class"
+msgstr ""
+
+#: ../lib/admin/meta-inpost.php:81
+msgid "Scripts"
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:94
@@ -576,15 +564,15 @@ msgstr ""
 msgid "Sorry, no content matched your criteria."
 msgstr ""
 
-#: ../lib/frontend/post.php:342
+#: ../lib/frontend/post.php:346
 msgid "About"
 msgstr ""
 
-#: ../lib/frontend/post.php:420 ../lib/frontend/post.php:469
+#: ../lib/frontend/post.php:424 ../lib/frontend/post.php:473
 msgid "Previous Page"
 msgstr ""
 
-#: ../lib/frontend/post.php:421 ../lib/frontend/post.php:495
+#: ../lib/frontend/post.php:425 ../lib/frontend/post.php:499
 msgid "Next Page"
 msgstr ""
 
@@ -778,7 +766,7 @@ msgid "(no title)"
 msgstr ""
 
 #: ../lib/widgets/featured-page-widget.php:138
-#: ../lib/widgets/page-list-widget.php:119
+#: ../lib/widgets/page-list-widget.php:118
 msgid "Title"
 msgstr ""
 
@@ -822,66 +810,66 @@ msgstr ""
 msgid "Bizznis - Page List"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:123
+#: ../lib/widgets/page-list-widget.php:122
 msgid "Sort by"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:125
+#: ../lib/widgets/page-list-widget.php:124
 msgid "Page title"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:126
+#: ../lib/widgets/page-list-widget.php:125
 msgid "Menu order"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:127
+#: ../lib/widgets/page-list-widget.php:126
 msgid "Publish date"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:128
+#: ../lib/widgets/page-list-widget.php:127
 msgid "Modified date"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:132
+#: ../lib/widgets/page-list-widget.php:131
 msgid "Order by"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:134
+#: ../lib/widgets/page-list-widget.php:133
 msgid "Ascending"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:135
+#: ../lib/widgets/page-list-widget.php:134
 msgid "Descending"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:139
+#: ../lib/widgets/page-list-widget.php:138
 msgid "Child Of"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:140
+#: ../lib/widgets/page-list-widget.php:139
 msgid "- Select -"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:143
+#: ../lib/widgets/page-list-widget.php:142
 msgid "Exclude"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:146
+#: ../lib/widgets/page-list-widget.php:145
 msgid "Page IDs, separated by commas."
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:149
+#: ../lib/widgets/page-list-widget.php:148
 msgid "Before link"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:152
+#: ../lib/widgets/page-list-widget.php:151
 msgid "Sets the text or html that precedes the link text inside &lt;a&gt; tag."
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:155
+#: ../lib/widgets/page-list-widget.php:154
 msgid "After link"
 msgstr ""
 
-#: ../lib/widgets/page-list-widget.php:158
+#: ../lib/widgets/page-list-widget.php:157
 msgid "Sets the text or html that follows the link text inside &lt;a&gt; tag."
 msgstr ""
