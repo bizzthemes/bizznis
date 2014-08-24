@@ -148,7 +148,7 @@ function bizznis_comment_callback( $comment, array $args, $depth ) {
 					$author = get_comment_author();
 					$url    = get_comment_author_url();
 					if ( ! empty( $url ) && 'http://' !== $url ) {
-						$author = sprintf( '<a href="%s" %s>%s</a>', esc_url( $url ), esc_attr( 'comment-author-link' ), $author );
+						$author = sprintf( '<a href="%s" %s>%s</a>', esc_url( $url ), bizznis_attr( 'comment-author-link' ), $author );
 					}
 					/**
 					 * Filter the "comment author says" text.
