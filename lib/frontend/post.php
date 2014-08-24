@@ -275,7 +275,9 @@ add_action( 'bizznis_entry_footer', 'bizznis_entry_footer_markup_open', 5 );
  */
 if ( ! function_exists( 'bizznis_entry_footer_markup_open' ) ) :
 function bizznis_entry_footer_markup_open() {
-	printf( '<footer %s>', bizznis_attr( 'entry-footer' ) );
+	if ( 'post' === get_post_type() ) {
+		printf( '<footer %s>', bizznis_attr( 'entry-footer' ) );
+	}
 }
 endif;
 
@@ -287,7 +289,9 @@ add_action( 'bizznis_entry_footer', 'bizznis_entry_footer_markup_close', 15 );
  */
 if ( ! function_exists( 'bizznis_entry_footer_markup_close' ) ) :
 function bizznis_entry_footer_markup_close() {
-	echo '</footer>';
+	if ( 'post' === get_post_type() ) {
+		echo '</footer>';
+	}
 }
 endif;
 
