@@ -18,6 +18,11 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.1.2
+* Removed Custom scripts from Customizer
+* Fixed options query
+* Optimized HTML5 markup
+
 ### 1.1.1
 * Fixed breadcrumbs
 * Fixed double DB menu query
