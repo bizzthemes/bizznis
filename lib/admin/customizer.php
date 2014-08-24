@@ -122,8 +122,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'image_size'                => '',
 				'image_alignment'           => 'alignleft',
 				'posts_nav'                 => 'numeric',
-				'header_scripts'            => '',
-				'footer_scripts'            => '',
 				'theme_version'             => PARENT_THEME_VERSION,
 				'db_version'                => PARENT_DB_VERSION,
 			)
@@ -241,7 +239,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		$this->breadcrumbs( $wp_customize );
 		$this->comments( $wp_customize );
 		$this->archives( $wp_customize );
-		$this->custom_scripts( $wp_customize );
 		$this->header( $wp_customize );
 		$this->background( $wp_customize );
 		$this->color( $wp_customize );
@@ -375,9 +372,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 	}
 
 	private function menu_extras( $wp_customize ) {
-		
-		//* Reposition Navigation section below Layout
-		$wp_customize->get_section( 'nav' )->priority = 30;
 	
 		//* Nav Extras Selector
 		if ( ! current_theme_supports( 'bizznis-menus' ) && ! bizznis_nav_menu_supported( 'primary' ) ) {
@@ -707,59 +701,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 
-	}
-	
-	private function custom_scripts( $wp_customize ) {
-	
-		//* Setting the priority
-		$priority = new Bizznis_Prioritizer( 110, 1 );
-		
-		$wp_customize->add_section(
-			'bizznis_acripts',
-			array(
-				'title'    => __( 'Scripts', 'bizznis' ),
-				'priority' => $priority->add(),
-			)
-		);
-
-		$settings = array(
-			'header_scripts' => array(
-				'label' 		=> sprintf( __( '%s scripts', 'bizznis' ), '<code>wp_head()</code>' ),
-				'description'   => sprintf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'bizznis' ), '<code>wp_head()</code>', '<code>&lt;/head&gt;</code>' ),
-			),
-			'footer_scripts' => array(
-				'label' 		=> sprintf( __( '%s scripts', 'bizznis' ), '<code>wp_footer()</code>' ),
-				'description'   => sprintf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'bizznis' ), '<code>wp_footer()</code>', '<code>&lt;/body&gt;</code>' ),
-			),
-		);
-
-		foreach ( $settings as $setting => $name ) {
-
-			$wp_customize->add_setting(
-				$this->get_field_name( $setting ),
-				array(
-					'default' => $this->get_default_value( $setting ),
-					'type'    => 'option',
-				)
-			);
-			
-			$wp_customize->add_control(
-				new Bizznis_Customize_Misc_Control(
-					$wp_customize,
-					'bizznis_' . $setting,
-					array(
-						'label'        => $name['label'],
-						'description'  => $name['description'],
-						'section'      => 'bizznis_acripts',
-						'type'         => 'textarea',
-						'settings'     => $this->get_field_name( $setting ),
-						'priority'     => $priority->add(),
-					)
-				)
-			);	
-
-		}
-		
 	}
 	
 	private function header( $wp_customize ) {
