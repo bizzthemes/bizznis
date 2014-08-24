@@ -83,11 +83,10 @@ function bizznis_custom_field( $field, $output_pattern = '%s' ) {
  * @since 1.0.0
  */
 function bizznis_get_custom_field( $field ) {
-	global $wp_query;
 	if ( null === get_the_ID() ) {
 		return '';
 	}
-	$custom_field = get_post_meta( ( is_admin() ? get_the_ID() : $wp_query->get_queried_object_id() ), $field, true );	
+	$custom_field = get_post_meta( get_the_ID(), $field, true );
 	if ( ! $custom_field ) {
 		return '';
 	}
@@ -97,6 +96,13 @@ function bizznis_get_custom_field( $field ) {
 
 /**
  * Save post meta / custom field data for a post or page.
+ *
+ * It verifies the nonce, then checks we're not doing autosave, ajax or a future post request. It then checks the
+ * current user's permissions, before finally* either updating the post meta, or deleting the field if the value was not
+ * truthy.
+ *
+ * By passing an array of fields => values from the same metabox (and therefore same nonce) into the $data argument,
+ * repeated checks against the nonce, request and permissions are avoided.
  *
  * @since 1.0.0
  */
