@@ -55,13 +55,14 @@ if ( ! function_exists( 'bizznis_footer_credits' ) ) :
 function bizznis_footer_credits() {
 	# Build the text strings. Includes shortcodes
 	$backtotop_text = '[footer_backtotop]';
-	$creds_text     = sprintf( '[footer_copyright before="%s "] &#x000B7; [footer_childtheme_link before="" after=" %s"] [footer_bizzthemes_link url="http://www.bizzthemes.com/" before="%s "] &#x000B7; [footer_wordpress_link] &#x000B7; [footer_loginout]', __( 'Copyright', 'bizznis' ), __( 'on', 'bizznis' ), __( 'by', 'bizznis' ) );
+	$creds_text     = sprintf( '<p>[footer_copyright before="%s "] &#x000B7; [footer_childtheme_link before="" after=" %s"] [footer_bizzthemes_link url="http://www.bizzthemes.com/" before="%s "] &#x000B7; [footer_wordpress_link] &#x000B7; [footer_loginout]</p>', __( 'Copyright', 'bizznis' ), __( 'on', 'bizznis' ), __( 'by', 'bizznis' ) );
 	# Filter the text strings
-	$backtotop_text = apply_filters( 'bizznis_footer_backtotop_text', $backtotop_text );
-	$creds_text     = apply_filters( 'bizznis_footer_creds_text', $creds_text );
+	$backtotop_text = apply_filters( 'bizznis_footer_backtotop_text', $backtotop_text, $creds_text );
+	$creds_text     = apply_filters( 'bizznis_footer_creds_text', $creds_text, $backtotop_text );
+	# Build output
 	$output = sprintf( '<div %s>', bizznis_attr( 'footer-creds' ) );
 	$output .= sprintf( '<div %s>', bizznis_attr( 'footer-creds-container', array( 'class' => 'wrap' ) ) );
-	$output .= '<p>' . $creds_text . '</p>';
+	$output .= $creds_text;
 	$output .= '</div>';
 	$output .= '</div>';
 	echo apply_filters( 'bizznis_footer_output', $output, $backtotop_text, $creds_text );
