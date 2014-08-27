@@ -269,12 +269,11 @@ class Bizznis_Breadcrumb {
 	 * @since 1.0.0
 	 */
 	protected function get_page_crumb() {
-		global $wp_query;
 		if ( $this->page_shown_on_front() && is_front_page() ) {
 			 # Don't do anything - we're on the front page and we've already dealt with that elsewhere
 			$crumb = $this->get_home_crumb(); 
 		} else {
-			$post = $wp_query->get_queried_object();
+			$post = get_queried_object();
 			# If this is a top level Page, it's simple to output the breadcrumb
 			if ( 0 == $post->post_parent ) {
 				$crumb = get_the_title();
@@ -437,8 +436,7 @@ class Bizznis_Breadcrumb {
 	 * @since 1.0.0
 	 */
 	protected function get_tax_crumb() {
-		global $wp_query;
-		$term  = $wp_query->get_queried_object();
+		$term  = get_queried_object();
 		$crumb = $this->args['labels']['tax'] . $this->get_term_parents( $term->term_id, $term->taxonomy );
 		/**
 		 * Filter the taxonomy archive breadcrumb.

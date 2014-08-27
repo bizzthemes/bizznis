@@ -160,15 +160,14 @@ function bizznis_site_layout( $use_cache = true ) {
 			return esc_attr( $layout_cache );
 		}
 	}
-	global $wp_query;
-	# If viewing a singular page or post
+	# If viewing a singular post type or a static posts page
 	if ( is_singular() || is_home() ) {
 		$custom_field = bizznis_get_custom_field( '_bizznis_layout' );
 		$site_layout  = $custom_field ? $custom_field : bizznis_get_option( 'site_layout' );
 	}
 	# If viewing a taxonomy archive
 	elseif ( is_category() || is_tag() || is_tax() ) {
-		$term = $wp_query->get_queried_object();
+		$term = get_queried_object();
 		$site_layout = $term && isset( $term->meta['layout'] ) && $term->meta['layout'] ? $term->meta['layout'] : bizznis_get_option( 'site_layout' );
 	}
 	# If viewing an author archive

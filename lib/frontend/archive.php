@@ -14,7 +14,6 @@ add_action( 'bizznis_loop', 'bizznis_do_taxonomy_title_description', 5 );
  */
 if ( ! function_exists( 'bizznis_do_taxonomy_title_description' ) ) :
 function bizznis_do_taxonomy_title_description() {
-	global $wp_query;
 	# Stop here if the page is not a category, tag or taxonomy term archive
 	if ( ! is_category() && ! is_tag() && ! is_tax() ) {
 		return;
@@ -24,7 +23,7 @@ function bizznis_do_taxonomy_title_description() {
 		return;
 	}
 	# Stop here if there's no term, or no term meta set
-	$term = is_tax() ? get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ) : $wp_query->get_queried_object();
+	$term = is_tax() ? get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ) : get_queried_object();
 	if ( ! $term || ! isset( $term->meta ) ) {
 		return;
 	}
