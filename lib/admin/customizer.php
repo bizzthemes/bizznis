@@ -536,7 +536,8 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		$wp_customize->add_section(
 			'bizznis_comments',
 			array(
-				'title'    => __( 'Comments and Trackbacks', 'bizznis' ),
+				'title'    => __( 'Comments', 'bizznis' ),
+				'description' => __( 'Enable or disable comments and trackbacks site-wide. You can selectively disable comments and trackbacks when editing individual posts.', 'bizznis' ),
 				'priority' => $priority->add(),
 			)
 		);
