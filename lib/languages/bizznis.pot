@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bizznis Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-24 17:14+0100\n"
-"PO-Revision-Date: 2014-08-24 17:14+0100\n"
+"POT-Creation-Date: 2014-08-27 15:24+0100\n"
+"PO-Revision-Date: 2014-08-27 15:24+0100\n"
 "Last-Translator: Željan Topić <admin@bizzartic.com>\n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -198,144 +198,150 @@ msgid "Attachment/Media"
 msgstr ""
 
 #: ../lib/admin/customizer.php:539
-msgid "Comments and Trackbacks"
+msgid "Comments"
 msgstr ""
 
-#: ../lib/admin/customizer.php:545
-msgid "Enable Comments on Posts?"
+#: ../lib/admin/customizer.php:540
+msgid ""
+"Enable or disable comments and trackbacks site-wide. You can selectively "
+"disable comments and trackbacks when editing individual posts."
 msgstr ""
 
 #: ../lib/admin/customizer.php:546
-msgid "Enable Comments on Pages?"
+msgid "Enable Comments on Posts?"
 msgstr ""
 
 #: ../lib/admin/customizer.php:547
-msgid "Enable Trackbacks on Posts?"
+msgid "Enable Comments on Pages?"
 msgstr ""
 
 #: ../lib/admin/customizer.php:548
+msgid "Enable Trackbacks on Posts?"
+msgstr ""
+
+#: ../lib/admin/customizer.php:549
 msgid "Enable Trackbacks on Pages?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:584
+#: ../lib/admin/customizer.php:585
 msgid "Content Archives"
 msgstr ""
 
-#: ../lib/admin/customizer.php:585
+#: ../lib/admin/customizer.php:586
 msgid ""
 "These options will affect any blog listings page, including archive, author, "
 "blog, category, search, and tag pages."
 msgstr ""
 
-#: ../lib/admin/customizer.php:615
+#: ../lib/admin/customizer.php:616
 msgid "Select one of the following"
 msgstr ""
 
-#: ../lib/admin/customizer.php:620
+#: ../lib/admin/customizer.php:621
 msgid "Display post content"
 msgstr ""
 
-#: ../lib/admin/customizer.php:621
+#: ../lib/admin/customizer.php:622
 msgid "Display post excerpts"
 msgstr ""
 
-#: ../lib/admin/customizer.php:630
+#: ../lib/admin/customizer.php:631
 msgid "Limit content to how many characters? (0 for no limit)"
 msgstr ""
 
-#: ../lib/admin/customizer.php:644
+#: ../lib/admin/customizer.php:645
 msgid "Featured image"
 msgstr ""
 
-#: ../lib/admin/customizer.php:653
+#: ../lib/admin/customizer.php:654
 msgid "Display the featured image?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:664
+#: ../lib/admin/customizer.php:665
 msgid "Featured image size"
 msgstr ""
 
-#: ../lib/admin/customizer.php:676
+#: ../lib/admin/customizer.php:677
 msgid "Featured image alignment"
 msgstr ""
 
-#: ../lib/admin/customizer.php:681
+#: ../lib/admin/customizer.php:682
 msgid "- None -"
 msgstr ""
 
-#: ../lib/admin/customizer.php:682 ../lib/widgets/featured-page-widget.php:164
+#: ../lib/admin/customizer.php:683 ../lib/widgets/featured-page-widget.php:164
 msgid "Left"
 msgstr ""
 
-#: ../lib/admin/customizer.php:683 ../lib/widgets/featured-page-widget.php:165
+#: ../lib/admin/customizer.php:684 ../lib/widgets/featured-page-widget.php:165
 msgid "Right"
 msgstr ""
 
-#: ../lib/admin/customizer.php:692
+#: ../lib/admin/customizer.php:693
 msgid "Navigation technique"
 msgstr ""
 
-#: ../lib/admin/customizer.php:697
+#: ../lib/admin/customizer.php:698
 msgid "Previous / Next"
 msgstr ""
 
-#: ../lib/admin/customizer.php:698
+#: ../lib/admin/customizer.php:699
 msgid "Numeric"
 msgstr ""
 
-#: ../lib/admin/customizer.php:745
+#: ../lib/admin/customizer.php:746
 msgid "Display Option"
 msgstr ""
 
-#: ../lib/admin/customizer.php:750
+#: ../lib/admin/customizer.php:751
 msgid "Site Title &amp; Tagline"
 msgstr ""
 
-#: ../lib/admin/customizer.php:751
+#: ../lib/admin/customizer.php:752
 msgid "Image logo"
 msgstr ""
 
-#: ../lib/admin/customizer.php:764
+#: ../lib/admin/customizer.php:765
 msgid ""
 "This option will either pick the header image logo.png in your child theme's "
 "style.css file or show site title and tagline."
 msgstr ""
 
-#: ../lib/admin/customizer.php:777
+#: ../lib/admin/customizer.php:778
 msgid "Remove Site Title?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:792
+#: ../lib/admin/customizer.php:793
 msgid "Remove Tagline?"
 msgstr ""
 
-#: ../lib/admin/customizer.php:813
+#: ../lib/admin/customizer.php:814
 msgid "Background"
 msgstr ""
 
-#: ../lib/admin/customizer.php:844
+#: ../lib/admin/customizer.php:845
 msgid ""
 "You should add your own CSS controls inside your child theme, where you can "
 "and add much more CSS styling options."
 msgstr ""
 
-#: ../lib/admin/customizer.php:852
+#: ../lib/admin/customizer.php:853
 msgid "Primary Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:853
+#: ../lib/admin/customizer.php:854
 msgid "Secondary Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:854
+#: ../lib/admin/customizer.php:855
 msgid "Link Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:855
+#: ../lib/admin/customizer.php:856
 msgid "Text Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:856
+#: ../lib/admin/customizer.php:857
 msgid "Detail Color"
 msgstr ""
 

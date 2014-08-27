@@ -18,6 +18,9 @@ Please visit http://bizzthemes.com/support/ for theme support.
 Changelog
 ----
 
+### 1.1.3
+* Removed several $wp_query global variables for faster loading
+
 ### 1.1.2
 * Removed Custom scripts from Customizer
 * Fixed options query
