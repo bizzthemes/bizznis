@@ -86,7 +86,7 @@ function bizznis_get_custom_field( $field ) {
 	if ( null === get_the_ID() ) {
 		return '';
 	}
-	$custom_field = get_post_meta( get_the_ID(), $field, true );
+	$custom_field = get_post_meta( ( is_admin() ? get_the_ID() : get_queried_object_id() ), $field, true );
 	if ( ! $custom_field ) {
 		return '';
 	}
