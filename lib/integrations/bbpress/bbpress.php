@@ -22,7 +22,6 @@ class Bizznis_BBP {
 		if ( ! in_array( 'bbpress/bbpress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) return;
 		# load them all
 		$this->bbp_post_actions();
-		$this->bbp_forum_layout();
 		$this->theme_support();
 		$this->post_type_support();
 	}
@@ -48,7 +47,8 @@ class Bizznis_BBP {
 	 */
 	public function bbp_post_actions() {
 		# Manipulate with bizznis hooks
-		add_action( 'bizznis_before', array( $this, 'bizznis_post_actions' ) );
+		add_action( 'wp_head', array( $this, 'bizznis_post_actions' ) );
+		add_action( 'wp_head', array( $this, 'bbp_forum_layout' ) );
 	}
 	
 	/**
@@ -96,6 +96,10 @@ class Bizznis_BBP {
 	 * @since 1.0.0
 	 */
 	public function bbp_forum_layout() {
+		# Stop here, if not on a bbpress template
+		if ( ! is_bbpress() ) {
+			return;
+		}
 		# Replace layout with custom selected inside theme settings
 		add_filter( 'bizznis_pre_get_option_site_layout', array( $this, 'bbp_select_layout' ) );
 	}
@@ -106,16 +110,12 @@ class Bizznis_BBP {
 	 * @since 1.0.0
 	 */
 	public function bbp_select_layout() {
-		# Stop here, if not on a bbpress template
-		if ( ! is_bbpress() ) {
-			return bizznis_get_default_layout();
-		}
 		# For some reason, if we use the cached version, weird things seem to happen.
 		$retval   = bizznis_get_default_layout();
 		$parent   = false;
 		# Check and see if a layout has been set for the parent topic
 		$topic_id = bbp_get_topic_id();
-		if ( ! empty( $forum_id ) ) {
+		if ( ! empty( $topic_id ) ) {
 			$parent = esc_attr( get_post_meta( $topic_id, '_bizznis_layout' , true ) );
 			if ( !empty( $parent ) ) {
 				return apply_filters( 'bizznis_bbp_layout', $parent );
