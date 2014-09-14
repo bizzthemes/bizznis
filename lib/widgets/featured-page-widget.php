@@ -88,7 +88,7 @@ class Bizznis_Featured_Page extends WP_Widget {
 				printf( '<header class="entry-header"><h2 class="entry-title"><a href="%s">%s</a></h2></header>', get_permalink(), esc_html( $title ) );
 			}
 			if ( ! empty( $instance['show_content'] ) ) {
-				echo '<div class="entry-content">';
+				printf( '<div %s>', bizznis_attr( 'entry-content' ) );
 				if ( empty( $instance['content_limit'] ) ) {
 					global $more;
 					$orig_more = $more;
