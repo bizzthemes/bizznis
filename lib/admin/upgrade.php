@@ -6,11 +6,8 @@
 */
 
 /**
- * Pings http://bizznis.bizzthemes.com/ asking if a new version of this theme is available.
+ * Checks if a new version of this theme is available.
  * If not, it returns false.
- *
- * If so, the external server passes serialized data back to this function,
- * which gets unserialized and returned for use.
  *
  * @since 1.0.0
  */
