@@ -679,7 +679,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'settings' => $this->get_field_name( 'image_alignment' ),
 				'type'     => 'select',
 				'choices'  => array(
-					'' 			 => __( '- None -', 'bizznis' ),
+					'alignnone'  => __( '- None -', 'bizznis' ),
 					'alignleft'  => __( 'Left', 'bizznis' ),
 					'alignright' => __( 'Right', 'bizznis' ),
 				),
