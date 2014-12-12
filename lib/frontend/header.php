@@ -5,20 +5,6 @@
 	Please do all modifications in the form of a child theme.
 */
 
-add_action( 'wp_head', 'bizznis_do_title', 1 );
-/**
- * Output the title, wrapped in title tags.
- *
- * @since 1.1.1
- */
-if ( ! function_exists( 'bizznis_do_title' ) ) :
-function bizznis_do_title() {
-	echo '<title>';
-	wp_title( '' );
-	echo '</title>' . "\n";
-}
-endif;
-
 add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
 /**
  * Return filtered post title.

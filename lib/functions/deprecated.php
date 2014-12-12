@@ -50,3 +50,19 @@ function bizznis_seo_site_description() {
 	_deprecated_function( __FUNCTION__, '1.1.0', "bizznis_update_setting" );
 	bizznis_site_description();
 }
+
+/**
+ * Deprecated. Output the title, wrapped in title tags.
+ *
+ * @since 1.0.0
+ * @deprecated 1.1.4
+ */
+if ( ! function_exists( '_wp_render_title_tag' ) ) :
+	add_action( 'wp_head', 'bizznis_do_title', 1 );
+	function bizznis_do_title() {
+		_deprecated_function( __FUNCTION__, '1.1.4', "_wp_render_title_tag" );
+		echo '<title>';
+		wp_title( '' );
+		echo '</title>' . "\n";
+	}
+endif;
