@@ -6,19 +6,6 @@
 */
 
 /**
- * Deprecated. Wraps the page title in a 'title' element.
- *
- * @since 1.0.0
- * @deprecated 1.1.0
- */
-function bizznis_doctitle_wrap( $title ) {
-	_deprecated_function( __FUNCTION__, '1.1.1', "bizznis_update_setting" );
-	# Only applies, if not currently in admin, or for a feed.
-	remove_filter( 'wp_title', 'bizznis_doctitle_wrap', 20 );
-	return is_feed() || is_admin() ? $title : sprintf( "<title>%s</title>\n", $title );
-}
-
-/**
  * Deprecated. Push individual setting (or group of setting) into an options db entry stored as an array.
  *
  * @since 1.0.0
@@ -61,8 +48,6 @@ if ( ! function_exists( '_wp_render_title_tag' ) ) :
 	add_action( 'wp_head', 'bizznis_do_title', 1 );
 	function bizznis_do_title() {
 		_deprecated_function( __FUNCTION__, '1.1.4', "_wp_render_title_tag" );
-		echo '<title>';
-		wp_title( '' );
-		echo '</title>' . "\n";
+		?><title><?php wp_title( '' ); ?></title><?php
 	}
 endif;
