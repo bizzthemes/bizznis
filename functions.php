@@ -7,5 +7,3 @@
 
 //* This file calls the init.php file, but only if the child theme hasn't called it first.
 require_once( dirname( __FILE__ ) . '/lib/init.php' );
-
-add_theme_support( 'site-logo' );
