@@ -1,4 +1,4 @@
-Parent Business Theme for WordPress Developers
+Business Theme for WordPress Developers
 ----
 
 Developed by Željan Topić, http://bizzthemes.com/
@@ -13,10 +13,14 @@ Install
 Support
 ----
 
-Please visit http://bizzthemes.com/support/ for theme support.
+Please visit http://bizzthemes.com/forums/ for theme support.
 
 Changelog
 ----
+
+### 1.1.4
+* Added support for Jetpack logo
+* Removed wp_title from WP 4.1 onwards
 
 ### 1.1.3
 * Removed several $wp_query global variables for faster loading
