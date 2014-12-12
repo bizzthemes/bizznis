@@ -28,8 +28,10 @@ add_action( 'customize_register', 'bizznis_jetpack_customizer', 20 );
 if ( ! function_exists( 'bizznis_jetpack_customizer' ) ) :
 function bizznis_jetpack_customizer( $wp_customize ) {
 	// Remove logo or title/tagline selection
-	$wp_customize->remove_control( 'bizznis_blog_title' );
-	$wp_customize->remove_control( 'header_info' );
+	if ( function_exists( 'jetpack_the_site_logo' ) && current_theme_supports( 'site-logo' ) ) {
+		$wp_customize->remove_control( 'bizznis_blog_title' );
+		$wp_customize->remove_control( 'header_info' );
+	}
 }
 endif;
 
@@ -41,7 +43,7 @@ add_filter( 'bizznis_pre_get_option_blog_title', 'jetpack_blog_title' );
  */
 if ( ! function_exists( 'jetpack_blog_title' ) ) :
 function jetpack_blog_title( $option ) {
-	if ( function_exists( 'jetpack_the_site_logo' ) ) {
+	if ( function_exists( 'jetpack_the_site_logo' ) && current_theme_supports( 'site-logo' ) ) {
 		return 'text';
 	}
 	return $option;
