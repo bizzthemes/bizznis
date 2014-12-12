@@ -10,7 +10,7 @@
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_date', 'bizznis_post_date_shortcode' );
+add_bizzcode( 'post_date', 'bizznis_post_date_shortcode' );
 function bizznis_post_date_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -29,7 +29,7 @@ function bizznis_post_date_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_time', 'bizznis_post_time_shortcode' );
+add_bizzcode( 'post_time', 'bizznis_post_time_shortcode' );
 function bizznis_post_time_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -58,7 +58,7 @@ function bizznis_post_time_shortcode( $atts ) {
  * @param array|string $atts Shortcode attributes. Empty string if no attributes.
  * @return string Shortcode output
  */
-add_shortcode( 'post_modified_date', 'bizznis_post_modified_date_shortcode' );
+add_bizzcode( 'post_modified_date', 'bizznis_post_modified_date_shortcode' );
 function bizznis_post_modified_date_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -103,7 +103,7 @@ function bizznis_post_modified_date_shortcode( $atts ) {
  * @param array|string $atts Shortcode attributes. Empty string if no attributes.
  * @return string Shortcode output
  */
-add_shortcode( 'post_modified_time', 'bizznis_post_modified_time_shortcode' );
+add_bizzcode( 'post_modified_time', 'bizznis_post_modified_time_shortcode' );
 function bizznis_post_modified_time_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -136,7 +136,7 @@ function bizznis_post_modified_time_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_author', 'bizznis_post_author_shortcode' );
+add_bizzcode( 'post_author', 'bizznis_post_author_shortcode' );
 function bizznis_post_author_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -157,7 +157,7 @@ function bizznis_post_author_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_author_link', 'bizznis_post_author_link_shortcode' );
+add_bizzcode( 'post_author_link', 'bizznis_post_author_link_shortcode' );
 function bizznis_post_author_link_shortcode( $atts ) {
 	$defaults = array(
 		'after'    => '',
@@ -184,7 +184,7 @@ function bizznis_post_author_link_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_author_posts_link', 'bizznis_post_author_posts_link_shortcode' );
+add_bizzcode( 'post_author_posts_link', 'bizznis_post_author_posts_link_shortcode' );
 function bizznis_post_author_posts_link_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -207,7 +207,7 @@ function bizznis_post_author_posts_link_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_comments', 'bizznis_post_comments_shortcode' );
+add_bizzcode( 'post_comments', 'bizznis_post_comments_shortcode' );
 function bizznis_post_comments_shortcode( $atts ) {
 	$defaults = array(
 		'after'       => '',
@@ -235,7 +235,7 @@ function bizznis_post_comments_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_tags', 'bizznis_post_tags_shortcode' );
+add_bizzcode( 'post_tags', 'bizznis_post_tags_shortcode' );
 function bizznis_post_tags_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -257,7 +257,7 @@ function bizznis_post_tags_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_categories', 'bizznis_post_categories_shortcode' );
+add_bizzcode( 'post_categories', 'bizznis_post_categories_shortcode' );
 function bizznis_post_categories_shortcode( $atts ) {
 	$defaults = array(
 		'sep'    => ', ',
@@ -278,7 +278,7 @@ function bizznis_post_categories_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_terms', 'bizznis_post_terms_shortcode' );
+add_bizzcode( 'post_terms', 'bizznis_post_terms_shortcode' );
 function bizznis_post_terms_shortcode( $atts ) {
 	$defaults = array(
 			'after'    => '',
@@ -303,7 +303,7 @@ function bizznis_post_terms_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'post_edit', 'bizznis_post_edit_shortcode' );
+add_bizzcode( 'post_edit', 'bizznis_post_edit_shortcode' );
 function bizznis_post_edit_shortcode( $atts ) {
 	if ( ! apply_filters( 'bizznis_edit_post_link', true ) ) {
 		return;
@@ -328,7 +328,7 @@ function bizznis_post_edit_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'footer_backtotop', 'bizznis_footer_backtotop_shortcode' );
+add_bizzcode( 'footer_backtotop', 'bizznis_footer_backtotop_shortcode' );
 function bizznis_footer_backtotop_shortcode( $atts ) {
 	$defaults = array(
 		'after'    => '',
@@ -348,7 +348,7 @@ function bizznis_footer_backtotop_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'footer_copyright', 'bizznis_footer_copyright_shortcode' );
+add_bizzcode( 'footer_copyright', 'bizznis_footer_copyright_shortcode' );
 function bizznis_footer_copyright_shortcode( $atts ) {
 	$defaults = array(
 		'after'     => '',
@@ -370,7 +370,7 @@ function bizznis_footer_copyright_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'footer_childtheme_link', 'bizznis_footer_childtheme_link_shortcode' );
+add_bizzcode( 'footer_childtheme_link', 'bizznis_footer_childtheme_link_shortcode' );
 function bizznis_footer_childtheme_link_shortcode( $atts ) {
 	if ( ! is_child_theme() || ! defined( 'CHILD_THEME_NAME' ) || ! defined( 'CHILD_THEME_URL' ) ) {
 		return;
@@ -389,7 +389,7 @@ function bizznis_footer_childtheme_link_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'footer_bizznis_link', 'bizznis_footer_bizznis_link_shortcode' );
+add_bizzcode( 'footer_bizznis_link', 'bizznis_footer_bizznis_link_shortcode' );
 function bizznis_footer_bizznis_link_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -407,7 +407,7 @@ function bizznis_footer_bizznis_link_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'footer_bizzthemes_link', 'bizznis_footer_bizzthemes_link_shortcode' );
+add_bizzcode( 'footer_bizzthemes_link', 'bizznis_footer_bizzthemes_link_shortcode' );
 function bizznis_footer_bizzthemes_link_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -423,7 +423,7 @@ function bizznis_footer_bizzthemes_link_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'footer_wordpress_link', 'bizznis_footer_wordpress_link_shortcode' );
+add_bizzcode( 'footer_wordpress_link', 'bizznis_footer_wordpress_link_shortcode' );
 function bizznis_footer_wordpress_link_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
@@ -439,7 +439,7 @@ function bizznis_footer_wordpress_link_shortcode( $atts ) {
  *
  * @since 1.0.0
  */
-add_shortcode( 'footer_loginout', 'bizznis_footer_loginout_shortcode' );
+add_bizzcode( 'footer_loginout', 'bizznis_footer_loginout_shortcode' );
 function bizznis_footer_loginout_shortcode( $atts ) {
 	$defaults = array(
 		'after'    => '',
@@ -455,4 +455,16 @@ function bizznis_footer_loginout_shortcode( $atts ) {
 	}
 	$output = $atts['before'] . apply_filters( 'loginout', $link ) . $atts['after'];
 	return apply_filters( 'bizznis_footer_loginout_shortcode', $output, $atts );
+}
+
+/**
+ * Add shortcode alternative for Bizznis core.
+ *
+ * @since 1.1.4
+ */
+function add_bizzcode( $tag, $func ) {
+	global $shortcode_tags;
+	if ( is_callable($func) ) {
+		$shortcode_tags[$tag] = $func;
+	}
 }
