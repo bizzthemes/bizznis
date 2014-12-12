@@ -130,87 +130,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 	}
 	
 	/**
-	 * Registers each of the settings with a sanitization filter type.
-	 */
-	public function sanitizer_filters() {
-	
-		bizznis_add_option_filter(
-			'one_zero',
-			$this->settings_field,
-			array(
-				'breadcrumb_front_page',
-				'breadcrumb_home',
-				'breadcrumb_single',
-				'breadcrumb_page',
-				'breadcrumb_posts_page',
-				'breadcrumb_archive',
-				'breadcrumb_404',
-				'breadcrumb_attachment',
-				'header_right',
-				'comments_posts',
-				'comments_pages',
-				'trackbacks_posts',
-				'trackbacks_pages',
-				'hide_site_title',
-				'hide_tagline',
-				'nav_extras_enable',
-				'content_archive_thumbnail',
-			)
-		);
-		
-		bizznis_add_option_filter(
-			'no_html',
-			$this->settings_field,
-			array(
-				'content_archive',
-				'nav_extras',
-				'nav_extras_twitter_id',
-				'image_alignment',
-				'posts_nav',
-				'site_layout',
-				'blog_title',
-				'style_selection',
-				'theme_version',
-			)
-		);
-		
-		bizznis_add_option_filter(
-			'absint',
-			$this->settings_field,
-			array(
-				'content_archive_limit',
-				'db_version',
-			)
-		);
-		
-		bizznis_add_option_filter(
-			'safe_html',
-			$this->settings_field,
-			array(
-				'nav_extras_twitter_text',
-			)
-		);
-		
-		bizznis_add_option_filter(
-			'requires_unfiltered_html',
-			$this->settings_field,
-			array(
-				'header_scripts',
-				'footer_scripts',
-			)
-		);
-		
-		bizznis_add_option_filter(
-			'url',
-			$this->settings_field,
-			array(
-				// empty
-			)
-		);
-		
-	}
-	
-	/**
 	 * Register preview scripts.
 	 */
 	public function preview_scripts() {
@@ -269,6 +188,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			array(
 				'default' => $this->get_default_value( 'style_selection' ),
 				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
 			)
 		);
 		
@@ -314,6 +234,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			array(
 				'default' => $this->get_default_value( 'site_layout' ),
 				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
 			)
 		);
 
@@ -354,6 +275,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			array(
 				'default' => $this->get_default_value( 'site_layout' ),
 				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
 			)
 		);
 
@@ -399,26 +321,44 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 		
-		//* Setting key and default value array
-		$settings = array(
-			'nav_extras_enable',
-			'nav_extras',
-			'nav_extras_twitter_id',
-			'nav_extras_twitter_text',
+		//* Add Settings
+		$wp_customize->add_setting(
+			$this->get_field_name( 'nav_extras_enable' ),
+			array(
+				'default' => $this->get_default_value( 'nav_extras_enable' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'one_zero' ),
+			)
 		);
-
-		foreach ( $settings as $setting ) {
-
-			$wp_customize->add_setting(
-				$this->get_field_name( $setting ),
-				array(
-					'default' => $this->get_default_value( $setting ),
-					'type'    => 'option',
-				)
-			);
-
-		}
 		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'nav_extras' ),
+			array(
+				'default' => $this->get_default_value( 'nav_extras' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'nav_extras_twitter_id' ),
+			array(
+				'default' => $this->get_default_value( 'nav_extras_twitter_id' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'nav_extras_twitter_text' ),
+			array(
+				'default' => $this->get_default_value( 'nav_extras_twitter_text' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'safe_html' ),
+			)
+		);
+		
+		//* Add Controls
 		$wp_customize->add_control(
 			'bizznis_nav_extras_enable',
 			array(
@@ -510,6 +450,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				array(
 					'default' => $this->get_default_value( $setting ),
 					'type'    => 'option',
+					'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'one_zero' ),
 				)
 			);
 
@@ -556,6 +497,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				array(
 					'default' => $this->get_default_value( $setting ),
 					'type'    => 'option',
+					'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'one_zero' ),
 				)
 			);
 
@@ -588,28 +530,62 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 
-		//* Setting key and default value array
-		$settings = array(
-			'content_archive',
-			'content_archive_limit',
-			'content_archive_thumbnail',
-			'image_size',
-			'image_alignment',
-			'posts_nav',
+		//* Add Settings		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'content_archive' ),
+			array(
+				'default' => $this->get_default_value( 'content_archive' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'content_archive_limit' ),
+			array(
+				'default' => $this->get_default_value( 'content_archive_limit' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'absint' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'content_archive_thumbnail' ),
+			array(
+				'default' => $this->get_default_value( 'content_archive_thumbnail' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'one_zero' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'image_size' ),
+			array(
+				'default' => $this->get_default_value( 'image_size' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'image_alignment' ),
+			array(
+				'default' => $this->get_default_value( 'image_alignment' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'posts_nav' ),
+			array(
+				'default' => $this->get_default_value( 'posts_nav' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
+			)
 		);
 
-		foreach ( $settings as $setting ) {
-
-			$wp_customize->add_setting(
-				$this->get_field_name( $setting ),
-				array(
-					'default' => $this->get_default_value( $setting ),
-					'type'    => 'option',
-				)
-			);
-
-		}
-
+		//* Add Controls
 		$wp_customize->add_control(
 			'bizznis_content_archive',
 			array(
@@ -721,25 +697,35 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		//* Setting the priority
 		$priority = new Bizznis_Prioritizer( 10, 1 );
 		
-		//* Setting key and default value array
-		$settings = array(
-			'blog_title',
-			'hide_site_title',
-			'hide_tagline',
+		//* Add Settings
+		$wp_customize->add_setting(
+			$this->get_field_name( 'blog_title' ),
+			array(
+				'default' => $this->get_default_value( 'blog_title' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'hide_site_title' ),
+			array(
+				'default' => $this->get_default_value( 'hide_site_title' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'one_zero' ),
+			)
+		);
+		
+		$wp_customize->add_setting(
+			$this->get_field_name( 'hide_tagline' ),
+			array(
+				'default' => $this->get_default_value( 'hide_tagline' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'one_zero' ),
+			)
 		);
 
-		foreach ( $settings as $setting ) {
-
-			$wp_customize->add_setting(
-				$this->get_field_name( $setting ),
-				array(
-					'default' => $this->get_default_value( $setting ),
-					'type'    => 'option',
-				)
-			);
-
-		}
-
+		//* Add Controls
 		$wp_customize->add_control(
 			'bizznis_blog_title',
 			array(
@@ -864,6 +850,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				array(
 					'default' => '',
 					'type'    => 'theme_mod',
+					'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'hex_color' ),
 				)
 			);
 
