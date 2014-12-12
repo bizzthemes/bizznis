@@ -32,10 +32,10 @@ final class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.1.3' );
+		define( 'PARENT_THEME_VERSION', 		'1.1.4' );
 		define( 'PARENT_THEME_BRANCH', 			'1.1' );
-		define( 'PARENT_DB_VERSION', 			'1130' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1409140800' ) );
+		define( 'PARENT_DB_VERSION', 			'1140' );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1418385600' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
@@ -52,6 +52,7 @@ final class Bizznis_Init {
 		define( 'BIZZNIS_INT_DIR', 				BIZZNIS_LIB_DIR . 	'/integrations' );
 		define( 'BIZZNIS_INT_WC_DIR', 			BIZZNIS_INT_DIR . 	'/woocommerce' );
 		define( 'BIZZNIS_INT_BBP_DIR', 			BIZZNIS_INT_DIR . 	'/bbpress' );
+		define( 'BIZZNIS_INT_JP_DIR', 			BIZZNIS_INT_DIR . 	'/jetpack' );
 		# URL Locations
 		define( 'PARENT_URL', 					get_template_directory_uri() );
 		define( 'CHILD_URL', 					get_stylesheet_directory_uri() );
@@ -69,6 +70,7 @@ final class Bizznis_Init {
 		define( 'BIZZNIS_INT_URL', 				BIZZNIS_LIB_URL . 	'/integrations' );
 		define( 'BIZZNIS_INT_WC_URL', 			BIZZNIS_INT_URL . 	'/woocommerce' );
 		define( 'BIZZNIS_INT_BBP_URL', 			BIZZNIS_INT_URL . 	'/bbpress' );
+		define( 'BIZZNIS_INT_JP_URL', 			BIZZNIS_INT_URL . 	'/jetpack' );
 		# Settings Field (for DB storage)
 		define( 'BIZZNIS_SETTINGS_FIELD', 		apply_filters( 'bizznis_settings_field', 'bizznis-settings' ) );
 	}
@@ -82,6 +84,7 @@ final class Bizznis_Init {
 		add_theme_support( 'menus' ); #wp
 		add_theme_support( 'post-thumbnails' ); #wp
 		add_theme_support( 'automatic-feed-links' ); #wp
+		add_theme_support( 'title-tag' ); #wp
 		add_theme_support( 'html5', array( #wp
 			'search-form',
 			'comment-form',
@@ -202,6 +205,7 @@ final class Bizznis_Init {
 		# Load Integrations
 		load_template( BIZZNIS_INT_WC_DIR 	 . '/woocommerce.php' );
 		load_template( BIZZNIS_INT_BBP_DIR 	 . '/bbpress.php' );
+		load_template( BIZZNIS_INT_JP_DIR 	 . '/jetpack.php' );
 		# Load Javascript
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/load-scripts.php' );
 		# Load CSS

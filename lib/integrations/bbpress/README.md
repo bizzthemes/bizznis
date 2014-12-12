@@ -1,6 +1,6 @@
 This integration allows you to seamlessly integrate bbPress with the Bizznis Parent and Bizznis child themes.
 
-##Descriptio
+##Description
 
 This integration does the following:
 

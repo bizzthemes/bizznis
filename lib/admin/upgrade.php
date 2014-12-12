@@ -6,8 +6,11 @@
 */
 
 /**
- * Checks if a new version of this theme is available.
+ * Pings http://bizznis.bizzthemes.com/ asking if a new version of this theme is available.
  * If not, it returns false.
+ *
+ * If so, the external server passes serialized data back to this function,
+ * which gets unserialized and returned for use.
  *
  * @since 1.0.0
  */
@@ -67,23 +70,23 @@ function bizznis_upgrade() {
 		update_option( BIZZNIS_SETTINGS_FIELD, $settings );
 	}
 	*/
-	# UPDATE DB TO VERSION 1130
-	if ( bizznis_get_option( 'db_version', null, false ) < '1130' ) {
-		bizznis_upgrade_1130();
+	# UPDATE DB TO VERSION 1140
+	if ( bizznis_get_option( 'db_version', null, false ) < '1140' ) {
+		bizznis_upgrade_1140();
 	}
 	do_action( 'bizznis_upgrade' );
 }
 
 /**
- * Upgrade the database to version 1130.
+ * Upgrade the database to version 1140.
  *
- * @since 1.0.9.1
+ * @since 1.0.0
  */
-function bizznis_upgrade_1130() {
+function bizznis_upgrade_1140() {
 	# Update Settings
 	bizznis_update_settings( array(
-		'theme_version' => '1.1.3',
-		'db_version'    => '1130',
+		'theme_version' => '1.1.4',
+		'db_version'    => '1140',
 	) );
 }
 
