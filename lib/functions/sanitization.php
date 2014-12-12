@@ -131,7 +131,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	protected function one_zero( $new_value ) {
+	public function one_zero( $new_value ) {
 		return (int) (bool) $new_value;
 	}
 
@@ -140,7 +140,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	protected function absint( $new_value ) {
+	public function absint( $new_value ) {
 		return absint( $new_value );
 	}
 
@@ -149,7 +149,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	protected function no_html( $new_value ) {
+	public function no_html( $new_value ) {
 		return strip_tags( $new_value );
 	}
 
@@ -158,7 +158,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	protected function url( $new_value ) {
+	public function url( $new_value ) {
 		return esc_url_raw( $new_value );
 	}
 	
@@ -170,7 +170,7 @@ class Bizznis_Settings_Sanitizer {
 	 * @param string $new_value String, an email address, possibly unsafe
 	 * @return string String a safe email address
 	 */
-	protected function email_address( $new_value ) {
+	public function email_address( $new_value ) {
 		return sanitize_email( $new_value );
 	}
 
@@ -179,7 +179,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	protected function safe_html( $new_value ) {
+	public function safe_html( $new_value ) {
 		return wp_kses_post( $new_value );
 	}
 	
@@ -188,7 +188,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.1.0
 	 */
-	protected function safe_text( $new_value ) {
+	public function safe_text( $new_value ) {
 		global $allowedtags;
 		return wp_kses( $new_value , $allowedtags );
 	}
@@ -200,7 +200,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since  1.1.0.
 	 */
-	protected function hex_color( $new_value ) {
+	public function hex_color( $new_value ) {
 		if ( '' === $new_value ) {
 			return '';
 		}
@@ -218,7 +218,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since  1.1.0.
 	 */
-	protected function hex_color_no_hash( $new_value ) {
+	public function hex_color_no_hash( $new_value ) {
 		$new_value = ltrim( $new_value, '#' );
 		if ( '' === $new_value ) {
 			return '';
@@ -233,7 +233,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since  1.1.0.
 	 */
-	protected function maybe_hash_hex_color( $new_value ) {
+	public function maybe_hash_hex_color( $new_value ) {
 		if ( $unhashed = sanitize_hex_color_no_hash( $new_value ) ) {
 			return '#' . $unhashed;
 		}
@@ -245,7 +245,7 @@ class Bizznis_Settings_Sanitizer {
 	 *
 	 * @since 1.0.0
 	 */
-	protected function requires_unfiltered_html( $new_value, $old_value ) {
+	public function requires_unfiltered_html( $new_value, $old_value ) {
 		if ( current_user_can( 'unfiltered_html' ) ) {
 			return $new_value;
 		}
