@@ -8,7 +8,7 @@ Install
 ----
 	1. Upload the theme folder via FTP to your wp-content/themes/ directory.
 	2. Go to your WordPress dashboard and select Appearance.
-	3. Inside your WordPress dashboard, go to Appearance > Theme Settings and configure them to your liking.
+	3. Inside your WordPress dashboard, go to Appearance > Customize and configure them to your liking.
 
 Support
 ----
@@ -17,6 +17,13 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 
 Changelog
 ----
+
+### 1.1.5
+* Modernized design
+* Fixed some broken admin links
+* Remove default background image
+* Added new logo images
+* Added link to child themes in customizer
 
 ### 1.1.4
 * Added support for Jetpack logo

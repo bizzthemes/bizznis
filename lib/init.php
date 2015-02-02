@@ -32,9 +32,9 @@ final class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.1.4' );
+		define( 'PARENT_THEME_VERSION', 		'1.1.5' );
 		define( 'PARENT_THEME_BRANCH', 			'1.1' );
-		define( 'PARENT_DB_VERSION', 			'1140' );
+		define( 'PARENT_DB_VERSION', 			'1150' );
 		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1418385600' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
@@ -108,8 +108,7 @@ final class Bizznis_Init {
 		# Turn on custom background image / color
 	if ( ! is_child_theme() ) {
 		add_theme_support( 'custom-background', array(
-			'default-color' => 'f9f8f2',
-			'default-image' => BIZZNIS_IMAGES_URL . '/background.png',
+			'default-color' => 'f5f5f5'
 		) );
 		# add_theme_support( 'custom-header' );
 		add_theme_support( 'bizznis-footer-widgets', 4 );
