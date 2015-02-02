@@ -26,7 +26,7 @@ Description: 	Used to style the TinyMCE editor.
 /* Imports
 --------------------------------------------- */
 
-@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
 
 /* Typographical Elements
 --------------------------------------------- */
@@ -36,9 +36,11 @@ html .mceContentBody {
 }
 
 body {
-	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 18px;
-	line-height: 1.625;
+	color: #696f6f;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+	font-weight: 300;
+	line-height: 1.8;
 }
 
 a,
@@ -68,13 +70,13 @@ textarea:focus,
 }
 
 a {
-	color: #dc3231;
+	color: #cf0f0f;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #dc3231;
-	text-decoration: underline;
+	color: #333;
+	text-decoration: none;
 }
 
 a img {
@@ -126,7 +128,8 @@ h3,
 h4,
 h5,
 h6 {
-	font-weight: 400;
+	color: #424242;
+	font-weight: 700;
 	line-height: 1.2;
 	margin: 0 0 10px;
 }
@@ -305,7 +308,7 @@ input:hover[type="button"],
 input:hover[type="reset"],
 input:hover[type="submit"],
 .button:hover {
-	background-color: #dc3231;
+	background-color: #cf0f0f;
 }
 
 .entry-content .button:hover {
