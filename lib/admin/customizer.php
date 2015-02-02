@@ -882,3 +882,20 @@ add_action( 'after_setup_theme', 'bizznis_customizer_init' );
 function bizznis_customizer_init() {
 	new Bizznis_Customizer;
 }
+
+/**
+ * Add links to premium child themes and plugins.
+ *
+ * @since 1.1.5
+ */
+add_action('customize_controls_print_footer_scripts', 'bizznis_external_links');
+function bizznis_external_links() {
+	if ( is_child_theme() ) {
+		return;
+	}
+	?>
+	<script>
+		jQuery('#customize-info').append('<span class="get-addon" style="display:block;"><a style="display:block;padding:15px;background-color:#eee;" href="<?php echo esc_url('http://bizzthemes.com/themes/category/child-themes/');?>" target="_blank"><?php _e('Child Themes Available! Purchase', 'bizznis');?> <span class="dashicons dashicons-cart"></span></a></span>');
+	</script>
+	<?php
+}
