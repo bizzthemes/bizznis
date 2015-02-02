@@ -66,6 +66,7 @@ function bizznis_add_taxonomy_layout_options() {
  */
 function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 	$tax = get_taxonomy( $taxonomy );
+	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'customize.php' );
 	?>
 	<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
 	<table class="form-table">
@@ -76,7 +77,7 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 					<div class="bizznis-layout-selector">
 						<p>
 							<input type="radio" name="meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> />
-							<label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label>
+							<label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Customizer</a>', 'bizznis' ), $customize_url ); ?></label>
 						</p>
 						<p><?php bizznis_layout_selector( array( 'name' => 'meta[layout]', 'selected' => $tag->meta['layout'], 'type' => 'site' ) ); ?></p>
 					</div>

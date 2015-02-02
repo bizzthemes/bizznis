@@ -41,7 +41,7 @@ And this to the relevant templates:
 ##Shop on front page
 
 1. Go to the *Dashboard > Settings > Reading* page select A Static Page and select "Shop" as the front page.
-2. It is recommended to turn off Bizznis breadcrumbs for the Home page in *Dashboard > Bizznis > Theme Settings > Breadcrumb options*.
+2. It is recommended to turn off Bizznis breadcrumbs for the Home page in *Dashboard > Appearance > Customize > Breadcrumb options*.
 
 ##How does the integration handle WooCommerce's CSS?
 

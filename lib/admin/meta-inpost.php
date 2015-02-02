@@ -31,9 +31,10 @@ function bizznis_add_inpost_layout_box() {
 function bizznis_inpost_layout_box() {
 	wp_nonce_field( 'bizznis_inpost_layout_save', 'bizznis_inpost_layout_nonce' );
 	$layout = bizznis_get_custom_field( '_bizznis_layout' );
+	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'customize.php' );
 	?>
 	<div class="bizznis-layout-selector">
-		<p><input type="radio" name="bizznis_layout[_bizznis_layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
+		<p><input type="radio" name="bizznis_layout[_bizznis_layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Customizer</a>', 'bizznis' ), $customize_url ); ?></label></p>
 
 		<p><?php bizznis_layout_selector( array( 'name' => 'bizznis_layout[_bizznis_layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
 	</div>

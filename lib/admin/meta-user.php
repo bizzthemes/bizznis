@@ -109,6 +109,7 @@ function bizznis_user_layout_fields( $user ) {
 	}
 	$layout = get_the_author_meta( 'layout', $user->ID );
 	$layout = $layout ? $layout : '';
+	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'customize.php' );
 	?>
 	<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
 	<p><span class="description"><?php _e( 'These settings apply to this author\'s archive pages.', 'bizznis' ); ?></span></p>
@@ -120,7 +121,7 @@ function bizznis_user_layout_fields( $user ) {
 					<div class="bizznis-layout-selector">
 						<p>
 							<input type="radio" name="meta[layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> />
-							<label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label>
+							<label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Customizer</a>', 'bizznis' ), $customize_url ); ?></label>
 						</p>
 						<p><?php bizznis_layout_selector( array( 'name' => 'meta[layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
 					</div>
