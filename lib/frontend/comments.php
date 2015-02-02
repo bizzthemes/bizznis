@@ -118,7 +118,7 @@ if ( ! function_exists( 'bizznis_default_list_comments' ) ) :
 function bizznis_default_list_comments() {
 	$defaults = array(
 		'type'        => 'comment',
-		'avatar_size' => 52,
+		'avatar_size' => 60,
 		'format'      => 'html5', # Not necessary, but a good example
 		'callback'    => 'bizznis_comment_callback',
 	);
