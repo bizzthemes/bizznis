@@ -187,16 +187,6 @@ function bizznis_custom_header_style() {
 				'background-image'    => 'url("' . esc_url( $header_image ) . '")',
 				'background-repeat'   => 'no-repeat',
 				'background-position' => 'center center',
-				'min-width'			  => get_custom_header()->width . 'px',
-				'min-height'		  => get_custom_header()->height . 'px',
-			)
-		) );
-		
-		bizznis_get_css()->add( array(
-			'selectors'    => array( $title_selector . ' a' ),
-			'declarations' => array(
-				'min-width'			  => get_custom_header()->width . 'px',
-				'min-height'		  => get_custom_header()->height . 'px',
 			)
 		) );
 	
