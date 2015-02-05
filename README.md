@@ -18,6 +18,10 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.1.6
+* Updated screenshot
+* Added content boxes to editor-style.css
+
 ### 1.1.5
 * Modernized design
 * Fixed some broken admin links
