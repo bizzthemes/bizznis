@@ -469,6 +469,44 @@ img.alignright,
 	margin-bottom: 0;
 }
 
+/* Content Boxes
+--------------------------------------------- */
+ 
+.content-box-blue,
+.content-box-gray,
+.content-box-green,
+.content-box-purple,
+.content-box-red,
+.content-box-yellow {
+	margin-bottom: 30px;
+	overflow: hidden;
+	padding: 30px;
+}
+ 
+.content-box-blue {
+	background-color: #a5dcf7;
+}
+ 
+.content-box-gray {
+	background-color: #e2e2e2;
+}
+ 
+.content-box-green {
+	background-color: #dbeaa0;
+}
+ 
+.content-box-purple {
+	background-color: #f6e3f1;
+}
+ 
+.content-box-red {
+	background-color: #f9bfa2;
+}
+ 
+.content-box-yellow {
+	background-color: #fbf78d;
+}
+
 /* RTL
 --------------------------------------------- */
 
