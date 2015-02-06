@@ -21,6 +21,11 @@ Changelog
 ### 1.1.6
 * Updated screenshot
 * Added content boxes to editor-style.css
+* removed logo images
+* added back backgroud image
+* restructured premium link
+* removed update checks
+* Fixed customizer link
 
 ### 1.1.5
 * Modernized design
