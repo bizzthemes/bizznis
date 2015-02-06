@@ -36,12 +36,6 @@ function bizznis_html5_ie_fix() {
  */
 add_action( 'admin_enqueue_scripts', 'bizznis_load_admin_scripts' );
 function bizznis_load_admin_scripts( $hook_suffix ) {
-	# Only add thickbox/preview if there is an update to Bizznis available
-	if ( bizznis_update_check() ) {
-		add_thickbox();
-		wp_enqueue_script( 'theme-preview' );
-		bizznis_load_admin_js();
-	}
 	# If we're on a Bizznis admin screen
 	if ( bizznis_is_menu_page( 'bizznis' ) ) {
 		bizznis_load_admin_js();

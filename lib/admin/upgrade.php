@@ -6,35 +6,6 @@
 */
 
 /**
- * Pings http://bizznis.bizzthemes.com/ asking if a new version of this theme is available.
- * If not, it returns false.
- *
- * If so, the external server passes serialized data back to this function,
- * which gets unserialized and returned for use.
- *
- * @since 1.0.0
- */
-function bizznis_update_check() {
-	# Check the updates transient
-	$bizznis_update = get_site_transient('update_themes');
-	if ( ! isset( $bizznis_update->response ) ) {
-		return false;
-	}
-	$bizznis_update = $bizznis_update->response;
-	if ( ! isset( $bizznis_update['bizznis'] ) ) {
-		return false;
-	}
-	else {
-		$bizznis_update = $bizznis_update['bizznis'];
-	}
-	# If we're already using the latest version, return false
-	if ( version_compare( PARENT_THEME_VERSION, $bizznis_update['new_version'], '>=' ) ) {
-		return false;
-	}
-	return $bizznis_update;
-}
-
-/**
  * Update Bizznis to the latest version.
  *
  * This iterative update function will take a Bizznis installation, no matter
@@ -53,7 +24,7 @@ function bizznis_upgrade() {
 	}
 	/*
 	#########################
-	# UPDATE TO VERSION 1.0.
+	# UPDATE TO VERSION x.x.x
 	#########################
 	if ( version_compare( bizznis_get_option( 'theme_version', null, false ), '1.9', '<' ) ) {
 		# Vestige nav settings, for backward compatibility
@@ -88,65 +59,6 @@ function bizznis_upgrade_1160() {
 		'theme_version' => '1.1.6',
 		'db_version'    => '1160',
 	) );
-}
-
-/**
- * Displays the notice that the theme settings were successfully updated to the
- * latest version.
- *
- * Currently, only used for pre-release update notices.
- *
- * @since 1.0.0
- */
-add_action( 'admin_notices', 'bizznis_upgraded_notice' );
-function bizznis_upgraded_notice() {
-	if ( ! bizznis_is_menu_page( 'bizznis' ) ) {
-		return;
-	}
-	if ( isset( $_REQUEST['upgraded'] ) && 'true' == $_REQUEST['upgraded'] ) {
-		echo '<div class="updated highlight" id="message"><p><strong>' . sprintf( __( 'Congratulations! You are now rocking Bizznis %s', 'bizznis' ), bizznis_get_option( 'theme_version' ) ) . '</strong></p></div>';
-	}
-}
-
-/**
- * Filters the action links at the end of an update.
- *
- * This function filters the action links that are presented to the
- * user at the end of a theme update. If the theme being updated is
- * not Bizznis, the filter returns the default values. Otherwise,
- * it will provide a link to the Bizznis Theme Settings page, which
- * will trigger the database/settings upgrade.
- *
- * @since 1.0.0
- */
-add_filter( 'update_theme_complete_actions', 'bizznis_update_action_links', 10, 2 );
-function bizznis_update_action_links( $actions, $theme ) {
-	if ( 'bizznis' != $theme ) {
-		return $actions;
-	}
-	return sprintf( '<a href="%s">%s</a>', menu_page_url( 'bizznis', 0 ), __( 'Click here to complete the upgrade', 'bizznis' ) );
-}
-
-/**
- * Displays the update nag at the top of the dashboard if there is a Bizznis
- * update available.
- *
- * @since 1.0.0
- */
-add_action( 'admin_notices', 'bizznis_update_nag' );
-function bizznis_update_nag() {
-	$bizznis_update = bizznis_update_check();
-	if ( ! is_super_admin() || ! $bizznis_update ) {
-		return false;
-	}
-	echo '<div class="update-nag">';
-	printf(
-		__( 'Bizznis %s is available. <a href="%s" onclick="return bizznis_confirm(\'%s\');">Update now</a>.', 'bizznis' ),
-		esc_html( $bizznis_update['new_version'] ),
-		wp_nonce_url( 'update.php?action=upgrade-theme&amp;theme=bizznis', 'upgrade-theme_bizznis' ),
-		esc_js( __( 'Upgrading Bizznis will overwrite the current installed version of Bizznis. Are you sure you want to upgrade?. "Cancel" to stop, "OK" to upgrade.', 'bizznis' ) )
-	);
-	echo '</div>';
 }
 
 /**
