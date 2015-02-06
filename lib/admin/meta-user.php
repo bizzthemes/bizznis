@@ -109,7 +109,7 @@ function bizznis_user_layout_fields( $user ) {
 	}
 	$layout = get_the_author_meta( 'layout', $user->ID );
 	$layout = $layout ? $layout : '';
-	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'customize.php' );
+	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), wp_customize_url() );
 	?>
 	<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
 	<p><span class="description"><?php _e( 'These settings apply to this author\'s archive pages.', 'bizznis' ); ?></span></p>

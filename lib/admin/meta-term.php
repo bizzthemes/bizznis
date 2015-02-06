@@ -66,7 +66,7 @@ function bizznis_add_taxonomy_layout_options() {
  */
 function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 	$tax = get_taxonomy( $taxonomy );
-	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'customize.php' );
+	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), wp_customize_url() );
 	?>
 	<h3><?php _e( 'Layout Settings', 'bizznis' ); ?></h3>
 	<table class="form-table">
