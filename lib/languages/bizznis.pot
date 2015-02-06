@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bizznis Theme Translation File\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-02 12:12+0100\n"
-"PO-Revision-Date: 2015-02-02 12:12+0100\n"
+"POT-Creation-Date: 2015-02-06 10:17+0100\n"
+"PO-Revision-Date: 2015-02-06 10:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: BizzThemes <info@bizzthemes.com>\n"
 "Language: en_US\n"
@@ -80,7 +80,7 @@ msgid ""
 "\">Report a Bug</a>"
 msgstr ""
 
-#: ../lib/admin/admin.php:290 ../lib/functions/load-scripts.php:63
+#: ../lib/admin/admin.php:290 ../lib/functions/load-scripts.php:57
 msgid "Are you sure you want to reset?"
 msgstr ""
 
@@ -345,8 +345,8 @@ msgstr ""
 msgid "Detail Color"
 msgstr ""
 
-#: ../lib/admin/customizer.php:898
-msgid "Child Themes Available! Purchase"
+#: ../lib/admin/customizer.php:897
+msgid "Extend with Premium Child Themes"
 msgstr ""
 
 #: ../lib/admin/meta-inpost.php:21 ../lib/admin/meta-term.php:71
@@ -456,28 +456,6 @@ msgstr ""
 
 #: ../lib/admin/meta-user.php:93
 msgid "Enable Author Box on this User's Archives?"
-msgstr ""
-
-#: ../lib/admin/upgrade.php:107
-#, php-format
-msgid "Congratulations! You are now rocking Bizznis %s"
-msgstr ""
-
-#: ../lib/admin/upgrade.php:127
-msgid "Click here to complete the upgrade"
-msgstr ""
-
-#: ../lib/admin/upgrade.php:144
-#, php-format
-msgid ""
-"Bizznis %s is available. <a href=\"%s\" onclick=\"return "
-"bizznis_confirm('%s');\">Update now</a>."
-msgstr ""
-
-#: ../lib/admin/upgrade.php:147
-msgid ""
-"Upgrading Bizznis will overwrite the current installed version of Bizznis. "
-"Are you sure you want to upgrade?. \"Cancel\" to stop, \"OK\" to upgrade."
 msgstr ""
 
 #: ../lib/frontend/comments.php:47
@@ -695,15 +673,15 @@ msgstr ""
 msgid "No Label Selected"
 msgstr ""
 
-#: ../lib/functions/load-scripts.php:60
+#: ../lib/functions/load-scripts.php:54
 msgid "Select / Deselect All"
 msgstr ""
 
-#: ../lib/functions/load-scripts.php:61
+#: ../lib/functions/load-scripts.php:55
 msgid "The changes you made will be lost if you navigate away from this page."
 msgstr ""
 
-#: ../lib/functions/load-scripts.php:62
+#: ../lib/functions/load-scripts.php:56
 msgid ""
 "Updating Bizznis will overwrite the current installed version of Bizznis. "
 "Are you sure you want to update?. \"Cancel\" to stop, \"OK\" to update."
