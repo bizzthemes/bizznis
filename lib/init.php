@@ -209,9 +209,6 @@ final class Bizznis_Init {
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/load-scripts.php' );
 		# Load CSS
 		load_template( BIZZNIS_FUNCTIONS_DIR . '/load-styles.php' );
-		# Load allowed tags
-		global $_bizznis_formatting_allowedtags;
-		$_bizznis_formatting_allowedtags = bizznis_formatting_allowedtags();
 	}
 
 }
