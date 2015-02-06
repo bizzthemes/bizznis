@@ -884,18 +884,18 @@ function bizznis_customizer_init() {
 }
 
 /**
- * Add links to premium child themes and plugins.
+ * Add link to premium child theme examples to extend/customize Bizznis.
  *
- * @since 1.1.5
+ * @since 1.1.6
  */
-add_action('customize_controls_print_footer_scripts', 'bizznis_external_links');
-function bizznis_external_links() {
-	if ( is_child_theme() ) {
-		return;
-	}
+add_action( 'customize_controls_print_footer_scripts', 'bizznis_marketing_links' );
+function bizznis_marketing_links() {
+	//* CHILD_THEME_NAME constant is defined in premium child themes and not Bizznis itself
+	if ( ! defined( 'CHILD_THEME_NAME' ) ) {
 	?>
-	<script>
-		jQuery('#customize-info').append('<span class="get-addon" style="display:block;"><a style="display:block;padding:15px;background-color:#eee;" href="<?php echo esc_url('http://bizzthemes.com/themes/category/child-themes/');?>" target="_blank"><?php _e('Child Themes Available! Purchase', 'bizznis');?> <span class="dashicons dashicons-cart"></span></a></span>');
-	</script>
+<script>
+	jQuery('#customize-info').append('<span class="get-addon" style="display:block;"><a style="display:block;padding:15px;background-color:#eee;" href="<?php echo esc_url('http://bizzthemes.com/themes/category/child-themes/');?>" target="_blank"><?php _e('Extend with Premium Child Themes', 'bizznis');?> <span class="dashicons dashicons-plus-alt"></span></a></span>');
+</script>
 	<?php
+	}
 }
