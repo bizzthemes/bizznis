@@ -43,6 +43,11 @@ function bizznis_inpost_layout_box() {
 	<p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_body_class]" id="bizznis_custom_body_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_body_class' ) ); ?>" /></p>
 	<p><label for="bizznis_custom_post_class"><b><?php _e( 'Custom Post Class', 'bizznis' ); ?></b></label></p>
 	<p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_post_class]" id="bizznis_custom_post_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_post_class' ) ); ?>" /></p>
+	<p><b><?php _e( 'Header Settings', 'bizznis' ); ?></b></p>
+	<p>
+		<label for="bizznis_hide_header"><input type="checkbox" name="bizznis_layout[_bizznis_hide_header]" id="bizznis_hide_header" value="1" <?php checked( bizznis_get_custom_field( '_bizznis_hide_header' ) ); ?> />
+		<?php printf( __( 'Hide %1$s %3$s on individual %2$s', 'bizznis' ), get_post_type(), strtolower( get_post_type_object( get_post_type() )->labels->name ), bizznis_code( '<header>' ) ); ?></label>
+	</p>
 	<?php
 }
 
@@ -60,6 +65,7 @@ function bizznis_inpost_layout_save( $post_id, $post ) {
 		'_bizznis_layout'            => '',
 		'_bizznis_custom_body_class' => '',
 		'_bizznis_post_class'        => '',
+		'_bizznis_hide_header'   	 => '',
 	) );
 	$data = array_map( 'bizznis_sanitize_html_classes', $data );
 	bizznis_save_custom_fields( $data, 'bizznis_inpost_layout_save', 'bizznis_inpost_layout_nonce', $post, $post_id );

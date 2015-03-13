@@ -525,3 +525,25 @@ function bizznis_prev_next_post_nav() {
 	echo '</nav>';
 }
 endif;
+
+add_action( 'wp_head', 'bizznis_custom_post_header' );
+/**
+ * Apple custom header settings for indiviudal post
+ *
+ * @since 1.1.7
+ */
+if ( ! function_exists( 'bizznis_custom_post_header' ) ) :
+function bizznis_custom_post_header() {
+	if ( ! is_singular() ) {
+		return;
+	}
+	$hide_header = bizznis_get_custom_field( '_bizznis_hide_header' );
+	if ( $hide_header ) {
+		remove_action( 'bizznis_entry_header', 'bizznis_do_post_format_image', 5 );
+		remove_action( 'bizznis_entry_header', 'bizznis_entry_header_markup_open', 5 );
+		remove_action( 'bizznis_entry_header', 'bizznis_entry_header_markup_close', 15 );
+		remove_action( 'bizznis_entry_header', 'bizznis_post_info' );
+		remove_action( 'bizznis_entry_header', 'bizznis_do_post_title' );
+	}
+}
+endif;
