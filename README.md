@@ -1,4 +1,4 @@
-Business Theme for WordPress Developers
+Mobile WordPress Theme Platform
 ----
 
 Developed by Željan Topić, http://bizzthemes.com/
