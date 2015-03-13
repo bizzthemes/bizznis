@@ -18,6 +18,11 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.1.7
+* Added site wrappers as filterable functions
+* Added more landing pages
+* Added option to remove post title on individual posts
+
 ### 1.1.6
 * Updated screenshot
 * Added content boxes to editor-style.css
