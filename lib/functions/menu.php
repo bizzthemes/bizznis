@@ -54,7 +54,7 @@ function bizznis_get_nav_menu( $args = array() ) {
 	}
 	$nav_markup_open = sprintf( '<nav %s>', bizznis_attr( 'nav-' . $sanitized_location, array( 'class' => "nav-bizznis nav-{$sanitized_location}" ) ) );
 	$nav_markup_open .= bizznis_wrapper( 'menu-' . $sanitized_location, 'open', false ); #wrapper
-	$nav_markup_close .= bizznis_wrapper( 'menu-' . $sanitized_location, 'close', false ); #wrapper
+	$nav_markup_close = bizznis_wrapper( 'menu-' . $sanitized_location, 'close', false ); #wrapper
 	$nav_markup_close .= '</nav>';
 	$nav_output = $nav_markup_open . $nav . $nav_markup_close;
 	$filter_location = 'bizznis_' . $sanitized_location . '_nav';
