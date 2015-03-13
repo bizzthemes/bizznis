@@ -1,9 +1,6 @@
 Mobile WordPress Theme Platform
 ----
 
-Developed by Željan Topić, http://bizzthemes.com/
-----
-
 Install
 ----
 	1. Upload the theme folder via FTP to your wp-content/themes/ directory.
