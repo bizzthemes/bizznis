@@ -91,6 +91,7 @@ final class Bizznis_Init {
 			'comment-list',
 			'gallery',
 			'caption',
+			'widgets',
 		) );
 		add_theme_support( 'bizznis-inpost-layouts' );
 		add_theme_support( 'bizznis-archive-layouts' );
