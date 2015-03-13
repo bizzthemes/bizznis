@@ -35,9 +35,9 @@ function bizznis_footer_widget_areas() {
 	}
 	if ( $inside ) {
 		$output .= sprintf( '<div %s>', bizznis_attr( 'footer-widgets' ) );
-		$output .= sprintf( '<div %s>', bizznis_attr( 'footer-widgets-container', array( 'class' => 'wrap' ) ) );
+		$output .= bizznis_wrapper( 'footer-widgets-wrapper', 'open', false ); #wrapper
 		$output .= $inside;
-		$output .= '</div>';
+		$output .= bizznis_wrapper( 'footer-widgets-wrapper', 'close', false ); #wrapper
 		$output .= '</div>';
 	}
 	echo apply_filters( 'bizznis_footer_widget_areas', $output, $footer_widgets );
@@ -61,9 +61,9 @@ function bizznis_footer_credits() {
 	$creds_text     = apply_filters( 'bizznis_footer_creds_text', $creds_text, $backtotop_text );
 	# Build output
 	$output = sprintf( '<div %s>', bizznis_attr( 'footer-creds' ) );
-	$output .= sprintf( '<div %s>', bizznis_attr( 'footer-creds-container', array( 'class' => 'wrap' ) ) );
+	$output .= bizznis_wrapper( 'footer-creds-wrapper', 'open', false ); #wrapper
 	$output .= $creds_text;
-	$output .= '</div>';
+	$output .= bizznis_wrapper( 'footer-creds-wrapper', 'close', false ); #wrapper
 	$output .= '</div>';
 	echo apply_filters( 'bizznis_footer_output', $output, $backtotop_text, $creds_text );
 }

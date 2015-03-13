@@ -34,11 +34,11 @@ function bizznis_do_header() {
 		do_action( 'bizznis_header_top' );
 		if ( apply_filters( 'bizznis_show_header_content', true ) ) {
 			printf( '<div %s>', bizznis_attr( 'header-content' ) );
-			printf( '<div %s>', bizznis_attr( 'header-container', array( 'class' => 'wrap' ) ) );
+			bizznis_wrapper( 'header-wrapper', 'open' ); #wrapper
 				if ( has_action( 'bizznis_site_title' ) ) {
 					printf( '<div %s>', bizznis_attr( 'title-area' ) );
 						do_action( 'bizznis_site_title' );
-					echo '</div>'; #end .title-area
+					echo '</div>'; #close .title-area
 				}
 				if ( ( isset( $wp_registered_sidebars['header-aside'] ) && is_active_sidebar( 'header-aside' ) ) || has_action( 'bizznis_header_aside' ) ) {
 					printf( '<aside %s>', bizznis_attr( 'header-aside-area', array( 'class' => 'header-aside-area widget-area' ) ) );
@@ -48,10 +48,10 @@ function bizznis_do_header() {
 						dynamic_sidebar( 'header-aside' );
 						remove_filter( 'wp_nav_menu_args', 'bizznis_header_menu_args' );
 						remove_filter( 'wp_nav_menu', 'bizznis_header_menu_wrap' );
-					echo '</aside>'; #end .aside-area
+					echo '</aside>'; #close .aside-area
 				}
-			echo '</div>'; #end .header-container
-			echo '</div>'; #end .header-content
+			bizznis_wrapper( 'header-wrapper', 'close' ); #wrapper
+			echo '</div>'; #close .header-content
 		}
 		do_action( 'bizznis_header_bottom' );
 	echo '</header>'; #end .site-header

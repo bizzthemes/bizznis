@@ -6,11 +6,11 @@
 */
 
 //* Handles the footer structure.
-echo '</div>'; #end .site-container
+bizznis_wrapper( 'main-wrapper', 'close' ); #wrapper
 do_action( 'bizznis_after_main_container' );
-echo '</div>'; #end .site-main
+echo '</div>'; #close .site-main
 do_action( 'bizznis_footer' );
-echo '</div>'; #end .site-container
+echo '</div>'; #close .site-container
 do_action( 'bizznis_after' );
 wp_footer();
 ?>

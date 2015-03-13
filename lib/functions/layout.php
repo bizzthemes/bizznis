@@ -229,3 +229,39 @@ function bizznis_layout_selector( $args = array() ) {
 		return $output;
 	}
 }
+
+/**
+ * Potentially echo or return a wrapper div.
+ *
+ * @since 1.1.7
+ *
+ * @param string $context The location ID.
+ * @param string $output  Optional. The markup to include. Can also be 'open'
+ *                        (default) or 'closed' to use pre-determined markup for consistency.
+ * @param boolean $echo   Optional. Whether to echo or return. Default is true (echo).
+ *
+ * @return string Wrap HTML.
+ */
+function bizznis_wrapper( $context = '', $output = 'open', $echo = true ) {
+	# Save original output param
+	$original_output = $output;
+	# Opening or closing the wrapper ?
+	switch ( $output ) {
+		case 'open':
+			$output = sprintf( '<div %s>', bizznis_attr( $context, array( 'class' => 'wrap' ) ) );
+			break;
+		case 'close':
+			$output = '</div>';
+			break;
+	}
+	# Filter the output
+	$output = apply_filters( "bizznis_wrapper_{$context}", $output, $original_output, $context );
+	# Echo or return output
+	if ( $echo ) {
+		echo $output;
+	}
+	else {
+		return $output;
+	}
+
+}

@@ -20,4 +20,4 @@ printf( '<div %s>', bizznis_attr( 'site-container' ) );
 do_action( 'bizznis_header' );
 printf( '<div %s>', bizznis_attr( 'site-main' ) );
 do_action( 'bizznis_before_main_container' );
-printf( '<div %s>', bizznis_attr( 'main-container', array( 'class' => 'wrap' ) ) );
+bizznis_wrapper( 'main-wrapper', 'open' ); #wrapper
