@@ -35,7 +35,7 @@ final class Bizznis_Init {
 		define( 'PARENT_THEME_VERSION', 		'1.1.8' );
 		define( 'PARENT_THEME_BRANCH', 			'1.1' );
 		define( 'PARENT_DB_VERSION', 			'1180' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1426334400' ) );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1428321600' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
