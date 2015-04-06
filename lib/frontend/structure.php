@@ -40,16 +40,7 @@ function bizznis_do_header() {
 						do_action( 'bizznis_site_title' );
 					echo '</div>'; #close .title-area
 				}
-				if ( ( isset( $wp_registered_sidebars['header-aside'] ) && is_active_sidebar( 'header-aside' ) ) || has_action( 'bizznis_header_aside' ) ) {
-					printf( '<aside %s>', bizznis_attr( 'header-aside-area', array( 'class' => 'header-aside-area widget-area' ) ) );
-						do_action( 'bizznis_header_aside' );
-						add_filter( 'wp_nav_menu_args', 'bizznis_header_menu_args' );
-						add_filter( 'wp_nav_menu', 'bizznis_header_menu_wrap' );
-						dynamic_sidebar( 'header-aside' );
-						remove_filter( 'wp_nav_menu_args', 'bizznis_header_menu_args' );
-						remove_filter( 'wp_nav_menu', 'bizznis_header_menu_wrap' );
-					echo '</aside>'; #close .aside-area
-				}
+				do_action( 'bizznis_after_site_title' );
 			bizznis_wrapper( 'header-wrapper', 'close' ); #wrapper
 			echo '</div>'; #close .header-content
 		}

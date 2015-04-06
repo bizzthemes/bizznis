@@ -254,6 +254,27 @@ function bizznis_site_description() {
 }
 endif;
 
+add_action( 'bizznis_after_site_title', 'bizznis_header_widget_area' );
+/**
+ * Echo the header widgets into the header.
+ *
+ * @since 1.1.8
+ */
+if ( ! function_exists( 'bizznis_header_widget_area' ) ) :
+function bizznis_header_widget_area() {
+	if ( ( isset( $wp_registered_sidebars['header-aside'] ) && is_active_sidebar( 'header-aside' ) ) || has_action( 'bizznis_header_aside' ) ) {
+		printf( '<aside %s>', bizznis_attr( 'header-aside-area', array( 'class' => 'header-aside-area widget-area' ) ) );
+			do_action( 'bizznis_header_aside' );
+			add_filter( 'wp_nav_menu_args', 'bizznis_header_menu_args' );
+			add_filter( 'wp_nav_menu', 'bizznis_header_menu_wrap' );
+			dynamic_sidebar( 'header-aside' );
+			remove_filter( 'wp_nav_menu_args', 'bizznis_header_menu_args' );
+			remove_filter( 'wp_nav_menu', 'bizznis_header_menu_wrap' );
+		echo '</aside>'; #close .aside-area
+	}
+}
+endif;
+
 // add_filter( 'bizznis_show_header_content', 'bizznis_hide_header_content' );
 /**
  * Hide header content on all pages except homepage

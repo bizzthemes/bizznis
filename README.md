@@ -15,6 +15,9 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.1.8
+* Added hook to header section
+
 ### 1.1.7
 * Added site wrappers as filterable functions
 * Added more landing pages

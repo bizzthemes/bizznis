@@ -32,9 +32,9 @@ final class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.1.7' );
+		define( 'PARENT_THEME_VERSION', 		'1.1.8' );
 		define( 'PARENT_THEME_BRANCH', 			'1.1' );
-		define( 'PARENT_DB_VERSION', 			'1170' );
+		define( 'PARENT_DB_VERSION', 			'1180' );
 		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1426334400' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
