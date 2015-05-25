@@ -20,6 +20,7 @@ Changelog
 * Fixed header area widgets display
 * Added print styles
 * Better theme support handling
+* Better customizer options
 
 ### 1.1.8
 * Added hook to header section

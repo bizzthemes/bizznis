@@ -501,7 +501,7 @@ function bizznis_numeric_posts_nav() {
 		$links[] = $paged + 1;
 	}
 	printf( '<nav %s>', bizznis_attr( 'archive-pagination' ) );
-	$before_number = bizznis_a11y() ? '<span class="screen-reader-text">' . __( 'Page ' ) .  '</span>' : '';
+	$before_number = bizznis_a11y() ? '<span class="screen-reader-text">' . __( 'Page ', 'bizznis' ) .  '</span>' : '';
 	echo '<ul>';
 	# Previous Post Link
 	if ( get_previous_posts_link() ) {
