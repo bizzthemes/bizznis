@@ -80,7 +80,13 @@ function bizznis_custom_field( $field, $output_pattern = '%s' ) {
 /**
  * Return custom field post meta data.
  *
+ * Return only the first value of custom field. Return empty string if field is blank or not set.
+ *
  * @since 1.0.0
+ *
+ * @param string $field Custom field key.
+ * @param int $post_id Optional. Post ID to use for Post Meta lookup, defaults to get_the_ID()
+ * @return string|boolean Return value or empty string on failure.
  */
 function bizznis_get_custom_field( $field ) {
 	if ( null === get_the_ID() ) {
@@ -90,6 +96,7 @@ function bizznis_get_custom_field( $field ) {
 	if ( ! $custom_field ) {
 		return '';
 	}
+	
 	# Return custom field, slashes stripped, sanitized if string
 	return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
 }

@@ -51,6 +51,7 @@ function bizznis_register_widget_area( $args ) {
 	 */
 	$defaults = apply_filters( 'bizznis_register_widget_area_defaults', $defaults, $args );
 	$args = wp_parse_args( $args, $defaults );
+	
 	return register_sidebar( $args );
 }
 
@@ -77,6 +78,7 @@ function bizznis_register_sidebar( $args ) {
 add_action( 'after_setup_theme', '_bizznis_builtin_sidebar_params' );
 function _bizznis_builtin_sidebar_params() {
 	global $wp_registered_sidebars;
+	
 	foreach ( $wp_registered_sidebars as $id => $params ) {
 		if ( ! isset( $params['_bizznis_builtin'] ) ) {
 			continue;
@@ -95,17 +97,16 @@ function bizznis_widget_area( $id, $args = array() ) {
 	if ( ! $id ) {
 		return false;
 	}
-	$args = wp_parse_args(
-		$args,
-		array(
-			'before'              => '<aside class="widget-area">',
-			'after'               => '</aside>',
-			'default'             => '',
-			'show_inactive'       => 0,
-			'before_sidebar_hook' => 'bizznis_before_' . $id . '_widget_area',
-			'after_sidebar_hook'  => 'bizznis_after_' . $id . '_widget_area',
-		)
-	);
+	$defaults = apply_filters( 'bizznis_widget_area_defaults', array(
+		'before'              => '<aside class="widget-area">' . bizznis_sidebar_title( $id ),
+		'after'               => '</aside>',
+		'default'             => '',
+		'show_inactive'       => 0,
+		'before_sidebar_hook' => 'bizznis_before_' . $id . '_widget_area',
+		'after_sidebar_hook'  => 'bizznis_after_' . $id . '_widget_area',
+	), $id, $args );
+	$args = wp_parse_args( $args, $defaults );
+	
 	if ( ! is_active_sidebar( $id ) && ! $args['show_inactive'] ) {
 		return false;
 	}
@@ -124,6 +125,7 @@ function bizznis_widget_area( $id, $args = array() ) {
 	}
 	# Closing markup
 	echo $args['after'];
+	
 	return true;
 }
 
@@ -154,4 +156,49 @@ function bizznis_remove_default_widgets_added_by_wp() {
 		$widgets['header-aside'] = array();
 		update_option( 'sidebars_widgets', $widgets );
 	}
+}
+
+/**
+ * Widget heading filter, default H4 in Widgets and sidebars modified to an H3 if bizznis_a11y( 'headings' ) support
+ *
+ * For using a semantic heading structure, improves accessibility
+ *
+ * @since 1.2.0
+ * @param array $args Arguments
+ * @return array $args
+ */
+add_filter( 'bizznis_register_sidebar_defaults', 'bizznis_a11y_register_sidebar_defaults' );
+function bizznis_a11y_register_sidebar_defaults( $args ) {
+	if ( bizznis_a11y( 'headings' ) ) {
+		$args['before_title'] = '<h3 class="widgettitle widget-title">';
+    	$args['after_title']  = "</h3>\n";
+	}
+
+    return $args;
+}
+
+/**
+ * Adds an H2 title to widget areas.
+ *
+ * For using a semantic heading structure, improves accessibility
+ *
+ * @since 1.2.0
+ * @uses bizznis_a11y( 'headings' ) to check for semantic heading support
+ * @global $wp_registered_sidebars
+ * @return string $heading Widget area heading or null
+ */
+function bizznis_sidebar_title( $id ) {
+	if ( bizznis_a11y( 'headings' ) && $id ) {
+		global $wp_registered_sidebars;
+
+		if ( array_key_exists( $id, $wp_registered_sidebars ) ) {
+			$name = $wp_registered_sidebars[$id]['name'];
+		} else {
+			$name = $id;
+		}
+		$heading = '<h2 class="bizznis-sidebar-title screen-reader-text">' . $name . '</h2>';
+
+		return apply_filters( 'bizznis_sidebar_title_output', $heading, $id );
+	}
+
 }

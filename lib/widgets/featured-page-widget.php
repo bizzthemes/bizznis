@@ -78,14 +78,49 @@ class Bizznis_Featured_Page extends WP_Widget {
 				'format'  => 'html',
 				'size'    => $instance['image_size'],
 				'context' => 'featured-page-widget',
-				'attr'    => bizznis_parse_attr( 'entry-image-widget' ),
+				'attr'    => bizznis_parse_attr( 'entry-image-widget', array ( 'alt' => get_the_title() ) ),
 			) );
 			if ( $instance['show_image'] && $image ) {
-				printf( '<a href="%s" title="%s" class="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), esc_attr( $instance['image_alignment'] ), $image );
+				$role = empty( $instance['show_title'] ) ? '' : 'aria-hidden="true"';
+				printf( '<a href="%s" class="%s" %s>%s</a>', get_permalink(), esc_attr( $instance['image_alignment'] ), $role, $image );
 			}
 			if ( ! empty( $instance['show_title'] ) ) {
 				$title = get_the_title() ? get_the_title() : __( '(no title)', 'bizznis' );
-				printf( '<header class="entry-header"><h2 class="entry-title"><a href="%s">%s</a></h2></header>', get_permalink(), esc_html( $title ) );
+				/**
+				 * Filter the featured page widget title.
+				 *
+				 * @since  1.2.0
+				 *
+				 * @param string $title    Featured page title.
+				 * @param array  $instance {
+				 *     Widget settings for this instance.
+				 *
+				 *     @type string $title           Widget title.
+				 *     @type int    $page_id         ID of the featured page.
+				 *     @type bool   $show_image      True if featured image should be shown, false
+				 *                                   otherwise.
+				 *     @type string $image_alignment Image alignment: alignnone, alignleft,
+				 *                                   aligncenter or alignright.
+				 *     @type string $image_size      Name of the image size.
+				 *     @type bool   $show_title      True if featured page title should be shown,
+				 *                                   false otherwise.
+				 *     @type bool   $show_content    True if featured page content should be shown,
+				 *                                   false otherwise.
+				 *     @type int    $content_limit   Amount of content to show, in characters.
+				 *     @type int    $more_text       Text to use for More link.
+				 * }
+				 * @param array  $args     {
+				 *     Widget display arguments.
+				 *
+				 *     @type string $before_widget Markup or content to display before the widget.
+				 *     @type string $before_title  Markup or content to display before the widget title.
+				 *     @type string $after_title   Markup or content to display after the widget title.
+				 *     @type string $after_widget  Markup or content to display after the widget.
+				 * }
+				 */
+				$title = apply_filters( 'bizznis_featured_page_title', $title, $instance, $args );
+				$heading = bizznis_a11y( 'headings' ) ? 'h4' : 'h2';
+				printf( '<header class="entry-header"><%s class="entry-title"><a href="%s">%s</a></%s></header>', $heading, get_permalink(), $title, $heading );
 			}
 			if ( ! empty( $instance['show_content'] ) ) {
 				printf( '<div %s>', bizznis_attr( 'entry-content' ) );
@@ -93,7 +128,7 @@ class Bizznis_Featured_Page extends WP_Widget {
 					global $more;
 					$orig_more = $more;
 					$more = 0;
-					the_content( $instance['more_text'] );
+					the_content( bizznis_a11y_more_link( $instance['more_text']  ) );
 					$more = $orig_more;
 				} else {
 					the_content_limit( (int) $instance['content_limit'], esc_html( $instance['more_text'] ) );
@@ -136,51 +171,57 @@ class Bizznis_Featured_Page extends WP_Widget {
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'bizznis' ); ?>:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" class="widefat" />
+			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" class="widefat" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'page_id' ); ?>"><?php _e( 'Page', 'bizznis' ); ?>:</label>
-			<?php wp_dropdown_pages( array( 'name' => $this->get_field_name( 'page_id' ), 'selected' => $instance['page_id'] ) ); ?>
+			<?php wp_dropdown_pages( array( 'name' => esc_attr( $this->get_field_name( 'page_id' ) ), 'id' => $this->get_field_id( 'page_id' ), 'selected' => $instance['page_id'] ) ); ?>
 		</p>
+
 		<hr class="div" />
+
 		<p>
-			<input id="<?php echo $this->get_field_id( 'show_image' ); ?>" type="checkbox" name="<?php echo $this->get_field_name( 'show_image' ); ?>" value="1"<?php checked( $instance['show_image'] ); ?> />
-			<label for="<?php echo $this->get_field_id( 'show_image' ); ?>"><?php _e( 'Show Featured Image', 'bizznis' ); ?></label>
+			<input id="<?php echo $this->get_field_id( 'show_image' ); ?>" type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'show_image' ) ); ?>" value="1"<?php checked( $instance['show_image'] ); ?> />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'show_image' ) ); ?>"><?php _e( 'Show Featured Image', 'bizznis' ); ?></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'image_size' ); ?>"><?php _e( 'Image Size', 'bizznis' ); ?>:</label>
-			<select id="<?php echo $this->get_field_id( 'image_size' ); ?>" class="bizznis-image-size-selector" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'image_size' ) ); ?>"><?php _e( 'Image Size', 'bizznis' ); ?>:</label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'image_size' ) ); ?>" class="bizznis-image-size-selector" name="<?php echo esc_attr( $this->get_field_name( 'image_size' ) ); ?>">
+				<option value="thumbnail">thumbnail (<?php echo absint( get_option( 'thumbnail_size_w' ) ); ?>x<?php echo absint( get_option( 'thumbnail_size_h' ) ); ?>)</option>
 				<?php
-				$sizes = bizznis_get_image_sizes();
+				$sizes = bizznis_get_additional_image_sizes();
 				foreach ( (array) $sizes as $name => $size )
 					echo '<option value="' . esc_attr( $name ) . '" ' . selected( $name, $instance['image_size'], FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . 'x' . absint( $size['height'] ) . ')</option>';
 				?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'image_alignment' ); ?>"><?php _e( 'Image Alignment', 'bizznis' ); ?>:</label>
-			<select id="<?php echo $this->get_field_id( 'image_alignment' ); ?>" name="<?php echo $this->get_field_name( 'image_alignment' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'image_alignment' ) ); ?>"><?php _e( 'Image Alignment', 'bizznis' ); ?>:</label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'image_alignment' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'image_alignment' ) ); ?>">
 				<option value="alignnone">- <?php _e( 'None', 'bizznis' ); ?> -</option>
 				<option value="alignleft" <?php selected( 'alignleft', $instance['image_alignment'] ); ?>><?php _e( 'Left', 'bizznis' ); ?></option>
 				<option value="alignright" <?php selected( 'alignright', $instance['image_alignment'] ); ?>><?php _e( 'Right', 'bizznis' ); ?></option>
+				<option value="aligncenter" <?php selected( 'aligncenter', $instance['image_alignment'] ); ?>><?php _e( 'Center', 'bizznis' ); ?></option>
 			</select>
 		</p>
+
 		<hr class="div" />
+
 		<p>
-			<input id="<?php echo $this->get_field_id( 'show_title' ); ?>" type="checkbox" name="<?php echo $this->get_field_name( 'show_title' ); ?>" value="1"<?php checked( $instance['show_title'] ); ?> />
-			<label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php _e( 'Show Page Title', 'bizznis' ); ?></label>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'show_title' ) ); ?>" type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'show_title' ) ); ?>" value="1"<?php checked( $instance['show_title'] ); ?> />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'show_title' ) ); ?>"><?php _e( 'Show Page Title', 'bizznis' ); ?></label>
 		</p>
 		<p>
-			<input id="<?php echo $this->get_field_id( 'show_content' ); ?>" type="checkbox" name="<?php echo $this->get_field_name( 'show_content' ); ?>" value="1"<?php checked( $instance['show_content'] ); ?> />
-			<label for="<?php echo $this->get_field_id( 'show_content' ); ?>"><?php _e( 'Show Page Content', 'bizznis' ); ?></label>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'show_content' ) ); ?>" type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'show_content' ) ); ?>" value="1"<?php checked( $instance['show_content'] ); ?> />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'show_content' ) ); ?>"><?php _e( 'Show Page Content', 'bizznis' ); ?></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'content_limit' ); ?>"><?php _e( 'Content Character Limit', 'bizznis' ); ?>:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'content_limit' ); ?>" name="<?php echo $this->get_field_name( 'content_limit' ); ?>" value="<?php echo esc_attr( $instance['content_limit'] ); ?>" size="3" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'content_limit' ) ); ?>"><?php _e( 'Content Character Limit', 'bizznis' ); ?>:</label>
+			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'content_limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'content_limit' ) ); ?>" value="<?php echo esc_attr( $instance['content_limit'] ); ?>" size="3" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'more_text' ); ?>"><?php _e( 'More Text', 'bizznis' ); ?>:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'more_text' ); ?>" name="<?php echo $this->get_field_name( 'more_text' ); ?>" value="<?php echo esc_attr( $instance['more_text'] ); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'more_text' ) ); ?>"><?php _e( 'More Text', 'bizznis' ); ?>:</label>
+			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'more_text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'more_text' ) ); ?>" value="<?php echo esc_attr( $instance['more_text'] ); ?>" />
 		</p>
 		<?php
 	}

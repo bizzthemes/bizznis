@@ -6,6 +6,22 @@
 */
 
 /**
+ * Register the scripts that Genesis will use.
+ *
+ * @since 1.2.0
+ *
+ * @uses BIZZNIS_ADMIN_JS_URL
+ * @uses PARENT_THEME_VERSION
+ */
+add_action( 'wp_enqueue_scripts', 'bizznis_register_scripts' );
+function bizznis_register_scripts() {
+	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+	wp_register_script( 'skip-links',  BIZZNIS_ADMIN_JS_URL . "/skip-links.js" );
+	wp_register_script( 'drop-down-menu',  BIZZNIS_ADMIN_JS_URL . "/drop-down-menu.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
+}
+
+/**
  * Enqueue the scripts used on the front-end of the site.
  *
  * @since 1.0.0
@@ -15,6 +31,10 @@ function bizznis_load_scripts() {
 	# If a single post or page, threaded comments are enabled, and comments are open
 	if ( is_singular() && get_option( 'thread_comments' ) && comments_open() ) {
 		wp_enqueue_script( 'comment-reply' );		
+	}
+	# If accessibility support enabled
+	if ( bizznis_a11y( 'skip-links' ) ) {
+		wp_enqueue_script( 'skip-links' );
 	}
 }
 

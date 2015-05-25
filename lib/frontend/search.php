@@ -13,14 +13,40 @@ add_filter( 'get_search_form', 'bizznis_search_form' );
  */
 if ( ! function_exists( 'bizznis_search_form' ) ) :
 function bizznis_search_form() {
-	$search_text = get_search_query() ? esc_attr( apply_filters( 'the_search_query', get_search_query() ) ) : apply_filters( 'bizznis_search_text', __( 'Search this website', 'bizznis' ) . '&#x02026;' );
+	$search_text = get_search_query() ? apply_filters( 'the_search_query', get_search_query() ) : apply_filters( 'bizznis_search_text', __( 'Search this website', 'bizznis' ) . ' &#x02026;' );
 	$button_text = apply_filters( 'bizznis_search_button_text', esc_attr__( 'Search', 'bizznis' ) );
 	$onfocus = "onfocus=\"if (this.value == '$search_text') {this.value = '';}\"";
 	$onblur  = "onblur=\"if (this.value == '') {this.value = '$search_text';}\"";
 	# Empty label, by default. Filterable.
 	$label = apply_filters( 'bizznis_search_form_label', '' );
 	$value_or_placeholder = ( get_search_query() == '' ) ? 'placeholder' : 'value';
-	$form = sprintf( '<form method="get" class="search-form" action="%s" role="search">%s<input type="search" name="s" %s="%s" /><input type="submit" value="%s" /></form>', home_url( '/' ), esc_html( $label ), $value_or_placeholder, esc_attr( $search_text ), esc_attr( $button_text ) );
+	$form  = sprintf( '<form %s>', bizznis_attr( 'search-form' ) );
+	if ( bizznis_a11y( 'search-form' ) ) {
+		if ( '' == $label )  {
+			$label = apply_filters( 'bizznis_search_text', __( 'Search this website', 'bizznis' ) );
+		}
+		$form_id = uniqid( 'searchform-' );
+		$form .= sprintf(
+			'<meta itemprop="target" content="%s"/><label class="search-form-label screen-reader-text" for="%s">%s</label><input itemprop="query-input" type="search" name="s" id="%s" %s="%s" /><input type="submit" value="%s" /></form>',
+			home_url( '/?s={s}' ),
+			esc_attr( $form_id ),
+			esc_html( $label ),
+			esc_attr( $form_id ),
+			$value_or_placeholder,
+			esc_attr( $search_text ),
+			esc_attr( $button_text )
+		);
+
+	} else {
+		$form .= sprintf(
+			'%s<meta itemprop="target" content="%s"/><input itemprop="query-input" type="search" name="s" %s="%s" /><input type="submit" value="%s"  /></form>',
+			esc_html( $label ),
+			home_url( '/?s={s}' ),
+			$value_or_placeholder,
+			esc_attr( $search_text ),
+			esc_attr( $button_text )
+		);
+	}
 	return apply_filters( 'bizznis_search_form', $form, $search_text, $button_text, $label );
 }
 endif;

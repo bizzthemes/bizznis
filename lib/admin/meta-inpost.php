@@ -33,17 +33,17 @@ function bizznis_inpost_layout_box() {
 	$layout = bizznis_get_custom_field( '_bizznis_layout' );
 	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), wp_customize_url() );
 	?>
-	<div class="bizznis-layout-selector">
+	<fieldset class="bizznis-layout-selector">
+		<legend class="screen-reader-text"><?php _e( 'Layout Settings', 'bizznis' ); ?></legend>
 		<p><input type="radio" name="bizznis_layout[_bizznis_layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Customizer</a>', 'bizznis' ), $customize_url ); ?></label></p>
-
-		<p><?php bizznis_layout_selector( array( 'name' => 'bizznis_layout[_bizznis_layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
-	</div>
+		<?php bizznis_layout_selector( array( 'name' => 'bizznis_layout[_bizznis_layout]', 'selected' => $layout, 'type' => 'site' ) ); ?>
+	</fieldset>
 	<br class="clear" />
-	<p><label for="bizznis_custom_body_class"><b><?php _e( 'Custom Body Class', 'bizznis' ); ?></b></label></p>
+	<p><label for="bizznis_custom_body_class"><strong><?php _e( 'Custom Body Class', 'bizznis' ); ?></strong></label></p>
 	<p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_body_class]" id="bizznis_custom_body_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_body_class' ) ); ?>" /></p>
-	<p><label for="bizznis_custom_post_class"><b><?php _e( 'Custom Post Class', 'bizznis' ); ?></b></label></p>
+	<p><label for="bizznis_custom_post_class"><strong><?php _e( 'Custom Post Class', 'bizznis' ); ?></strong></label></p>
 	<p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_post_class]" id="bizznis_custom_post_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_post_class' ) ); ?>" /></p>
-	<p><b><?php _e( 'Header Settings', 'bizznis' ); ?></b></p>
+	<p><strong><?php _e( 'Header Settings', 'bizznis' ); ?></strong></p>
 	<p>
 		<label for="bizznis_hide_header"><input type="checkbox" name="bizznis_layout[_bizznis_hide_header]" id="bizznis_hide_header" value="1" <?php checked( bizznis_get_custom_field( '_bizznis_hide_header' ) ); ?> />
 		<?php printf( __( 'Hide %1$s %3$s on individual %2$s', 'bizznis' ), get_post_type(), strtolower( get_post_type_object( get_post_type() )->labels->name ), bizznis_code( '<header>' ) ); ?></label>
@@ -98,7 +98,7 @@ function bizznis_add_inpost_scripts_box() {
 function bizznis_inpost_scripts_box() {
 	wp_nonce_field( 'bizznis_inpost_scripts_save', 'bizznis_inpost_scripts_nonce' );
 	?>
-	<p><label for="bizznis_scripts" class="screen-reader-text"><b><?php _e( 'Page-specific Scripts', 'bizznis' ); ?></b></label></p>
+	<p><label for="bizznis_scripts" class="screen-reader-text"><strong><?php _e( 'Page-specific Scripts', 'bizznis' ); ?></strong></label></p>	
 	<p><textarea class="widefat" rows="4" cols="4" name="bizznis_scripts[_bizznis_scripts]" id="bizznis_scripts"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_scripts' ) ); ?></textarea></p>
 	<p><?php printf( __( 'Suitable for page-specific script. Must include %s tags.', 'bizznis' ), bizznis_code( 'script' ) ); ?></p>
 	<?php

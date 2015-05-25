@@ -29,16 +29,16 @@ function bizznis_taxonomy_archive_options( $tag, $taxonomy ) {
 	<table class="form-table">
 		<tbody>
 			<tr class="form-field">
-				<th scope="row" valign="top"><label for="meta[headline]"><?php _e( 'Archive Headline', 'bizznis' ); ?></label></th>
+				<th scope="row"><label for="bizznis-meta[headline]"><?php _e( 'Archive Headline', 'bizznis' ); ?></label></th>
 				<td>
-					<input id="meta[headline]" name="meta[headline]" type="text" value="<?php echo esc_attr( $tag->meta['headline'] ); ?>" size="40" />
+					<input id="bizznis-meta[headline]" name="bizznis-meta[headline]" type="text" value="<?php echo esc_attr( $tag->meta['headline'] ); ?>" size="40" />
 					<p class="description"><?php _e( 'Leave empty if you do not want to display a headline.', 'bizznis' ); ?></p>
 				</td>
 			</tr>
 			<tr class="form-field">
-				<th scope="row" valign="top"><label for="meta[intro_text]"><?php _e( 'Archive Intro Text', 'bizznis' ); ?></label></th>
+				<th scope="row"><label for="bizznis-meta[intro_text]"><?php _e( 'Archive Intro Text', 'bizznis' ); ?></label></th>
 				<td>
-					<textarea id="meta[intro_text]" name="meta[intro_text]" rows="3" cols="50" class="large-text"><?php echo esc_textarea( $tag->meta['intro_text'] ); ?></textarea>
+					<textarea id="bizznis-meta[intro_text]" name="bizznis-meta[intro_text]" rows="3" cols="50" class="large-text"><?php echo esc_textarea( $tag->meta['intro_text'] ); ?></textarea>
 					<p class="description"><?php _e( 'Leave empty if you do not want to display any intro text.', 'bizznis' ); ?></p>
 				</td>
 			</tr>
@@ -72,15 +72,13 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 	<table class="form-table">
 		<tbody>
 			<tr>
-				<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
+				<th scope="row"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
 				<td>
-					<div class="bizznis-layout-selector">
-						<p>
-							<input type="radio" name="meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> />
-							<label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Customizer</a>', 'bizznis' ), $customize_url ); ?></label>
-						</p>
-						<p><?php bizznis_layout_selector( array( 'name' => 'meta[layout]', 'selected' => $tag->meta['layout'], 'type' => 'site' ) ); ?></p>
-					</div>
+					<fieldset class="bizznis-layout-selector">
+						<legend class="screen-reader-text"><?php _e( 'Choose Layout', 'bizznis' ); ?></legend>
+						<p><input type="radio" class="default-layout" name="bizznis-meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> /> <label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
+						<?php bizznis_layout_selector( array( 'name' => 'bizznis-meta[layout]', 'selected' => $tag->meta['layout'], 'type' => 'site' ) ); ?>
+					</fieldset>
 				</td>
 			</tr>
 		</tbody>
@@ -115,7 +113,25 @@ function bizznis_get_term_filter( $term, $taxonomy ) {
 	) ) );
 	# Sanitize term meta
 	foreach ( $term->meta as $field => $value ) {
-		$term->meta[$field] = apply_filters( 'bizznis_term_meta_' . $field, stripslashes_deep( wp_kses_decode_entities( $value ) ), $term, $taxonomy );
+		if ( is_array( $value ) ) {
+			$value = stripslashes_deep( array_filter( $value, 'wp_kses_decode_entities' ) );
+		} else {
+			$value = stripslashes( wp_kses_decode_entities( $value ) );
+		}
+
+		/**
+		 * Term meta value filter.
+		 *
+		 * Allow term meta value to be filtered before being injected into the $term->meta array.
+		 *
+		 * @since
+		 *
+		 * @param string|array  $value The term meta value.
+		 * @param string  $term The term that is being filtered.
+		 * @param string  $taxonomy The taxonomy to which the term belongs.
+		 */
+		$term->meta[ $field ] = apply_filters( "bizznis_term_meta_{$field}", $value, $term, $taxonomy );
+
 	}
 	$term->meta = apply_filters( 'bizznis_term_meta', $term->meta, $term, $taxonomy );
 	return $term;
@@ -162,4 +178,25 @@ function bizznis_term_meta_delete( $term_id, $tt_id ) {
 	$term_meta = (array) get_option( 'bizznis-term-meta' );
 	unset( $term_meta[$term_id] );
 	update_option( 'bizznis-term-meta', (array) $term_meta );
+}
+
+/**
+ * Create new term meta record for split terms.
+ *
+ * When WordPress splits terms, ensure that the term meta gets preserved for the newly created term.
+ *
+ * @since 1.2.0
+ *
+ * @param integer @old_term_id The ID of the term being split.
+ * @param integer @new_term_id The ID of the newly created term.
+ */
+add_action( 'split_shared_term', 'bizznis_split_shared_term' );
+function bizznis_split_shared_term( $old_term_id, $new_term_id ) {
+	$term_meta = (array) get_option( 'bizznis-term-meta' );
+	if ( ! isset( $term_meta[ $old_term_id ] ) ) {
+		return;
+	}
+	$term_meta[ $new_term_id ] = $term_meta[ $old_term_id ];
+
+	update_option( 'bizznis-term-meta', $term_meta );
 }

@@ -28,7 +28,6 @@ add_action( 'bizznis_header', 'bizznis_do_header' );
  */
 if ( ! function_exists( 'bizznis_do_header' ) ) :
 function bizznis_do_header() {
-	global $wp_registered_sidebars;
 	do_action( 'bizznis_before_header' );
 	printf( '<header %s>', bizznis_attr( 'site-header' ) );
 		do_action( 'bizznis_header_top' );

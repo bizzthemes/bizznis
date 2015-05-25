@@ -154,13 +154,13 @@ function bizznis_loop_grid_content() {
 				'context' => 'grid-loop',
 				'attr'    => bizznis_parse_attr( 'entry-image-grid-loop', array( 'class' => $_bizznis_loop_args['feature_image_class'] ) ),
 			) );
-			printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $image );
+			printf( '<a href="%s">%s</a>', get_permalink(), $image );
 		}
 		if ( $_bizznis_loop_args['feature_content_limit'] )  {
-			the_content_limit( (int) $_bizznis_loop_args['feature_content_limit'], esc_html( $_bizznis_loop_args['more'] ) );
+			the_content_limit( (int) $_bizznis_loop_args['feature_content_limit'], bizznis_a11y_more_link( esc_html( $_bizznis_loop_args['more'] ) ) );
 		}
 		else {
-			the_content( esc_html( $_bizznis_loop_args['more'] ) );
+			the_content( bizznis_a11y_more_link( esc_html( $_bizznis_loop_args['more'] ) ) );
 		}
 	}
 	else {
@@ -170,14 +170,13 @@ function bizznis_loop_grid_content() {
 				'context' => 'grid-loop',
 				'attr'    => bizznis_parse_attr( 'entry-image', array( 'class' => $_bizznis_loop_args['grid_image_class'] ) ),
 			) );
-			printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $image );
+			printf( '<a href="%s">%s</a>', get_permalink(), $image );
 		}
 		if ( $_bizznis_loop_args['grid_content_limit'] ) {
-			the_content_limit( (int) $_bizznis_loop_args['grid_content_limit'], esc_html( $_bizznis_loop_args['more'] ) );
-		}
-		else {
+			the_content_limit( (int) $_bizznis_loop_args['grid_content_limit'], bizznis_a11y_more_link( esc_html( $_bizznis_loop_args['more'] ) ) );
+		} else {
 			the_excerpt();
-			printf( '<a href="%s" class="more-link">%s</a>', get_permalink(), esc_html( $_bizznis_loop_args['more'] ) );
+			printf( '<a href="%s" class="more-link">%s</a>', get_permalink(), bizznis_a11y_more_link( esc_html( $_bizznis_loop_args['more'] ) ) );
 		}
 	}
 

@@ -7,5 +7,6 @@
 
 //*	Handles the secondary sidebar structure.
 printf( '<aside %s>', bizznis_attr( 'sidebar-secondary' ) );
+echo bizznis_sidebar_title( 'sidebar-alt' );
 do_action( 'bizznis_sidebar_alt' );
 echo '</aside>' ."\n";

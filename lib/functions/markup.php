@@ -59,6 +59,13 @@ add_filter( 'bizznis_attr_body', 'bizznis_attributes_body' );
 function bizznis_attributes_body( $attributes ) {
 	$attributes['itemscope']	= 'itemscope';
 	$attributes['itemtype']		= 'http://schema.org/WebPage';
+	# Search results pages
+	if ( is_search() ) {
+		$attributes['itemtype'] = 'http://schema.org/SearchResultsPage';
+	}
+	if ( is_singular( 'post' ) || is_archive() || is_home() ) {
+		$attributes['itemtype']  = 'http://schema.org/Blog';
+	}
 	return $attributes;
 }
 
@@ -109,6 +116,43 @@ function bizznis_attributes_header_widget_area( $attributes ) {
 }
 
 /**
+ * Add attributes for breadcrumb wrapper.
+ *
+ * @since 1.2.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Ammended attributes
+ */
+add_filter( 'bizznis_attr_breadcrumb', 'bizznis_attributes_breadcrumb' );
+function bizznis_attributes_breadcrumb( $attributes ) {
+	$attributes['itemprop']  = 'breadcrumb';
+	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemtype']  = 'http://schema.org/BreadcrumbList';
+
+	return $attributes;
+}
+
+/**
+ * Add attributes for search form.
+ *
+ * @since 1.2.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_search-form', 'bizznis_attributes_search_form' );
+function bizznis_attributes_search_form( $attributes ) {
+	$attributes['itemprop']  = 'potentialAction';
+	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemtype']  = 'http://schema.org/SearchAction';
+	$attributes['method']    = 'get';
+	$attributes['action']    = home_url( '/' );
+	$attributes['role']      = 'search';
+
+	return $attributes;
+}
+
+/**
  * Add attributes for top navigation element.
  *
  * @since 1.0.0
@@ -120,6 +164,7 @@ function bizznis_attributes_nav( $attributes ) {
 	$attributes['role']      	= 'navigation';
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/SiteNavigationElement';
+	
 	return $attributes;
 }
 
@@ -130,18 +175,11 @@ function bizznis_attributes_nav( $attributes ) {
  */
 add_filter( 'bizznis_attr_content', 'bizznis_attributes_content' );
 function bizznis_attributes_content( $attributes ) {
-	$attributes['role']     	= 'main';
-	$attributes['itemprop'] 	= 'mainContentOfPage';
-	# Blog microdata
-	if ( is_singular( 'post' ) || is_archive() || is_home() || is_page_template( 'page_blog.php' ) ) {
-		$attributes['itemscope']	= 'itemscope';
-		$attributes['itemtype'] 	= 'http://schema.org/Blog';
+	$attributes['role'] = 'main';
+	if ( ! ( is_singular( 'post' ) || is_archive() || is_home() ) ) {
+		$attributes['itemprop'] = 'mainContentOfPage';
 	}
-	# Search results pages
-	if ( is_search() ) {
-		$attributes['itemscope']	= 'itemscope';
-		$attributes['itemtype']		= 'http://schema.org/SearchResultsPage';
-	}
+	
 	return $attributes;
 }
 
@@ -152,16 +190,20 @@ function bizznis_attributes_content( $attributes ) {
  */
 add_filter( 'bizznis_attr_entry', 'bizznis_attributes_entry' );
 function bizznis_attributes_entry( $attributes ) {
-	$attributes['class']     	= join( ' ', get_post_class() );
-	$attributes['itemscope'] 	= 'itemscope';
-	$attributes['itemtype']  	= 'http://schema.org/CreativeWork';
-	# Blog posts microdata
-	if ( 'post' == get_post_type() ) {
-		$attributes['itemtype']  	= 'http://schema.org/BlogPosting';
-		# If main query,
-		if ( is_main_query() )
-			$attributes['itemprop']	= 'blogPost';
+	$attributes['class'] = join( ' ', get_post_class() );
+	if ( ! is_main_query() ) {
+		return $attributes;
 	}
+	# Blog posts microdata
+	if ( 'post' === get_post_type() ) {
+		$attributes['itemscope'] = 'itemscope';
+		$attributes['itemtype']  = 'http://schema.org/BlogPosting';
+		# If main query,
+		if ( ! is_search() ) {
+			$attributes['itemprop']  = 'blogPost';
+		}
+	}
+
 	return $attributes;
 }
 
@@ -174,6 +216,7 @@ add_filter( 'bizznis_attr_entry-image', 'bizznis_attributes_entry_image' );
 function bizznis_attributes_entry_image( $attributes ) {
 	$attributes['class']    	= bizznis_get_option( 'image_alignment' ) . ' post-image entry-image';
 	$attributes['itemprop'] 	= 'image';
+	
 	return $attributes;
 }
 
@@ -186,6 +229,7 @@ add_filter( 'bizznis_attr_entry-image-widget', 'bizznis_attributes_entry_image_w
 function bizznis_attributes_entry_image_widget( $attributes ) {
 	$attributes['class']    	= 'entry-image attachment-' . get_post_type();
 	$attributes['itemprop'] 	= 'image';
+	
 	return $attributes;
 }
 
@@ -197,6 +241,7 @@ function bizznis_attributes_entry_image_widget( $attributes ) {
 add_filter( 'bizznis_attr_entry-image-grid-loop', 'bizznis_attributes_entry_image_grid_loop' );
 function bizznis_attributes_entry_image_grid_loop( $attributes ) {
 	$attributes['itemprop'] 	= 'image';
+	
 	return $attributes;
 }
 
@@ -210,6 +255,7 @@ function bizznis_attributes_entry_author( $attributes ) {
 	$attributes['itemprop']  	= 'author';
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/Person';
+	
 	return $attributes;
 }
 
@@ -222,6 +268,7 @@ add_filter( 'bizznis_attr_entry-author-link', 'bizznis_attributes_entry_author_l
 function bizznis_attributes_entry_author_link( $attributes ) {
 	$attributes['itemprop'] 	= 'url';
 	$attributes['rel']      	= 'author';
+	
 	return $attributes;
 }
 
@@ -233,6 +280,7 @@ function bizznis_attributes_entry_author_link( $attributes ) {
 add_filter( 'bizznis_attr_entry-author-name', 'bizznis_attributes_entry_author_name' );
 function bizznis_attributes_entry_author_name( $attributes ) {
 	$attributes['itemprop'] 	= 'name';
+	
 	return $attributes;
 }
 
@@ -245,6 +293,7 @@ add_filter( 'bizznis_attr_entry-time', 'bizznis_attributes_entry_time' );
 function bizznis_attributes_entry_time( $attributes ) {
 	$attributes['itemprop'] 	= 'datePublished';
 	$attributes['datetime'] 	= get_the_time( 'c' );
+	
 	return $attributes;
 }
 
@@ -260,6 +309,7 @@ add_filter( 'bizznis_attr_entry-modified-time', 'bizznis_attributes_entry_modifi
 function bizznis_attributes_entry_modified_time( $attributes ) {
 	$attributes['itemprop'] = 'dateModified';
 	$attributes['datetime'] = get_the_modified_time( 'c' );
+	
 	return $attributes;
 
 }
@@ -272,6 +322,7 @@ function bizznis_attributes_entry_modified_time( $attributes ) {
 add_filter( 'bizznis_attr_entry-title', 'bizznis_attributes_entry_title' );
 function bizznis_attributes_entry_title( $attributes ) {
 	$attributes['itemprop'] 	= 'headline';
+	
 	return $attributes;
 }
 
@@ -283,6 +334,7 @@ function bizznis_attributes_entry_title( $attributes ) {
 add_filter( 'bizznis_attr_entry-content', 'bizznis_attributes_entry_content' );
 function bizznis_attributes_entry_content( $attributes ) {
 	$attributes['itemprop'] 	= 'text';
+	
 	return $attributes;
 }
 
@@ -297,6 +349,7 @@ add_filter( 'bizznis_attr_adjacent-entry-pagination', 'bizznis_attributes_pagina
 add_filter( 'bizznis_attr_comments-pagination', 'bizznis_attributes_pagination' );
 function bizznis_attributes_pagination( $attributes ) {
 	$attributes['class'] .= ' pagination';
+	
 	return $attributes;
 }
 
@@ -308,6 +361,7 @@ function bizznis_attributes_pagination( $attributes ) {
 add_filter( 'bizznis_attr_entry-comments', 'bizznis_attributes_entry_comments' );
 function bizznis_attributes_entry_comments( $attributes ) {
 	$attributes['id'] 			= 'comments';
+	
 	return $attributes;
 }
 
@@ -322,6 +376,7 @@ function bizznis_attributes_comment( $attributes ) {
 	$attributes['itemprop']  	= 'comment';
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype'] 	= 'http://schema.org/UserComments';
+	
 	return $attributes;
 }
 
@@ -335,6 +390,7 @@ function bizznis_attributes_comment_author( $attributes ) {
 	$attributes['itemprop']  = 'creator';
 	$attributes['itemscope'] = 'itemscope';
 	$attributes['itemtype']  = 'http://schema.org/Person';
+	
 	return $attributes;
 }
 
@@ -350,6 +406,7 @@ add_filter( 'bizznis_attr_comment-author-link', 'bizznis_attributes_comment_auth
 function bizznis_attributes_comment_author_link( $attributes ) {
 	$attributes['rel']      = 'external nofollow';
 	$attributes['itemprop'] = 'url';
+	
 	return $attributes;
 }
 
@@ -365,6 +422,7 @@ add_filter( 'bizznis_attr_comment-time', 'bizznis_attributes_comment_time' );
 function bizznis_attributes_comment_time( $attributes ) {
 	$attributes['datetime'] = esc_attr( get_comment_time( 'c' ) );
 	$attributes['itemprop'] = 'commentTime';
+	
 	return $attributes;
 }
 
@@ -379,6 +437,7 @@ function bizznis_attributes_comment_time( $attributes ) {
 add_filter( 'bizznis_attr_comment-time-link', 'bizznis_attributes_comment_time_link' );
 function bizznis_attributes_comment_time_link( $attributes ) {
 	$attributes['itemprop'] = 'url';
+	
 	return $attributes;
 }
 
@@ -393,6 +452,7 @@ function bizznis_attributes_comment_time_link( $attributes ) {
 add_filter( 'bizznis_attr_comment-content', 'bizznis_attributes_comment_content' );
 function bizznis_attributes_comment_content( $attributes ) {
 	$attributes['itemprop'] = 'commentText';
+	
 	return $attributes;
 }
 
@@ -406,6 +466,7 @@ function bizznis_attributes_author_box( $attributes ) {
 	$attributes['itemprop']  	= 'author';
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/Person';
+	
 	return $attributes;
 }
 
@@ -418,8 +479,10 @@ add_filter( 'bizznis_attr_sidebar-primary', 'bizznis_attributes_sidebar_primary'
 function bizznis_attributes_sidebar_primary( $attributes ) {
 	$attributes['class']     	= 'sidebar sidebar-primary widget-area';
 	$attributes['role']      	= 'complementary';
+	$attributes['aria-label']	= __( 'Primary Sidebar', 'bizznis' );
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/WPSideBar';
+	
 	return $attributes;
 }
 
@@ -432,8 +495,10 @@ add_filter( 'bizznis_attr_sidebar-secondary', 'bizznis_attributes_sidebar_second
 function bizznis_attributes_sidebar_secondary( $attributes ) {
 	$attributes['class']     	= 'sidebar sidebar-secondary widget-area';
 	$attributes['role']      	= 'complementary';
+	$attributes['aria-label']	= __( 'Secondary Sidebar', 'bizznis' );
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/WPSideBar';
+	
 	return $attributes;
 }
 
@@ -447,16 +512,90 @@ function bizznis_attributes_site_footer( $attributes ) {
 	$attributes['role']      	= 'contentinfo';
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/WPFooter';
+	
 	return $attributes;
 }
 
 /**
- * Add attributes for site footer element.
+ * Add ID markup to the elements to jump to
  *
- * @since 1.0.0
+ * @since 1.2.0
  */
-add_filter( 'bizznis_attr_breadcrumb', 'bizznis_attributes_site_breadcrumb' );
-function bizznis_attributes_site_breadcrumb( $attributes ) {
-	$attributes['itemprop'] 	= 'breadcrumb';
+function bizznis_skiplinks_markup() {
+	add_filter( 'bizznis_attr_nav-primary', 'bizznis_skiplinks_attr_nav_primary' );
+	add_filter( 'bizznis_attr_content', 'bizznis_skiplinks_attr_content' );
+	add_filter( 'bizznis_attr_sidebar-primary', 'bizznis_skiplinks_attr_sidebar_primary' );
+	add_filter( 'bizznis_attr_sidebar-secondary', 'bizznis_skiplinks_attr_sidebar_secondary' );
+	add_filter( 'bizznis_attr_footer-widgets', 'bizznis_skiplinks_attr_footer_widgets' );
+
+}
+
+/**
+ * Add ID markup to primary navigation
+ *
+ * @since 1.2.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return $attributes plus id and aria-label
+ */
+function bizznis_skiplinks_attr_nav_primary( $attributes ) {
+	$attributes['id'] = 'bizznis-nav-primary';
+	$attributes['aria-label'] = __( 'Main navigation', 'bizznis' );
+	
+	return $attributes;
+}
+
+/**
+ * Add ID markup to content area
+ *
+ * @since 1.2.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return $attributes plus id
+ */
+function bizznis_skiplinks_attr_content( $attributes ) {
+	$attributes['id'] = 'bizznis-content';
+	return $attributes;
+}
+
+/**
+ * Add ID markup to primary sidebar
+ *
+ * @since 1.2.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return $attributes plus id
+ */
+function bizznis_skiplinks_attr_sidebar_primary( $attributes ) {
+	$attributes['id'] = 'bizznis-sidebar-primary';
+	
+	return $attributes;
+}
+
+/**
+ * Add ID markup to secondary sidebar
+ *
+ * @since 1.2.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return $attributes plus id
+ */
+function bizznis_skiplinks_attr_sidebar_secondary( $attributes ) {
+	$attributes['id'] = 'bizznis-sidebar-secondary';
+	
+	return $attributes;
+}
+
+/**
+ * Add ID markup to footer widget area
+ *
+ * @since 1.2.0
+ *
+ * @param array $attributes Existing attributes.
+ * @return $attributes plus id
+ */
+function bizznis_skiplinks_attr_footer_widgets( $attributes ) {
+	$attributes['id'] = 'bizznis-footer-widgets';
+	
 	return $attributes;
 }

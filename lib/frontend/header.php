@@ -13,7 +13,8 @@ add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
  */
 if ( ! function_exists( 'bizznis_default_title' ) ) :
 function bizznis_default_title( $title, $sep, $seplocation ) {
-	if ( is_front_page() ) {
+	# If viewing the root page
+	if ( bizznis_is_root_page() ) {
 		#* Determine the doctitle
 		$title = get_bloginfo( 'name' );
 		#* Append site description, if necessary
@@ -262,15 +263,17 @@ add_action( 'bizznis_after_site_title', 'bizznis_header_widget_area' );
  */
 if ( ! function_exists( 'bizznis_header_widget_area' ) ) :
 function bizznis_header_widget_area() {
+	global $wp_registered_sidebars;
 	if ( ( isset( $wp_registered_sidebars['header-aside'] ) && is_active_sidebar( 'header-aside' ) ) || has_action( 'bizznis_header_aside' ) ) {
-		printf( '<aside %s>', bizznis_attr( 'header-aside-area', array( 'class' => 'header-aside-area widget-area' ) ) );
+		printf( '<div %s>', bizznis_attr( 'header-aside-area', array( 'class' => 'header-aside-area widget-area' ) ) );
+			echo bizznis_sidebar_title( 'header-aside' );
 			do_action( 'bizznis_header_aside' );
 			add_filter( 'wp_nav_menu_args', 'bizznis_header_menu_args' );
 			add_filter( 'wp_nav_menu', 'bizznis_header_menu_wrap' );
 			dynamic_sidebar( 'header-aside' );
 			remove_filter( 'wp_nav_menu_args', 'bizznis_header_menu_args' );
 			remove_filter( 'wp_nav_menu', 'bizznis_header_menu_wrap' );
-		echo '</aside>'; #close .aside-area
+		echo '</div>'; #close .aside-area
 	}
 }
 endif;
@@ -289,5 +292,67 @@ function bizznis_hide_header_content() {
 	if ( is_home() || is_front_page() || ! has_nav_menu( 'primary' ) ) {
 		return true;
 	}
+}
+endif;
+
+add_action ( 'bizznis_before_header', 'bizznis_skip_links', 5 );
+/**
+ * Add skiplinks for screen readers and keyboard navigation
+ *
+ * @since  1.2.0
+ */
+if ( ! function_exists( 'bizznis_skip_links' ) ) :
+function bizznis_skip_links() {
+	if ( ! bizznis_a11y( 'skip-links' ) ) {
+		return;
+	}
+	# Call function to add IDs to the markup
+	bizznis_skiplinks_markup();
+	# Determine which skip links are needed
+	$links = array();
+	if ( has_nav_menu( 'primary' ) ) {
+		$links['bizznis-nav-primary'] =  __( 'Skip to primary navigation', 'bizznis' );
+	}
+	$links['bizznis-content'] = __( 'Skip to content', 'bizznis' );
+	if ( in_array( bizznis_site_layout(), array( 'sidebar-content', 'content-sidebar', 'sidebar-sidebar-content', 'sidebar-content-sidebar', 'content-sidebar-sidebar' ) ) ) {
+		$links['bizznis-sidebar-primary'] = __( 'Skip to primary sidebar', 'bizznis' );
+	}
+	if ( in_array( bizznis_site_layout(), array( 'sidebar-sidebar-content', 'sidebar-content-sidebar', 'content-sidebar-sidebar' ) ) ) {
+		$links['bizznis-sidebar-secondary'] = __( 'Skip to secondary sidebar', 'bizznis' );
+	}
+	if ( current_theme_supports( 'bizznis-footer-widgets' ) ) {
+		$footer_widgets = get_theme_support( 'bizznis-footer-widgets' );
+		if ( isset( $footer_widgets[0] ) && is_numeric( $footer_widgets[0] ) ) {
+			if ( is_active_sidebar( 'footer-1' ) ) {
+				$links['bizznis-footer-widgets'] = __( 'Skip to footer', 'bizznis' );
+			}
+		}
+	}
+
+	 /**
+	 * Filter the skip links.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array $links {
+	 *     Default skiplinks.
+	 *
+	 *     @type string HTML ID attribute value to link to.
+	 *     @type string Anchor text.
+	 * }
+	 */
+	$links = apply_filters( 'bizznis_skip_links_output', $links );
+	# write HTML, skiplinks in a list with a heading
+	$skiplinks  =  '<section>';
+	$skiplinks .=  '<h2 class="screen-reader-text">'. __( 'Skip links', 'bizznis' ) .'</h2>';
+	$skiplinks .=  '<ul class="bizznis-skip-link">';
+	# Add markup for each skiplink
+	foreach ($links as $key => $value) {
+		$skiplinks .=  '<li><a href="' . esc_url( '#' . $key ) . '" class="screen-reader-shortcut"> ' . $value . '</a></li>';
+	}
+	$skiplinks .=  '</ul>';
+	$skiplinks .=  '</section>' . "\n";
+
+	echo $skiplinks;
 }
 endif;

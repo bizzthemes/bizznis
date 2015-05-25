@@ -280,12 +280,12 @@ function bizznis_post_categories_shortcode( $atts ) {
  */
 add_bizzcode( 'post_terms', 'bizznis_post_terms_shortcode' );
 function bizznis_post_terms_shortcode( $atts ) {
-	$defaults = array(
+	$defaults = apply_filters( 'bizznis_post_terms_shortcode_defaults', array(
 			'after'    => '',
 			'before'   => __( 'Filed Under: ', 'bizznis' ),
 			'sep'      => ', ',
 			'taxonomy' => 'category',
-	);
+	) );
 	$atts = shortcode_atts( $defaults, $atts, 'post_terms' );
 	$terms = get_the_term_list( get_the_ID(), $atts['taxonomy'], $atts['before'], trim( $atts['sep'] ) . ' ', $atts['after'] );
 	if ( is_wp_error( $terms ) ) {

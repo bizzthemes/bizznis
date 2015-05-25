@@ -115,12 +115,12 @@ class Bizznis_Page_List extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'bizznis' ); ?>:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" class="widefat" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title', 'bizznis' ); ?>:</label>
+			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" class="widefat" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'sort_column' ); ?>"><?php _e( 'Sort by', 'bizznis' ); ?>:</label>
-			<select id="<?php echo $this->get_field_id( 'sort_column' ); ?>" name="<?php echo $this->get_field_name( 'sort_column' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'sort_column' ) ); ?>"><?php _e( 'Sort by', 'bizznis' ); ?>:</label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'sort_column' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'sort_column' ) ); ?>">
 				<option value="post_title" <?php selected( 'post_title', $instance['sort_column'] ); ?>><?php _e( 'Page title', 'bizznis' ); ?></option>
 				<option value="menu_order" <?php selected( 'menu_order', $instance['sort_column'] ); ?>><?php _e( 'Menu order', 'bizznis' ); ?></option>
 				<option value="post_date" <?php selected( 'post_date', $instance['sort_column'] ); ?>><?php _e( 'Publish date', 'bizznis' ); ?></option>
@@ -128,31 +128,31 @@ class Bizznis_Page_List extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'sort_order' ); ?>"><?php _e( 'Order by', 'bizznis' ); ?>:</label>
-			<select id="<?php echo $this->get_field_id( 'sort_order' ); ?>" name="<?php echo $this->get_field_name( 'sort_order' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'sort_order' ) ); ?>"><?php _e( 'Order by', 'bizznis' ); ?>:</label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'sort_order' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'sort_order' ) ); ?>">
 				<option value="asc" <?php selected( 'asc', $instance['sort_order'] ); ?>><?php _e( 'Ascending', 'bizznis' ); ?></option>
 				<option value="desc" <?php selected( 'desc', $instance['sort_order'] ); ?>><?php _e( 'Descending', 'bizznis' ); ?></option>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'child_of' ); ?>"><?php _e( 'Child Of', 'bizznis' ); ?>:</label>
-			<?php wp_dropdown_pages( array( 'name' => $this->get_field_name( 'child_of' ), 'selected' => $instance['child_of'], 'show_option_none' => __( '- Select -', 'bizznis' ) ) ); ?>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'child_of' ) ); ?>"><?php _e( 'Child Of', 'bizznis' ); ?>:</label>
+			<?php wp_dropdown_pages( array( 'name' => esc_attr( $this->get_field_name( 'child_of' ) ), 'selected' => $instance['child_of'], 'show_option_none' => __( '- Select -', 'bizznis' ) ) ); ?>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><?php _e( 'Exclude', 'bizznis' ); ?>:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>" value="<?php echo esc_attr( $instance['exclude'] ); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'exclude' ) ); ?>"><?php _e( 'Exclude', 'bizznis' ); ?>:</label>
+			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'exclude' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'exclude' ) ); ?>" value="<?php echo esc_attr( $instance['exclude'] ); ?>" />
 			<br />
 			<small><?php _e( 'Page IDs, separated by commas.', 'bizznis' ); ?></small>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'link_before' ); ?>"><?php _e( 'Before link', 'bizznis' ); ?>:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'link_before' ); ?>" name="<?php echo $this->get_field_name( 'link_before' ); ?>" value="<?php echo esc_attr( $instance['link_before'] ); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'link_before' ) ); ?>"><?php _e( 'Before link', 'bizznis' ); ?>:</label>
+			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'link_before' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'link_before' ) ); ?>" value="<?php echo esc_attr( $instance['link_before'] ); ?>" />
 			<br />
 			<small><?php _e( 'Sets the text or html that precedes the link text inside &lt;a&gt; tag.', 'bizznis' ); ?></small>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'link_after' ); ?>"><?php _e( 'After link', 'bizznis' ); ?>:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'link_after' ); ?>" name="<?php echo $this->get_field_name( 'link_after' ); ?>" value="<?php echo esc_attr( $instance['link_after'] ); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'link_after' ) ); ?>"><?php _e( 'After link', 'bizznis' ); ?>:</label>
+			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'link_after' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'link_after' ) ); ?>" value="<?php echo esc_attr( $instance['link_after'] ); ?>" />
 			<br />
 			<small><?php _e( 'Sets the text or html that follows the link text inside &lt;a&gt; tag.', 'bizznis' ); ?></small>
 		</p>

@@ -15,6 +15,12 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.2.0
+* Added accessibility to all areas
+* Fixed header area widgets display
+* Added print styles
+* Better theme support handling
+
 ### 1.1.8
 * Added hook to header section
 

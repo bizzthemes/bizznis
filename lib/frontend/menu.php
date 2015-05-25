@@ -34,6 +34,7 @@ add_action( 'bizznis_header_top', 'bizznis_do_nav' );
  *
  * @uses bizznis_nav_menu() Display a navigation menu.
  * @uses bizznis_nav_menu_supported() Checks for support of specific nav menu.
+ * @uses bizznis_a11y() Checks for acessibility support to add a heading to the main navigation.
  */
 if ( ! function_exists( 'bizznis_do_nav' ) ) :
 function bizznis_do_nav() {
@@ -42,6 +43,9 @@ function bizznis_do_nav() {
 		return;
 	}
 	$class = 'menu menu-bizznis menu-primary';
+	if ( bizznis_a11y( 'headings' ) ) {
+		printf( '<h2 class="screen-reader-text">%s</h2>', __( 'Main navigation', 'bizznis' ) );
+	}
 	bizznis_nav_menu( array(
 		'theme_location' => 'primary',
 		'menu_class'     => $class,

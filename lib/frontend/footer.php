@@ -35,6 +35,7 @@ function bizznis_footer_widget_areas() {
 	}
 	if ( $inside ) {
 		$output .= sprintf( '<div %s>', bizznis_attr( 'footer-widgets' ) );
+		$output .= bizznis_sidebar_title( 'Footer' );
 		$output .= bizznis_wrapper( 'footer-widgets-wrapper', 'open', false ); #wrapper
 		$output .= $inside;
 		$output .= bizznis_wrapper( 'footer-widgets-wrapper', 'close', false ); #wrapper

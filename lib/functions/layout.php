@@ -212,7 +212,7 @@ function bizznis_layout_selector( $args = array() ) {
 	foreach ( bizznis_get_layouts( $args['type'] ) as $id => $data ) {
 		$class = $id == $args['selected'] ? ' selected' : '';
 		$output .= sprintf(
-			'<label class="box%2$s"><img src="%3$s" alt="%1$s" /><br /> <input type="radio" name="%4$s" id="%5$s" value="%5$s" %6$s /></label>',
+			'<label class="box%2$s" for="%5$s"><span class="screen-reader-text">%1$s </span><img src="%3$s" alt="%1$s" /><input type="radio" name="%4$s" id="%5$s" value="%5$s" %6$s class="screen-reader-text" /></label>',
 			esc_attr( $data['label'] ),
 			esc_attr( $class ),
 			esc_url( $data['img'] ),

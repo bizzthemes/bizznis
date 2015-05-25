@@ -15,5 +15,10 @@ if ( post_password_required() ) {
 	return;
 }
 
+//* Output semantically correct header if accessibility is supported
+if ( bizznis_a11y( 'headings' ) ) {
+	printf( '<h2 class="screen-reader-text">%s</h2>', __( 'Reader Interactions', 'bizznis' ) );
+}
+
 //* This hook handles all comments code
 do_action( 'bizznis_comments' );

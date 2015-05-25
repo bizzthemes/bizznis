@@ -45,10 +45,10 @@ function bizznis_user_options_fields( $user ) {
 	<table class="form-table">
 		<tbody>
 			<tr>
-				<th scope="row" valign="top"><?php _e( 'Bizznis Admin Menus', 'bizznis' ); ?></th>
+				<th scope="row"><?php _e( 'Bizznis Admin Menus', 'bizznis' ); ?></th>
 				<td>
-					<input id="meta[bizznis_admin_menu]" name="meta[bizznis_admin_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_admin_menu', $user->ID ) ); ?> />
-					<label for="meta[bizznis_admin_menu]"><?php _e( 'Enable Bizznis Admin Menus?', 'bizznis' ); ?></label><br />
+					<input id="bizznis-bizznis-meta[bizznis_admin_menu]" name="bizznis-bizznis-meta[bizznis_admin_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_admin_menu', $user->ID ) ); ?> />
+					<label for="bizznis-bizznis-meta[bizznis_admin_menu]"><?php _e( 'Enable Bizznis Admin Menus?', 'bizznis' ); ?></label><br />
 				</td>
 			</tr>
 		</tbody>
@@ -71,26 +71,26 @@ function bizznis_user_archive_fields( $user ) {
 	<table class="form-table">
 		<tbody>
 			<tr>
-				<th scope="row" valign="top"><label for="headline"><?php _e( 'Custom Archive Headline', 'bizznis' ); ?></label></th>
+				<th scope="row"><label for="headline"><?php _e( 'Custom Archive Headline', 'bizznis' ); ?></label></th>
 				<td>
-					<input name="meta[headline]" id="headline" type="text" value="<?php echo esc_attr( get_the_author_meta( 'headline', $user->ID ) ); ?>" class="regular-text" /><br />
+					<input name="bizznis-meta[headline]" id="headline" type="text" value="<?php echo esc_attr( get_the_author_meta( 'headline', $user->ID ) ); ?>" class="regular-text" /><br />
 					<span class="description"><?php printf( __( 'Will display in the %s tag at the top of the first page', 'bizznis' ), '<code>&lt;h1&gt;&lt;/h1&gt;</code>' ); ?></span>
 				</td>
 			</tr>
 			<tr>
 				<th scope="row" valign="top"><label for="intro_text"><?php _e( 'Custom Description Text', 'bizznis' ); ?></label></th>
 				<td>
-					<textarea name="meta[intro_text]" id="intro_text" rows="5" cols="30"><?php echo esc_textarea( get_the_author_meta( 'intro_text', $user->ID ) ); ?></textarea><br />
+					<textarea name="bizznis-meta[intro_text]" id="intro_text" rows="5" cols="30"><?php echo esc_textarea( get_the_author_meta( 'intro_text', $user->ID ) ); ?></textarea><br />
 					<span class="description"><?php _e( 'This text will be the first paragraph, and display on the first page', 'bizznis' ); ?></span>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row" valign="top"><?php _e( 'Author Box', 'bizznis' ); ?></th>
+				<th scope="row"><?php _e( 'Author Box', 'bizznis' ); ?></th>
 				<td>
-					<input id="meta[bizznis_author_box_single]" name="meta[bizznis_author_box_single]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_author_box_single', $user->ID ) ); ?> />
-					<label for="meta[bizznis_author_box_single]"><?php _e( 'Enable Author Box on this User\'s Posts?', 'bizznis' ); ?></label><br />
-					<input id="meta[bizznis_author_box_archive]" name="meta[bizznis_author_box_archive]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_author_box_archive', $user->ID ) ); ?> />
-					<label for="meta[bizznis_author_box_archive]"><?php _e( 'Enable Author Box on this User\'s Archives?', 'bizznis' ); ?></label>
+					<input id="bizznis-meta[bizznis_author_box_single]" name="bizznis-meta[bizznis_author_box_single]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_author_box_single', $user->ID ) ); ?> />
+					<label for="bizznis-meta[bizznis_author_box_single]"><?php _e( 'Enable Author Box on this User\'s Posts?', 'bizznis' ); ?></label><br />
+					<input id="bizznis-meta[bizznis_author_box_archive]" name="bizznis-meta[bizznis_author_box_archive]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'bizznis_author_box_archive', $user->ID ) ); ?> />
+					<label for="bizznis-meta[bizznis_author_box_archive]"><?php _e( 'Enable Author Box on this User\'s Archives?', 'bizznis' ); ?></label>
 				</td>
 			</tr>
 		</tbody>
@@ -118,13 +118,11 @@ function bizznis_user_layout_fields( $user ) {
 			<tr>
 				<th scope="row" valign="top"><?php _e( 'Choose Layout', 'bizznis' ); ?></th>
 				<td>
-					<div class="bizznis-layout-selector">
-						<p>
-							<input type="radio" name="meta[layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> />
-							<label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Customizer</a>', 'bizznis' ), $customize_url ); ?></label>
-						</p>
-						<p><?php bizznis_layout_selector( array( 'name' => 'meta[layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
-					</div>
+					<fieldset class="bizznis-layout-selector">
+						<legend class="screen-reader-text"><?php _e( 'Choose Layout', 'bizznis' ); ?></legend>
+						<p><input type="radio" name="bizznis-meta[layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
+						<?php bizznis_layout_selector( array( 'name' => 'bizznis-meta[layout]', 'selected' => $layout, 'type' => 'site' ) ); ?>
+					</fieldset>
 				</td>
 			</tr>
 		</tbody>
@@ -143,26 +141,34 @@ function bizznis_user_meta_save( $user_id ) {
 	if ( ! current_user_can( 'edit_users', $user_id ) ) {
 		return;
 	}
-	if ( ! isset( $_POST['meta'] ) || ! is_array( $_POST['meta'] ) ) {
+	if ( ! isset( $_POST['bizznis-meta'] ) || ! is_array( $_POST['bizznis-meta'] ) ) {
 		return;
 	}
-	$meta = wp_parse_args(
-		$_POST['meta'],
-		array(
-			'bizznis_admin_menu'         	=> '',
-			'bizznis_settings_menu'  	 	=> '',
-			'bizznis_author_box_single'  	=> '',
-			'bizznis_author_box_archive' 	=> '',
-			'headline'                   	=> '',
-			'intro_text'                 	=> '',
-			'doctitle'                   	=> '',
-			'meta_description'           	=> '',
-			'noindex'                   	=> '',
-			'nofollow'                  	=> '',
-			'noarchive'                  	=> '',
-			'layout'                     	=> '',
-		)
+	$defaults = array(
+		'bizznis_admin_menu'         	=> '',
+		'bizznis_settings_menu'  	 	=> '',
+		'bizznis_author_box_single'  	=> '',
+		'bizznis_author_box_archive' 	=> '',
+		'headline'                   	=> '',
+		'intro_text'                 	=> '',
+		'doctitle'                   	=> '',
+		'meta_description'           	=> '',
+		'noindex'                   	=> '',
+		'nofollow'                  	=> '',
+		'noarchive'                  	=> '',
+		'layout'                     	=> '',
 	);
+	/**
+	 * Filter the user meta defaults array.
+	 *
+	 * Allows developer to filter the default array of user meta key => value pairs.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array $defaults Default user meta array.
+	 */
+	$defaults = apply_filters( 'bizznis_user_meta_defaults', $defaults );
+	$meta = wp_parse_args( $_POST['bizznis-meta'], $defaults );
 	# Sanitize 
 	$meta['headline']   = strip_tags( $meta['headline'] );
 	$meta['intro_text'] = current_user_can( 'unfiltered_html' ) ? $meta['intro_text'] : bizznis_formatting_kses( $meta['intro_text'] );

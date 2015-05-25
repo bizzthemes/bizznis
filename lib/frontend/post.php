@@ -68,6 +68,29 @@ function bizznis_custom_post_class( array $classes ) {
 }
 endif;
 
+add_filter( 'post_class', 'bizznis_featured_image_post_class' );
+/**
+ * Featured Image Post Class
+ *
+ * @since 1.2.0
+ *
+ * @uses bizznis_get_image() Bizznis featured image
+ *
+ * @param array $classes Existing post classes
+ * @return array Amended post classes
+ *
+ */
+if ( ! function_exists( 'bizznis_featured_image_post_class' ) ) :
+function bizznis_featured_image_post_class( $classes ) {
+    $image = bizznis_get_image();
+    if ( $image && ! in_array( 'has-post-thumbnail', $classes ) ) {
+        $classes[] = 'has-post-thumbnail';
+    }
+
+    return $classes;
+}
+endif;
+
 add_action( 'bizznis_entry_header', 'bizznis_do_post_format_image', 5 );
 /**
  * Add a post format icon. Adds an image, corresponding to the post format, before the post title.
@@ -84,11 +107,11 @@ function bizznis_do_post_format_image() {
 	$post_format = get_post_format();
 	# If post format is set, look for post format image
 	if ( $post_format && file_exists( sprintf( '%s/images/post-formats/%s.png', CHILD_DIR, $post_format ) ) ) {
-		printf( '<a href="%s" title="%s" rel="bookmark"><img src="%s" class="post-format-image" alt="%s" /></a>', get_permalink(), the_title_attribute( 'echo=0' ), sprintf( '%s/images/post-formats/%s.png', CHILD_URL, $post_format ), $post_format );
+		printf( '<a href="%s" rel="bookmark"><img src="%s" class="post-format-image" alt="%s" /></a>', get_permalink(), sprintf( '%s/images/post-formats/%s.png', CHILD_URL, $post_format ), $post_format );
 	}
 	# Else, look for the default post format image
 	elseif ( file_exists( sprintf( '%s/images/post-formats/default.png', CHILD_DIR ) ) ) {
-		printf( '<a href="%s" title="%s" rel="bookmark"><img src="%s/images/post-formats/default.png" class="post-format-image" alt="%s" /></a>', get_permalink(), the_title_attribute( 'echo=0' ), CHILD_URL, 'post' );
+		printf( '<a href="%s" rel="bookmark"><img src="%s/images/post-formats/default.png" class="post-format-image" alt="%s" /></a>', get_permalink(), CHILD_URL, 'post' );
 	}
 }
 endif;
@@ -160,10 +183,10 @@ function bizznis_do_post_image() {
 			'format'  => 'html',
 			'size'    => bizznis_get_option( 'image_size' ),
 			'context' => 'archive',
-			'attr'    => bizznis_parse_attr( 'entry-image' ),
+			'attr'    => bizznis_parse_attr( 'entry-image', array ( 'alt' => get_the_title() ) ),
 		) );
 		if ( ! empty( $img ) ) {
-			printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $img );
+			printf( '<a href="%s" aria-hidden="true">%s</a>', get_permalink(), $img );
 		}
 	}
 }
@@ -254,16 +277,26 @@ add_action( 'bizznis_entry_header', 'bizznis_post_info' );
 /**
  * Echo the post info (byline) under the post title.
  *
+ * By default, only does post info on posts.
+ *
+ * The post info makes use of several shortcodes by default, and the whole output is filtered via `bizznis_post_info`
+ * before echoing.
+ *
  * @since 1.0.0
+ * @uses bizznis_markup() Contextual markup.
+ * @return null Return early if post type lacks support.
  */
 if ( ! function_exists( 'bizznis_post_info' ) ) :
 function bizznis_post_info() {
-	# Doesn't do post info on pages.
-	if ( 'page' === get_post_type() ) {
+	# Filter for each post type.
+	if ( ! post_type_supports( get_post_type(), 'bizznis-entry-meta-before-content' ) ) {
 		return;
 	}
-	$entry_meta = apply_filters( 'bizznis_post_info', '[post_date] ' . __( 'by', 'bizznis' ) . ' [post_author_posts_link] [post_comments] [post_edit]' );
-	printf( '<p %s>' . $entry_meta . '</p>', bizznis_attr( 'entry-meta' ) );
+	$filtered = apply_filters( 'bizznis_post_info', '[post_date] ' . __( 'by', 'bizznis' ) . ' [post_author_posts_link] [post_comments] [post_edit]' );
+	if ( empty( $filtered ) ) {
+		return;
+	}
+	printf( '<p %s>' . $filtered . '</p>', bizznis_attr( 'entry-meta' ) );
 }
 endif;
 
@@ -275,7 +308,7 @@ add_action( 'bizznis_entry_footer', 'bizznis_entry_footer_markup_open', 5 );
  */
 if ( ! function_exists( 'bizznis_entry_footer_markup_open' ) ) :
 function bizznis_entry_footer_markup_open() {
-	if ( 'post' === get_post_type() ) {
+	if ( post_type_supports( get_post_type(), 'bizznis-entry-meta-after-content' ) ) {
 		printf( '<footer %s>', bizznis_attr( 'entry-footer' ) );
 	}
 }
@@ -289,7 +322,7 @@ add_action( 'bizznis_entry_footer', 'bizznis_entry_footer_markup_close', 15 );
  */
 if ( ! function_exists( 'bizznis_entry_footer_markup_close' ) ) :
 function bizznis_entry_footer_markup_close() {
-	if ( 'post' === get_post_type() ) {
+	if ( post_type_supports( get_post_type(), 'bizznis-entry-meta-after-content' ) ) {
 		echo '</footer>';
 	}
 }
@@ -304,12 +337,15 @@ add_action( 'bizznis_entry_footer', 'bizznis_post_meta' );
  */
 if ( ! function_exists( 'bizznis_post_meta' ) ) :
 function bizznis_post_meta() {
-	# Doesn't do post meta on pages.
-	if ( 'page' === get_post_type() ) {
+	# Filter for each post type.
+	if ( ! post_type_supports( get_post_type(), 'bizznis-entry-meta-after-content' ) ) {
 		return;
 	}
-	$entry_meta = apply_filters( 'bizznis_post_meta', '[post_categories] [post_tags]' );
-	printf( '<p %s>' . $entry_meta . '</p>', bizznis_attr( 'entry-meta' ) );
+	$filtered = apply_filters( 'bizznis_post_meta', '[post_categories] [post_tags]' );
+	if ( empty( $filtered ) ) {
+		return;
+	}
+	printf( '<p %s>' . $filtered . '</p>', bizznis_attr( 'entry-meta' ) );
 }
 endif;
 
@@ -355,16 +391,14 @@ function bizznis_author_box( $context = '', $echo = true ) {
 	 * @param string $context Context. 
 	 */
 	$title = apply_filters( 'bizznis_author_box_title', $title, $context );
-	$pattern  = sprintf( '<section %s>', bizznis_attr( 'author-box' ) );
-	$pattern .= '%s';
-	$pattern .= '<div class="author-body">';
 	if ( 'single' === $context ) {
-		$pattern .= '<h4 class="author-box-title">%s</h4>';
+		$heading_element = 'h4';
 	} else {
-		$pattern .= '<h1 class="author-box-title">%s</h1>';
+		$heading_element = 'h1';
 	}
+	$pattern  = sprintf( '<section %s>', bizznis_attr( 'author-box' ) );
+	$pattern .= '%s<' . $heading_element . ' class="author-box-title">%s</' . $heading_element . '>';
 	$pattern .= '<div class="author-box-content" itemprop="description">%s</div>';
-	$pattern .= '</div>';
 	$pattern .= '</section>';
 	$output = apply_filters( 'bizznis_author_box', sprintf( $pattern, $gravatar, $title, $description ), $context, $pattern, $gravatar, $title, $description );
 	if ( $echo ) {
@@ -467,6 +501,7 @@ function bizznis_numeric_posts_nav() {
 		$links[] = $paged + 1;
 	}
 	printf( '<nav %s>', bizznis_attr( 'archive-pagination' ) );
+	$before_number = bizznis_a11y() ? '<span class="screen-reader-text">' . __( 'Page ' ) .  '</span>' : '';
 	echo '<ul>';
 	# Previous Post Link
 	if ( get_previous_posts_link() ) {
@@ -475,7 +510,7 @@ function bizznis_numeric_posts_nav() {
 	# Link to first page, plus ellipses if necessary
 	if ( ! in_array( 1, $links ) ) {
 		$class = 1 == $paged ? ' class="active"' : '';
-		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), '1' );
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), $before_number . '1' );
 		if ( ! in_array( 2, $links ) ) {
 			echo '<li class="pagination-omission">&#x02026;</li>';
 		}
@@ -483,8 +518,8 @@ function bizznis_numeric_posts_nav() {
 	# Link to current page, plus 2 pages in either direction if necessary
 	sort( $links );
 	foreach ( (array) $links as $link ) {
-		$class = $paged == $link ? ' class="active"' : '';
-		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $link ) ), $link );
+		$class = $paged == $link ? ' class="active"  aria-label="' . __( 'Current page', 'bizznis' ) . '"' : '';
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $link ) ), $before_number . $link );
 	}
 	# Link to last page, plus ellipses if necessary
 	if ( ! in_array( $max, $links ) ) {
@@ -492,11 +527,11 @@ function bizznis_numeric_posts_nav() {
 			echo '<li class="pagination-omission">&#x02026;</li>' . "\n";
 		}
 		$class = $paged == $max ? ' class="active"' : '';
-		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $max ) ), $max );
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $max ) ), $before_number . $max );
 	}
 	# Next Post Link
 	if ( get_next_posts_link() ) {
-		printf( '<li class="pagination-next">%s</li>' . "\n", get_next_posts_link( apply_filters( 'bizznis_next_link_text', __( 'Next Page', 'bizznis' ) . ' &#x000BB;' ) ) );
+		printf( '<li class="pagination-next">%s</li>' . "\n", get_next_posts_link( apply_filters( 'genesis_next_link_text', __( 'Next Page', 'genesis' ) . ' &#x000BB;' ) ) );
 	}
 	echo '</ul></nav>' . "\n";
 }

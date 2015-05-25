@@ -137,15 +137,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		wp_enqueue_script( 'bizznis_preview_customizer_js', BIZZNIS_ADMIN_JS_URL . '/customizer_preview.js', array( 'jquery', 'customize-preview' ), PARENT_THEME_VERSION, true );
 		
 	}
-	
-	/**
-	 * Register controls scripts.
-	 */
-	public function controls_scripts() {
-
-		wp_enqueue_script( 'bizznis_controls_customizer_js', BIZZNIS_ADMIN_JS_URL . '/customizer_controls.js', array( 'jquery', 'customize-controls' ), PARENT_THEME_VERSION, true );
-		
-	}
 
 	/**
 	 * Register controls.
@@ -192,15 +183,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 		
-		//* Get custom styles
-		$styles  = get_theme_support( 'bizznis-style-selector' );
-		$custom_styles[''] = __( 'Default', 'bizznis' );
-		if ( ! empty( $styles ) ) {
-			$styles = array_shift( $styles );
-			foreach ( (array) $styles as $style => $title ) {
-				$custom_styles[esc_attr( $style )] = esc_html( $title );
-			}
-		}
+		$bizznis_style_support = get_theme_support( 'bizznis-style-selector' );
 
 		$wp_customize->add_control(
 			'bizznis_color_scheme',
@@ -209,7 +192,10 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'section'  => 'bizznis_color_scheme',
 				'settings' => $this->get_field_name( 'style_selection' ),
 				'type'     => 'select',
-				'choices'  => $custom_styles,
+				'choices'  => array_merge(
+					array( '' => __( 'Default', 'bizznis' ) ),
+					array_shift( $bizznis_style_support )
+				),
 				'priority' => $priority->add(),
 			)
 		);
@@ -300,26 +286,8 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			return;
 		}
 		
-		//* Nav Extras Selector
-		if ( ! has_nav_menu( 'primary' ) ) {
-			return;
-		}
-		
 		//* Setting the priority
 		$priority = new Bizznis_Prioritizer( 11, 1 );
-		
-		$wp_customize->add_control(
-			new Bizznis_Customize_Misc_Control(
-				$wp_customize,
-				'extras_info',
-				array(
-					'section'  => 'nav',
-					'type'     => 'info',
-					'label'    => __( 'Primary Menu Extra', 'bizznis' ),
-					'priority' => $priority->add(),
-				)
-			)
-		);
 		
 		//* Add Settings
 		$wp_customize->add_setting(
@@ -360,6 +328,20 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		
 		//* Add Controls
 		$wp_customize->add_control(
+			new Bizznis_Customize_Misc_Control(
+				$wp_customize,
+				'bizznis_nav_extras_info',
+				array(
+					'section'  => 'nav',
+					'type'     => 'info',
+					'label'    => __( 'Primary Menu Extra', 'bizznis' ),
+					'priority' => $priority->add(),
+					'active_callback' => 'bizznis_callback_control',
+				)
+			)
+		);
+		
+		$wp_customize->add_control(
 			'bizznis_nav_extras_enable',
 			array(
 				'label'    => __( 'Enable Extras on Right Side?', 'bizznis' ),
@@ -367,6 +349,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'settings' => $this->get_field_name( 'nav_extras_enable' ),
 				'type'     => 'checkbox',
 				'priority' => $priority->add(),
+				'active_callback' => 'bizznis_callback_control',
 			)
 		);
 		
@@ -383,6 +366,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 					'twitter'     	=> __( 'Twitter link', 'bizznis' ),
 				),
 				'priority' => $priority->add(),
+				'active_callback' => 'bizznis_callback_control',
 			)
 		);
 		
@@ -393,6 +377,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'section'  => 'nav',
 				'settings' => $this->get_field_name( 'nav_extras_twitter_id' ),
 				'priority' => $priority->add(),
+				'active_callback' => 'bizznis_callback_control',
 			)
 		);
 
@@ -403,6 +388,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'section'  => 'nav',
 				'settings' => $this->get_field_name( 'nav_extras_twitter_text' ),
 				'priority' => $priority->add(),
+				'active_callback' => 'bizznis_callback_control',
 			)
 		);
 
@@ -433,14 +419,14 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		);
 		
 		$settings = array(
-			'breadcrumb_home'       => __( 'Homepage', 'bizznis' ),
-			'breadcrumb_front_page' => __( 'Front Page', 'bizznis' ),
-			'breadcrumb_posts_page' => __( 'Posts Page', 'bizznis' ),
-			'breadcrumb_single'     => __( 'Single', 'bizznis' ),
-			'breadcrumb_page'       => __( 'Page', 'bizznis' ),
-			'breadcrumb_archive'    => __( 'Archive', 'bizznis' ),
-			'breadcrumb_404'        => __( '404', 'bizznis' ),
-			'breadcrumb_attachment' => __( 'Attachment/Media', 'bizznis' ),
+			'breadcrumb_home'       => __( 'Breadcrumbs on Homepage', 'bizznis' ),
+			'breadcrumb_front_page' => __( 'Breadcrumbs on Front Page', 'bizznis' ),
+			'breadcrumb_posts_page' => __( 'Breadcrumbs on Posts Page', 'bizznis' ),
+			'breadcrumb_single'     => __( 'Breadcrumbs on Single', 'bizznis' ),
+			'breadcrumb_page'       => __( 'Breadcrumbs on Page', 'bizznis' ),
+			'breadcrumb_archive'    => __( 'Breadcrumbs on Archive', 'bizznis' ),
+			'breadcrumb_404'        => __( 'Breadcrumbs on 404 Page', 'bizznis' ),
+			'breadcrumb_attachment' => __( 'Breadcrumbs on Attachment/Media', 'bizznis' ),
 		);
 
 		foreach ( $settings as $setting => $label ) {
@@ -608,6 +594,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'section'  => 'bizznis_archives',
 				'settings' => $this->get_field_name( 'content_archive_limit' ),
 				'priority' => $priority->add(),
+				'active_callback' => 'bizznis_callback_control',
 			)
 		);
 		
@@ -644,6 +631,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'type'     => 'select',
 				'choices'  => bizznis_get_image_sizes_for_customizer(),
 				'priority' => $priority->add(),
+				'active_callback' => 'bizznis_callback_control',
 			)
 		);
 
@@ -660,6 +648,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 					'alignright' => __( 'Right', 'bizznis' ),
 				),
 				'priority' => $priority->add(),
+				'active_callback' => 'bizznis_callback_control',
 			)
 		);
 
@@ -874,6 +863,53 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 }
 
 /**
+ * Active callback control
+ *
+ * @since 1.1.9
+ */
+function bizznis_callback_control( $control ) {
+
+	//* Get control ID
+    $control_id = $control->id;	
+    
+	//* Primary menu extras
+	$primary_nav_setting = $control->manager->get_setting('nav_menu_locations[primary]')->value();
+	$nav_extras_enable_setting = $control->manager->get_setting('bizznis-settings[nav_extras_enable]')->value();
+	$nav_extras_setting = $control->manager->get_setting('bizznis-settings[nav_extras]')->value();
+	
+	//* Show primary nav extras if primary nav is set
+    if ( in_array( $control_id, array( 'bizznis_nav_extras_info', 'bizznis_nav_extras_enable' ) ) && $primary_nav_setting != '' ) {
+		return true;
+	}
+	
+	//* Show primary nav extras if nav extras are enabled
+    if ( in_array( $control_id, array( 'bizznis_nav_extras' ) ) && $nav_extras_enable_setting && $primary_nav_setting != '' ) {
+		return true;
+	}
+	
+	//* Show twitter options if twitter nav extra is set
+    if ( in_array( $control_id, array( 'bizznis_nav_extras_twitter_id', 'bizznis_nav_extras_twitter_text' ) ) && $nav_extras_setting == 'twitter' && $nav_extras_enable_setting && $primary_nav_setting != '' ) {
+		return true;
+	}
+	
+	//* Content archives
+	$content_archive_setting = $control->manager->get_setting('bizznis-settings[content_archive]')->value();
+	$content_archive_thumbnail_setting = $control->manager->get_setting('bizznis-settings[content_archive_thumbnail]')->value();
+	
+	//* Show content limit, when displaying post content
+    if ( in_array( $control_id, array( 'bizznis_content_archive_limit' ) ) && $content_archive_setting == 'full' ) {
+		return true;
+	}
+	
+	//* Show featured image options if featured image is enabled
+    if ( in_array( $control_id, array( 'bizznis_image_size', 'bizznis_image_alignment' ) ) && $content_archive_thumbnail_setting ) {
+		return true;
+	}
+     
+    return false;
+}
+
+/**
  * Initiate Bizznis_Customizer class.
  *
  * @since 1.1.0
@@ -894,7 +930,7 @@ function bizznis_marketing_links() {
 	if ( ! defined( 'CHILD_THEME_NAME' ) ) {
 	?>
 <script>
-	jQuery('#customize-info').append('<span class="get-addon" style="display:block;"><a style="display:block;padding:15px;background-color:#eee;" href="<?php echo esc_url('http://bizzthemes.com/themes/category/child-themes/');?>" target="_blank"><?php _e('Extend with Premium Child Themes', 'bizznis');?> <span class="dashicons dashicons-plus-alt"></span></a></span>');
+	jQuery('#customize-info').append('<span class="get-addon" style="display:block;"><a style="display:block;padding:15px;background-color:#fff;" href="<?php echo esc_url('http://bizzthemes.com/extend-bizznis/');?>" target="_blank"><?php _e('Get Priority Support &amp; Extensions ', 'bizznis');?> <span class="dashicons dashicons-plus-alt"></span></a></span>');
 </script>
 	<?php
 	}

@@ -19,7 +19,7 @@ function bizznis_do_taxonomy_title_description() {
 		return;
 	}
 	# Stop here if we're not on the first page
-	if ( get_query_var( 'paged' ) >= 2 ) {
+	if ( get_query_var( 'paged' ) >= 2 && ! bizznis_a11y() ) {
 		return;
 	}
 	# Stop here if there's no term, or no term meta set
@@ -30,6 +30,10 @@ function bizznis_do_taxonomy_title_description() {
 	$headline = $intro_text = '';
 	if ( $term->meta['headline'] ) {
 		$headline = sprintf( '<h1 class="archive-title">%s</h1>', strip_tags( $term->meta['headline'] ) );
+	} else {
+		if ( bizznis_a11y() ) {
+			$headline = sprintf( '<h1 class="archive-title">%s</h1>', strip_tags( $term->name ) );
+		}
 	}
 	if ( $term->meta['intro_text'] ) {
 		$intro_text = apply_filters( 'bizznis_term_intro_text_output', $term->meta['intro_text'] );
@@ -54,11 +58,14 @@ function bizznis_do_author_title_description() {
 		return;
 	}
 	# Stop here if we're not on page 1
-	if ( get_query_var( 'paged' ) >= 2 ) {
+	if ( get_query_var( 'paged' ) >= 2 && ! bizznis_a11y() ) {
 		return;
 	}
 	# If there's a custom headline to display, it is marked up as a level 1 heading.
-	$headline   = get_the_author_meta( 'headline', (int) get_query_var( 'author' ) );
+	$headline = get_the_author_meta( 'headline', (int) get_query_var( 'author' ) );
+	if ( '' == $headline && bizznis_a11y() ) {
+		$headline = get_the_author_meta( 'display_name', (int) get_query_var( 'author' ) );
+	}
 	$intro_text = get_the_author_meta( 'intro_text', (int) get_query_var( 'author' ) );
 	# If there's a description (intro text) to display, it is run through 'wpautop()' before being added to a div.
 	$headline   = $headline ? sprintf( '<h1 class="archive-title">%s</h1>', strip_tags( $headline ) ) : '';
@@ -82,6 +89,43 @@ function bizznis_do_author_box_archive() {
 	}
 	if ( get_the_author_meta( 'bizznis_author_box_archive', get_query_var( 'author' ) ) ) {
 		bizznis_author_box( 'archive' );
+	}
+}
+endif;
+
+add_action( 'bizznis_before_loop', 'bizznis_do_date_archive_title' );
+/**
+ * Add custom headline and description to date archive pages.
+ *
+ * If we're not on a date archive page, or not on page 1, then nothing extra is displayed.
+ *
+ *
+ * @since 1.2.0
+ *
+ * @uses bizznis_has_post_type_archive_support() Check if a post type should potentially support an archive setting page.
+ * @uses bizznis_get_cpt_option()                Get list of custom post types which need an archive settings page.
+ * @return null Return early if not on relevant post type archive.
+ */
+if ( ! function_exists( 'bizznis_do_date_archive_title' ) ) :
+function bizznis_do_date_archive_title() {
+	if ( ! is_date() ) {
+		return;
+	}
+	if ( ! bizznis_a11y( 'headings' ) ) {
+		return;
+	}
+	if ( get_query_var( 'paged' ) >= 2  && ! bizznis_a11y( 'headings' )  ) {
+		return;
+	}
+	if ( is_day() ) {
+		$headline = __( 'Archives for ', 'bizznis' ) . get_the_date();
+	} elseif ( is_month() ) {
+		$headline = __( 'Archives for ', 'bizznis' ) . single_month_title( ' ', false );
+	} elseif ( is_year() ) {
+		$headline = __( 'Archives for ', 'bizznis' ) . get_query_var( 'year' );
+	}
+	if ( $headline ) {
+		printf( '<div class="archive-description archive-date"><h1 class="archive-title">%s</h1></div>', $headline );
 	}
 }
 endif;

@@ -59,13 +59,31 @@ function bizznis_custom_field_redirect() {
  * Return a specific value from the associative array passed as the second argument to 'add_theme_support()'.
  *
  * @since 1.0.0
+ * @param string $feature The theme feature.
+ * @param string $arg     The theme feature argument.
+ * @param string $default Optional. Fallback if value is blank or doesn't exist.
+ *                        Default is empty string.
+ *
+ * @return mixed Return value if associative array, true if indexed array, or
+ *               $default if theme doesn't support $feature or $arg doesn't exist.
  */
 function bizznis_get_theme_support_arg( $feature, $arg, $default = '' ) {
 	$support = get_theme_support( $feature );
-	if ( ! $support || ! isset( $support[0] ) || ! array_key_exists( $arg, (array) $support[0] ) ) {
+
+	if ( ! $arg &&  $support ) {
+		return true;
+	}
+	if ( ! $support || ! isset( $support[0] ) ) {
 		return $default;
 	}
-	return $support[0][ $arg ];
+	if ( array_key_exists( $arg, (array) $support[0] ) ) {
+		return $support[0][ $arg ];
+	}
+	if ( in_array( $arg, (array) $support[0] ) ) {
+		return true;
+	}
+
+	return $default;
 }
 
 /**
@@ -98,6 +116,7 @@ function bizznis_detect_plugin( array $plugins ) {
 			}
 		}
 	}
+	
 	# No class, function or constant found to exist
 	return false;
 }
@@ -124,6 +143,7 @@ function bizznis_is_menu_page( $pagehook = '' ) {
 	if ( isset( $_REQUEST['section'] ) && $_REQUEST['section'] == $pagehook ) {
 		return true;
 	}
+	
 	return false;
 }
 
@@ -134,6 +154,7 @@ function bizznis_is_menu_page( $pagehook = '' ) {
  */
 function bizznis_is_customizer() {
 	global $wp_customize;
+	
 	return is_a( $wp_customize, 'WP_Customize_Manager' ) && $wp_customize->is_preview(); 
 }
 
@@ -145,8 +166,50 @@ function bizznis_is_customizer() {
 function bizznis_get_global_post_type_name( $post_type_name = '' ) {
 	if ( ! $post_type_name ) {
 		$post_type_name = get_post_type();
+		if ( false === get_post_type() ) {
+			$post_type_name = get_query_var( 'post_type' );
+		}
 	}
+	
 	return $post_type_name;
+}
+
+/**
+ * Determine if theme support bizznis-accessibility is activated by the child theme.
+ * Assumes the presence of a screen-reader-text class in the stylesheet (required generated class as from WordPress 4.2)
+ *
+ * Adds screen-reader-text by default.
+ * Skip links to primary navigation, main contant, sidebars and footer, semantic headings and a keyboard accessible drop-down-menu
+ * can be added as extra features as: 'skip-links', 'headings', 'drop-down-menu'
+ *
+ * @since 1.2.0
+ *
+ * @param string $arg Optional. Specific accessibility feature to check for support.
+ *                    Accepts `drop-down-menu` and `headings`. Default is empty string.
+ *
+ * @return bool True if current theme supports bizznis-accessibility, or an specific feature of it, false otherwise.
+ */
+function bizznis_a11y( $arg = '' ) {
+	$feature = 'bizznis-accessibility';
+	# No args
+	if ( empty( $arg ) ) {
+		return current_theme_supports( $feature );
+	}
+	# Get accessibility theme support
+	$support = get_theme_support( $feature );
+	# No support for feature.
+	if ( ! $support ) {
+		return false;
+	}
+	# No args passed in to add_theme_support(), so accept all.
+	if ( ! isset( $support[0] ) ) {
+		return true;
+	}
+	
+	# Support for specific arg found.
+	if ( in_array( $arg, $support[0] ) ) {
+		return true;
+	}
 }
 
 /**
@@ -161,5 +224,29 @@ function bizznis_plugin_install_link( $plugin_slug = '', $text = '' ) {
 	else {
 		$url = admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
 	}
+	
 	return sprintf( '<a href="%s" class="thickbox">%s</a>', esc_url( $url ), esc_html( $text ) );
+}
+
+/**
+ * Check if the root page of the site is being viewed.
+ *
+ * is_front_page() returns false for the root page of a website when
+ * - the WordPress "Front page displays" setting is set to "A static page"
+ * - "Front page" is left undefined
+ * - "Posts page" is assigned to an existing page
+ *
+ * This function checks for is_front_page() or the root page of the website
+ * in this edge case.
+ *
+ * @since 2.2.0
+ *
+ * @return bool True if this is the root page of the site, false othewise.
+ */
+function bizznis_is_root_page() {
+	if ( is_front_page() || ( is_home() && get_option( 'page_for_posts' ) && ! get_option( 'page_on_front' ) && ! get_queried_object() ) ) {
+		return true;
+	}
+	
+	return false;
 }

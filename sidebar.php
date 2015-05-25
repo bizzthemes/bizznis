@@ -7,5 +7,6 @@
 
 //* Handles the primary sidebar structure.
 printf( '<aside %s>', bizznis_attr( 'sidebar-primary' ) );
+echo bizznis_sidebar_title( 'sidebar' );
 do_action( 'bizznis_sidebar' );
 echo '</aside>' ."\n";

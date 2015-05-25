@@ -668,11 +668,16 @@ function bizznis_do_breadcrumbs() {
 		return;
 	}
 	# plugins
+	$breadcrumb_markup_open = sprintf( '<div %s>', bizznis_attr( 'breadcrumb' ) );
+	
 	if ( function_exists( 'bcn_display' ) ) {
-		echo '<div class="breadcrumb" itemprop="breadcrumb">'. bcn_display() .'</div>';
+		echo $breadcrumb_markup_open . bcn_display() . '</div>';
 	}
-	elseif ( function_exists( 'yoast_breadcrumb' ) ) {
-		yoast_breadcrumb( '<div class="breadcrumb">', '</div>' );
+	elseif ( class_exists( 'WPSEO_Breadcrumbs' ) && bizznis_get_option( 'breadcrumbs-enable', 'wpseo_internallinks' ) ) {
+		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
+	}
+	elseif( function_exists( 'yoast_breadcrumb' ) && ! class_exists( 'WPSEO_Breadcrumbs' ) ) {
+		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
 	}
 	elseif ( function_exists( 'breadcrumbs' ) ) {
 		breadcrumbs();

@@ -160,18 +160,31 @@ function bizznis_comment_callback( $comment, array $args, $depth ) {
 					 * @param string $text Comment author says text.
 					 */
 					$comment_author_says_text = apply_filters( 'comment_author_says_text', __( 'says', 'bizznis' ) );
-					printf( '<span itemprop="name">%s</span> <span class="says">%s</span>', $author, $comment_author_says_text );
+					if ( ! empty( $comment_author_says_text ) ) {
+						$comment_author_says_text = '<span class="says">' . $comment_author_says_text . '</span>';
+					}
+					printf( '<span itemprop="name">%s</span> %s', $author, $comment_author_says_text );
 					?>
 				</p>
-				<p <?php echo bizznis_attr( 'comment-meta' ); ?>>
-				<?php				
+				<?php
+				/**
+				 * Allows developer to control whether to print the comment date.
+				 *
+				 * @since 1.2.0
+				 *
+				 * @param boolean $comment_date Whether to print the comment date
+				 * @param string  $post_type    The current post type
+				 */
+				$comment_date = apply_filters( 'bizznis_show_comment_date', true, get_post_type() );
+				if ( $comment_date ) {
+					printf( '<p %s>', bizznis_attr( 'comment-meta' ) );
 					printf( '<time %s>', bizznis_attr( 'comment-time' ) );
 					printf( '<a href="%s" %s>', esc_url( get_comment_link( $comment->comment_ID ) ), bizznis_attr( 'comment-time-link' ) );
 					echo    esc_html( get_comment_date() ) . ' ' . __( 'at', 'bizznis' ) . ' ' . esc_html( get_comment_time() );
-					echo    '</a></time>';
-					edit_comment_link( __( '(Edit)', 'bizznis' ), ' ' );
-					?>
-				</p>
+					echo    '</a></time></p>';
+				}
+				edit_comment_link( __( '(Edit)', 'bizznis' ), ' ' );
+				?>
 			</header>
 			<div <?php echo bizznis_attr( 'comment-content' ); ?>>
 				<?php if ( ! $comment->comment_approved ) : ?>

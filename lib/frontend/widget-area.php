@@ -7,42 +7,74 @@
 
 add_action( 'bizznis_init', 'bizznis_register_default_widget_areas', 15 );
 /**
- * Register the default Bizznis widget areas.
+ * Hook the callback that registers the default Bizznis widget areas.
  *
  * @since 1.0.0
- *
- * @uses bizznis_register_widget_area() Register widget areas.
  */
 if ( ! function_exists( 'bizznis_register_default_widget_areas' ) ) :
 function bizznis_register_default_widget_areas() {
-	bizznis_register_widget_area(
-		array(
-			'id'               => 'header-aside',
-			'name'             => __( 'Header', 'bizznis' ),
-			'description'      => __( 'This is the widget area in the header.', 'bizznis' ),
-			'_bizznis_builtin' => true,
-		)
-	);
-	bizznis_register_widget_area(
-		array(
-			'id'               => 'sidebar',
-			'name'             => __( 'Primary Sidebar', 'bizznis' ),
-			'description'      => __( 'This is the primary sidebar if you are using a two or three column site layout option.', 'bizznis' ),
-			'_bizznis_builtin' => true,
-		)
-	);
-	bizznis_register_widget_area(
-		array(
-			'id'               => 'sidebar-alt',
-			'name'             => __( 'Secondary Sidebar', 'bizznis' ),
-			'description'      => __( 'This is the secondary sidebar if you are using a three column site layout option.', 'bizznis' ),
-			'_bizznis_builtin' => true,
-		)
-	);
+
+	//* Temporarily register placeholder widget areas, so that child themes can unregister directly in functions.php.
+	bizznis_register_widget_area( array( 'id' => 'header-aside' ) );
+	bizznis_register_widget_area( array( 'id' => 'sidebar' ) );
+	bizznis_register_widget_area( array( 'id' => 'sidebar-alt' ) );
+
+	//* Call all final widget area registration after themes setup, so text can be translated.
+	add_action( 'after_setup_theme', '_bizznis_register_default_widget_areas_cb' );
+	add_action( 'after_setup_theme', 'bizznis_register_footer_widget_areas' );
+	add_action( 'after_setup_theme', 'bizznis_register_after_entry_widget_area' );
+
 }
 endif;
 
-add_action( 'after_setup_theme', 'bizznis_register_footer_widget_areas' );
+/**
+ * Register the default Bizznis widget areas, if the placeholder widget areas are still registered.
+ *
+ * @since 1.2.0
+ *
+ * @uses bizznis_register_widget_area() Register widget areas.
+ */
+if ( ! function_exists( '_bizznis_register_default_widget_areas_cb' ) ) :
+function _bizznis_register_default_widget_areas_cb() {
+
+	global $wp_registered_sidebars;
+
+	if ( isset( $wp_registered_sidebars['header-aside'] ) ) {
+		bizznis_register_widget_area(
+			array(
+				'id'               => 'header-aside',
+				'name'             => is_rtl() ? __( 'Header Left', 'bizznis' ) : __( 'Header Right', 'bizznis' ),
+				'description'      => __( 'This is the header widget area. It typically appears next to the site title or logo. This widget area is not suitable to display every type of widget, and works best with a custom menu, a search form, or possibly a text widget.', 'bizznis' ),
+				'_bizznis_builtin' => true,
+			)
+		);
+	}
+
+	if ( isset( $wp_registered_sidebars['sidebar'] ) ) {
+		bizznis_register_widget_area(
+			array(
+				'id'               => 'sidebar',
+				'name'             => __( 'Primary Sidebar', 'bizznis' ),
+				'description'      => __( 'This is the primary sidebar if you are using a two or three column site layout option.', 'bizznis' ),
+				'_bizznis_builtin' => true,
+			)
+		);
+	}
+
+	if ( isset( $wp_registered_sidebars['sidebar-alt'] ) ) {
+		bizznis_register_widget_area(
+			array(
+				'id'               => 'sidebar-alt',
+				'name'             => __( 'Secondary Sidebar', 'bizznis' ),
+				'description'      => __( 'This is the secondary sidebar if you are using a three column site layout option.', 'bizznis' ),
+				'_bizznis_builtin' => true,
+			)
+		);
+	}
+
+}
+endif;
+
 /**
  * Register footer widget areas based on the number of widget areas the user wishes to create
  * with 'add_theme_support()'.
@@ -71,7 +103,6 @@ function bizznis_register_footer_widget_areas() {
 }
 endif;
 
-add_action( 'after_setup_theme', 'bizznis_register_after_entry_widget_area' );
 /**
  * Register after-entry widget area if user specifies in the child theme.
  *
@@ -132,10 +163,11 @@ endif;
  * @since 1.0.0
  */
 if ( ! function_exists( 'bizznis_default_widget_area_content' ) ) :
-function bizznis_default_widget_area_content( $name ) {
+function bizznis_default_widget_area_content( $name ) {	
 	echo '<section class="widget widget_text">';
 	echo '<div class="widget-wrap">';
-		printf( '<h4 class="widgettitle">%s</h4>', esc_html( $name ) );
+	$heading = ( bizznis_a11y( 'headings' ) ? 'h3' : 'h4' );
+		printf( '<%1$s class="widgettitle">%2$s</%1$s>', $heading, esc_html( $name ) );
 		echo '<div class="textwidget"><p>';
 			printf( __( 'This is the %s. You can add content to this area by visiting your <a href="%s">Widgets Panel</a> and adding new widgets to this area.', 'bizznis' ), $name, admin_url( 'widgets.php' ) );
 		echo '</p></div>';
