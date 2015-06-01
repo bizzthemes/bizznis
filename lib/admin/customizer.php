@@ -873,9 +873,12 @@ function bizznis_callback_control( $control ) {
     $control_id = $control->id;	
     
 	//* Primary menu extras
-	$primary_nav_setting = $control->manager->get_setting('nav_menu_locations[primary]')->value();
-	$nav_extras_enable_setting = $control->manager->get_setting('bizznis-settings[nav_extras_enable]')->value();
-	$nav_extras_setting = $control->manager->get_setting('bizznis-settings[nav_extras]')->value();
+	$primary_nav_setting = $control->manager->get_setting('nav_menu_locations[primary]');
+	$primary_nav_setting = isset( $primary_nav_setting ) ? $primary_nav_setting->value() : '';
+	$nav_extras_enable_setting = $control->manager->get_setting('bizznis-settings[nav_extras_enable]');
+	$nav_extras_enable_setting = isset( $nav_extras_enable_setting ) ? $nav_extras_enable_setting->value() : '';
+	$nav_extras_setting = $control->manager->get_setting('bizznis-settings[nav_extras]');
+	$nav_extras_setting = isset( $nav_extras_setting ) ? $nav_extras_setting->value() : '';
 	
 	//* Show primary nav extras if primary nav is set
     if ( in_array( $control_id, array( 'bizznis_nav_extras_info', 'bizznis_nav_extras_enable' ) ) && $primary_nav_setting != '' ) {
