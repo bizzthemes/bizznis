@@ -287,7 +287,16 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		}
 		
 		//* Setting the priority
-		$priority = new Bizznis_Prioritizer( 11, 1 );
+		$priority = new Bizznis_Prioritizer( 100, 1 );
+		
+		$wp_customize->add_section(
+			'bizznis_menu_extras',
+			array(
+				'title'    => __( 'Menu Extras', 'bizznis' ),
+				'description' => __( 'Add extra features to primary menu.', 'bizznis' ),
+				'priority' => $priority->add(),
+			)
+		);
 		
 		//* Add Settings
 		$wp_customize->add_setting(
@@ -332,7 +341,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				$wp_customize,
 				'bizznis_nav_extras_info',
 				array(
-					'section'  => 'nav',
+					'section'  => 'bizznis_menu_extras',
 					'type'     => 'info',
 					'label'    => __( 'Primary Menu Extra', 'bizznis' ),
 					'priority' => $priority->add(),
@@ -345,7 +354,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			'bizznis_nav_extras_enable',
 			array(
 				'label'    => __( 'Enable Extras on Right Side?', 'bizznis' ),
-				'section'  => 'nav',
+				'section'  => 'bizznis_menu_extras',
 				'settings' => $this->get_field_name( 'nav_extras_enable' ),
 				'type'     => 'checkbox',
 				'priority' => $priority->add(),
@@ -357,7 +366,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			'bizznis_nav_extras',
 			array(
 				'label'    => __( 'Display the following', 'bizznis' ),
-				'section'  => 'nav',
+				'section'  => 'bizznis_menu_extras',
 				'settings' => $this->get_field_name( 'nav_extras' ),
 				'type'     => 'select',
 				'choices'  => array(
@@ -374,7 +383,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			'bizznis_nav_extras_twitter_id',
 			array(
 				'label'    => __( 'Enter Twitter ID', 'bizznis' ),
-				'section'  => 'nav',
+				'section'  => 'bizznis_menu_extras',
 				'settings' => $this->get_field_name( 'nav_extras_twitter_id' ),
 				'priority' => $priority->add(),
 				'active_callback' => 'bizznis_callback_control',
@@ -385,7 +394,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			'bizznis_nav_extras_twitter_text',
 			array(
 				'label'    => __( 'Twitter Link Text', 'bizznis' ),
-				'section'  => 'nav',
+				'section'  => 'bizznis_menu_extras',
 				'settings' => $this->get_field_name( 'nav_extras_twitter_text' ),
 				'priority' => $priority->add(),
 				'active_callback' => 'bizznis_callback_control',
@@ -402,19 +411,14 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		}
 		
 		//* Setting the priority
-		$priority = new Bizznis_Prioritizer( 16, 1 );
-
-		$wp_customize->add_control(
-			new Bizznis_Customize_Misc_Control(
-				$wp_customize,
-				'breadcrumbs_info',
-				array(
-					'section'     => 'nav',
-					'type'        => 'info',
-					'label'       => __( 'Breadcrumbs', 'bizznis' ),
-					'description' => __( 'Breadcrumbs are a great way of letting your visitors find out where they are on your site with just a glance.', 'bizznis' ),
-					'priority' => $priority->add(),
-				)
+		$priority = new Bizznis_Prioritizer( 100, 1 );
+		
+		$wp_customize->add_section(
+			'bizznis_breadcrumbs',
+			array(
+				'title'    => __( 'Breadcrumbs', 'bizznis' ),
+				'description' => __( 'Breadcrumbs are a great way of letting your visitors find out where they are on your site with just a glance.', 'bizznis' ),
+				'priority' => $priority->add(),
 			)
 		);
 		
@@ -444,7 +448,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'bizznis_' . $setting,
 				array(
 					'label'    => $label,
-					'section'  => 'nav',
+					'section'  => 'bizznis_breadcrumbs',
 					'settings' => $this->get_field_name( $setting ),
 					'type'     => 'checkbox',
 					'priority' => $priority->add(),

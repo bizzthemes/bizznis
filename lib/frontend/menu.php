@@ -6,6 +6,31 @@
 */
 
 /**
+ * Pass nav menu link attributes through attribute parser.
+ *
+ * Adds nav menu link attributes via the Bizznis markup API.
+ *
+ * @since 1.2.2
+ *
+ * @param array $atts {
+ *		The HTML attributes applied to the menu item's <a>, empty strings are ignored.
+ *
+ *		@type string $title Title attribute.
+ *		@type string $target Target attribute.
+ *		@type string $rel The rel attribute.
+ *		@type string $href The href attribute.
+ * }
+ * @param object $item The current menu item.
+ * @param array $args An array of wp_nav_menu() arguments.
+ *
+ * @return array Maybe modified menu attributes array.
+ */
+add_filter( 'nav_menu_link_attributes', 'bizznis_nav_menu_link_attributes', 10, 3 );
+function bizznis_nav_menu_link_attributes( $atts, $item, $args ) {
+	return bizznis_parse_attr( 'nav-link', $atts );
+}
+
+/**
  * Register the custom menu locations, if theme has support for them.
  *
  * Does the `bizznis_register_nav_menus` action.
@@ -118,6 +143,8 @@ endif;
 if ( ! function_exists( 'bizznis_header_menu_args' ) ) :
 function bizznis_header_menu_args( $args ) {
 	$args['container']   = '';
+	$args['link_before'] = $args['link_before'] ? $args['link_before'] : sprintf( '<span %s>', bizznis_attr( 'nav-link-wrap' ) );
+	$args['link_after']  = $args['link_after'] ? $args['link_after'] : '</span>';
 	$args['menu_class'] .= ' menu-bizznis';
 	return $args;
 }

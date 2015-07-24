@@ -161,6 +161,16 @@ function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
  * @param string|array $new     New settings. Can be a string, or an array.
  * @param string       $setting Optional. Settings field name. Default is BIZZNIS_SETTINGS_FIELD.
  */
-function bizznis_update_settings( $new = '', $setting = BIZZNIS_SETTINGS_FIELD ) {
-	return update_option( $setting, wp_parse_args( $new, get_option( $setting ) ) );
+function bizznis_update_settings( $new = '', $setting = BIZZNIS_SETTINGS_FIELD ) {	
+	$old = get_option( $setting );
+	$settings = wp_parse_args( $new, $old );
+
+	//* Allow settings to be deleted
+	foreach ( $settings as $key => $value ) {
+		if ( 'unset' == $value ) {
+			unset( $settings[ $key ] );
+		}
+	}
+
+	return update_option( $setting, $settings );
 }

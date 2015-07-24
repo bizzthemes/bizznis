@@ -85,25 +85,72 @@ function bizznis_do_meta_pingback() {
 }
 endif;
 
-add_action( 'wp_head', 'bizznis_rel_author' );
+add_action( 'wp_head', 'bizznis_paged_rel' );
 /**
- * Echo custom rel="author" link tag.
+ * Output rel links in the head to indicate previous and next pages in paginated archives and posts.
  *
- * @since 1.0.0
+ * @link  http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+ *
+ * @since 1.2.2
  */
-if ( ! function_exists( 'bizznis_rel_author' ) ) :
-function bizznis_rel_author() {
-	$post = get_post();
-	# If the appropriate information has been entered for an individual post/page
-	if ( is_singular() && post_type_supports( $post->post_type, 'bizznis-rel-author' ) && isset( $post->post_author ) && $gplus_url = get_user_option( 'googleplus', $post->post_author ) ) {
-		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
-		return;
+if ( ! function_exists( 'bizznis_paged_rel' ) ) :
+function bizznis_paged_rel() {
+
+	global $wp_query;
+
+	$prev = $next = '';
+
+	$paged = intval( get_query_var( 'paged' ) );
+	$page  = intval( get_query_var( 'page' ) );
+
+	if ( ! is_singular() ) {
+
+		$prev = $paged > 1 ? get_previous_posts_page_link() : $prev;
+		$next = $paged < $wp_query->max_num_pages ? get_next_posts_page_link() : $next;
+
+	} else {
+
+		//* No need for this on previews
+		if ( is_preview() ) {
+			return '';
+		}
+
+		$numpages = substr_count( $wp_query->post->post_content, '<!--nextpage-->' ) + 1;
+
+		if ( $numpages && ! $page ) {
+			$page = 1;
+		}
+
+		if ( $page > 1 ) {
+			$prev = bizznis_paged_post_url( $page - 1 );
+		}
+
+		if ( $page < $numpages ) {
+			$next = bizznis_paged_post_url( $page + 1 );
+		}
+
 	}
-	# If the appropriate information has been entered for an individual author archive
-	if ( is_author() && get_query_var( 'author' ) && $gplus_url = get_user_option( 'googleplus', get_query_var( 'author' ) ) ) {
-		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
-		return;
+
+	if ( $prev ) {
+		printf( '<link rel="prev" href="%s" />' . "\n", esc_url( $prev ) );
 	}
+
+	if ( $next ) {
+		printf( '<link rel="next" href="%s" />' . "\n", esc_url( $next ) );
+	}
+
+}
+endif;
+
+add_action( 'wp_head', 'bizznis_meta_name' );
+/**
+ * Output meta tag for site name.
+ *
+ * @since 1.2.2
+ */
+if ( ! function_exists( 'bizznis_meta_name' ) ) :
+function bizznis_meta_name() {
+	printf( '<meta itemprop="name" content="%s" />' . "\n", get_bloginfo( 'name' ) );
 }
 endif;
 
@@ -310,11 +357,11 @@ function bizznis_skip_links() {
 	bizznis_skiplinks_markup();
 	# Determine which skip links are needed
 	$links = array();
-	if ( has_nav_menu( 'primary' ) ) {
+	if ( bizznis_nav_menu_supported( 'primary' ) && has_nav_menu( 'primary' ) ) {
 		$links['bizznis-nav-primary'] =  __( 'Skip to primary navigation', 'bizznis' );
 	}
 	$links['bizznis-content'] = __( 'Skip to content', 'bizznis' );
-	if ( in_array( bizznis_site_layout(), array( 'sidebar-content', 'content-sidebar', 'sidebar-sidebar-content', 'sidebar-content-sidebar', 'content-sidebar-sidebar' ) ) ) {
+	if ( 'full-width-content' != bizznis_site_layout() ) {
 		$links['bizznis-sidebar-primary'] = __( 'Skip to primary sidebar', 'bizznis' );
 	}
 	if ( in_array( bizznis_site_layout(), array( 'sidebar-sidebar-content', 'sidebar-content-sidebar', 'content-sidebar-sidebar' ) ) ) {

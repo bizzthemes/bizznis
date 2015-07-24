@@ -82,6 +82,37 @@ function bizznis_rel_nofollow( $text ) {
 }
 
 /**
+ * Return the special URL of a paged post.
+ *
+ * Taken from _wp_link_page() in WordPress core, but instead of anchor markup, just return the URL.
+ *
+ * @since 1.2.2
+ *
+ * @param int $i The page number to generate the URL from.
+ * @param int $post_id The post ID
+ * @return string Unescaped URL
+ */
+function bizznis_paged_post_url( $i, $post_id = 0 ) {
+	global $wp_rewrite;
+
+	$post = get_post( $post_id );
+
+	if ( 1 == $i ) {
+		$url = get_permalink( $post_id );
+	} else {
+		if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) ) {
+			$url = add_query_arg( 'page', $i, get_permalink( $post_id ) );
+		} elseif ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_on_front' ) == $post->ID ) {
+			$url = trailingslashit( get_permalink( $post_id ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
+		} else {
+			$url = trailingslashit( get_permalink( $post_id ) ) . user_trailingslashit( $i, 'single_paged' );
+		}
+	}
+
+	return $url;
+}
+
+/**
  * Sanitize multiple HTML classes in one pass.
  *
  * @since 1.0.0

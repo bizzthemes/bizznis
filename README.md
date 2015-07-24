@@ -15,6 +15,11 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.2.2
+* Adjusted customizer extra menu controls
+* Better accessibility
+* Better markup for SEO
+
 ### 1.2.1
 * Fixed a bug with customizer
 

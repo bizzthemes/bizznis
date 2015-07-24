@@ -6,6 +6,30 @@
 */
 
 /**
+ * Deprecated. Echo custom rel="author" link tag.
+ *
+ * If the appropriate information has been entered, either for the homepage author, or for an individual post/page
+ * author, echo a custom rel="author" link.
+ *
+ * @since 1.0.0
+ * @deprecated 1.2.2
+ */
+function bizznis_rel_author() {
+	_deprecated_function( __FUNCTION__, '1.2.2' );
+	$post = get_post();
+	# If the appropriate information has been entered for an individual post/page
+	if ( is_singular() && post_type_supports( $post->post_type, 'bizznis-rel-author' ) && isset( $post->post_author ) && $gplus_url = get_user_option( 'googleplus', $post->post_author ) ) {
+		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
+		return;
+	}
+	# If the appropriate information has been entered for an individual author archive
+	if ( is_author() && get_query_var( 'author' ) && $gplus_url = get_user_option( 'googleplus', get_query_var( 'author' ) ) ) {
+		printf( '<link rel="author" href="%s" />' . "\n", esc_url( $gplus_url ) );
+		return;
+	}
+}
+
+/**
  * Deprecated. Push individual setting (or group of setting) into an options db entry stored as an array.
  *
  * @since 1.0.0

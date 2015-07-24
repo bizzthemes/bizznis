@@ -51,6 +51,23 @@ function bizznis_attr( $context, $attributes = array() ) {
 //* LIST OF ALL ATTRIBUTE FILTERS
 
 /**
+ * Add attributes for head element.
+ *
+ * @since 1.2.2
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_head', 'bizznis_attributes_head' );
+function bizznis_attributes_head( $attributes ) {
+	$attributes['class']     = '';
+	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemtype']  = 'http://schema.org/WebSite';
+
+	return $attributes;
+}
+
+/**
  * Add attributes for body element.
  *
  * @since 1.0.0
@@ -66,6 +83,7 @@ function bizznis_attributes_body( $attributes ) {
 	if ( is_singular( 'post' ) || is_archive() || is_home() ) {
 		$attributes['itemtype']  = 'http://schema.org/Blog';
 	}
+	
 	return $attributes;
 }
 
@@ -79,6 +97,7 @@ function bizznis_attributes_header( $attributes ) {
 	$attributes['role']			= 'banner';
 	$attributes['itemscope']	= 'itemscope';
 	$attributes['itemtype']		= 'http://schema.org/WPHeader';
+	
 	return $attributes;
 }
 
@@ -90,6 +109,7 @@ function bizznis_attributes_header( $attributes ) {
 add_filter( 'bizznis_attr_site-title', 'bizznis_attributes_site_title' );
 function bizznis_attributes_site_title( $attributes ) {
 	$attributes['itemprop'] 	= 'headline';
+	
 	return $attributes;
 }
 
@@ -101,6 +121,7 @@ function bizznis_attributes_site_title( $attributes ) {
 add_filter( 'bizznis_attr_site-description', 'bizznis_attributes_site_description' );
 function bizznis_attributes_site_description( $attributes ) {
 	$attributes['itemprop'] 	= 'description';
+	
 	return $attributes;
 }
 
@@ -112,6 +133,7 @@ function bizznis_attributes_site_description( $attributes ) {
 add_filter( 'bizznis_attr_header-widget-area', 'bizznis_attributes_header_widget_area' );
 function bizznis_attributes_header_widget_area( $attributes ) {
 	$attributes['class'] 		= 'widget-area header-widget-area';
+	
 	return $attributes;
 }
 
@@ -128,6 +150,11 @@ function bizznis_attributes_breadcrumb( $attributes ) {
 	$attributes['itemprop']  = 'breadcrumb';
 	$attributes['itemscope'] = 'itemscope';
 	$attributes['itemtype']  = 'http://schema.org/BreadcrumbList';
+	
+	//* Breadcrumb itemprop not valid on blog
+	if ( is_singular( 'post' ) || is_archive() || is_home() ) {
+		unset( $attributes['itemprop'] );
+	}
 
 	return $attributes;
 }
@@ -165,6 +192,38 @@ function bizznis_attributes_nav( $attributes ) {
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/SiteNavigationElement';
 	
+	return $attributes;
+}
+
+/**
+ * Add attributes for the span wrap around navigation item links.
+ *
+ * @since 1.2.2
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_nav-link-wrap', 'bizznis_attributes_nav_link_wrap' );
+function bizznis_attributes_nav_link_wrap( $attributes ) {
+	$attributes['class'] = '';
+	$attributes['itemprop'] = 'name';
+
+	return $attributes;
+}
+
+/**
+ * Add attributes for the navigation item links.
+ *
+ * @since 1.2.2
+ *
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_nav-link', 'bizznis_attributes_nav_link' );
+function bizznis_attributes_nav_link( $attributes ) {
+	$attributes['class'] = '';
+	$attributes['itemprop'] = 'url';
+
 	return $attributes;
 }
 
@@ -375,7 +434,7 @@ function bizznis_attributes_comment( $attributes ) {
 	$attributes['class']     	= '';
 	$attributes['itemprop']  	= 'comment';
 	$attributes['itemscope'] 	= 'itemscope';
-	$attributes['itemtype'] 	= 'http://schema.org/UserComments';
+	$attributes['itemtype']  	= 'http://schema.org/Comment';
 	
 	return $attributes;
 }
@@ -387,7 +446,7 @@ function bizznis_attributes_comment( $attributes ) {
  */
 add_filter( 'bizznis_attr_comment-author', 'bizznis_attributes_comment_author' );
 function bizznis_attributes_comment_author( $attributes ) {
-	$attributes['itemprop']  = 'creator';
+	$attributes['itemprop']  = 'author';
 	$attributes['itemscope'] = 'itemscope';
 	$attributes['itemtype']  = 'http://schema.org/Person';
 	
@@ -421,7 +480,7 @@ function bizznis_attributes_comment_author_link( $attributes ) {
 add_filter( 'bizznis_attr_comment-time', 'bizznis_attributes_comment_time' );
 function bizznis_attributes_comment_time( $attributes ) {
 	$attributes['datetime'] = esc_attr( get_comment_time( 'c' ) );
-	$attributes['itemprop'] = 'commentTime';
+	$attributes['itemprop'] = 'datePublished';
 	
 	return $attributes;
 }
@@ -451,7 +510,7 @@ function bizznis_attributes_comment_time_link( $attributes ) {
  */
 add_filter( 'bizznis_attr_comment-content', 'bizznis_attributes_comment_content' );
 function bizznis_attributes_comment_content( $attributes ) {
-	$attributes['itemprop'] = 'commentText';
+	$attributes['itemprop'] = 'text';
 	
 	return $attributes;
 }

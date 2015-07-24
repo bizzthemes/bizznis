@@ -36,6 +36,8 @@ function bizznis_get_nav_menu( $args = array() ) {
 	$args = wp_parse_args( $args, array(
 		'theme_location' => '',
 		'container'      => '',
+		'link_before'    => sprintf( '<span %s>', bizznis_attr( 'nav-link-wrap' ) ),
+		'link_after'     => '</span>',
 		'menu_class'     => 'menu menu-bizznis',
 		'echo'           => 0,
 	) );
