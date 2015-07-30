@@ -94,7 +94,6 @@ function bizznis_attributes_body( $attributes ) {
  */
 add_filter( 'bizznis_attr_site-header', 'bizznis_attributes_header' );
 function bizznis_attributes_header( $attributes ) {
-	$attributes['role']			= 'banner';
 	$attributes['itemscope']	= 'itemscope';
 	$attributes['itemtype']		= 'http://schema.org/WPHeader';
 	
@@ -188,7 +187,6 @@ add_filter( 'bizznis_attr_nav-header', 'bizznis_attributes_nav' );
 add_filter( 'bizznis_attr_nav-primary', 'bizznis_attributes_nav' );
 add_filter( 'bizznis_attr_nav-secondary', 'bizznis_attributes_nav' );
 function bizznis_attributes_nav( $attributes ) {
-	$attributes['role']      	= 'navigation';
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/SiteNavigationElement';
 	
@@ -234,7 +232,6 @@ function bizznis_attributes_nav_link( $attributes ) {
  */
 add_filter( 'bizznis_attr_content', 'bizznis_attributes_content' );
 function bizznis_attributes_content( $attributes ) {
-	$attributes['role'] = 'main';
 	if ( ! ( is_singular( 'post' ) || is_archive() || is_home() ) ) {
 		$attributes['itemprop'] = 'mainContentOfPage';
 	}
@@ -568,7 +565,6 @@ function bizznis_attributes_sidebar_secondary( $attributes ) {
  */
 add_filter( 'bizznis_attr_site-footer', 'bizznis_attributes_site_footer' );
 function bizznis_attributes_site_footer( $attributes ) {
-	$attributes['role']      	= 'contentinfo';
 	$attributes['itemscope'] 	= 'itemscope';
 	$attributes['itemtype']  	= 'http://schema.org/WPFooter';
 	
@@ -586,7 +582,6 @@ function bizznis_skiplinks_markup() {
 	add_filter( 'bizznis_attr_sidebar-primary', 'bizznis_skiplinks_attr_sidebar_primary' );
 	add_filter( 'bizznis_attr_sidebar-secondary', 'bizznis_skiplinks_attr_sidebar_secondary' );
 	add_filter( 'bizznis_attr_footer-widgets', 'bizznis_skiplinks_attr_footer_widgets' );
-
 }
 
 /**
@@ -614,6 +609,7 @@ function bizznis_skiplinks_attr_nav_primary( $attributes ) {
  */
 function bizznis_skiplinks_attr_content( $attributes ) {
 	$attributes['id'] = 'bizznis-content';
+	
 	return $attributes;
 }
 
