@@ -48,6 +48,11 @@ add_action( 'wp_head', 'bizznis_load_favicon' );
  */
 if ( ! function_exists( 'bizznis_load_favicon' ) ) :
 function bizznis_load_favicon( $favicon = '' ) {
+	# Use WP site icon, if available
+	if ( function_exists( 'has_site_icon' ) && has_site_icon() ) {
+		return;
+	}
+	
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( 'bizznis_pre_load_favicon', false );
 	if ( $pre !== false ) {
@@ -151,6 +156,22 @@ add_action( 'wp_head', 'bizznis_meta_name' );
 if ( ! function_exists( 'bizznis_meta_name' ) ) :
 function bizznis_meta_name() {
 	printf( '<meta itemprop="name" content="%s" />' . "\n", get_bloginfo( 'name' ) );
+}
+endif;
+
+add_action( 'wp_head', 'bizznis_meta_url' );
+if ( ! function_exists( 'bizznis_meta_url' ) ) :
+/**
+ * Output meta tag for site URL.
+ *
+ * @since 1.2.3
+ */
+function bizznis_meta_url() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	printf( '<meta itemprop="url" content="%s" />' . "\n", trailingslashit( home_url() ) );
 }
 endif;
 
