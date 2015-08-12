@@ -563,7 +563,7 @@ th {
 
 .site-main {
 	clear: both;
-	padding-top: 40px;
+	padding-top: 20px;
 }
 
 .site-footer {
@@ -596,7 +596,7 @@ th {
 
 .content {
 	float: right;
-	width: 860px;
+	width: 880px;
 }
 
 .content-sidebar .content,
@@ -608,7 +608,7 @@ th {
 .content-sidebar-sidebar .content,
 .sidebar-content-sidebar .content,
 .sidebar-sidebar-content .content {
-	width: 640px;
+	width: 660px;
 }
 
 .full-width-content .content {
@@ -633,7 +633,7 @@ th {
 
 .sidebar-secondary {
 	float: left;
-	width: 180px;
+	width: 200px;
 }
 
 .content-sidebar-sidebar .sidebar-secondary {
@@ -775,8 +775,10 @@ img.alignright,
 -------------------- */
 
 .breadcrumb {
+	background-color: #fff;
 	font-size: 16px;
 	margin-bottom: 20px;
+	padding: 20px 60px;
 }
 
 /* Author box
@@ -791,7 +793,7 @@ img.alignright,
 .archive-description {
 	background-color: #191919;
 	color: #f1f1f1;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 	overflow: hidden;
 	padding: 60px;
 }
@@ -1119,6 +1121,15 @@ img.alignright,
 	font-size: 16px;
 }
 
+.menu-bizznis-extra a {
+	color: #333;
+}
+
+.menu-bizznis-extra a:hover,
+.menu-bizznis-extra a:focus {
+	color: #cf0f0f;
+}
+
 /* Accessible Menu
 -------------------- */
 
@@ -1139,12 +1150,22 @@ img.alignright,
 	background-color: #f1f1f1;
 }
 
+.custom-header .nav-primary {
+	background-color: #fff;
+	background-color: rgba(255,255,255,0.6);
+}
+
 /* Secondary Navigation
 --------------------------------------------- */
 
 .nav-secondary {
 	background-color: #191919;
 	color: #9e9d95;
+}
+
+.custom-header .nav-secondary {
+	background-color: #333;
+	background-color: rgba(0,0,0,0.6);
 }
 
 .nav-secondary  a {
@@ -1178,6 +1199,11 @@ img.alignright,
 	margin: -55px 0 0 199px;
 }
 
+.custom-header .nav-header .sub-menu a,
+.custom-header .nav-header .sub-menu a:hover {
+	color: #000;
+}
+
 /* Content Area
 ------------------------------------------------------------------------------------------------------------------ */
 
@@ -1185,7 +1211,7 @@ img.alignright,
 --------------------------------------------- */
 
 .entry {
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 article.entry {
@@ -1252,7 +1278,7 @@ article.entry {
 
 .archive-pagination {
 	clear: both;
-	margin: 40px 0;
+	margin: 20px 0;
 	text-align: center;
 }
 
@@ -1273,7 +1299,7 @@ article.entry {
 }
 
 .entry-pagination {
-	margin: 0 0 40px 0;
+	margin: 0 0 20px 0;
 }
 
 .post-navigation {
@@ -1326,7 +1352,7 @@ article.entry {
 .entry-pings {
 	background-color: #fff;
 	clear: both;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 .comment-respond,
@@ -1352,7 +1378,7 @@ li.comment {
 }
 
 .comment-list li.comment {
-	margin-top: 40px;
+	margin-top: 20px;
 	padding: 50px;
 }
 
@@ -1452,7 +1478,7 @@ li.comment {
 .sidebar .widget,
 .after-entry .widget {
 	background-color: #fff;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 	padding: 60px;
 }
 
@@ -1519,7 +1545,8 @@ li.comment {
 --------------------------------------------- */
 
 .footer-creds {
-	padding: 60px 0;
+	background-color: #fff;
+	padding: 30px 0;
 	text-align: center;
 }
 
@@ -1621,7 +1648,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 
 @media only screen and (max-width: 1200px) {
 
-	.site-main,
 	.wrap {
 		max-width: 960px;
 	}
@@ -1664,9 +1690,15 @@ only screen and (min-device-pixel-ratio : 1.5) {
 
 @media only screen and (max-width: 960px) {
 
-	.site-main,
+	body {
+		background-color: #fff;
+		font-size: 16px;
+	}
+	
 	.wrap {
 		max-width: 800px;
+		padding-left: 5%;
+		padding-right: 5%;
 	}
 
 	.content,
@@ -1686,9 +1718,18 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	.title-area {
 		width: 100%;
 	}
-
-	.site-header .wrap {
-		padding: 20px 5%;
+	
+	.archive-description,
+	.author-box,
+	.comment-respond,
+	.entry,
+	article.entry,
+	.entry-comments,
+	.entry-pings,
+	.sidebar .widget,
+	.site-header,
+	.breadcrumb {
+		padding: 0;
 	}
 
 	.header-image .title-area {
@@ -1730,29 +1771,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 }
 
 @media only screen and (max-width: 800px) {
-
-	body {
-		background-color: #fff;
-		font-size: 16px;
-	}
-
-	.site-main,
-	.wrap {
-		padding-left: 5%;
-		padding-right: 5%;
-	}
-
-	.archive-description,
-	.author-box,
-	.comment-respond,
-	.entry,
-	article.entry,
-	.entry-comments,
-	.entry-pings,
-	.sidebar .widget,
-	.site-header {
-		padding: 0;
-	}
 
 	.archive-pagination li a {
 		margin-bottom: 4px;
