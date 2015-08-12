@@ -937,7 +937,7 @@ function bizznis_marketing_links() {
 	if ( ! defined( 'CHILD_THEME_NAME' ) ) {
 	?>
 <script>
-	jQuery('#customize-info').append('<span class="get-addon" style="display:block;"><a style="display:block;padding:15px;background-color:#fff;" href="<?php echo esc_url('http://bizzthemes.com/extend-bizznis/');?>" target="_blank"><?php _e('Get Priority Support &amp; Extensions ', 'bizznis');?> <span class="dashicons dashicons-plus-alt"></span></a></span>');
+	jQuery('#customize-info').append('<span class="get-addon" style="display:block;"><a style="display:block;padding:10px 15px;background-color:#f6f6f6;" href="<?php echo esc_url('http://bizzthemes.com/extend-bizznis/');?>" target="_blank"><?php _e('Bizznis Support &amp; Extensions ', 'bizznis');?> <span class="dashicons dashicons-plus-alt"></span></a></span>');
 </script>
 	<?php
 	}

@@ -38,7 +38,7 @@ function bizznis_css_add_rules() {
 			'selectors'    => array( 
 				'.color-primary-color',
 				'.entry-title a',
-				'.nav-secondary a',
+				'.nav-primary a',
 			),
 			'declarations' => array(
 				'color' => $color_primary
@@ -47,9 +47,8 @@ function bizznis_css_add_rules() {
 		bizznis_get_css()->add( array(
 			'selectors'    => array(
 				'.color-primary-background',
-				'.nav-primary',
+				'.nav-secondary',
 				'.footer-widgets',
-				'.footer-creds',
 			),
 			'declarations' => array(
 				'background-color' => $color_primary
@@ -63,7 +62,7 @@ function bizznis_css_add_rules() {
 				'.color-primary-border',
 				'.site-main',
 				'.menu-bizznis .sub-menu a',
-				'.nav-secondary',
+				'.nav-primary',
 				'.nav-header .sub-menu',
 				'article.entry',
 				'.archive-pagination',
