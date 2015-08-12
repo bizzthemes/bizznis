@@ -93,8 +93,12 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
  */
 add_filter( 'get_term', 'bizznis_get_term_filter', 10, 2 ); #wp
 function bizznis_get_term_filter( $term, $taxonomy ) {
-	# Stop here, if $term is not object
+	//* Stop here, if $term is not object
 	if ( ! is_object( $term ) ) {
+		return $term;
+	}
+	//* Do nothing, if called in the context of creating a term via an ajax call
+	if ( did_action( 'wp_ajax_add-tag' ) ) {
 		return $term;
 	}
 	$db = get_option( 'bizznis-term-meta' );
@@ -161,7 +165,7 @@ function bizznis_term_meta_save( $term_id, $tt_id ) {
 		return;
 	}
 	$term_meta = (array) get_option( 'bizznis-term-meta' );
-	$term_meta[$term_id] = isset( $_POST['meta'] ) ? (array) $_POST['meta'] : array();
+	$term_meta[$term_id] = isset( $_POST['bizznis-meta'] ) ? (array) $_POST['bizznis-meta'] : array();
 	if ( ! current_user_can( 'unfiltered_html' ) && isset( $term_meta[$term_id]['archive_description'] ) ) {
 		$term_meta[$term_id]['archive_description'] = bizznis_formatting_kses( $term_meta[$term_id]['archive_description'] );
 	}
