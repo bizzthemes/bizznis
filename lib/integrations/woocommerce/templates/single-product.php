@@ -27,6 +27,26 @@ remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wr
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 
 /**
+ * Start <article> markup for WooCommerce shop page
+ *
+ * @since 1.2.3
+ */
+add_action( 'woocommerce_before_main_content', 'bizznis_output_single_content_wrapper', 10 );
+function bizznis_output_single_content_wrapper() {
+	printf( '<article %s>', bizznis_attr( 'entry' ) );
+}
+
+/**
+ * End </article> markup for WooCommerce shop page
+ *
+ * @since 1.2.3
+ */
+add_action( 'woocommerce_after_main_content', 'bizznis_output_single_content_wrapper_end', 10 );
+function bizznis_output_single_content_wrapper_end() {
+	echo '</article>';
+}
+
+/**
  * Displays single product loop
  *
  * Uses WooCommerce structure and contains all existing WooCommerce hooks

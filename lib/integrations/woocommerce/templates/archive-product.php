@@ -28,6 +28,26 @@ remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wr
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 
 /**
+ * Start <article> markup for WooCommerce shop page
+ *
+ * @since 1.2.3
+ */
+add_action( 'woocommerce_before_main_content', 'bizznis_output_shop_content_wrapper', 10 );
+function bizznis_output_shop_content_wrapper() {
+	printf( '<article %s>', bizznis_attr( 'entry' ) );
+}
+
+/**
+ * End </article> markup for WooCommerce shop page
+ *
+ * @since 1.2.3
+ */
+add_action( 'woocommerce_after_main_content', 'bizznis_output_shop_content_wrapper_end', 10 );
+function bizznis_output_shop_content_wrapper_end() {
+	echo '</article>';
+}
+
+/**
  * Manage page layout for the Product archive (Shop) page
  *
  * Set the layout in the Bizznis layouts metabox in the Page Editor
@@ -38,8 +58,9 @@ add_filter( 'bizznis_pre_get_option_site_layout', 'bizznis_wc_archive_layout' );
 function bizznis_wc_archive_layout( $layout ) {
 	$shop_page_id = get_option( 'woocommerce_shop_page_id' );
 	$layout = get_post_meta( $shop_page_id, '_bizznis_layout', true );
-	if ( $layout )
+	if ( $layout ) {
 		return $layout;
+	}
 }
 
 /**

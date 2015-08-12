@@ -28,6 +28,58 @@ remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wr
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 
 /**
+ * Start <article> markup for WooCommerce shop page
+ *
+ * @since 1.2.3
+ */
+add_action( 'woocommerce_before_main_content', 'bizznis_output_taxonomy_content_wrapper', 10 );
+function bizznis_output_taxonomy_content_wrapper() {
+	printf( '<article %s>', bizznis_attr( 'entry' ) );
+}
+
+/**
+ * End </article> markup for WooCommerce shop page
+ *
+ * @since 1.2.3
+ */
+add_action( 'woocommerce_after_main_content', 'bizznis_output_taxonomy_content_wrapper_end', 10 );
+function bizznis_output_taxonomy_content_wrapper_end() {
+	echo '</article>';
+}
+
+/**
+ * Remove default <header> if Archive Headline is set
+ *
+ * @since 1.2.3
+ */
+add_action( 'wp_head', 'bizznis_title_archive_headline_replace' );
+function bizznis_title_archive_headline_replace() {
+	$term = get_queried_object();
+	if ( $term->meta['headline'] || bizznis_a11y() ) {
+		add_filter( 'woocommerce_show_page_title', '__return_false' );
+	} else {
+		remove_action( 'bizznis_loop', 'bizznis_do_taxonomy_title_description', 5 );
+	}
+
+}
+
+/**
+ * Manage page layout for the Product archive (Shop) page
+ *
+ * Set the layout in the Bizznis layouts metabox in the Page Editor
+ *
+ * @since 1.0.0
+ */
+add_filter( 'bizznis_pre_get_option_site_layout', 'bizznis_wc_single_layout' );
+function bizznis_wc_single_layout( $layout ) {
+	$shop_page_id = get_option( 'woocommerce_shop_page_id' );
+	$layout = get_post_meta( $shop_page_id, '_bizznis_layout', true );
+	if ( $layout ) {
+		return $layout;
+	}
+}
+
+/**
  * Displays shop items for the queried taxonomy term
  *
  * This is needed thanks to substantial changes to WooC template contents

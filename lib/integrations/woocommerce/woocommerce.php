@@ -38,11 +38,6 @@ class Bizznis_WC {
 		if ( ! current_theme_supports( 'bizznis-woocommerce' ) ) {
 			return;
 		}
-		# Stop here, if woocommerce version is lower than 2.0.0
-		global $woocommerce;
-		if ( version_compare( $woocommerce->version, '2.0.0', '<' ) ) {
-			return;
-		}
 		# Environment is OK, let's go!
 		global $woocommerce;
 		# Load Functions
@@ -80,7 +75,7 @@ class Bizznis_WC {
 	}
 	
 	/**
-	 * Initialize post type support for Bizznis features (Layout selector, SEO,  Scripts).
+	 * Initialize post type support for Bizznis features (Layout selector, Scripts).
 	 *
 	 * @since 1.0.0
 	 */
