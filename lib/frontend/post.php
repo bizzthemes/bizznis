@@ -375,7 +375,7 @@ if ( ! function_exists( 'bizznis_author_box' ) ) :
 function bizznis_author_box( $context = '', $echo = true ) {
 	global $authordata;
 	$authordata    = is_object( $authordata ) ? $authordata : get_userdata( get_query_var( 'author' ) );
-	$gravatar_size = apply_filters( 'bizznis_author_box_gravatar_size', 60, $context );
+	$gravatar_size = apply_filters( 'bizznis_author_box_gravatar_size', 70, $context );
 	$gravatar      = get_avatar( get_the_author_meta( 'email' ), $gravatar_size );
 	$description   = wpautop( get_the_author_meta( 'description' ) );
 	# The author box markup, contextual
