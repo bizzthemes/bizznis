@@ -15,6 +15,10 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.2.3
+* WooCommerce integration fixes
+* Better design markup
+
 ### 1.2.2
 * Adjusted customizer extra menu controls
 * Better accessibility
