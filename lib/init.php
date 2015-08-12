@@ -109,6 +109,7 @@ final class Bizznis_Init {
 		add_theme_support( 'custom-header', array(
 			'header-selector'   => '.site-header',
 			'background-size'   => 'cover',
+			'default-image'     => get_stylesheet_directory_uri() . '/images/header-bg.jpg',
 		) );
 		# Turn on custom background image / color
 		add_theme_support( 'custom-background', array(
