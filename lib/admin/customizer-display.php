@@ -19,18 +19,78 @@
  *
  * @return void
  */
-add_action( 'bizznis_css', 'bizznis_css_add_rules' );
-function bizznis_css_add_rules() {
+ 
+/**
+ * Custom header
+ */
+add_action( 'bizznis_css', 'bizznis_css_add_header_rules' );
+function bizznis_css_add_header_rules() {
+	
+	//* Stop here if custom header not supported
+	if ( ! current_theme_supports( 'custom-header' ) ) {
+		return;
+	}
+	
+	//* Stop here if user specifies their own callback
+	if ( get_theme_support( 'custom-header', 'wp-head-callback' ) ) {
+		return;
+	}
+	
+	$text_color			= get_header_textcolor();
+	$header_image 		= get_header_image();
+	$header_selector	= get_theme_support( 'custom-header', 'header-selector' );
+	$background_size	= get_theme_support( 'custom-header', 'background-size' );
+	$background_position= get_theme_support( 'custom-header', 'background-position' );
+	
+	//* Fallback
+	$header_selector = ( ! $header_selector ) ?  '.custom-header .site-header' : $header_selector;
+	$background_size = ( ! $background_size ) ?  'auto' : $background_size;
+	$background_position = ( ! $background_position ) ?  'center center' : $background_position;
+	
+	//* Header image
+	if ( $header_image ) {
+		
+		bizznis_get_css()->add( array(
+			'selectors'    => array( $header_selector ),
+			'declarations' => array(
+				'background-image'    => 'url("' . esc_url( $header_image ) . '")',
+				'background-repeat'   => 'no-repeat',
+				'background-position' => $background_position,
+				'background-size'	  => $background_size,
+			)
+		) );
+	
+	}
+	
+	//* Header text color CSS, if showing text
+	if ( display_header_text() && $text_color != get_theme_support( 'custom-header', 'default-text-color' ) ) {
+		
+		bizznis_get_css()->add( array(
+			'selectors'    => array( 
+				'.custom-header .header-content',
+				'.custom-header .header-content a',
+				'.custom-header .header-content a:hover',
+			),
+			'declarations' => array(
+				'color'		  		 => bizznis_add_string_filter( 'maybe_hash_hex_color', $text_color ),
+			)
+		) );
 
-	/**
-	 * Colors section
-	 */
-	// Get and escape options
-	$color_primary   = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_primary_color' ) );
-	$color_secondary = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_secondary_color' ) );
-	$color_link      = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_link_color' ) );
-	$color_text      = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_text_color' ) );
-	$color_detail    = bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_detail_color' ) );
+	}
+	
+}
+
+/**
+ * Colors section
+ */
+add_action( 'bizznis_css', 'bizznis_css_add_color_rules' );
+function bizznis_css_add_color_rules() {	
+
+	$color_primary		= bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_primary_color' ) );
+	$color_secondary	= bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_secondary_color' ) );
+	$color_link			= bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_link_color' ) );
+	$color_text			= bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_text_color' ) );
+	$color_detail		= bizznis_add_string_filter( 'maybe_hash_hex_color', get_theme_mod( 'bizznis_detail_color' ) );
 	
 	// Primary color
 	if ( $color_primary ) {
@@ -51,7 +111,7 @@ function bizznis_css_add_rules() {
 				'.footer-widgets',
 			),
 			'declarations' => array(
-				'background-color' => $color_primary
+				'background-color' => $color_primary,
 			)
 		) );
 		bizznis_get_css()->add( array(
@@ -62,7 +122,6 @@ function bizznis_css_add_rules() {
 				'.color-primary-border',
 				'.site-main',
 				'.menu-bizznis .sub-menu a',
-				'.nav-primary',
 				'.nav-header .sub-menu',
 				'article.entry',
 				'.archive-pagination',

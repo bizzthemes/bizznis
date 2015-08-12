@@ -97,20 +97,24 @@ final class Bizznis_Init {
 		add_theme_support( 'bizznis-archive-layouts' );
 		add_theme_support( 'bizznis-breadcrumbs' );
 		add_theme_support( 'bizznis-responsive-viewport' ); #html5
-		# Maybe add support for Bizznis menus
 	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
+		# Maybe add support for Bizznis menus
 		add_theme_support( 'bizznis-menus', array(
 			'primary'   => __( 'Primary Navigation Menu', 'bizznis' ),
 			'secondary' => __( 'Secondary Navigation Menu', 'bizznis' ),
 		) );
 	}
-		# Turn on footer widgets if Bizznis is active
-		# Turn on custom header image / custom logo
-		# Turn on custom background image / color
 	if ( ! is_child_theme() ) {
+		# Turn on custom header image / custom logo
+		add_theme_support( 'custom-header', array(
+			'header-selector'   => '.site-header',
+			'background-size'   => 'cover',
+		) );
+		# Turn on custom background image / color
 		add_theme_support( 'custom-background', array(
 			'default-color' => 'f5f5f5'
 		) );
+		# Turn on accessibility
 		add_theme_support( 'bizznis-accessibility', array(
 			'skip-links',
 			'search-form',
@@ -118,7 +122,7 @@ final class Bizznis_Init {
 			'headings',
 			'rems'
 		) );
-		# add_theme_support( 'custom-header' );
+		# Turn on footer widgets if Bizznis is active
 		add_theme_support( 'bizznis-footer-widgets', 4 );
 		add_theme_support( 'bizznis-after-entry-widgets' );
 		add_editor_style();
