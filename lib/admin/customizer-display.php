@@ -39,38 +39,47 @@ function bizznis_css_add_header_rules() {
 	$text_color			= get_header_textcolor();
 	$header_image 		= get_header_image();
 	$header_selector	= get_theme_support( 'custom-header', 'header-selector' );
+	$text_selectors		= get_theme_support( 'custom-header', 'text-selectors' );
 	$background_size	= get_theme_support( 'custom-header', 'background-size' );
 	$background_position= get_theme_support( 'custom-header', 'background-position' );
 	
+	//* If no options set, don't waste the output. Stop here.
+	if ( empty( $header_image ) && ! display_header_text() && $text_color == get_theme_support( 'custom-header', 'default-text-color' ) ) {
+		return;
+	}
+	
 	//* Fallback
-	$header_selector = ( ! $header_selector ) ?  '.custom-header .site-header' : $header_selector;
-	$background_size = ( ! $background_size ) ?  'auto' : $background_size;
+	$header_selector = ( ! $header_selector ) ?  array( '.custom-header .site-header' ) : array( $header_selector );
+	$text_selectors = ( ! $text_selectors ) ? array( '.custom-header .header-content', '.custom-header .header-content a', '.custom-header .header-content a:hover' ) : $text_selectors;
+	$text_selectors = ( ! is_array( $text_selectors ) ) ? explode(",", $text_selectors ) : $text_selectors;
 	$background_position = ( ! $background_position ) ?  'center center' : $background_position;
 	
 	//* Header image
 	if ( $header_image ) {
 		
+		$background_array = array(
+			'background-image'    => 'url("' . esc_url( $header_image ) . '")',
+			'background-repeat'   => 'no-repeat',
+			'background-size'	  => $background_size,
+			'background-position' => $background_position,
+		);
+		
+		if ( ! $background_size ) {
+			unset( $background_array['background-size'] );
+		}
+		
 		bizznis_get_css()->add( array(
-			'selectors'    => array( $header_selector ),
-			'declarations' => array(
-				'background-image'    => 'url("' . esc_url( $header_image ) . '")',
-				'background-repeat'   => 'no-repeat',
-				'background-position' => $background_position,
-				'background-size'	  => $background_size,
-			)
+			'selectors'    => $header_selector,
+			'declarations' => $background_array
 		) );
 	
 	}
 	
 	//* Header text color CSS, if showing text
-	if ( display_header_text() && $text_color != get_theme_support( 'custom-header', 'default-text-color' ) ) {
+	if ( display_header_text() && $text_color ) {
 		
 		bizznis_get_css()->add( array(
-			'selectors'    => array( 
-				'.custom-header .header-content',
-				'.custom-header .header-content a',
-				'.custom-header .header-content a:hover',
-			),
+			'selectors'    => $text_selectors,
 			'declarations' => array(
 				'color'		  		 => bizznis_add_string_filter( 'maybe_hash_hex_color', $text_color ),
 			)

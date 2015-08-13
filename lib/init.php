@@ -107,9 +107,10 @@ final class Bizznis_Init {
 	if ( ! is_child_theme() ) {
 		# Turn on custom header image / custom logo
 		add_theme_support( 'custom-header', array(
-			'header-selector'   => '.site-header',
-			'background-size'   => 'cover',
-			'default-image'     => get_stylesheet_directory_uri() . '/images/header-bg.jpg',
+			'header-selector'		=> '.site-header',
+			'text-selectors'		=> '.custom-header .header-content, .custom-header .header-content a, .custom-header .header-content a:hover',
+			'background-size'		=> 'cover',
+			'default-image'			=> get_stylesheet_directory_uri() . '/images/header-bg.jpg',
 		) );
 		# Turn on custom background image / color
 		add_theme_support( 'custom-background', array(
