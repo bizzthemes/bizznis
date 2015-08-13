@@ -114,6 +114,9 @@ function bizznis_header_body_classes( array $classes ) {
 			$classes[] = 'custom-header';
 		}
 	}
+	if ( current_theme_supports( 'custom-header' ) && get_header_image() ) {
+		$classes[] = 'custom-header-active';
+	}
 	if ( 'image' == bizznis_get_option( 'blog_title' ) || ( current_theme_supports( 'custom-header' ) && ! display_header_text() ) ) {
 		$classes[] = 'header-image';
 	}
