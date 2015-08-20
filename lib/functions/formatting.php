@@ -180,13 +180,13 @@ function bizznis_human_time_diff( $older_date, $newer_date = false ) {
 	}
 	# Hold units of time in seconds, and their pluralised strings (not translated yet)
 	$units = array(
-		array( 31536000, _nx_noop( '%s year', '%s years', 'time difference' ) ),  // 60 * 60 * 24 * 365
-		array( 2592000, _nx_noop( '%s month', '%s months', 'time difference' ) ), // 60 * 60 * 24 * 30
-		array( 604800, _nx_noop( '%s week', '%s weeks', 'time difference' ) ),    // 60 * 60 * 24 * 7
-		array( 86400, _nx_noop( '%s day', '%s days', 'time difference' ) ),       // 60 * 60 * 24
-		array( 3600, _nx_noop( '%s hour', '%s hours', 'time difference' ) ),      // 60 * 60
-		array( 60, _nx_noop( '%s minute', '%s minutes', 'time difference' ) ),
-		array( 1, _nx_noop( '%s second', '%s seconds', 'time difference' ) ),
+		array( 31536000, _nx_noop( '%s year', '%s years', 'time difference', 'bizznis' ) ),  // 60 * 60 * 24 * 365
+		array( 2592000, _nx_noop( '%s month', '%s months', 'time difference', 'bizznis' ) ), // 60 * 60 * 24 * 30
+		array( 604800, _nx_noop( '%s week', '%s weeks', 'time difference', 'bizznis' ) ),    // 60 * 60 * 24 * 7
+		array( 86400, _nx_noop( '%s day', '%s days', 'time difference', 'bizznis' ) ),       // 60 * 60 * 24
+		array( 3600, _nx_noop( '%s hour', '%s hours', 'time difference', 'bizznis' ) ),      // 60 * 60
+		array( 60, _nx_noop( '%s minute', '%s minutes', 'time difference', 'bizznis' ) ),
+		array( 1, _nx_noop( '%s second', '%s seconds', 'time difference', 'bizznis' ) ),
 	);
 	# Step one: the first unit
 	for ( $i = 0, $j = count( $units ); $i < $j; $i++ ) {

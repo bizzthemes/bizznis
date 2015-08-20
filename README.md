@@ -1,4 +1,4 @@
-Mobile WordPress Theme Platform
+Professional WordPress Theme Platform
 ----
 
 Install
@@ -17,6 +17,7 @@ Changelog
 
 ### 1.2.4
 * Moved all core support functions inside "after_setup_theme()" hook
+* Fixed all texdomain issues for better WP.org language pack compatibility
 
 ### 1.2.3
 * WooCommerce integration fixes

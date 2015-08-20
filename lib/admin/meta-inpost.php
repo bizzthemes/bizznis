@@ -100,7 +100,7 @@ function bizznis_inpost_scripts_box() {
 	?>
 	<p><label for="bizznis_scripts" class="screen-reader-text"><strong><?php _e( 'Page-specific Scripts', 'bizznis' ); ?></strong></label></p>	
 	<p><textarea class="widefat" rows="4" cols="4" name="bizznis_scripts[_bizznis_scripts]" id="bizznis_scripts"><?php echo esc_textarea( bizznis_get_custom_field( '_bizznis_scripts' ) ); ?></textarea></p>
-	<p><?php printf( __( 'Suitable for page-specific script. Must include %s tags.', 'bizznis' ), bizznis_code( 'script' ) ); ?></p>
+	<p><?php printf( __( 'Suitable for page-specific script. Must have %s tags.', 'bizznis' ), bizznis_code( 'script' ) ); ?></p>
 	<?php
 }
 

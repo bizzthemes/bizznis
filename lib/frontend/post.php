@@ -531,7 +531,7 @@ function bizznis_numeric_posts_nav() {
 	}
 	# Next Post Link
 	if ( get_next_posts_link() ) {
-		printf( '<li class="pagination-next">%s</li>' . "\n", get_next_posts_link( apply_filters( 'genesis_next_link_text', __( 'Next Page', 'genesis' ) . ' &#x000BB;' ) ) );
+		printf( '<li class="pagination-next">%s</li>' . "\n", get_next_posts_link( apply_filters( 'genesis_next_link_text', __( 'Next Page', 'bizznis' ) . ' &#x000BB;' ) ) );
 	}
 	echo '</ul></nav>' . "\n";
 }
