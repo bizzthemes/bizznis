@@ -15,6 +15,9 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.2.4
+* Moved all core support functions inside "after_setup_theme()" hook
+
 ### 1.2.3
 * WooCommerce integration fixes
 * Better design markup

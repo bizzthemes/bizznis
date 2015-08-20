@@ -5,7 +5,7 @@ Description:		Bizznis is a professional mobile responsive WordPress theme platfo
 License:			GPL version 3
 License URI:		http://gplv3.fsf.org/
 Branch:				1.0
-Version:			1.2.3
+Version:			1.2.4
 Author:				BizzThemes
 Author URI:			http://bizzthemes.com/
 Tags:				light, gray, white, one-column, two-columns, three-columns, right-sidebar, left-sidebar, responsive-layout, fluid-layout, custom-menu, featured-images, full-width-template, microformats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -249,7 +249,7 @@ h5,
 h6 {
 	font-weight: 700;
 	line-height: 1.2;
-	margin: 0 0 10px;
+	margin: 0 0 12px;
 }
 
 h1 {
@@ -792,7 +792,7 @@ img.alignright,
 .author-box,
 .archive-description {
 	background-color: #191919;
-	color: #f1f1f1;
+	color: #f7f7f7;
 	margin-bottom: 20px;
 	overflow: hidden;
 	padding: 60px;
@@ -830,7 +830,6 @@ img.alignright,
 .entry-title {
 	font-size: 44px;
 	letter-spacing: -2px;
-	line-height: 1.38;
 }
 
 .widget-title {
@@ -979,6 +978,14 @@ img.alignright,
 .header-aside-area li {
 	list-style-type: none;
 	word-wrap: break-word;
+}
+
+.header-aside-area .widget {
+	margin-bottom: 30px;
+}
+
+.header-aside-area .widget:last-child {
+	margin-bottom: 0;
 }
 
 /* Site Navigation

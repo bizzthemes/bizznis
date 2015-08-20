@@ -19,9 +19,10 @@ final class Bizznis_Init {
 	 */
 	public function __construct() {
 		$this->constants();
-		$this->theme_support();
-		$this->post_type_support();
-		$this->i18n();
+		
+		add_action( 'after_setup_theme', array( $this, 'theme_support' ) );
+		add_action( 'after_setup_theme', array( $this, 'post_type_support' ) );
+		add_action( 'after_setup_theme', array( $this, 'i18n' ) );
 	}
 	
 	/**
@@ -32,10 +33,10 @@ final class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.2.3' );
+		define( 'PARENT_THEME_VERSION', 		'1.2.4' );
 		define( 'PARENT_THEME_BRANCH', 			'1.2' );
-		define( 'PARENT_DB_VERSION', 			'1230' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1438430400' ) );
+		define( 'PARENT_DB_VERSION', 			'1240' );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1470657600' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
