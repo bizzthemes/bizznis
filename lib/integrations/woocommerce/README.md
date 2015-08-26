@@ -83,7 +83,7 @@ For more technically minded users, this is what the integration does:
 	* unhook the Bizznis Loop and replace it with the relevant WooCommerce shop loop
 	* remove WooCommerce's #container and #content divs, which are not required or wanted by Bizznis
 * The shop loop function in each template is heavily based on its WooCommerce counterpart, but has been modified to accommodate certain Bizznis features such as the Taxonomy term headings and descriptions feature.
-* The templates contain the `genesis();` function and therefore are fully customisable using Bizznis hooks and filters. 
+* The templates contain the `bizznis();` function and therefore are fully customisable using Bizznis hooks and filters. 
 * The template loader allows users to use their own templates in the child theme's 'woocommerce' folder. These user templates, if they exist in the child theme's `woocommerce' folder, will be loaded in place of the supplied Bizznis Integration for WooCommerce templates
 * Using appropriate filters, modifies the Bizznis breadcrumbs output to mimic the breadcrumb structure provided by WooCommerce's built-in breadcrumbs.
 

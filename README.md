@@ -15,6 +15,11 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.2.5
+* SCHEMA fixes
+* Theme support functions now hooked to core instead of "after_setup_theme()" hook
+* Return rem insted of px in CSS
+
 ### 1.2.4
 * Moved all core support functions inside "after_setup_theme()" hook
 * Fixed all texdomain issues for better WP.org language pack compatibility

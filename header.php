@@ -9,7 +9,7 @@
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes( 'html' ); ?>>
-<head>
+<?php printf( '<head %s>', bizznis_attr( 'head' ) ); ?>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
 <?php wp_head(); ?>
 </head>

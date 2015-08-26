@@ -5,7 +5,7 @@ Description:		Professional WordPress Theme Platform. Built for large and small w
 License:			GPL version 3
 License URI:		http://gplv3.fsf.org/
 Branch:				1.0
-Version:			1.2.4
+Version:			1.2.5
 Author:				BizzThemes
 Author URI:			http://bizzthemes.com/
 Tags:				light, gray, white, one-column, two-columns, three-columns, right-sidebar, left-sidebar, responsive-layout, fluid-layout, custom-menu, featured-images, full-width-template, microformats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -91,10 +91,10 @@ Text Domain:		bizznis
 /* HTML5 Reset
 ------------------------------------------------------------------------------------------------------------------ */
 
-/* normalize.css v3.0.1 | MIT License | git.io/normalize
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize
 --------------------------------------------- */
 
-html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background:0 0}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#333}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:bold}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
 
 /* Box Sizing
 --------------------------------------------- */
@@ -152,10 +152,15 @@ input[type="search"]{
 /* Typographical Elements
 --------------------------------------------- */
 
+html {
+    font-size: 62.5%; /* 10px browser default */
+}
+
 body {
 	background-color: #f1f1f1;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 18px;
+	font-size: 1.8rem;
 	font-weight: 300;
 	line-height: 1.8;
 	margin: 0;
@@ -232,6 +237,7 @@ blockquote::before {
 	content: "\201C";
 	display: block;
 	font-size: 30px;
+	font-size: 3rem;
 	height: 0;
 	left: -20px;
 	position: relative;
@@ -254,26 +260,32 @@ h6 {
 
 h1 {
 	font-size: 36px;
+	font-size: 3.6rem;
 }
 
 h2 {
 	font-size: 30px;
+	font-size: 3.0rem;
 }
 
 h3 {
 	font-size: 24px;
+	font-size: 2.4rem;
 }
 
 h4 {
 	font-size: 20px;
+	font-size: 2rem;
 }
 
 h5 {
 	font-size: 18px;
+	font-size: 1.8rem;
 }
 
 h6 {
 	font-size: 16px;
+	font-size: 1.6rem;
 }
 
 /* Objects
@@ -568,6 +580,7 @@ th {
 
 .site-footer {
 	font-size: 16px;
+	font-size: 1.6rem;
 }
 
 /* Column Widths and Positions
@@ -703,6 +716,7 @@ img.alignright,
 
 .wp-caption-text {
 	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 600;
 	text-align: center;
 }
@@ -777,6 +791,7 @@ img.alignright,
 .breadcrumb {
 	background-color: #fff;
 	font-size: 16px;
+	font-size: 1.6rem;
 	margin-bottom: 20px;
 	padding: 20px 60px;
 }
@@ -805,6 +820,7 @@ img.alignright,
 .author-box .author-box-title {
 	display: block;
 	font-size: 28px;
+	font-size: 2.8rem;
 	padding: 0;
 }
 
@@ -829,11 +845,13 @@ img.alignright,
 
 .entry-title {
 	font-size: 44px;
+	font-size: 4.4rem;
 	letter-spacing: -2px;
 }
 
 .widget-title {
 	font-size: 28px;
+	font-size: 2.8rem;
 	font-weight: 100;
 	margin-bottom: 30px;
 }
@@ -854,6 +872,7 @@ img.alignright,
 
 .archive-title {
 	font-size: 28px;
+	font-size: 2.8rem;
 	margin: 0;
 }
 
@@ -907,6 +926,7 @@ img.alignright,
 
 .site-title {
 	font-size: 42px;
+	font-size: 4.2rem;
 	font-weight: 700;
 	letter-spacing: -2px;
 	line-height: 1.2;
@@ -920,6 +940,7 @@ img.alignright,
 
 .site-description {
 	font-size: 17px;
+	font-size: 1.7rem;
 	line-height: 1.5;
 }
 
@@ -1047,6 +1068,7 @@ img.alignright,
 .menu-bizznis .menu-item {
 	display: inline-block;
 	font-size: 16px;
+	font-size: 1.6rem;
 	text-align: left;
 }
 
@@ -1096,7 +1118,6 @@ img.alignright,
 	background-color: #fff;
 	border: 1px solid #e5e5e5;
 	border-top: 0;
-	font-size: 16px;
 	padding: 16px 20px;
 	position: relative;
 	width: 250px;
@@ -1136,6 +1157,7 @@ img.alignright,
 
 .menu-bizznis-extra {
 	font-size: 16px;
+	font-size: 1.6rem;
 }
 
 .menu-bizznis-extra a {
@@ -1258,6 +1280,7 @@ article.entry {
 .entry-meta {
 	clear: both;
 	font-size: 16px;
+	font-size: 1.6rem;
 }
 
 .entry-header .entry-meta {
@@ -1381,6 +1404,7 @@ article.entry {
 
 .comment-header {
 	font-size: 16px;
+	font-size: 1.6rem;
 }
 
 li.comment {
@@ -1453,6 +1477,7 @@ li.comment {
 .form-allowed-tags {
 	background-color: #f1f1f1;
 	font-size: 16px;
+	font-size: 1.6rem;
 	padding: 24px;
 }
 
@@ -1461,6 +1486,7 @@ li.comment {
 
 .sidebar {
 	font-size: 16px;
+	font-size: 1.6rem;
 }
 
 .sidebar li,
@@ -1590,6 +1616,7 @@ li.comment {
 
 .featured-content .entry-title {
 	font-size: 24px;
+	font-size: 2.4rem;
 	line-height: 1.2;
 }
 
@@ -1605,6 +1632,7 @@ div.gform_wrapper textarea,
 div.gform_wrapper select,
 div.gform_wrapper .ginput_complex label {
 	font-size: 16px;
+	font-size: 1.6rem;
 	padding: 10px;
 }
 
@@ -1623,6 +1651,7 @@ div.gform_wrapper form li {
 
 div.gform_wrapper .gform_footer input[type="submit"] {
 	font-size: 14px;
+	font-size: 1.4rem;
 }
 
 /* External Scripts
@@ -1712,6 +1741,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	body {
 		background-color: #fff;
 		font-size: 16px;
+		font-size: 1.6rem;
 	}
 	
 	.wrap {
@@ -1738,8 +1768,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 		width: 100%;
 	}
 	
-	.archive-description,
-	.author-box,
 	.comment-respond,
 	.entry,
 	article.entry,
@@ -1749,6 +1777,11 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	.site-header,
 	.breadcrumb {
 		padding: 0;
+	}
+	
+	.archive-description,
+	.author-box {
+		padding: 20px;
 	}
 
 	.header-image .title-area {
@@ -1896,7 +1929,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	.edit-link,
 	.entry-comments-link,
 	.entry-footer,
-	.genesis-box,
+	.bizznis-box,
 	.header-widget-area,
 	.hidden-print,
 	.home-top,
