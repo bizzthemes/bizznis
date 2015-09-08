@@ -15,6 +15,11 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.2.6
+* Post meta support for custom post types
+* Fixed breadcrumbs
+* Archive title rendered only when accessiblity is supported
+
 ### 1.2.5
 * SCHEMA fixes
 * Theme support functions now hooked to core instead of "after_setup_theme()" hook

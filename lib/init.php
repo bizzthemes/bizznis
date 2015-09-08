@@ -22,6 +22,7 @@ final class Bizznis_Init {
 		$this->theme_support();
 		$this->post_type_support();
 
+		add_action( 'init', array( $this, 'post_type_support_post_meta' ), 11 );
 		add_action( 'after_setup_theme', array( $this, 'i18n' ) );
 	}
 	
@@ -33,10 +34,10 @@ final class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.2.5' );
+		define( 'PARENT_THEME_VERSION', 		'1.2.6' );
 		define( 'PARENT_THEME_BRANCH', 			'1.2' );
-		define( 'PARENT_DB_VERSION', 			'1250' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1470657600' ) );
+		define( 'PARENT_DB_VERSION', 			'1260' );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1441713600' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
@@ -140,8 +141,22 @@ final class Bizznis_Init {
 	public function post_type_support() {
 		add_post_type_support( 'post', array( 'bizznis-scripts', 'bizznis-layouts', 'bizznis-rel-author' ) );
 		add_post_type_support( 'page', array( 'bizznis-scripts', 'bizznis-layouts' ) );
-		add_post_type_support( 'post', 'bizznis-entry-meta-before-content' );
-		add_post_type_support( 'post', 'bizznis-entry-meta-after-content' );
+	}
+	
+	/**
+	 * Add post type support for post meta to all post types except page.
+	 *
+	 * @since 1.2.6
+	 */
+	public function post_type_support_post_meta() {
+		$public_post_types = get_post_types( array( 'public' => true ) );
+
+		foreach ( $public_post_types as $post_type ) {
+			if ( 'page' !== $post_type ) {
+				add_post_type_support( $post_type, 'bizznis-entry-meta-before-content' );
+				add_post_type_support( $post_type, 'bizznis-entry-meta-after-content' );
+			}
+		}
 	}
 	
 	/**

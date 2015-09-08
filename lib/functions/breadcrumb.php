@@ -601,9 +601,13 @@ class Bizznis_Breadcrumb {
 	 * @param string $sep Separator
 	 * @return string HTML markup for anchor link and optional separator.
 	 */
-	protected function get_breadcrumb_link( $url, $title, $content, $sep = false ) {
-		$title = $title ? ' title="' . esc_attr( $title ) . '"' : '';
-		$link = sprintf( '<a href="%s"%s>%s</a>', esc_attr( $url ), $title, esc_html( $content ) );
+	protected function get_breadcrumb_link( $url, $title, $content, $sep = false ) {		
+		//* Empty title, for backward compatibility
+		$title = '';
+		$itemprop_url  = ' itemprop="url"';
+		$itemprop_name = ' itemprop="name"';
+		$link = sprintf( '<a href="%s"%s><span%s>%s</span></a>', esc_attr( $url ), $itemprop_url, $itemprop_name, esc_html( $content ) );
+
 		/**
 		 * Filter the anchor link for a single breadcrumb.
 		 *
@@ -616,11 +620,13 @@ class Bizznis_Breadcrumb {
 		 * @param array  $args    Arguments used to generate the breadcrumbs. Documented in Bizznis_Breadcrumbs::get_output().
 		 */
 		$link = apply_filters( 'bizznis_breadcrumb_link', $link, $url, $title, $content, $this->args );
+		$link = sprintf( '<span %s>', bizznis_attr( 'breadcrumb-link-wrap' ) ) . $link . '</span>';
+		
 		if ( $sep ) {
 			$link .= $sep;
 		}
+		
 		return $link;
-
 	}
 
 	/**

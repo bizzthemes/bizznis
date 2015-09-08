@@ -159,6 +159,24 @@ function bizznis_attributes_breadcrumb( $attributes ) {
 }
 
 /**
+ * Add attributes for breadcrumb wrapper.
+ *
+ * @since 1.2.6
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Ammended attributes
+ */
+add_filter( 'bizznis_attr_breadcrumb-link-wrap', 'bizznis_attributes_breadcrumb_link_wrap' );
+function bizznis_attributes_breadcrumb_link_wrap( $attributes ) {
+	$attributes['itemprop']  = 'itemListElement';
+	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemtype']  = 'http://schema.org/ListItem';
+
+	return $attributes;
+}
+
+/**
  * Add attributes for search form.
  *
  * @since 1.2.0
@@ -219,7 +237,12 @@ function bizznis_attributes_nav_link_wrap( $attributes ) {
  */
 add_filter( 'bizznis_attr_nav-link', 'bizznis_attributes_nav_link' );
 function bizznis_attributes_nav_link( $attributes ) {
-	$attributes['class'] = '';
+	/**
+	 * Since we're utilizing a filter that plugins might also want to filter, don't overwrite class here.
+	 */
+	$class = str_replace( 'nav-link', '', $attributes['class'] );
+
+	$attributes['class']    = $class;
 	$attributes['itemprop'] = 'url';
 
 	return $attributes;

@@ -276,11 +276,11 @@ abstract class Bizznis_Admin_Form extends Bizznis_Admin {
 		<div class="wrap bizznis-admin bizznis-form">
 		<form method="post" action="options.php">
 			<?php settings_fields( $this->settings_field ); ?>
-			<h2>
+			<h1>
 				<?php do_action( 'admin_title_left', $this->pagehook ); ?>
 				<?php echo esc_html( get_admin_page_title() ); ?>
 				<?php do_action( 'admin_title_right', $this->pagehook ); ?>
-			</h2>
+			</h1>
 			<?php do_action( "{$this->pagehook}_settings_page_form", $this->pagehook ); ?>
 			<?php do_settings_fields( $this->page_id, 'default' ); ?>
 			<?php do_settings_sections( $this->page_id );?>

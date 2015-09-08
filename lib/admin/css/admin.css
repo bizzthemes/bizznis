@@ -55,6 +55,7 @@ hr.div {
 
 /* Bizznis feedback link ----------- */
 
+.bizznis-admin h1 a.feedback,
 .bizznis-admin h2 a.feedback {
 	font-family: serif;
 	font-size: 11px;

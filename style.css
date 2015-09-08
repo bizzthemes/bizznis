@@ -5,7 +5,7 @@ Description:		Professional WordPress Theme Platform. Built for large and small w
 License:			GPL version 3
 License URI:		http://gplv3.fsf.org/
 Branch:				1.0
-Version:			1.2.5
+Version:			1.2.6
 Author:				BizzThemes
 Author URI:			http://bizzthemes.com/
 Tags:				light, gray, white, one-column, two-columns, three-columns, right-sidebar, left-sidebar, responsive-layout, fluid-layout, custom-menu, featured-images, full-width-template, microformats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -75,6 +75,7 @@ Text Domain:		bizznis
 		- Gravity Forms
 	External Scripts
 		- Github
+	CSS3 animations
 	Media Queries
 		- Retina ready
 		- Responsive width
@@ -571,6 +572,7 @@ th {
 
 .site-header {
 	background-color: #fff;
+	animation: feature-bg-anim .3s ease-in-out;
 }
 
 .site-main {
@@ -1663,6 +1665,21 @@ div.gform_wrapper .gform_footer input[type="submit"] {
 table.lines {
 	margin-bottom: 0;
 	line-height: 1.5;
+}
+
+/* CSS3 animations
+------------------------------------------------------------------------------------------------------------------ */
+
+@keyframes feature-text-anim {
+	0%{opacity:0;-webkit-transform:translate3d(0,10px,0);-moz-transform:translate3d(0,10px,0);-ms-transform:translate3d(0,10px,0);-o-transform:translate3d(0,10px,0);transform:translate3d(0,10px,0);}
+	75%{opacity:0;-webkit-transform:translate3d(0,10px,0);-moz-transform:translate3d(0,10px,0);-ms-transform:translate3d(0,10px,0);-o-transform:translate3d(0,10px,0);transform:translate3d(0,10px,0);}
+	100%{opacity:1;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);-o-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}
+}
+
+@keyframes feature-bg-anim{
+	0%{opacity:0;}
+	50%{opacity:0;}
+	100%{opacity:1;}
 }
 
 

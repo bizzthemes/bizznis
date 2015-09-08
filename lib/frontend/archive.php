@@ -19,7 +19,7 @@ function bizznis_do_taxonomy_title_description() {
 		return;
 	}
 	# Stop here if we're not on the first page
-	if ( get_query_var( 'paged' ) >= 2 && ! bizznis_a11y() ) {
+	if ( ! bizznis_a11y() ) {
 		return;
 	}
 	# Stop here if there's no term, or no term meta set
@@ -58,7 +58,7 @@ function bizznis_do_author_title_description() {
 		return;
 	}
 	# Stop here if we're not on page 1
-	if ( get_query_var( 'paged' ) >= 2 && ! bizznis_a11y() ) {
+	if ( ! bizznis_a11y() ) {
 		return;
 	}
 	# If there's a custom headline to display, it is marked up as a level 1 heading.
@@ -112,9 +112,6 @@ function bizznis_do_date_archive_title() {
 		return;
 	}
 	if ( ! bizznis_a11y( 'headings' ) ) {
-		return;
-	}
-	if ( get_query_var( 'paged' ) >= 2  && ! bizznis_a11y( 'headings' )  ) {
 		return;
 	}
 	if ( is_day() ) {
