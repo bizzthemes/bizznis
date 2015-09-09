@@ -15,6 +15,19 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.2.7
+* Fixed issue with Schema.org microdata when using Blog template.
+* Add H1 to posts page when using static front page and theme supports a11y.
+* Better logic for generating H1 on front page
+* Removed incorrect usage of mainContentOfPage.
+* Added helper function to filter markup to add .screen-reader-text class to markup.
+* Fixed breadcrumb Schema.org microdata for breadcrumb items.
+* Prevent duplicate H1 elements on author archives.
+* Only output http://schema.org/WebSite on front page.
+* Add boolean attribute option to markup API.
+* Pass archive title/description wrappers through markup API.
+* Remove a11y checks for titles that were previously output by default.
+
 ### 1.2.6
 * Post meta support for custom post types
 * Fixed breadcrumbs

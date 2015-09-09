@@ -393,6 +393,8 @@ function bizznis_author_box( $context = '', $echo = true ) {
 	$title = apply_filters( 'bizznis_author_box_title', $title, $context );
 	if ( 'single' === $context ) {
 		$heading_element = 'h4';
+	} elseif ( bizznis_a11y( 'headings' ) ) {
+		$heading_element = 'h4';
 	} else {
 		$heading_element = 'h1';
 	}

@@ -604,9 +604,9 @@ class Bizznis_Breadcrumb {
 	protected function get_breadcrumb_link( $url, $title, $content, $sep = false ) {		
 		//* Empty title, for backward compatibility
 		$title = '';
-		$itemprop_url  = ' itemprop="url"';
+		$itemprop_item = ' itemprop="item"';
 		$itemprop_name = ' itemprop="name"';
-		$link = sprintf( '<a href="%s"%s><span%s>%s</span></a>', esc_attr( $url ), $itemprop_url, $itemprop_name, esc_html( $content ) );
+		$link = sprintf( '<a href="%s"%s><span%s>%s</span></a>', esc_attr( $url ), $itemprop_item, $itemprop_name, esc_html( $content ) );
 
 		/**
 		 * Filter the anchor link for a single breadcrumb.

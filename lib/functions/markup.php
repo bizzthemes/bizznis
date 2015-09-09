@@ -41,11 +41,42 @@ function bizznis_attr( $context, $attributes = array() ) {
 			$classes 	= apply_filters( 'bizznis_parse_attr_class', $classes, $context ); # apply filter
 			$value 		= join( ' ', $classes ); # turn into string
 		}
-        $output .= sprintf( '%s="%s" ', esc_html( $key ), esc_attr( $value ) );
+		if ( true === $value ) {
+			$output .= esc_html( $key ) . ' ';
+		} else {
+			$output .= sprintf( '%s="%s" ', esc_html( $key ), esc_attr( $value ) );
+		}
     }
     $output = apply_filters( "bizznis_attr_{$context}_output", $output, $attributes, $context );
 	# Return all atrubutes
     return trim( $output );
+}
+
+/**
+ * Helper function for use as a filter for when you want to prevent a class from being automatically
+ * generated and output on an element that is passed through the markup API.
+ *
+ * @since 1.2.7
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+function bizznis_attributes_empty_class( $attributes ) {
+	$attributes['class'] = '';
+
+	return $attributes;
+}
+
+/**
+ * Helper function for use as a filter for when you want to add screen-reader-text class to an element.
+ *
+ * @since 1.2.7
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+function bizznis_attributes_screen_reader_class( $attributes ) {
+	$attributes['class'] .= ' screen-reader-text';
+
+	return $attributes;
 }
 
 //* LIST OF ALL ATTRIBUTE FILTERS
@@ -60,8 +91,13 @@ function bizznis_attr( $context, $attributes = array() ) {
  */
 add_filter( 'bizznis_attr_head', 'bizznis_attributes_head' );
 function bizznis_attributes_head( $attributes ) {
-	$attributes['class']     = '';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['class'] = '';
+
+	if ( ! is_front_page() ) {
+		return $attributes;
+	}
+
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/WebSite';
 
 	return $attributes;
@@ -74,7 +110,7 @@ function bizznis_attributes_head( $attributes ) {
  */
 add_filter( 'bizznis_attr_body', 'bizznis_attributes_body' );
 function bizznis_attributes_body( $attributes ) {
-	$attributes['itemscope']	= 'itemscope';
+	$attributes['itemscope']	= true;
 	$attributes['itemtype']		= 'http://schema.org/WebPage';
 	# Search results pages
 	if ( is_search() ) {
@@ -94,7 +130,7 @@ function bizznis_attributes_body( $attributes ) {
  */
 add_filter( 'bizznis_attr_site-header', 'bizznis_attributes_header' );
 function bizznis_attributes_header( $attributes ) {
-	$attributes['itemscope']	= 'itemscope';
+	$attributes['itemscope']	= true;
 	$attributes['itemtype']		= 'http://schema.org/WPHeader';
 	
 	return $attributes;
@@ -147,7 +183,7 @@ function bizznis_attributes_header_widget_area( $attributes ) {
 add_filter( 'bizznis_attr_breadcrumb', 'bizznis_attributes_breadcrumb' );
 function bizznis_attributes_breadcrumb( $attributes ) {
 	$attributes['itemprop']  = 'breadcrumb';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/BreadcrumbList';
 	
 	//* Breadcrumb itemprop not valid on blog
@@ -170,7 +206,7 @@ function bizznis_attributes_breadcrumb( $attributes ) {
 add_filter( 'bizznis_attr_breadcrumb-link-wrap', 'bizznis_attributes_breadcrumb_link_wrap' );
 function bizznis_attributes_breadcrumb_link_wrap( $attributes ) {
 	$attributes['itemprop']  = 'itemListElement';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/ListItem';
 
 	return $attributes;
@@ -187,7 +223,7 @@ function bizznis_attributes_breadcrumb_link_wrap( $attributes ) {
 add_filter( 'bizznis_attr_search-form', 'bizznis_attributes_search_form' );
 function bizznis_attributes_search_form( $attributes ) {
 	$attributes['itemprop']  = 'potentialAction';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/SearchAction';
 	$attributes['method']    = 'get';
 	$attributes['action']    = home_url( '/' );
@@ -205,7 +241,7 @@ add_filter( 'bizznis_attr_nav-header', 'bizznis_attributes_nav' );
 add_filter( 'bizznis_attr_nav-primary', 'bizznis_attributes_nav' );
 add_filter( 'bizznis_attr_nav-secondary', 'bizznis_attributes_nav' );
 function bizznis_attributes_nav( $attributes ) {
-	$attributes['itemscope'] 	= 'itemscope';
+	$attributes['itemscope'] 	= true;
 	$attributes['itemtype']  	= 'http://schema.org/SiteNavigationElement';
 	
 	return $attributes;
@@ -255,10 +291,62 @@ function bizznis_attributes_nav_link( $attributes ) {
  */
 add_filter( 'bizznis_attr_content', 'bizznis_attributes_content' );
 function bizznis_attributes_content( $attributes ) {
-	if ( ! ( is_singular( 'post' ) || is_archive() || is_home() ) ) {
-		$attributes['itemprop'] = 'mainContentOfPage';
-	}
-	
+	return $attributes;
+}
+
+/**
+ * Add attributes for taxonomy description.
+ *
+ * @since 1.2.7
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_taxonomy-archive-description', 'bizznis_attributes_taxonomy_archive_description' );
+function bizznis_attributes_taxonomy_archive_description( $attributes ) {
+	$attributes['class'] = 'archive-description taxonomy-archive-description taxonomy-description';
+
+	return $attributes;
+}
+
+/**
+ * Add attributes for author description.
+ *
+ * @since 1.2.7
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_author-archive-description', 'bizznis_attributes_author_archive_description' );
+function bizznis_attributes_author_archive_description( $attributes ) {
+	$attributes['class'] = 'archive-description author-archive-description author-description';
+
+	return $attributes;
+}
+
+/**
+ * Add attributes for date archive description.
+ *
+ * @since 1.2.7
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_date-archive-description', 'bizznis_attributes_date_archive_description' );
+function bizznis_attributes_date_archive_description( $attributes ) {
+	$attributes['class'] = 'archive-description date-archive-description archive-date';
+
+	return $attributes;
+}
+
+/**
+ * Add attributes for posts page description.
+ *
+ * @since 1.2.7
+ * @param array $attributes Existing attributes.
+ * @return array Amended attributes.
+ */
+add_filter( 'bizznis_attr_posts-page-description', 'bizznis_attributes_posts_page_description' );
+function bizznis_attributes_posts_page_description( $attributes ) {
+	$attributes['class'] = 'archive-description posts-page-description';
+
 	return $attributes;
 }
 
@@ -270,14 +358,16 @@ function bizznis_attributes_content( $attributes ) {
 add_filter( 'bizznis_attr_entry', 'bizznis_attributes_entry' );
 function bizznis_attributes_entry( $attributes ) {
 	$attributes['class'] = join( ' ', get_post_class() );
+	
 	if ( ! is_main_query() ) {
 		return $attributes;
 	}
+	
 	# Blog posts microdata
 	if ( 'post' === get_post_type() ) {
-		$attributes['itemscope'] = 'itemscope';
+		$attributes['itemscope'] = true;
 		$attributes['itemtype']  = 'http://schema.org/BlogPosting';
-		# If main query,
+		# If not search results page
 		if ( ! is_search() ) {
 			$attributes['itemprop']  = 'blogPost';
 		}
@@ -332,7 +422,7 @@ function bizznis_attributes_entry_image_grid_loop( $attributes ) {
 add_filter( 'bizznis_attr_entry-author', 'bizznis_attributes_entry_author' );
 function bizznis_attributes_entry_author( $attributes ) {
 	$attributes['itemprop']  	= 'author';
-	$attributes['itemscope'] 	= 'itemscope';
+	$attributes['itemscope'] 	= true;
 	$attributes['itemtype']  	= 'http://schema.org/Person';
 	
 	return $attributes;
@@ -453,7 +543,7 @@ add_filter( 'bizznis_attr_comment', 'bizznis_attributes_comment' );
 function bizznis_attributes_comment( $attributes ) {
 	$attributes['class']     	= '';
 	$attributes['itemprop']  	= 'comment';
-	$attributes['itemscope'] 	= 'itemscope';
+	$attributes['itemscope'] 	= true;
 	$attributes['itemtype']  	= 'http://schema.org/Comment';
 	
 	return $attributes;
@@ -467,7 +557,7 @@ function bizznis_attributes_comment( $attributes ) {
 add_filter( 'bizznis_attr_comment-author', 'bizznis_attributes_comment_author' );
 function bizznis_attributes_comment_author( $attributes ) {
 	$attributes['itemprop']  = 'author';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/Person';
 	
 	return $attributes;
@@ -543,7 +633,7 @@ function bizznis_attributes_comment_content( $attributes ) {
 add_filter( 'bizznis_attr_author-box', 'bizznis_attributes_author_box' );
 function bizznis_attributes_author_box( $attributes ) {
 	$attributes['itemprop']  	= 'author';
-	$attributes['itemscope'] 	= 'itemscope';
+	$attributes['itemscope'] 	= true;
 	$attributes['itemtype']  	= 'http://schema.org/Person';
 	
 	return $attributes;
@@ -559,7 +649,7 @@ function bizznis_attributes_sidebar_primary( $attributes ) {
 	$attributes['class']     	= 'sidebar sidebar-primary widget-area';
 	$attributes['role']      	= 'complementary';
 	$attributes['aria-label']	= __( 'Primary Sidebar', 'bizznis' );
-	$attributes['itemscope'] 	= 'itemscope';
+	$attributes['itemscope'] 	= true;
 	$attributes['itemtype']  	= 'http://schema.org/WPSideBar';
 	
 	return $attributes;
@@ -575,7 +665,7 @@ function bizznis_attributes_sidebar_secondary( $attributes ) {
 	$attributes['class']     	= 'sidebar sidebar-secondary widget-area';
 	$attributes['role']      	= 'complementary';
 	$attributes['aria-label']	= __( 'Secondary Sidebar', 'bizznis' );
-	$attributes['itemscope'] 	= 'itemscope';
+	$attributes['itemscope'] 	= true;
 	$attributes['itemtype']  	= 'http://schema.org/WPSideBar';
 	
 	return $attributes;
@@ -588,7 +678,7 @@ function bizznis_attributes_sidebar_secondary( $attributes ) {
  */
 add_filter( 'bizznis_attr_site-footer', 'bizznis_attributes_site_footer' );
 function bizznis_attributes_site_footer( $attributes ) {
-	$attributes['itemscope'] 	= 'itemscope';
+	$attributes['itemscope'] 	= true;
 	$attributes['itemtype']  	= 'http://schema.org/WPFooter';
 	
 	return $attributes;

@@ -223,13 +223,22 @@ function bizznis_site_title() {
 	if ( bizznis_get_option( 'hide_site_title' ) ) {
 		return;
 	}
+	
 	# Set what goes inside the wrapping tags
 	$inside = sprintf( '<a href="%s">%s</a>', trailingslashit( home_url() ), get_bloginfo( 'name' ) );
+	
 	# Determine which wrapping tags to use
-	$wrap = is_home() ? 'h1' : 'p';
+	$wrap = bizznis_is_root_page() ? 'h1' : 'p';
+
+	# A little fallback, in case an SEO plugin is active
+	$wrap = bizznis_is_root_page() ? 'h1' : $wrap;
+
+	# Apply filter
 	$wrap = apply_filters( 'bizznis_semantic_title_wrap', $wrap );
+	
 	# Build the title
 	$title  = sprintf( "<{$wrap} %s>", bizznis_attr( 'site-title' ) ). $inside ."</{$wrap}>";
+	
 	# Echo (filtered)
 	echo apply_filters( 'bizznis_seo_title', $title, $inside, $wrap );
 }
