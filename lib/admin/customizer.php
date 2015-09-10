@@ -100,6 +100,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'hide_tagline' 	      		=> 0,
 				'style_selection'			=> '',
 				'header_right'              => 0,
+				'nav_extras_responsive'		=> '',
 				'nav_extras'                => '',
 				'nav_extras_enable'         => 0,
 				'nav_extras_twitter_id'     => '',
@@ -134,7 +135,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 	 */
 	public function preview_scripts() {
 
-		wp_enqueue_script( 'bizznis_preview_customizer_js', BIZZNIS_ADMIN_JS_URL . '/customizer_preview.js', array( 'jquery', 'customize-preview' ), PARENT_THEME_VERSION, true );
+		wp_enqueue_script( 'bizznis_preview_customizer_js', BIZZNIS_ASSETS_JS_URL . '/customizer_preview.js', array( 'jquery', 'customize-preview' ), PARENT_THEME_VERSION, true );
 		
 	}
 
@@ -293,12 +294,21 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			'bizznis_menu_extras',
 			array(
 				'title'    => __( 'Menu Extras', 'bizznis' ),
-				'description' => __( 'Add extra features to primary menu.', 'bizznis' ),
+				'description' => __( 'Add extra features to navigation menus.', 'bizznis' ),
 				'priority' => $priority->add(),
 			)
 		);
 		
 		//* Add Settings
+		$wp_customize->add_setting(
+			$this->get_field_name( 'nav_extras_responsive' ),
+			array(
+				'default' => $this->get_default_value( 'nav_extras_responsive' ),
+				'type'    => 'option',
+				'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'no_html' ),
+			)
+		);
+		
 		$wp_customize->add_setting(
 			$this->get_field_name( 'nav_extras_enable' ),
 			array(
@@ -336,6 +346,25 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		);
 		
 		//* Add Controls
+		
+		$menus_get = get_registered_nav_menus();
+		$menus_select[''] = __( '- Select -', 'bizznis' );
+		$menus = $menus_select + $menus_get;
+		
+		if ( current_theme_supports( 'bizznis-responsive-menu' ) && $menus ) {
+			$wp_customize->add_control(
+				'nav_extras_responsive',
+				array(
+					'label'    => __( 'Make a Menu Responsive', 'bizznis' ),
+					'section'  => 'bizznis_menu_extras',
+					'settings' => $this->get_field_name( 'nav_extras_responsive' ),
+					'type'     => 'select',
+					'choices'  => $menus,
+					'priority' => $priority->add(),
+				)
+			);
+		}
+		
 		$wp_customize->add_control(
 			new Bizznis_Customize_Misc_Control(
 				$wp_customize,

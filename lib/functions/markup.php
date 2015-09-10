@@ -56,7 +56,7 @@ function bizznis_attr( $context, $attributes = array() ) {
  * Helper function for use as a filter for when you want to prevent a class from being automatically
  * generated and output on an element that is passed through the markup API.
  *
- * @since 1.2.7
+ * @since 1.3.0
  * @param array $attributes Existing attributes.
  * @return array Amended attributes.
  */
@@ -69,7 +69,7 @@ function bizznis_attributes_empty_class( $attributes ) {
 /**
  * Helper function for use as a filter for when you want to add screen-reader-text class to an element.
  *
- * @since 1.2.7
+ * @since 1.3.0
  * @param array $attributes Existing attributes.
  * @return array Amended attributes.
  */
@@ -297,7 +297,7 @@ function bizznis_attributes_content( $attributes ) {
 /**
  * Add attributes for taxonomy description.
  *
- * @since 1.2.7
+ * @since 1.3.0
  * @param array $attributes Existing attributes.
  * @return array Amended attributes.
  */
@@ -311,7 +311,7 @@ function bizznis_attributes_taxonomy_archive_description( $attributes ) {
 /**
  * Add attributes for author description.
  *
- * @since 1.2.7
+ * @since 1.3.0
  * @param array $attributes Existing attributes.
  * @return array Amended attributes.
  */
@@ -325,7 +325,7 @@ function bizznis_attributes_author_archive_description( $attributes ) {
 /**
  * Add attributes for date archive description.
  *
- * @since 1.2.7
+ * @since 1.3.0
  * @param array $attributes Existing attributes.
  * @return array Amended attributes.
  */
@@ -339,7 +339,7 @@ function bizznis_attributes_date_archive_description( $attributes ) {
 /**
  * Add attributes for posts page description.
  *
- * @since 1.2.7
+ * @since 1.3.0
  * @param array $attributes Existing attributes.
  * @return array Amended attributes.
  */

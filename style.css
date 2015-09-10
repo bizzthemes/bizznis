@@ -5,7 +5,7 @@ Description:		Professional WordPress Theme Platform. Built for large and small w
 License:			GPL version 3
 License URI:		http://gplv3.fsf.org/
 Branch:				1.0
-Version:			1.2.7
+Version:			1.3.0
 Author:				BizzThemes
 Author URI:			http://bizzthemes.com/
 Tags:				light, gray, white, one-column, two-columns, three-columns, right-sidebar, left-sidebar, responsive-layout, fluid-layout, custom-menu, featured-images, full-width-template, microformats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -1071,6 +1071,7 @@ img.alignright,
 	display: inline-block;
 	font-size: 16px;
 	font-size: 1.6rem;
+	position: relative;
 	text-align: left;
 }
 
@@ -1079,7 +1080,6 @@ img.alignright,
 	color: #333;
 	display: block;
 	padding: 30px 20px;
-	position: relative;
 }
 
 .menu-bizznis a:hover,
@@ -1130,6 +1130,7 @@ img.alignright,
 }
 
 .menu-bizznis .menu-item:hover,
+.menu-bizznis .menu-item:focus,
 .menu-bizznis .menu-item:hover:focus {
 	position: static;
 }
@@ -1152,7 +1153,8 @@ img.alignright,
 	position: static;
 }
 
-.menu-bizznis .menu-item > a:focus + ul.sub-menu {
+.menu-bizznis .menu-item > a:focus + ul.sub-menu,
+.menu-bizznis .menu-item.bizznis-hover > ul.sub-menu {
 	left: auto;
 	opacity: 1;
 }
@@ -1182,6 +1184,99 @@ img.alignright,
 .menu-bizznis .menu-item.sfHover > ul.sub-menu {
 	left: auto;
 	opacity: 1;
+}
+
+/* Mobile Menu
+-------------------- */
+
+@media only screen and (max-width: 768px) {
+	
+	.mobile-menu-icon {
+		cursor: pointer;
+		display: block;
+	}
+
+	.mobile-menu-icon::before {
+		content: "\00b7 \00b7 \00b7";
+		display: block;
+		font-size: 70px;
+		line-height: 0;
+		margin: 0 auto;
+		padding: 25px 0 30px;
+		text-align: center;
+	}
+	
+	.nav-responsive .menu-bizznis,
+	.nav-responsive .menu-bizznis-extra {
+		display: none;
+	}
+
+	.nav-mobile .menu-bizznis,
+	.nav-mobile .menu-item,
+	.nav-mobile .menu-bizznis-extra {
+		clear: both;
+		display: block;
+	}
+
+	.nav-responsive li a {
+		display: block;
+	}
+
+	.nav-responsive .menu-item:hover {
+		position: static;
+	}
+
+	.nav-responsive .menu-item:hover > .sub-menu {
+		left: 0;
+		margin-left: 0;
+	}
+
+	.nav-responsive .menu-item-has-children {
+		cursor: pointer;	
+	}
+	
+	.nav-responsive .menu-item-has-children > a:after {
+		content: '';
+	}
+
+	.nav-responsive .menu-bizznis > .menu-item-has-children:before {
+		content: "\25bc";
+		float: right;
+		font-size: 15px;
+		line-height: 1;
+		padding: 24px 18px;
+	}
+
+	.nav-responsive .menu-open.menu-item-has-children:before {
+		content: "\25b2";
+	}
+
+	.nav-responsive .menu-bizznis  > .menu-item > .sub-menu {
+		display: none;
+	}
+
+	.nav-responsive .menu-item:hover > .sub-menu > .menu-item:hover > .sub-menu,
+	.nav-responsive .sub-menu {
+		left: auto;
+		opacity: 1;
+		position: relative;
+		transition: opacity .4s ease-in-out;
+		width: 100%;
+		z-index: 99;
+	}
+
+	.nav-responsive .sub-menu li a,
+	.nav-responsive .sub-menu li a:hover,
+	.nav-responsive .sub-menu .sub-menu {
+		margin: 0;
+		position: relative;
+		width: 100%;
+	}
+	
+	.nav-bizznis .search input {
+		width: 100%;
+	}
+	
 }
 
 /* Primary Navigation

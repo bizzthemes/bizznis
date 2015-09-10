@@ -34,19 +34,20 @@ final class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.2.7' );
-		define( 'PARENT_THEME_BRANCH', 			'1.2' );
-		define( 'PARENT_DB_VERSION', 			'1270' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1441800000' ) );
+		define( 'PARENT_THEME_VERSION', 		'1.3.0' );
+		define( 'PARENT_THEME_BRANCH', 			'1.3' );
+		define( 'PARENT_DB_VERSION', 			'1300' );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1441886400' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
 		define( 'BIZZNIS_LIB_DIR', 				PARENT_DIR . 		'/lib' );
 		define( 'BIZZNIS_IMAGES_DIR', 			PARENT_DIR . 		'/images' );
 		define( 'BIZZNIS_ADMIN_DIR', 			BIZZNIS_LIB_DIR . 	'/admin' );
-		define( 'BIZZNIS_ADMIN_IMAGES_DIR', 	BIZZNIS_ADMIN_DIR . '/images' );
-		define( 'BIZZNIS_ADMIN_CSS_DIR', 		BIZZNIS_ADMIN_DIR . '/css' );
-		define( 'BIZZNIS_ADMIN_JS_DIR', 		BIZZNIS_ADMIN_DIR . '/js' );
+		define( 'BIZZNIS_ASSETS_DIR', 			BIZZNIS_LIB_DIR . 	'/assets' );
+		define( 'BIZZNIS_ASSETS_IMAGES_DIR', 	BIZZNIS_ASSETS_DIR . '/images' );
+		define( 'BIZZNIS_ASSETS_CSS_DIR', 		BIZZNIS_ASSETS_DIR . '/css' );
+		define( 'BIZZNIS_ASSETS_JS_DIR', 		BIZZNIS_ASSETS_DIR . '/js' );
 		define( 'BIZZNIS_CLASSES_DIR', 			BIZZNIS_LIB_DIR . 	'/classes' );
 		define( 'BIZZNIS_FUNCTIONS_DIR', 		BIZZNIS_LIB_DIR . 	'/functions' );
 		define( 'BIZZNIS_FRONTEND_DIR', 		BIZZNIS_LIB_DIR . 	'/frontend' );
@@ -61,9 +62,10 @@ final class Bizznis_Init {
 		define( 'BIZZNIS_LIB_URL', 				PARENT_URL . 		'/lib' );
 		define( 'BIZZNIS_IMAGES_URL', 			PARENT_URL . 		'/images' );
 		define( 'BIZZNIS_ADMIN_URL', 			BIZZNIS_LIB_URL . 	'/admin' );
-		define( 'BIZZNIS_ADMIN_IMAGES_URL', 	BIZZNIS_ADMIN_URL . '/images' );
-		define( 'BIZZNIS_ADMIN_CSS_URL', 		BIZZNIS_ADMIN_URL . '/css' );
-		define( 'BIZZNIS_ADMIN_JS_URL', 		BIZZNIS_ADMIN_URL . '/js' );
+		define( 'BIZZNIS_ASSETS_URL', 			BIZZNIS_LIB_URL . 	'/assets' );
+		define( 'BIZZNIS_ASSETS_IMAGES_URL', 	BIZZNIS_ASSETS_URL . '/images' );
+		define( 'BIZZNIS_ASSETS_CSS_URL', 		BIZZNIS_ASSETS_URL . '/css' );
+		define( 'BIZZNIS_ASSETS_JS_URL', 		BIZZNIS_ASSETS_URL . '/js' );
 		define( 'BIZZNIS_CLASSES_URL', 			BIZZNIS_LIB_URL . 	'/classes' );
 		define( 'BIZZNIS_FUNCTIONS_URL', 		BIZZNIS_LIB_URL . 	'/functions' );
 		define( 'BIZZNIS_SHORTCODES_URL', 		BIZZNIS_LIB_URL . 	'/shortcodes' );
@@ -107,6 +109,8 @@ final class Bizznis_Init {
 		) );
 	}
 	if ( ! is_child_theme() ) {
+		# Turn on responsive menus
+		add_theme_support( 'bizznis-responsive-menu' );
 		# Turn on custom header image / custom logo
 		add_theme_support( 'custom-header', array(
 			'header-selector'		=> '.site-header',

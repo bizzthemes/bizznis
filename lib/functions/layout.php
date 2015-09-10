@@ -21,7 +21,7 @@ function bizznis_register_layout( $id = '', $args = array() ) {
 	}
 	$defaults = array(
 		'label' => __( 'No Label Selected', 'bizznis' ),
-		'img'   => BIZZNIS_ADMIN_IMAGES_URL . '/layouts/none.png',
+		'img'   => BIZZNIS_ASSETS_IMAGES_URL . '/layouts/none.png',
 		'type'  => 'site',
 	);
 	$args = wp_parse_args( $args, $defaults );

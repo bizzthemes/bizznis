@@ -10,15 +10,16 @@
  *
  * @since 1.2.0
  *
- * @uses BIZZNIS_ADMIN_JS_URL
+ * @uses BIZZNIS_ASSETS_JS_URL
  * @uses PARENT_THEME_VERSION
  */
 add_action( 'wp_enqueue_scripts', 'bizznis_register_scripts' );
 function bizznis_register_scripts() {
 	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-	wp_register_script( 'skip-links',  BIZZNIS_ADMIN_JS_URL . "/skip-links.js" );
-	wp_register_script( 'drop-down-menu',  BIZZNIS_ADMIN_JS_URL . "/drop-down-menu.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
+	wp_register_script( 'skip-links',  BIZZNIS_ASSETS_JS_URL . "/skip-links.js" );
+	wp_register_script( 'drop-down-menu',  BIZZNIS_ASSETS_JS_URL . "/drop-down-menu.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
+	wp_register_script( 'responsive-menu',  BIZZNIS_ASSETS_JS_URL . "/responsive-menu.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
 }
 
 /**
@@ -32,9 +33,24 @@ function bizznis_load_scripts() {
 	if ( is_singular() && get_option( 'thread_comments' ) && comments_open() ) {
 		wp_enqueue_script( 'comment-reply' );		
 	}
-	# If accessibility support enabled
+	
+	# If accessibility support for 'skip-links' is enabled
 	if ( bizznis_a11y( 'skip-links' ) ) {
 		wp_enqueue_script( 'skip-links' );
+	}
+	
+	# If accessibility support for 'skip-links' is enabled
+	if ( bizznis_a11y( 'drop-down-menu' ) ) {
+		wp_enqueue_script( 'drop-down-menu' );
+	}
+	
+	# If responsive menu support is enabled
+	$responsive_menu = bizznis_get_option( 'nav_extras_responsive' );
+	if ( current_theme_supports( 'bizznis-responsive-menu' ) && ! empty( $responsive_menu ) ) {		
+		wp_enqueue_script( 'responsive-menu' );
+		wp_localize_script( 'responsive-menu', 'bizzmenuL10n', array(
+			'selector' => $responsive_menu,
+		) );
 	}
 }
 
@@ -46,7 +62,7 @@ function bizznis_load_scripts() {
  */
 add_action( 'wp_head', 'bizznis_html5_ie_fix' );
 function bizznis_html5_ie_fix() {
-	echo '<!--[if lt IE 9]><script src="' . BIZZNIS_ADMIN_JS_URL . '/html5shiv.js"></script><![endif]-->' . "\n";
+	echo '<!--[if lt IE 9]><script src="' . BIZZNIS_ASSETS_JS_URL . '/html5shiv.js"></script><![endif]-->' . "\n";
 }
 
 /**
@@ -68,7 +84,7 @@ function bizznis_load_admin_scripts( $hook_suffix ) {
  * @since 1.0.0
  */
 function bizznis_load_admin_js() {
-	wp_enqueue_script( 'bizznis_admin_js', BIZZNIS_ADMIN_JS_URL . '/admin.js', array( 'jquery' ), PARENT_THEME_VERSION, true );
+	wp_enqueue_script( 'bizznis_admin_js', BIZZNIS_ASSETS_JS_URL . '/admin.js', array( 'jquery' ), PARENT_THEME_VERSION, true );
 	# Strings
 	$strings = array(
 		'categoryChecklistToggle' => __( 'Select / Deselect All', 'bizznis' ),

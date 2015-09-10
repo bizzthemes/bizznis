@@ -33,5 +33,5 @@ function bizznis_enqueue_main_stylesheet() {
  */
 add_action( 'admin_print_styles', 'bizznis_load_admin_styles' );
 function bizznis_load_admin_styles() {
-	wp_enqueue_style( 'bizznis_admin_css', BIZZNIS_ADMIN_CSS_URL . '/admin.css', array(), PARENT_THEME_VERSION );
+	wp_enqueue_style( 'bizznis_admin_css', BIZZNIS_ASSETS_CSS_URL . '/admin.css', array(), PARENT_THEME_VERSION );
 }

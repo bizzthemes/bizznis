@@ -135,7 +135,7 @@ add_action( 'bizznis_loop', 'bizznis_do_posts_page_heading', 5 );
  *
  * If we're not on a posts page, then nothing extra is displayed.
  *
- * @since 1.2.7
+ * @since 1.3.0
  * @uses bizznis_a11y() Check if a post type should potentially support an archive setting page.
  * @uses bizznis_do_post_title() Get list of custom post types which need an archive settings page.
  * @return null Return early if not on relevant posts page.

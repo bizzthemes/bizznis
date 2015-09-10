@@ -14,7 +14,7 @@ add_action( 'bizznis_init', 'bizznis_create_initial_layouts', 0 );
 if ( ! function_exists( 'bizznis_create_initial_layouts' ) ) :
 function bizznis_create_initial_layouts() {
 	# Common path to default layout images
-	$url = BIZZNIS_ADMIN_IMAGES_URL . '/layouts/';
+	$url = BIZZNIS_ASSETS_IMAGES_URL . '/layouts/';
 	$layouts = apply_filters( 'bizznis_initial_layouts', array(
 		'content-sidebar' => array(
 			'label'   => __( 'Content-Sidebar', 'bizznis' ),

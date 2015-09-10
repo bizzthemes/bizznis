@@ -15,7 +15,7 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
-### 1.2.7
+### 1.3.0
 * Fixed issue with Schema.org microdata when using Blog template.
 * Add H1 to posts page when using static front page and theme supports a11y.
 * Better logic for generating H1 on front page
@@ -27,6 +27,12 @@ Changelog
 * Add boolean attribute option to markup API.
 * Pass archive title/description wrappers through markup API.
 * Remove a11y checks for titles that were previously output by default.
+* Added accesibility for menus by default
+* Moved all assets (images, css, js) to assets folder
+* Updated admin images for Bizznis branding
+* Updated HTML5 shiv file for old IE
+* Reponsive extra menu option with integrated 'bizznis-responsive-menu' support
+* Updated translations
 
 ### 1.2.6
 * Post meta support for custom post types
