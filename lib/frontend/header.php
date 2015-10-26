@@ -13,6 +13,10 @@ add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
  */
 if ( ! function_exists( 'bizznis_default_title' ) ) :
 function bizznis_default_title( $title, $sep, $seplocation ) {
+	# If viewing the feed
+	if ( is_feed() ) {
+		return $title;
+	}
 	# If viewing the root page
 	if ( bizznis_is_root_page() ) {
 		#* Determine the doctitle

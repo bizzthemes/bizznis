@@ -36,7 +36,7 @@ function get_the_content_limit( $max_characters, $more_link_text = '(more...)', 
 	$content = bizznis_truncate_phrase( $content, $max_characters );
 	# More link?
 	if ( $more_link_text ) {
-		$link   = apply_filters( 'get_the_content_more_link', sprintf( '&#x02026; <a href="%s" class="more-link">%s</a>', get_permalink(), bizznis_a11y_more_link( $more_link_text ) ), $more_link_text );
+		$link   = apply_filters( 'get_the_content_more_link', sprintf( '&#x02026; <a href="%s" class="more-link">%s</a>', get_permalink(), $more_link_text ), $more_link_text );
 		$output = sprintf( '<p>%s %s</p>', $content, $link );
 	} else {
 		$output = sprintf( '<p>%s</p>', $content );
@@ -54,7 +54,7 @@ function get_the_content_limit( $max_characters, $more_link_text = '(more...)', 
  * @return string $more_link_text with or withput the hidden title.
  */
 function bizznis_a11y_more_link( $more_link_text )  {
-	if ( bizznis_a11y() && ! empty( $more_link_text ) ) {
+	if ( bizznis_a11y( 'screen-reader-text' ) && ! empty( $more_link_text ) ) {
 		$more_link_text .= ' <span class="screen-reader-text">' . __( 'about ', 'bizznis' ) . get_the_title() . '</span>';
 	}
 	

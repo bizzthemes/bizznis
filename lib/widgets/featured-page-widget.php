@@ -128,10 +128,10 @@ class Bizznis_Featured_Page extends WP_Widget {
 					global $more;
 					$orig_more = $more;
 					$more = 0;
-					the_content( bizznis_a11y_more_link( $instance['more_text']  ) );
+					the_content( bizznis_a11y_more_link( $instance['more_text'] ) );
 					$more = $orig_more;
 				} else {
-					the_content_limit( (int) $instance['content_limit'], esc_html( $instance['more_text'] ) );
+					the_content_limit( (int) $instance['content_limit'], bizznis_a11y_more_link( esc_html( $instance['more_text'] ) ) );
 				}
 				echo '</div>';
 			}

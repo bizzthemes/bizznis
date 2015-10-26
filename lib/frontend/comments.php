@@ -17,13 +17,12 @@ function bizznis_get_comments_template() {
 	if ( ! post_type_supports( get_post_type(), 'comments' ) ) {
 		return;
 	}
+	
 	if ( is_singular() && ! in_array( get_post_type(), array( 'post', 'page' ) ) ) {
 		comments_template( '', true );
-	}
-	elseif ( is_singular( 'post' ) && ( bizznis_get_option( 'trackbacks_posts' ) || bizznis_get_option( 'comments_posts' ) ) ) {
+	} elseif ( is_singular( 'post' ) && ( bizznis_get_option( 'trackbacks_posts' ) || bizznis_get_option( 'comments_posts' ) ) ) {
 		comments_template( '', true );
-	}
-	elseif ( is_singular( 'page' ) && ( bizznis_get_option( 'trackbacks_pages' ) || bizznis_get_option( 'comments_pages' ) ) ) {
+	} elseif ( is_singular( 'page' ) && ( bizznis_get_option( 'trackbacks_pages' ) || bizznis_get_option( 'comments_pages' ) ) ) {
 		comments_template( '', true );
 	}
 }
@@ -38,10 +37,12 @@ add_action( 'bizznis_comments', 'bizznis_do_comments', 5 );
 if ( ! function_exists( 'bizznis_do_comments' ) ) :
 function bizznis_do_comments() {
 	global $wp_query;
+	
 	# Stop here if comments are off for this post type
 	if ( ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) || ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) ) {
 		return;
 	}
+	
 	if ( have_comments() && ! empty( $wp_query->comments_by_type['comment'] ) ) {
 		printf( '<div %s>', bizznis_attr( 'entry-comments' ) );
 		echo apply_filters( 'bizznis_title_comments', __( '<h3>Comments</h3>', 'bizznis' ) );
@@ -78,6 +79,7 @@ add_action( 'bizznis_comments', 'bizznis_do_pings', 10 );
 if ( ! function_exists( 'bizznis_do_pings' ) ) :
 function bizznis_do_pings() {
 	global $wp_query;
+	
 	# If have pings
 	if ( have_comments() && !empty( $wp_query->comments_by_type['pings'] ) ) {
 		printf( '<div %s>', bizznis_attr( 'entry-pings' ) );
@@ -104,6 +106,7 @@ function bizznis_default_list_pings() {
 	$args = apply_filters( 'bizznis_ping_list_args', array(
 		'type' => 'pings',
 	) );
+	
 	wp_list_comments( $args );
 }
 endif;
@@ -123,6 +126,7 @@ function bizznis_default_list_comments() {
 		'callback'    => 'bizznis_comment_callback',
 	);
 	$args = apply_filters( 'bizznis_comment_list_args', $defaults );
+	
 	wp_list_comments( $args );
 }
 endif;
@@ -164,6 +168,7 @@ function bizznis_comment_callback( $comment, array $args, $depth ) {
 						$comment_author_says_text = '<span class="says">' . $comment_author_says_text . '</span>';
 					}
 					printf( '<span itemprop="name">%s</span> %s', $author, $comment_author_says_text );
+					edit_comment_link( __( '(Edit)', 'bizznis' ), ' ' );
 					?>
 				</p>
 				<?php
@@ -183,7 +188,6 @@ function bizznis_comment_callback( $comment, array $args, $depth ) {
 					echo    esc_html( get_comment_date() ) . ' ' . __( 'at', 'bizznis' ) . ' ' . esc_html( get_comment_time() );
 					echo    '</a></time></p>';
 				}
-				edit_comment_link( __( '(Edit)', 'bizznis' ), ' ' );
 				?>
 			</header>
 			<div <?php echo bizznis_attr( 'comment-content' ); ?>>
@@ -231,6 +235,7 @@ function bizznis_do_comment_form() {
 	if ( ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) || ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) ) {
 		return;
 	}
+	
 	comment_form( array( 'format' => 'html5' ) );
 }
 endif;
@@ -244,6 +249,7 @@ endif;
 if ( ! function_exists( 'bizznis_comment_form_args' ) ) :
 function bizznis_comment_form_args( array $defaults ) {
 	global $user_identity;
+	
 	$commenter = wp_get_current_commenter();
 	$req       = get_option( 'require_name_email' );
 	$aria_req  = ( $req ? ' aria-required="true"' : '' );
@@ -277,8 +283,10 @@ function bizznis_comment_form_args( array $defaults ) {
 			'url'    => $url,
 		),
 	);
+	
 	# Merge $args with $defaults
 	$args = wp_parse_args( $args, $defaults );
+	
 	# Return filterable array of $args, along with other optional variables
 	return apply_filters( 'bizznis_comment_form_args', $args, $user_identity, get_the_ID(), $commenter, $req, $aria_req );
 }
@@ -295,6 +303,7 @@ function bizznis_comments_link_filter( $link, $post_id ) {
 	if ( 0 == get_comments_number() ) {
 		return get_permalink( $post_id ) . '#respond';
 	}
+	
 	return $link;
 }
 endif;

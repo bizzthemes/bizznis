@@ -64,7 +64,7 @@ add_action( 'bizznis_header_top', 'bizznis_do_nav' );
 if ( ! function_exists( 'bizznis_do_nav' ) ) :
 function bizznis_do_nav() {
 	# Do nothing if menu not supported
-	if ( ! bizznis_nav_menu_supported( 'primary' ) ) {
+	if ( ! bizznis_nav_menu_supported( 'primary' ) || ! has_nav_menu( 'primary' ) ) {
 		return;
 	}
 	$class = 'menu menu-bizznis menu-primary';
@@ -92,7 +92,7 @@ add_action( 'bizznis_header_bottom', 'bizznis_do_subnav' );
 if ( ! function_exists( 'bizznis_do_subnav' ) ) :
 function bizznis_do_subnav() {
 	# Do nothing if menu not supported
-	if ( ! bizznis_nav_menu_supported( 'secondary' ) ) {
+	if ( ! bizznis_nav_menu_supported( 'secondary' ) || ! has_nav_menu( 'secondary' ) ) {
 		return;
 	}
 	$class = 'menu menu-bizznis menu-secondary';

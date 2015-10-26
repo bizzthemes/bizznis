@@ -13,15 +13,18 @@
 function bizznis_get_option( $key, $setting = null, $use_cache = true ) {	
 	# The default is set here, so it doesn't have to be repeated in the function arguments for bizznis_option() too.
 	$setting = $setting ? $setting : BIZZNIS_SETTINGS_FIELD;
+	
 	# Allow child theme to short-circuit this function
 	$pre = apply_filters( "bizznis_pre_get_option_{$key}", null, $setting );
 	if ( null !== $pre ) {
 		return $pre;
 	}
+	
 	# Bypass cache if viewing site in customizer
 	if ( bizznis_is_customizer() ) {
 		$use_cache = false;
 	}
+	
 	# If we need to bypass the cache
 	if ( ! $use_cache ) {
 		$options = get_option( $setting );
@@ -30,14 +33,17 @@ function bizznis_get_option( $key, $setting = null, $use_cache = true ) {
 		}
 		return is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
 	}
+	
 	# Setup caches
 	static $settings_cache = array();
 	static $options_cache  = array();
+	
 	# Check options cache
 	if ( isset( $options_cache[$setting][$key] ) ) {
 		# Option has been cached
 		return $options_cache[$setting][$key];
 	}
+	
 	# Check settings cache
 	if ( isset( $settings_cache[$setting] ) ) {
 		# Setting has been cached
@@ -47,6 +53,7 @@ function bizznis_get_option( $key, $setting = null, $use_cache = true ) {
 		# Set value and cache setting
 		$options = $settings_cache[$setting] = apply_filters( 'bizznis_options', get_option( $setting ), $setting );
 	}
+	
 	# Check for non-existent option
 	if ( ! is_array( $options ) || ! array_key_exists( $key, (array) $options ) ) {
 		# Cache non-existent option
@@ -56,6 +63,7 @@ function bizznis_get_option( $key, $setting = null, $use_cache = true ) {
 		# Option has not been previously been cached, so cache now
 		$options_cache[$setting][$key] = is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
 	}
+	
 	return $options_cache[$setting][$key];
 }
 
@@ -117,10 +125,12 @@ function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
 	if ( ! empty( $deprecated ) ) {
 		_deprecated_argument( __FUNCTION__, '1.1.0' );
 	}
+	
 	# Verify the nonce
 	if ( ! isset( $_POST[ $nonce_name ] ) || ! wp_verify_nonce( $_POST[ $nonce_name ], $nonce_action ) ) {
 		return;
 	}
+	
 	# Don't try to save the data under autosave, ajax, or future post.
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
@@ -131,10 +141,19 @@ function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
 	if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
 		return;
 	}
+	
+	# Grab the post object
+	if ( ! is_null( $deprecated ) ) {
+		$post = get_post( $deprecated );
+	} else {
+		$post = get_post( $post );
+	}
+	
 	# Don't save if WP is creating a revision (same as DOING_AUTOSAVE?)
 	if ( 'revision' == get_post_type( $post ) ) {
 		return;
 	}
+	
 	# Check that the user is allowed to edit the post
 	if ( ! current_user_can( 'edit_post', $post->ID ) ) {
 		return;

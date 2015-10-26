@@ -161,10 +161,12 @@ function bizznis_do_post_title() {
 	$wrap = is_singular() ? 'h1' : 'h2';
 	# Also, if HTML5 with semantic headings, wrap in H1
 	$wrap = apply_filters( 'bizznis_entry_header_wrap', $wrap );
+	
 	# Build the output
 	$output = sprintf( "<{$wrap} %s>", bizznis_attr( 'entry-title' ) );
 	$output .= "{$title}";
 	$output .= "</{$wrap}>";
+	
 	echo apply_filters( 'bizznis_post_title_output', "$output \n" );
 }
 endif;
@@ -222,7 +224,7 @@ function bizznis_do_post_content() {
 			the_content_limit( (int) bizznis_get_option( 'content_archive_limit' ), __( '[Read more...]', 'bizznis' ) );
 		}
 		else {
-			the_content( __( '[Read more...]', 'bizznis' ) );
+			the_content( bizznis_a11y_more_link(__( '[Read more...]', 'bizznis' ) ) );
 		}
 	}
 }
@@ -393,7 +395,7 @@ function bizznis_author_box( $context = '', $echo = true ) {
 	$title = apply_filters( 'bizznis_author_box_title', $title, $context );
 	if ( 'single' === $context ) {
 		$heading_element = 'h4';
-	} elseif ( bizznis_a11y( 'headings' ) ) {
+	} elseif ( bizznis_a11y( 'headings' ) || get_the_author_meta( 'headline', (int) get_query_var( 'author' ) ) ) {
 		$heading_element = 'h4';
 	} else {
 		$heading_element = 'h1';
@@ -503,7 +505,7 @@ function bizznis_numeric_posts_nav() {
 		$links[] = $paged + 1;
 	}
 	printf( '<nav %s>', bizznis_attr( 'archive-pagination' ) );
-	$before_number = bizznis_a11y() ? '<span class="screen-reader-text">' . __( 'Page ', 'bizznis' ) .  '</span>' : '';
+	$before_number = bizznis_a11y( 'screen-reader-text' ) ? '<span class="screen-reader-text">' . __( 'Page ', 'bizznis' ) .  '</span>' : '';
 	echo '<ul>';
 	# Previous Post Link
 	if ( get_previous_posts_link() ) {
@@ -514,7 +516,7 @@ function bizznis_numeric_posts_nav() {
 		$class = 1 == $paged ? ' class="active"' : '';
 		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), $before_number . '1' );
 		if ( ! in_array( 2, $links ) ) {
-			echo '<li class="pagination-omission">&#x02026;</li>';
+			echo '<li class="pagination-omission">&#x02026;</li>' . "\n";
 		}
 	}
 	# Link to current page, plus 2 pages in either direction if necessary

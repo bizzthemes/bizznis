@@ -91,3 +91,33 @@ if ( ! function_exists( '_wp_render_title_tag' ) ) :
 		?><title><?php wp_title( '' ); ?></title><?php
 	}
 endif;
+
+/**
+ * Deprecated. Output the title, wrapped in title tags.
+ *
+ * @since 1.0.0
+ * @deprecated 1.3.1
+ */
+add_action( 'wp_head', 'deprecated_footer_creds_text_filter' );
+function deprecated_footer_creds_text_filter() {
+	if ( has_filter( 'bizznis_footer_creds_text', 'company_add_back_to_top' ) ) {
+		remove_action( 'bizznis_footer_inner', 'bizznis_footer_credits' );
+		add_action( 'bizznis_footer_inner', 'do_bizznis_footer_creds_text' );
+		add_filter( 'bizznis_footer_creds_text', 'do_shortcode', 20 );
+	}
+}
+
+function do_bizznis_footer_creds_text() {
+	# Build the text strings. Includes shortcodes
+	$backtotop_text = '[footer_backtotop]';
+	$creds_text     = sprintf( '<p>[footer_copyright before="%s "] &#x000B7; [footer_childtheme_link before="" after=""] [footer_bizzthemes_link url="http://www.bizzthemes.com/" before="%s "] &#x000B7; [footer_wordpress_link] &#x000B7; [footer_loginout]</p>', __( 'Copyright', 'bizznis' ), __( 'by', 'bizznis' ) );
+	# Filter the text strings
+	$creds_text     = apply_filters( 'bizznis_footer_creds_text', $creds_text, $backtotop_text );
+	# Build output
+	$output = sprintf( '<div %s>', bizznis_attr( 'footer-creds' ) );
+	$output .= bizznis_wrapper( 'footer-creds-wrapper', 'open', false ); #wrapper
+	$output .= $creds_text;
+	$output .= bizznis_wrapper( 'footer-creds-wrapper', 'close', false ); #wrapper
+	$output .= '</div>';
+	echo $output;
+}

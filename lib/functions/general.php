@@ -189,10 +189,10 @@ function bizznis_get_global_post_type_name( $post_type_name = '' ) {
  *
  * @return bool True if current theme supports bizznis-accessibility, or an specific feature of it, false otherwise.
  */
-function bizznis_a11y( $arg = '' ) {
+function bizznis_a11y( $arg = 'screen-reader-text' ) {
 	$feature = 'bizznis-accessibility';
 	# No args
-	if ( empty( $arg ) ) {
+	if ( 'screen-reader-text' === $arg ) {
 		return current_theme_supports( $feature );
 	}
 	# Get accessibility theme support
@@ -201,9 +201,9 @@ function bizznis_a11y( $arg = '' ) {
 	if ( ! $support ) {
 		return false;
 	}
-	# No args passed in to add_theme_support(), so accept all.
+	# No args passed in to add_theme_support(), so accept none.
 	if ( ! isset( $support[0] ) ) {
-		return true;
+		return false;
 	}
 	
 	# Support for specific arg found.
