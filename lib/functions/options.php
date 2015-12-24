@@ -97,15 +97,21 @@ function bizznis_custom_field( $field, $output_pattern = '%s' ) {
  * @return string|boolean Return value or empty string on failure.
  */
 function bizznis_get_custom_field( $field ) {
-	if ( null === get_the_ID() ) {
+	
+	//* Use get_the_ID() if no $post_id is specified
+	$post_id = empty( $post_id ) ? get_the_ID() : $post_id;
+
+	if ( ! $post_id ) {
 		return '';
 	}
+	
 	$custom_field = get_post_meta( ( is_admin() ? get_the_ID() : get_queried_object_id() ), $field, true );
+	
 	if ( ! $custom_field ) {
 		return '';
 	}
 	
-	# Return custom field, slashes stripped, sanitized if string
+	//* Return custom field, slashes stripped, sanitized if string
 	return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
 }
 

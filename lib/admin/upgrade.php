@@ -41,23 +41,23 @@ function bizznis_upgrade() {
 		update_option( BIZZNIS_SETTINGS_FIELD, $settings );
 	}
 	*/
-	# UPDATE DB TO VERSION 1310
-	if ( bizznis_get_option( 'db_version', null, false ) < '1310' ) {
-		bizznis_upgrade_1310();
+	# UPDATE DB TO VERSION 1320
+	if ( bizznis_get_option( 'db_version', null, false ) < '1320' ) {
+		bizznis_upgrade_1320();
 	}
 	do_action( 'bizznis_upgrade' );
 }
 
 /**
- * Upgrade the database to version 1310.
+ * Upgrade the database to version 1320.
  *
  * @since 1.0.0
  */
-function bizznis_upgrade_1310() {
+function bizznis_upgrade_1320() {
 	# Update Settings
 	bizznis_update_settings( array(
-		'theme_version' => '1.3.1',
-		'db_version'    => '1310',
+		'theme_version' => '1.3.2',
+		'db_version'    => '1320',
 	) );
 }
 

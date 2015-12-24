@@ -15,9 +15,9 @@ if ( ! function_exists( 'bizznis_register_default_widget_areas' ) ) :
 function bizznis_register_default_widget_areas() {
 
 	//* Temporarily register placeholder widget areas, so that child themes can unregister directly in functions.php.
-	bizznis_register_widget_area( array( 'id' => 'header-aside' ) );
 	bizznis_register_widget_area( array( 'id' => 'sidebar' ) );
 	bizznis_register_widget_area( array( 'id' => 'sidebar-alt' ) );
+	bizznis_register_widget_area( array( 'id' => 'header-aside' ) );
 
 	//* Call all final widget area registration after themes setup, so text can be translated.
 	add_action( 'after_setup_theme', '_bizznis_register_default_widget_areas_cb' );

@@ -18,11 +18,7 @@ function bizznis_get_comments_template() {
 		return;
 	}
 	
-	if ( is_singular() && ! in_array( get_post_type(), array( 'post', 'page' ) ) ) {
-		comments_template( '', true );
-	} elseif ( is_singular( 'post' ) && ( bizznis_get_option( 'trackbacks_posts' ) || bizznis_get_option( 'comments_posts' ) ) ) {
-		comments_template( '', true );
-	} elseif ( is_singular( 'page' ) && ( bizznis_get_option( 'trackbacks_pages' ) || bizznis_get_option( 'comments_pages' ) ) ) {
+	if ( is_singular() ) {
 		comments_template( '', true );
 	}
 }
@@ -37,11 +33,6 @@ add_action( 'bizznis_comments', 'bizznis_do_comments', 5 );
 if ( ! function_exists( 'bizznis_do_comments' ) ) :
 function bizznis_do_comments() {
 	global $wp_query;
-	
-	# Stop here if comments are off for this post type
-	if ( ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) || ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) ) {
-		return;
-	}
 	
 	if ( have_comments() && ! empty( $wp_query->comments_by_type['comment'] ) ) {
 		printf( '<div %s>', bizznis_attr( 'entry-comments' ) );
@@ -79,6 +70,11 @@ add_action( 'bizznis_comments', 'bizznis_do_pings', 10 );
 if ( ! function_exists( 'bizznis_do_pings' ) ) :
 function bizznis_do_pings() {
 	global $wp_query;
+		
+	# Stop here if pings are off
+	if ( get_option( 'default_ping_status' ) === 'closed' ) {
+		return;
+	}
 	
 	# If have pings
 	if ( have_comments() && !empty( $wp_query->comments_by_type['pings'] ) ) {

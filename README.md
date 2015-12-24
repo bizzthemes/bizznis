@@ -15,6 +15,14 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.3.2
+* Feature - Responsive options metaboxe tables
+* Tweak - Breadcrumbs options labels
+* Tweak - Posts pagination rel
+* Tweak - Comments now controlled by WP core options only
+* Tweak - Moved header aside widget area after Primary Sidebar
+* Fix - Options saving
+
 ### 1.3.0
 * Fixed issue with Schema.org microdata when using Blog template.
 * Add H1 to posts page when using static front page and theme supports a11y.

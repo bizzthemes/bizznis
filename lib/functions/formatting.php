@@ -204,7 +204,7 @@ function bizznis_human_time_diff( $older_date, $newer_date = false ) {
 	if ( $ii < $j ) {
 		$seconds2 = $units[$ii][0];
 		# Check if this second unit has a value > 0
-		if ( ( $count2 = floor( ( $since - ( $seconds * $count ) ) / $seconds2 ) ) != 0 ) {
+		if ( ( $count2 = (int) floor( ( $since - ( $seconds * $count ) ) / $seconds2 ) ) !== 0 ) {
 			# Add translated separator string, and translated unit string
 			$output .= sprintf( ' %s ' . translate_nooped_plural( $units[$ii][1], $count2, 'bizznis' ),	_x( 'and', 'separator in time difference', 'bizznis' ),	$count2	);
 		}

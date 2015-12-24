@@ -83,7 +83,7 @@ add_filter( 'post_class', 'bizznis_featured_image_post_class' );
 if ( ! function_exists( 'bizznis_featured_image_post_class' ) ) :
 function bizznis_featured_image_post_class( $classes ) {
     $image = bizznis_get_image();
-    if ( $image && ! in_array( 'has-post-thumbnail', $classes ) ) {
+	if ( $image && ! is_singular() && bizznis_get_option( 'content_archive_thumbnail' ) && ! in_array( 'has-post-thumbnail', $classes ) ) {
         $classes[] = 'has-post-thumbnail';
     }
 

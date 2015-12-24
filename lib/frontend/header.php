@@ -115,7 +115,7 @@ function bizznis_paged_rel() {
 	if ( ! is_singular() ) {
 
 		$prev = $paged > 1 ? get_previous_posts_page_link() : $prev;
-		$next = $paged < $wp_query->max_num_pages ? get_next_posts_page_link() : $next;
+		$next = $paged < $wp_query->max_num_pages ? get_next_posts_page_link( $wp_query->max_num_pages ) : $next;
 
 	} else {
 
@@ -281,6 +281,7 @@ add_action( 'bizznis_after_site_title', 'bizznis_header_widget_area' );
 if ( ! function_exists( 'bizznis_header_widget_area' ) ) :
 function bizznis_header_widget_area() {
 	global $wp_registered_sidebars;
+	
 	if ( ( isset( $wp_registered_sidebars['header-aside'] ) && is_active_sidebar( 'header-aside' ) ) || has_action( 'bizznis_header_aside' ) ) {
 		printf( '<div %s>', bizznis_attr( 'header-aside-area', array( 'class' => 'header-aside-area widget-area' ) ) );
 			echo bizznis_sidebar_title( 'header-aside' );

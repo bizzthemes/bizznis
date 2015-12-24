@@ -148,7 +148,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		$this->layout( $wp_customize );
 		$this->menu_extras( $wp_customize );
 		$this->breadcrumbs( $wp_customize );
-		$this->comments( $wp_customize );
 		$this->archives( $wp_customize );
 		$this->header( $wp_customize );
 		$this->background( $wp_customize );
@@ -455,14 +454,26 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			'breadcrumb_home'       => __( 'Breadcrumbs on Homepage', 'bizznis' ),
 			'breadcrumb_front_page' => __( 'Breadcrumbs on Front Page', 'bizznis' ),
 			'breadcrumb_posts_page' => __( 'Breadcrumbs on Posts Page', 'bizznis' ),
-			'breadcrumb_single'     => __( 'Breadcrumbs on Single', 'bizznis' ),
-			'breadcrumb_page'       => __( 'Breadcrumbs on Page', 'bizznis' ),
-			'breadcrumb_archive'    => __( 'Breadcrumbs on Archive', 'bizznis' ),
+			'breadcrumb_single'     => __( 'Breadcrumbs on Single Posts', 'bizznis' ),
+			'breadcrumb_page'       => __( 'Breadcrumbs on Pages', 'bizznis' ),
+			'breadcrumb_archive'    => __( 'Breadcrumbs on Archives', 'bizznis' ),
 			'breadcrumb_404'        => __( 'Breadcrumbs on 404 Page', 'bizznis' ),
 			'breadcrumb_attachment' => __( 'Breadcrumbs on Attachment/Media', 'bizznis' ),
 		);
 
 		foreach ( $settings as $setting => $label ) {
+			
+			if ( 'breadcrumb_front_page' == $setting || 'breadcrumb_posts_page' == $setting ) {
+				if ( 'page' !== get_option( 'show_on_front' ) ) {
+					continue;
+				}
+			}
+
+			if ( 'breadcrumb_home' == $setting ) {
+				if ( 'page' === get_option( 'show_on_front' ) ) {
+					continue;
+				}
+			}
 			
 			$wp_customize->add_setting(
 				$this->get_field_name( $setting ),
@@ -478,53 +489,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				array(
 					'label'    => $label,
 					'section'  => 'bizznis_breadcrumbs',
-					'settings' => $this->get_field_name( $setting ),
-					'type'     => 'checkbox',
-					'priority' => $priority->add(),
-				)
-			);
-
-		}
-
-	}
-
-	private function comments( $wp_customize ) {
-
-		//* Setting the priority
-		$priority = new Bizznis_Prioritizer();
-		
-		$wp_customize->add_section(
-			'bizznis_comments',
-			array(
-				'title'    => __( 'Comments', 'bizznis' ),
-				'description' => __( 'Enable or disable comments and trackbacks site-wide. You can selectively disable comments and trackbacks when editing individual posts.', 'bizznis' ),
-				'priority' => $priority->add(),
-			)
-		);
-		
-		$settings = array(
-			'comments_posts' => __( 'Enable Comments on Posts?', 'bizznis' ),
-			'comments_pages' => __( 'Enable Comments on Pages?', 'bizznis' ),
-			'trackbacks_posts' => __( 'Enable Trackbacks on Posts?', 'bizznis' ),
-			'trackbacks_pages' => __( 'Enable Trackbacks on Pages?', 'bizznis' ),
-		);
-
-		foreach ( $settings as $setting => $label ) {
-
-			$wp_customize->add_setting(
-				$this->get_field_name( $setting ),
-				array(
-					'default' => $this->get_default_value( $setting ),
-					'type'    => 'option',
-					'sanitize_callback' => array( 'Bizznis_Settings_Sanitizer', 'one_zero' ),
-				)
-			);
-
-			$wp_customize->add_control(
-				'bizznis_' . $setting,
-				array(
-					'label'    => $label,
-					'section'  => 'bizznis_comments',
 					'settings' => $this->get_field_name( $setting ),
 					'type'     => 'checkbox',
 					'priority' => $priority->add(),
