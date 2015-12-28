@@ -218,7 +218,7 @@ function bizznis_post_comments_shortcode( $atts ) {
 		'zero'        => __( 'Leave a Comment', 'bizznis' ),
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_comments' );
-	if ( ( ! bizznis_get_option( 'comments_posts' ) || ! comments_open() ) && 'enabled' === $atts['hide_if_off'] ) {
+	if ( ( ! comments_open() ) && 'enabled' === $atts['hide_if_off'] ) {
 		return;
 	}
 	# Darn you, WordPress!

@@ -15,6 +15,9 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.3.3
+* Fix - Commments not displaying
+
 ### 1.3.2
 * Feature - Responsive options metaboxe tables
 * Tweak - Breadcrumbs options labels

@@ -227,11 +227,6 @@ add_action( 'bizznis_comments', 'bizznis_do_comment_form', 15 );
  */
 if ( ! function_exists( 'bizznis_do_comment_form' ) ) :
 function bizznis_do_comment_form() {
-	# Stop here if comments are closed for this post type
-	if ( ( is_page() && ! bizznis_get_option( 'comments_pages' ) ) || ( is_single() && ! bizznis_get_option( 'comments_posts' ) ) ) {
-		return;
-	}
-	
 	comment_form( array( 'format' => 'html5' ) );
 }
 endif;
