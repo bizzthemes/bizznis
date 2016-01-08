@@ -6,6 +6,30 @@
 */
 
 /**
+ * Term meta defaults.
+ *
+ * @since 1.3.4
+ *
+ * @return array Array of default term meta.
+ */
+function bizznis_term_meta_defaults() {
+
+	return apply_filters( 'bizznis_term_meta_defaults', array(		
+		'headline'            => '',
+		'intro_text'          => '',
+		'display_title'       => 0, //* vestigial
+		'display_description' => 0, //* vestigial
+		'doctitle'            => '',
+		'description'         => '',
+		'layout'              => '',
+		'noindex'             => 0,
+		'nofollow'            => 0,
+		'noarchive'           => 0,
+	) );
+
+}
+
+/**
  * Loop through the custom taxonomies and add the archive options to each custom taxonomy edit screen.
  *
  * @since 1.0.0
@@ -31,14 +55,14 @@ function bizznis_taxonomy_archive_options( $tag, $taxonomy ) {
 			<tr class="form-field">
 				<th scope="row"><label for="bizznis-meta[headline]"><?php _e( 'Archive Headline', 'bizznis' ); ?></label></th>
 				<td>
-					<input id="bizznis-meta[headline]" name="bizznis-meta[headline]" type="text" value="<?php echo esc_attr( $tag->meta['headline'] ); ?>" size="40" />
+					<input name="bizznis-meta[headline]" id="bizznis-meta[headline]" type="text" value="<?php echo esc_attr( get_term_meta( $tag->term_id, 'headline', true ) ); ?>" size="40" />
 					<p class="description"><?php _e( 'Leave empty if you do not want to display a headline.', 'bizznis' ); ?></p>
 				</td>
 			</tr>
 			<tr class="form-field">
 				<th scope="row"><label for="bizznis-meta[intro_text]"><?php _e( 'Archive Intro Text', 'bizznis' ); ?></label></th>
 				<td>
-					<textarea id="bizznis-meta[intro_text]" name="bizznis-meta[intro_text]" rows="3" cols="50" class="large-text"><?php echo esc_textarea( $tag->meta['intro_text'] ); ?></textarea>
+					<textarea name="bizznis-meta[intro_text]" id="bizznis-meta[intro_text]" rows="3" cols="50" class="large-text"><?php echo esc_textarea( get_term_meta( $tag->term_id, 'intro_text', true ) ); ?></textarea>
 					<p class="description"><?php _e( 'Leave empty if you do not want to display any intro text.', 'bizznis' ); ?></p>
 				</td>
 			</tr>
@@ -77,7 +101,7 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 					<fieldset class="bizznis-layout-selector">
 						<legend class="screen-reader-text"><?php _e( 'Choose Layout', 'bizznis' ); ?></legend>
 						<p><input type="radio" class="default-layout" name="bizznis-meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> /> <label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
-						<?php bizznis_layout_selector( array( 'name' => 'bizznis-meta[layout]', 'selected' => $tag->meta['layout'], 'type' => 'site' ) ); ?>
+						<?php bizznis_layout_selector( array( 'name' => 'bizznis-meta[layout]', 'selected' => get_term_meta( $tag->term_id, 'layout', true ), 'type' => 'site' ) ); ?>
 					</fieldset>
 				</td>
 			</tr>
@@ -97,24 +121,22 @@ function bizznis_get_term_filter( $term, $taxonomy ) {
 	if ( ! is_object( $term ) ) {
 		return $term;
 	}
+	
 	//* Do nothing, if called in the context of creating a term via an ajax call
 	if ( did_action( 'wp_ajax_add-tag' ) ) {
 		return $term;
 	}
-	$db = get_option( 'bizznis-term-meta' );
-	$term_meta = isset( $db[$term->term_id] ) ? $db[$term->term_id] : array();
-	$term->meta = wp_parse_args( $term_meta, apply_filters( 'bizznis_term_meta_defaults', array(
-		'headline'            => '',
-		'intro_text'          => '',
-		'display_title'       => 0, //* vestigial
-		'display_description' => 0, //* vestigial
-		'doctitle'            => '',
-		'description'         => '',
-		'layout'              => '',
-		'noindex'             => 0,
-		'nofollow'            => 0,
-		'noarchive'           => 0,
-	) ) );
+	
+	//* Pull all meta for this term ID
+	$term_meta = get_term_meta( $term->term_id );
+	
+	//* Convert array values to string
+	foreach ( $term_meta as $key => $value ) {
+		$term_meta[ $key ] = $value[0];
+	}
+	
+	$term->meta = wp_parse_args( $term_meta, bizznis_term_meta_defaults() );
+	
 	# Sanitize term meta
 	foreach ( $term->meta as $field => $value ) {
 		if ( is_array( $value ) ) {
@@ -138,6 +160,7 @@ function bizznis_get_term_filter( $term, $taxonomy ) {
 
 	}
 	$term->meta = apply_filters( 'bizznis_term_meta', $term->meta, $term, $taxonomy );
+	
 	return $term;
 }
 
@@ -151,6 +174,7 @@ function bizznis_get_terms_filter( array $terms, $taxonomy ) {
 	foreach( $terms as $term ) {
 		$term = bizznis_get_term_filter( $term, $taxonomy );
 	}
+	
 	return $terms;
 }
 
@@ -164,12 +188,18 @@ function bizznis_term_meta_save( $term_id, $tt_id ) {
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		return;
 	}
-	$term_meta = (array) get_option( 'bizznis-term-meta' );
-	$term_meta[$term_id] = isset( $_POST['bizznis-meta'] ) ? (array) $_POST['bizznis-meta'] : array();
-	if ( ! current_user_can( 'unfiltered_html' ) && isset( $term_meta[$term_id]['archive_description'] ) ) {
-		$term_meta[$term_id]['archive_description'] = bizznis_formatting_kses( $term_meta[$term_id]['archive_description'] );
+	
+	$values = isset( $_POST['bizznis-meta'] ) ? (array) $_POST['bizznis-meta'] : array();
+
+	$values = wp_parse_args( $values, bizznis_term_meta_defaults() );
+
+	if ( ! current_user_can( 'unfiltered_html' ) && isset( $values['archive_description'] ) ) {
+		$values['archive_description'] = bizznis_formatting_kses( $values['archive_description'] );
 	}
-	update_option( 'bizznis-term-meta', $term_meta );
+	
+	foreach ( $values as $key => $value ) {
+		update_term_meta( $term_id, $key, $value );
+	}
 }
 
 /**
@@ -179,9 +209,9 @@ function bizznis_term_meta_save( $term_id, $tt_id ) {
  */
 add_action( 'delete_term', 'bizznis_term_meta_delete', 10, 2 );
 function bizznis_term_meta_delete( $term_id, $tt_id ) {
-	$term_meta = (array) get_option( 'bizznis-term-meta' );
-	unset( $term_meta[$term_id] );
-	update_option( 'bizznis-term-meta', (array) $term_meta );
+	foreach ( bizznis_term_meta_defaults() as $key => $value ) {
+		delete_term_meta( $term_id, $key );
+	}
 }
 
 /**
@@ -197,9 +227,11 @@ function bizznis_term_meta_delete( $term_id, $tt_id ) {
 add_action( 'split_shared_term', 'bizznis_split_shared_term' );
 function bizznis_split_shared_term( $old_term_id, $new_term_id ) {
 	$term_meta = (array) get_option( 'bizznis-term-meta' );
+	
 	if ( ! isset( $term_meta[ $old_term_id ] ) ) {
 		return;
 	}
+	
 	$term_meta[ $new_term_id ] = $term_meta[ $old_term_id ];
 
 	update_option( 'bizznis-term-meta', $term_meta );

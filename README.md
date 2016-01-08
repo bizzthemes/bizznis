@@ -15,6 +15,10 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.3.4
+* Tweak - schema.org for blog post turnet to CreativeWork
+* Tweak - taxonomy terms option work better
+
 ### 1.3.3
 * Fix - Commments not displaying
 

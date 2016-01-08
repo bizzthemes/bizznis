@@ -116,9 +116,6 @@ function bizznis_attributes_body( $attributes ) {
 	if ( is_search() ) {
 		$attributes['itemtype'] = 'http://schema.org/SearchResultsPage';
 	}
-	if ( is_singular( 'post' ) || is_archive() || is_home() ) {
-		$attributes['itemtype']  = 'http://schema.org/Blog';
-	}
 	
 	return $attributes;
 }
@@ -363,15 +360,8 @@ function bizznis_attributes_entry( $attributes ) {
 		return $attributes;
 	}
 	
-	# Blog posts microdata
-	if ( 'post' === get_post_type() ) {
-		$attributes['itemscope'] = true;
-		$attributes['itemtype']  = 'http://schema.org/BlogPosting';
-		# If not search results page
-		if ( ! is_search() ) {
-			$attributes['itemprop']  = 'blogPost';
-		}
-	}
+	$attributes['itemscope'] = true;
+	$attributes['itemtype']  = 'http://schema.org/CreativeWork';
 
 	return $attributes;
 }
