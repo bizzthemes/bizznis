@@ -55,7 +55,7 @@ function bizznis_output_taxonomy_content_wrapper_end() {
 add_action( 'wp_head', 'bizznis_title_archive_headline_replace' );
 function bizznis_title_archive_headline_replace() {
 	$term = get_queried_object();
-	if ( $term->meta['headline'] || bizznis_a11y() ) {
+	if ( $headline = get_term_meta( $term->term_id, 'headline', true ) || bizznis_a11y() ) {
 		add_filter( 'woocommerce_show_page_title', '__return_false' );
 	} else {
 		remove_action( 'bizznis_loop', 'bizznis_do_taxonomy_title_description', 5 );

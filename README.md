@@ -15,6 +15,9 @@ Please visit http://bizzthemes.com/forums/ for theme support.
 Changelog
 ----
 
+### 1.3.5
+* Improved - term meta queries now simplified
+
 ### 1.3.4
 * Tweak - schema.org for blog post turnet to CreativeWork
 * Tweak - taxonomy terms option work better

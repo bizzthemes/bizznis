@@ -100,7 +100,7 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 				<td>
 					<fieldset class="bizznis-layout-selector">
 						<legend class="screen-reader-text"><?php _e( 'Choose Layout', 'bizznis' ); ?></legend>
-						<p><input type="radio" class="default-layout" name="bizznis-meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> /> <label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
+						<p><input type="radio" class="default-layout" name="bizznis-meta[layout]" id="default-layout" value="" <?php checked( get_term_meta( $tag->term_id, 'layout', true ), '' ); ?> /> <label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'bizznis' ), menu_page_url( 'bizznis', 0 ) ); ?></label></p>
 						<?php bizznis_layout_selector( array( 'name' => 'bizznis-meta[layout]', 'selected' => get_term_meta( $tag->term_id, 'layout', true ), 'type' => 'site' ) ); ?>
 					</fieldset>
 				</td>
@@ -111,7 +111,9 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 }
 
 /**
- * Merge term meta data into options table.
+ * For backward compatibility only.
+ *
+ * Filter each term, pulling term meta automatically so it can be accessed directly by the term object.
  *
  * @since 1.0.0
  */
@@ -131,7 +133,7 @@ function bizznis_get_term_filter( $term, $taxonomy ) {
 	$term_meta = get_term_meta( $term->term_id );
 	
 	//* Convert array values to string
-	foreach ( $term_meta as $key => $value ) {
+	foreach ( (array) $term_meta as $key => $value ) {
 		$term_meta[ $key ] = $value[0];
 	}
 	
