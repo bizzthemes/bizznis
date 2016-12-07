@@ -18,29 +18,29 @@ abstract class Bizznis_Customizer_Base {
 	 */
 	public function __construct() {
 		
-		//* Register new customizer elements
+		// Register new customizer elements.
 		if ( method_exists( $this, 'register' ) ) {
 			add_action( 'customize_register', array( $this, 'register'), 15 );
 		} else {
 			_doing_it_wrong( 'Bizznis_Customizer_Base', __( 'When extending Bizznis_Customizer_Base, you must create a register method.', 'bizznis' ) );
 		}
 			
-		//* Register the default settings
+		// Register the default settings.
 		if ( method_exists( $this, 'default_settings' ) ) {
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 		}
 		
-		//* Sanitize settings
+		// Sanitize settings.
 		if ( method_exists( $this, 'sanitizer_filters' ) ) {
 			add_action( 'bizznis_settings_sanitizer_init', array( $this, 'sanitizer_filters' ) );
 		}
 
-		//* Customizer preview scripts & styles
+		// Customizer preview scripts & styles.
 		if ( method_exists( $this, 'preview_scripts' ) ) {
 			add_action( 'customize_preview_init', array( $this, 'preview_scripts') );
 		}
 		
-		//* Customizer controls scripts & styles
+		// Customizer controls scripts & styles.
 		if ( method_exists( $this, 'controls_scripts' ) ) {
 			add_action( 'customize_controls_enqueue_scripts', array( $this, 'controls_scripts') );
 		}
@@ -48,7 +48,7 @@ abstract class Bizznis_Customizer_Base {
 	}
 	
 	public function register_settings() {
-		# If this page doesn't store settings, no need to register them
+		// If this page doesn't store settings, no need to register them.
 		if ( ! $this->settings_field ) {
 			return;
 		}
@@ -130,18 +130,17 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 	 * Register preview scripts.
 	 */
 	public function preview_scripts() {
-
 		wp_enqueue_script( 'bizznis_preview_customizer_js', BIZZNIS_ASSETS_JS_URL . '/customizer_preview.js', array( 'jquery', 'customize-preview' ), PARENT_THEME_VERSION, true );
-		
 	}
 
 	/**
 	 * Register controls.
 	 */
 	public function register( $wp_customize ) {
-		
 		$this->styles( $wp_customize );
-		$this->layout( $wp_customize );
+		if ( bizznis_has_multiple_layouts() ) {
+			$this->layout( $wp_customize );
+		}
 		$this->menu_extras( $wp_customize );
 		$this->breadcrumbs( $wp_customize );
 		$this->archives( $wp_customize );
@@ -151,17 +150,16 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		
 	}
 
-	private function styles( $wp_customize ) {
-			
-		//* Color Selector
+	private function styles( $wp_customize ) {	
+		// Color Selector.
 		if ( ! current_theme_supports( 'bizznis-style-selector' ) ) {
 			return;
 		}
 		
-		//* Setting the priority
+		// Setting the priority.
 		$priority = new Bizznis_Prioritizer();
 
-		//* Add Section
+		// Add Section.
 		$wp_customize->add_section(
 			'bizznis_color_scheme',
 			array(
@@ -199,8 +197,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 	}
 	
 	private function layout( $wp_customize ) {
-				
-		//* Setting the priority
+		// Setting the priority.
 		$priority = new Bizznis_Prioritizer( 20, 1 );
 		
 		$wp_customize->add_section(
@@ -245,9 +242,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 		
-		
-		//* bbPress layout
-		
+		// bbPress layout.
 		if ( ! in_array( 'bbpress/bbpress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 			return;
 		}
@@ -277,12 +272,12 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 
 	private function menu_extras( $wp_customize ) {
 	
-		//* Nav Extras Selector
+		// Nav Extras Selector.
 		if ( ! current_theme_supports( 'bizznis-menus' ) && ! bizznis_nav_menu_supported( 'primary' ) ) {
 			return;
 		}
 		
-		//* Setting the priority
+		// Setting the priority.
 		$priority = new Bizznis_Prioritizer( 100, 1 );
 		
 		$wp_customize->add_section(
@@ -294,7 +289,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 		
-		//* Add Settings
+		// Add Settings.
 		$wp_customize->add_setting(
 			$this->get_field_name( 'nav_extras_responsive' ),
 			array(
@@ -340,8 +335,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 		
-		//* Add Controls
-		
+		// Add Controls.
 		$menus_get = get_registered_nav_menus();
 		$menus_select[''] = __( '- Select -', 'bizznis' );
 		$menus = $menus_select + $menus_get;
@@ -428,13 +422,12 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 	}
 	
 	private function breadcrumbs( $wp_customize ) {
-	
-		//* Breadcrumbs Selector
+		// Breadcrumbs Selector.
 		if ( ! current_theme_supports( 'bizznis-breadcrumbs' ) ) {
 			return;
 		}
 		
-		//* Setting the priority
+		// Setting the priority.
 		$priority = new Bizznis_Prioritizer( 100, 1 );
 		
 		$wp_customize->add_section(
@@ -458,7 +451,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		);
 
 		foreach ( $settings as $setting => $label ) {
-			
 			if ( 'breadcrumb_front_page' == $setting || 'breadcrumb_posts_page' == $setting ) {
 				if ( 'page' !== get_option( 'show_on_front' ) ) {
 					continue;
@@ -490,14 +482,12 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 					'priority' => $priority->add(),
 				)
 			);
-
 		}
 
 	}
 
 	private function archives( $wp_customize ) {
-
-		//* Setting the priority
+		// Setting the priority.
 		$priority = new Bizznis_Prioritizer();
 		
 		$wp_customize->add_section(
@@ -509,7 +499,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 
-		//* Add Settings		
+		// Add Settings.
 		$wp_customize->add_setting(
 			$this->get_field_name( 'content_archive' ),
 			array(
@@ -564,7 +554,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 
-		//* Add Controls
+		// Add Controls.
 		$wp_customize->add_control(
 			'bizznis_content_archive',
 			array(
@@ -573,8 +563,8 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 				'settings' => $this->get_field_name( 'content_archive' ),
 				'type'     => 'select',
 				'choices'  => array(
-					'full'     => __( 'Display post content', 'bizznis' ),
-					'excerpts' => __( 'Display post excerpts', 'bizznis' ),
+					'full'     => __( 'Display entry content', 'bizznis' ),
+					'excerpts' => __( 'Display entry excerpts', 'bizznis' ),
 				),
 				'priority' => $priority->add(),
 			)
@@ -648,7 +638,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		$wp_customize->add_control(
 			'bizznis_posts_nav',
 			array(
-				'label'    => __( 'Navigation technique', 'bizznis' ),
+				'label'    => __( 'Entry Pagination Type', 'bizznis' ),
 				'section'  => 'bizznis_archives',
 				'settings' => $this->get_field_name( 'posts_nav' ),
 				'type'     => 'select',
@@ -663,23 +653,22 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 	}
 	
 	private function header( $wp_customize ) {
-		
-		//* Allows these settings to update asynchronously in the Preview pane.
+		// Allows these settings to update asynchronously in the Preview pane.
 		$wp_customize->get_setting( 'blogname' )->transport        = 'postMessage';
 		$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
 		
-		//* Move Header Color to Header section
+		// Move Header Color to Header section.
 		$wp_customize->get_control( 'header_textcolor' )->section = 'header_image';
 	
-		//* Header Selector
+		// Header Selector.
 		if ( current_theme_supports( 'bizznis-custom-header' ) || current_theme_supports( 'custom-header' ) ) {
 			return;
 		}
 		
-		//* Setting the priority
+		// Setting the priority.
 		$priority = new Bizznis_Prioritizer( 10, 1 );
 		
-		//* Add Settings
+		// Add Settings.
 		$wp_customize->add_setting(
 			$this->get_field_name( 'blog_title' ),
 			array(
@@ -707,7 +696,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 
-		//* Add Controls
+		// Add Controls.
 		$wp_customize->add_control(
 			'bizznis_blog_title',
 			array(
@@ -736,7 +725,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 		
-		//* Change priority for Site Title
+		// Change priority for Site Title.
 		$site_title           = $wp_customize->get_control( 'blogname' );
 		$site_title->priority = $priority->add();
 
@@ -751,7 +740,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 		
-		//* Change priority for Tagline
+		// Change priority for Tagline.
 		$site_description = $wp_customize->get_control( 'blogdescription' );
 		$site_description->priority = $priority->add();
 		
@@ -769,38 +758,36 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 	}
 		
 	private function background( $wp_customize ) {
-	
-		//* Color Selector
+		// Color Selector.
 		if ( ! current_theme_supports( 'custom-background' ) ) {
 			return;
 		}
 		
-		//* Setting the priority
+		// Setting the priority.
 		$priority = new Bizznis_Prioritizer( 10, 5 );
 		
-		//* Rename Background Image section to Background
+		// Rename Background Image section to Background.
 		$wp_customize->get_section( 'background_image' )->title = __( 'Background', 'bizznis' );
 
-		//* Move Background Color to Background section
+		// Move Background Color to Background section.
 		$wp_customize->get_control( 'background_color' )->section = 'background_image';
 		
-		//* Reset priorities on existing controls
+		// Reset priorities on existing controls.
 		$wp_customize->get_control( 'background_color' )->priority = $priority->add();
 		$wp_customize->get_control( 'background_image' )->priority = $priority->add();
 		$wp_customize->get_control( 'background_repeat' )->priority = $priority->add();
-		$wp_customize->get_control( 'background_position_x' )->priority = $priority->add();
+		#$wp_customize->get_control( 'background_position_x' )->priority = $priority->add();
 		$wp_customize->get_control( 'background_attachment' )->priority = $priority->add();
 		
 	}
 	
 	private function color( $wp_customize ) {
-	
-		//* Color Selector
+		// Color Selector.
 		if ( is_child_theme() ) {
 			return;
 		}
 		
-		//* Setting the priority
+		// Setting the priority.
 		$priority = new Bizznis_Prioritizer( 120, 1 );
 		
 		$wp_customize->add_control(
@@ -816,7 +803,7 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 			)
 		);
 		
-		//* Setting key and default value array
+		// Setting key and default value array.
 		$settings = array(
 			'primary_color' 	=> __( 'Primary Color', 'bizznis' ),
 			'secondary_color' 	=> __( 'Secondary Color', 'bizznis' ),
@@ -826,7 +813,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 		);
 
 		foreach ( $settings as $setting => $label ) {
-
 			$wp_customize->add_setting(
 				'bizznis_' . $setting,
 				array(
@@ -848,7 +834,6 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
 					)
 				)
 			);
-
 		}
 		
 	}
@@ -862,10 +847,10 @@ class Bizznis_Customizer extends Bizznis_Customizer_Base {
  */
 function bizznis_callback_control( $control ) {
 
-	//* Get control ID
+	// Get control ID.
     $control_id = $control->id;	
     
-	//* Primary menu extras
+	// Primary menu extras.
 	$primary_nav_setting = $control->manager->get_setting('nav_menu_locations[primary]');
 	$primary_nav_setting = isset( $primary_nav_setting ) ? $primary_nav_setting->value() : '';
 	$nav_extras_enable_setting = $control->manager->get_setting('bizznis-settings[nav_extras_enable]');
@@ -873,35 +858,35 @@ function bizznis_callback_control( $control ) {
 	$nav_extras_setting = $control->manager->get_setting('bizznis-settings[nav_extras]');
 	$nav_extras_setting = isset( $nav_extras_setting ) ? $nav_extras_setting->value() : '';
 	
-	//* Show primary nav extras if primary nav is set
+	// Show primary nav extras if primary nav is set.
     if ( in_array( $control_id, array( 'bizznis_nav_extras_info', 'bizznis_nav_extras_enable' ) ) && $primary_nav_setting != '' ) {
 		return true;
 	}
 	
-	//* Show primary nav extras if nav extras are enabled
+	// Show primary nav extras if nav extras are enabled.
     if ( in_array( $control_id, array( 'bizznis_nav_extras' ) ) && $nav_extras_enable_setting && $primary_nav_setting != '' ) {
 		return true;
 	}
 	
-	//* Show twitter options if twitter nav extra is set
+	// Show twitter options if twitter nav extra is set.
     if ( in_array( $control_id, array( 'bizznis_nav_extras_twitter_id', 'bizznis_nav_extras_twitter_text' ) ) && $nav_extras_setting == 'twitter' && $nav_extras_enable_setting && $primary_nav_setting != '' ) {
 		return true;
 	}
 	
-	//* Content archives
+	// Content archives.
 	$content_archive_setting = $control->manager->get_setting('bizznis-settings[content_archive]')->value();
 	$content_archive_thumbnail_setting = $control->manager->get_setting('bizznis-settings[content_archive_thumbnail]')->value();
 	
-	//* Show content limit, when displaying post content
+	// Show content limit, when displaying post content.
     if ( in_array( $control_id, array( 'bizznis_content_archive_limit' ) ) && $content_archive_setting == 'full' ) {
 		return true;
 	}
 	
-	//* Show featured image options if featured image is enabled
+	// Show featured image options if featured image is enabled.
     if ( in_array( $control_id, array( 'bizznis_image_size', 'bizznis_image_alignment' ) ) && $content_archive_thumbnail_setting ) {
 		return true;
 	}
-     
+
     return false;
 }
 
@@ -922,7 +907,7 @@ function bizznis_customizer_init() {
  */
 add_action( 'customize_controls_print_footer_scripts', 'bizznis_marketing_links' );
 function bizznis_marketing_links() {
-	//* CHILD_THEME_NAME constant is defined in premium child themes and not Bizznis itself
+	// CHILD_THEME_NAME constant is defined in premium child themes and not Bizznis itself.
 	if ( ! defined( 'CHILD_THEME_NAME' ) ) {
 	?>
 <script>

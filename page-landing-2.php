@@ -24,5 +24,5 @@ function bizznis_return_landing_2_layout() {
  */
 add_filter( 'bizznis_wrapper_main-wrapper', '__return_false' ); 
 
-//* Run the Bizznis loop
+// Run the Bizznis loop.
 bizznis();

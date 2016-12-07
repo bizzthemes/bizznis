@@ -13,7 +13,6 @@
  * @return array Array of default term meta.
  */
 function bizznis_term_meta_defaults() {
-
 	return apply_filters( 'bizznis_term_meta_defaults', array(		
 		'headline'            => '',
 		'intro_text'          => '',
@@ -26,7 +25,6 @@ function bizznis_term_meta_defaults() {
 		'nofollow'            => 0,
 		'noarchive'           => 0,
 	) );
-
 }
 
 /**
@@ -60,9 +58,9 @@ function bizznis_taxonomy_archive_options( $tag, $taxonomy ) {
 				</td>
 			</tr>
 			<tr class="form-field">
-				<th scope="row"><label for="bizznis-meta[intro_text]"><?php _e( 'Archive Intro Text', 'bizznis' ); ?></label></th>
+				<th scope="row"><label for="bizznis-meta-intro-text"><?php _e( 'Archive Intro Text', 'bizznis' ); ?></label></th>
 				<td>
-					<textarea name="bizznis-meta[intro_text]" id="bizznis-meta[intro_text]" rows="3" cols="50" class="large-text"><?php echo esc_textarea( get_term_meta( $tag->term_id, 'intro_text', true ) ); ?></textarea>
+					<?php wp_editor( get_term_meta( $tag->term_id, 'intro_text', true ), "bizznis-meta-intro-text", array( 'textarea_name' => 'bizznis-meta[intro_text]' ) ); ?>
 					<p class="description"><?php _e( 'Leave empty if you do not want to display any intro text.', 'bizznis' ); ?></p>
 				</td>
 			</tr>
@@ -78,6 +76,10 @@ function bizznis_taxonomy_archive_options( $tag, $taxonomy ) {
  */
 add_action( 'admin_init', 'bizznis_add_taxonomy_layout_options' );
 function bizznis_add_taxonomy_layout_options() {
+	if ( ! bizznis_has_multiple_layouts() ) {
+		return;
+	}
+	
 	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $tax_name ) {
 		add_action( $tax_name . '_edit_form', 'bizznis_taxonomy_layout_options', 10, 2 );
 	}
@@ -113,56 +115,30 @@ function bizznis_taxonomy_layout_options( $tag, $taxonomy ) {
 /**
  * For backward compatibility only.
  *
- * Filter each term, pulling term meta automatically so it can be accessed directly by the term object.
+ * Sets $term->meta to empty array. All calls to $term->meta->key will be unset unless force set by `bizznis_term_meta` filter.
  *
  * @since 1.0.0
+ *
+ * @param object $term     Database row object.
+ * @param string $taxonomy Taxonomy name that $term is part of.
+ *
+ * @return object $term Database row object.
  */
 add_filter( 'get_term', 'bizznis_get_term_filter', 10, 2 ); #wp
 function bizznis_get_term_filter( $term, $taxonomy ) {
-	//* Stop here, if $term is not object
+	// Stop here, if $term is not object.
 	if ( ! is_object( $term ) ) {
 		return $term;
 	}
 	
-	//* Do nothing, if called in the context of creating a term via an ajax call
+	// Do nothing, if called in the context of creating a term via an ajax call.
 	if ( did_action( 'wp_ajax_add-tag' ) ) {
 		return $term;
 	}
 	
-	//* Pull all meta for this term ID
-	$term_meta = get_term_meta( $term->term_id );
-	
-	//* Convert array values to string
-	foreach ( (array) $term_meta as $key => $value ) {
-		$term_meta[ $key ] = $value[0];
-	}
-	
-	$term->meta = wp_parse_args( $term_meta, bizznis_term_meta_defaults() );
-	
-	# Sanitize term meta
-	foreach ( $term->meta as $field => $value ) {
-		if ( is_array( $value ) ) {
-			$value = stripslashes_deep( array_filter( $value, 'wp_kses_decode_entities' ) );
-		} else {
-			$value = stripslashes( wp_kses_decode_entities( $value ) );
-		}
+	// Still set $term->meta and apply filter, for backward compatibility.
+	$term->meta = apply_filters( 'bizznis_term_meta', array(), $term, $taxonomy );
 
-		/**
-		 * Term meta value filter.
-		 *
-		 * Allow term meta value to be filtered before being injected into the $term->meta array.
-		 *
-		 * @since
-		 *
-		 * @param string|array  $value The term meta value.
-		 * @param string  $term The term that is being filtered.
-		 * @param string  $taxonomy The taxonomy to which the term belongs.
-		 */
-		$term->meta[ $field ] = apply_filters( "bizznis_term_meta_{$field}", $value, $term, $taxonomy );
-
-	}
-	$term->meta = apply_filters( 'bizznis_term_meta', $term->meta, $term, $taxonomy );
-	
 	return $term;
 }
 
@@ -181,6 +157,16 @@ function bizznis_get_terms_filter( array $terms, $taxonomy ) {
 }
 
 /**
+ * Maintain backward compatibility with the older `bizznis_term_meta_{$key}` filter so old filter functions will still work.
+ *
+ * @since 1.4.0
+ */
+add_filter( 'get_term_metadata', 'bizznis_term_meta_filter', 10, 4 );
+function bizznis_term_meta_filter( $value, $object_id, $meta_key, $single ) {
+	return apply_filters( "bizznis_term_meta_{$meta_key}", $value, get_term_field( 'slug', $object_id ), null );
+}
+
+/**
  * Save term meta data.
  *
  * @since 1.0.0
@@ -192,7 +178,6 @@ function bizznis_term_meta_save( $term_id, $tt_id ) {
 	}
 	
 	$values = isset( $_POST['bizznis-meta'] ) ? (array) $_POST['bizznis-meta'] : array();
-
 	$values = wp_parse_args( $values, bizznis_term_meta_defaults() );
 
 	if ( ! current_user_can( 'unfiltered_html' ) && isset( $values['archive_description'] ) ) {
@@ -223,8 +208,8 @@ function bizznis_term_meta_delete( $term_id, $tt_id ) {
  *
  * @since 1.2.0
  *
- * @param integer @old_term_id The ID of the term being split.
- * @param integer @new_term_id The ID of the newly created term.
+ * @param int @old_term_id The ID of the term being split.
+ * @param int @new_term_id The ID of the newly created term.
  */
 add_action( 'split_shared_term', 'bizznis_split_shared_term' );
 function bizznis_split_shared_term( $old_term_id, $new_term_id ) {

@@ -6,7 +6,7 @@
 */
 
 /**
- * Register the scripts that Genesis will use.
+ * Register the scripts that Bizznis will use.
  *
  * @since 1.2.0
  *
@@ -17,9 +17,10 @@ add_action( 'wp_enqueue_scripts', 'bizznis_register_scripts' );
 function bizznis_register_scripts() {
 	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-	wp_register_script( 'skip-links',  BIZZNIS_ASSETS_JS_URL . "/skip-links.js" );
+	wp_register_script( 'skip-links',  BIZZNIS_ASSETS_JS_URL . "/skip-links.js", array(), PARENT_THEME_VERSION, true );
 	wp_register_script( 'drop-down-menu',  BIZZNIS_ASSETS_JS_URL . "/drop-down-menu.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
 	wp_register_script( 'responsive-menu',  BIZZNIS_ASSETS_JS_URL . "/responsive-menu.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
+	wp_register_script( 'html5shiv', BIZZNIS_ASSETS_JS_URL . "/html5shiv.js", array(), '3.7.3', true );
 }
 
 /**
@@ -29,22 +30,24 @@ function bizznis_register_scripts() {
  */
 add_action( 'wp_enqueue_scripts', 'bizznis_load_scripts' );
 function bizznis_load_scripts() {
-	# If a single post or page, threaded comments are enabled, and comments are open
+	global $wp_scripts;
+	
+	// If a single post or page, threaded comments are enabled, and comments are open.
 	if ( is_singular() && get_option( 'thread_comments' ) && comments_open() ) {
 		wp_enqueue_script( 'comment-reply' );		
 	}
 	
-	# If accessibility support for 'skip-links' is enabled
+	// If accessibility support for 'skip-links' is enabled.
 	if ( bizznis_a11y( 'skip-links' ) ) {
 		wp_enqueue_script( 'skip-links' );
 	}
 	
-	# If accessibility support for 'skip-links' is enabled
+	// If accessibility support for 'skip-links' is enabled.
 	if ( bizznis_a11y( 'drop-down-menu' ) ) {
 		wp_enqueue_script( 'drop-down-menu' );
 	}
 	
-	# If responsive menu support is enabled
+	// If responsive menu support is enabled.
 	$responsive_menu = bizznis_get_option( 'nav_extras_responsive' );
 	if ( current_theme_supports( 'bizznis-responsive-menu' ) && ! empty( $responsive_menu ) ) {		
 		wp_enqueue_script( 'responsive-menu' );
@@ -52,17 +55,10 @@ function bizznis_load_scripts() {
 			'selector' => $responsive_menu,
 		) );
 	}
-}
-
-/**
- * Load the html5 shiv for IE8 and below. Can't enqueue with IE conditionals.
- *
- * @since 1.0.6
- *
- */
-add_action( 'wp_head', 'bizznis_html5_ie_fix' );
-function bizznis_html5_ie_fix() {
-	echo '<!--[if lt IE 9]><script src="' . BIZZNIS_ASSETS_JS_URL . '/html5shiv.js"></script><![endif]-->' . "\n";
+	
+	//* HTML5 shiv.
+	wp_enqueue_script( 'html5shiv' );
+	$wp_scripts->add_data( 'html5shiv', 'conditional', 'lt IE 9' );
 }
 
 /**
@@ -72,7 +68,7 @@ function bizznis_html5_ie_fix() {
  */
 add_action( 'admin_enqueue_scripts', 'bizznis_load_admin_scripts' );
 function bizznis_load_admin_scripts( $hook_suffix ) {
-	# If we're on a Bizznis admin screen
+	// If we're on a Bizznis admin screen.
 	if ( bizznis_is_menu_page( 'bizznis' ) ) {
 		bizznis_load_admin_js();
 	}
@@ -85,7 +81,8 @@ function bizznis_load_admin_scripts( $hook_suffix ) {
  */
 function bizznis_load_admin_js() {
 	wp_enqueue_script( 'bizznis_admin_js', BIZZNIS_ASSETS_JS_URL . '/admin.js', array( 'jquery' ), PARENT_THEME_VERSION, true );
-	# Strings
+	
+	// Strings.
 	$strings = array(
 		'categoryChecklistToggle' => __( 'Select / Deselect All', 'bizznis' ),
 		'saveAlert'               => __( 'The changes you made will be lost if you navigate away from this page.', 'bizznis' ),
@@ -93,21 +90,4 @@ function bizznis_load_admin_js() {
 		'confirmReset'            => __( 'Are you sure you want to reset?', 'bizznis' ),
 	);
 	wp_localize_script( 'bizznis_admin_js', 'bizznisL10n', $strings );
-	# Toggles
-	$toggles = array();
-	/*
-	* Deprecated since 1.1.0
-	*
-	$toggles = array(
-		// Checkboxes - when checked, show extra settings
-		'nav'                       => array( '#bizznis-settings\\[nav\\]', '#bizznis_nav_settings', '_checked' ),
-		'content_archive_thumbnail' => array( '#bizznis-settings\\[content_archive_thumbnail\\]', '#bizznis_image_size', '_checked' ),
-		'nav_extras_enable'         => array( '#bizznis-settings\\[nav_extras_enable\\]', '#bizznis_nav_extras_settings', '_checked' ),
-		// Select toggles
-		'blog_title'                => array( '#bizznis-settings\\[blog_title\\]', '#bizznis_blog_title_image', 'image' ),
-		'nav_extras'                => array( '#bizznis-settings\\[nav_extras\\]', '#bizznis_nav_extras_twitter', 'twitter' ),
-		'content_archive'           => array( '#bizznis-settings\\[content_archive\\]', '#bizznis_content_limit_setting', 'full' ),
-	);
-	*/
-	wp_localize_script( 'bizznis_admin_js', 'bizznis_toggles', apply_filters( 'bizznis_toggles', $toggles ) );
 }

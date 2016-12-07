@@ -52,15 +52,15 @@ class Bizznis_Page_List extends WP_Widget {
 	 */
 	function widget( $args, $instance ) {
 	
-		# Merge with defaults
+		// Merge with defaults.
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		
-		# Bulletproof ordering
+		// Bulletproof ordering.
 		if ( $instance['sort_column'] == 'menu_order' ) {
 			$instance['sort_column'] = 'menu_order, post_title';
 		}
 		
-		# Get page list
+		// Get page list.
 		$out = wp_list_pages( apply_filters('widget_pages_list_args', array(
 			'title_li'			=> '',
 			'echo'				=> 0,			
@@ -72,7 +72,7 @@ class Bizznis_Page_List extends WP_Widget {
 			'link_after'		=> $instance['link_after']
 		) ) );
 		
-		# stop if nothing to show
+		// Stop if nothing to show.
 		if ( empty( $out ) ) {
 			return;
 		}
@@ -111,7 +111,7 @@ class Bizznis_Page_List extends WP_Widget {
 	 * @since 1.0.0
 	 */
 	function form( $instance ) {
-		# Merge with defaults
+		// Merge with defaults.
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		?>
 		<p>

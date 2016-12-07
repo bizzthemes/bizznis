@@ -13,17 +13,19 @@ add_filter( 'wp_title', 'bizznis_default_title', 10, 3 );
  */
 if ( ! function_exists( 'bizznis_default_title' ) ) :
 function bizznis_default_title( $title, $sep, $seplocation ) {
-	# If viewing the feed
+	// If viewing the feed.
 	if ( is_feed() ) {
 		return $title;
 	}
-	# If viewing the root page
+	
+	// If viewing the root page.
 	if ( bizznis_is_root_page() ) {
-		#* Determine the doctitle
+		// Determine the doctitle.
 		$title = get_bloginfo( 'name' );
-		#* Append site description, if necessary
+		// Append site description, if necessary.
 		$title = $title . " - " . get_bloginfo( 'description' );
 	}
+	
 	return esc_html( trim( $title ) );
 }
 endif;
@@ -32,15 +34,32 @@ add_action( 'wp_head', 'bizznis_responsive_viewport', 1 );
 /**
  * Optionally output the responsive CSS viewport tag.
  *
+ * Child theme needs to support `bizznis-responsive-viewport`.
+ *
+ * Applies `bizznis_viewport_value` filter on content attribute.
+ *
+ *
  * @since 1.0.0
  */
 if ( ! function_exists( 'bizznis_responsive_viewport' ) ) :
 function bizznis_responsive_viewport() {
-	# Child theme needs to support 'bizznis-responsive-viewport'.
+	// Child theme needs to support 'bizznis-responsive-viewport'.
 	if ( ! current_theme_supports( 'bizznis-responsive-viewport' ) ) {
 		return;
 	}
-	echo '<meta name="viewport" content="width=device-width, initial-scale=1" />' . "\n";
+	/**
+	 * Filter the viewport meta tag value.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string $viewport_default Default value of the viewport meta tag.
+	 */
+	$viewport_value = apply_filters( 'bizznis_viewport_value', 'width=device-width, initial-scale=1' );
+
+	printf(
+		'<meta name="viewport" content="%s" />' . "\n",
+		esc_attr( $viewport_value )
+	);
 }
 endif;
 
@@ -52,32 +71,30 @@ add_action( 'wp_head', 'bizznis_load_favicon' );
  */
 if ( ! function_exists( 'bizznis_load_favicon' ) ) :
 function bizznis_load_favicon( $favicon = '' ) {
-	# Use WP site icon, if available
+	// Use WP site icon, if available.
 	if ( function_exists( 'has_site_icon' ) && has_site_icon() ) {
 		return;
 	}
 	
-	# Allow child theme to short-circuit this function
+	// Allow child theme to short-circuit this function.
 	$pre = apply_filters( 'bizznis_pre_load_favicon', false );
 	if ( $pre !== false ) {
 		$favicon = $pre;
-	}
-	elseif ( file_exists( CHILD_DIR . '/images/favicon.ico' ) ) {
+	} elseif ( file_exists( CHILD_DIR . '/images/favicon.ico' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.ico';
-	}
-	elseif ( file_exists( CHILD_DIR . '/images/favicon.gif' ) ) {
+	} elseif ( file_exists( CHILD_DIR . '/images/favicon.gif' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.gif';
-	}
-	elseif ( file_exists( CHILD_DIR . '/images/favicon.png' ) ) {
+	} elseif ( file_exists( CHILD_DIR . '/images/favicon.png' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.png';
-	}
-	elseif ( file_exists( CHILD_DIR . '/images/favicon.jpg' ) ) {
+	} elseif ( file_exists( CHILD_DIR . '/images/favicon.jpg' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.jpg';
 	}
-	# URL to favicon is filtered via 'bizznis_favicon_url' before being echoed.
+	
+	// URL to favicon is filtered via 'bizznis_favicon_url' before being echoed.
 	$favicon = apply_filters( 'bizznis_favicon_url', $favicon );
+	
 	if ( $favicon ) {
-		echo '<link rel="Shortcut Icon" href="' . esc_url( $favicon ) . '" type="image/x-icon" />' . "\n";
+		echo '<link rel="icon" href="' . esc_url( $favicon ) . '" type="image/x-icon" />' . "\n";
 	}
 }
 endif;
@@ -119,7 +136,7 @@ function bizznis_paged_rel() {
 
 	} else {
 
-		//* No need for this on previews
+		//* No need for this on previews.
 		if ( is_preview() ) {
 			return '';
 		}
@@ -188,9 +205,10 @@ add_action( 'wp_head', 'bizznis_header_scripts' );
  */
 if ( ! function_exists( 'bizznis_header_scripts' ) ) :
 function bizznis_header_scripts() {
-	# Applies 'bizznis_header_scripts' filter on value stored in header_scripts setting.
+	// Applies 'bizznis_header_scripts' filter on value stored in header_scripts setting.
 	echo apply_filters( 'bizznis_header_scripts', bizznis_get_option( 'header_scripts' ) );
-	# If singular, echo scripts from custom field
+	
+	// If singular, echo scripts from custom field.
 	if ( is_singular() ) {
 		bizznis_custom_field( '_bizznis_scripts' );
 	}
@@ -206,11 +224,13 @@ add_action( 'after_setup_theme', 'bizznis_custom_header' );
 if ( ! function_exists( 'bizznis_custom_header' ) ) :
 function bizznis_custom_header() {
 	$wp_custom_header = get_theme_support( 'custom-header' );
-	# Stop here if not active (Bizznis of WP custom header)
+	
+	// Stop here if not active (Bizznis of WP custom header).
 	if ( ! $wp_custom_header ) {
 		return;
 	}
-	# Blog title option is obsolete when custom header is active
+	
+	// Blog title option is obsolete when custom header is active.
 	add_filter( 'bizznis_pre_get_option_blog_title', '__return_empty_array' );
 }
 endif;
@@ -223,27 +243,27 @@ add_action( 'bizznis_site_title', 'bizznis_site_title' );
  */
 if ( ! function_exists( 'bizznis_site_title' ) ) :
 function bizznis_site_title() {
-	# Stop here if title is hiden
+	// Stop here if title is hiden.
 	if ( bizznis_get_option( 'hide_site_title' ) ) {
 		return;
 	}
 	
-	# Set what goes inside the wrapping tags
+	// Set what goes inside the wrapping tags.
 	$inside = sprintf( '<a href="%s">%s</a>', trailingslashit( home_url() ), get_bloginfo( 'name' ) );
 	
-	# Determine which wrapping tags to use
+	// Determine which wrapping tags to use.
 	$wrap = bizznis_is_root_page() ? 'h1' : 'p';
 
-	# A little fallback, in case an SEO plugin is active
+	// A little fallback, in case an SEO plugin is active.
 	$wrap = bizznis_is_root_page() ? 'h1' : $wrap;
 
-	# Apply filter
+	// Apply filter.
 	$wrap = apply_filters( 'bizznis_semantic_title_wrap', $wrap );
 	
-	# Build the title
+	// Build the title.
 	$title  = sprintf( "<{$wrap} %s>", bizznis_attr( 'site-title' ) ). $inside ."</{$wrap}>";
 	
-	# Echo (filtered)
+	// Echo (filtered).
 	echo apply_filters( 'bizznis_seo_title', $title, $inside, $wrap );
 }
 endif;
@@ -256,18 +276,23 @@ add_action( 'bizznis_site_title', 'bizznis_site_description' );
  */
 if ( ! function_exists( 'bizznis_site_description' ) ) :
 function bizznis_site_description() {
-	# Stop here if tagline is hiden
+	// Stop here if tagline is hiden.
 	if ( bizznis_get_option( 'hide_tagline' ) ) {
 		return;
 	}
-	# Set what goes inside the wrapping tags
+	
+	// Set what goes inside the wrapping tags.
 	$inside = esc_html( get_bloginfo( 'description' ) );
-	# Determine which wrapping tags to use
+	
+	// Determine which wrapping tags to use.
 	$wrap = apply_filters( 'bizznis_semantic_description_wrap', 'p' );
-	# Build the description
+	
+	// Build the description.
 	$description  = sprintf( "<{$wrap} %s>", bizznis_attr( 'site-description' ) ). $inside ."</{$wrap}>";
-	# Output (filtered)
+	
+	// Output (filtered).
 	$output = $inside ? apply_filters( 'bizznis_seo_description', $description, $inside, $wrap ) : '';
+	
 	echo $output;
 }
 endif;
@@ -324,9 +349,11 @@ function bizznis_skip_links() {
 	if ( ! bizznis_a11y( 'skip-links' ) ) {
 		return;
 	}
-	# Call function to add IDs to the markup
+	
+	// Call function to add IDs to the markup.
 	bizznis_skiplinks_markup();
-	# Determine which skip links are needed
+	
+	// Determine which skip links are needed.
 	$links = array();
 	if ( bizznis_nav_menu_supported( 'primary' ) && has_nav_menu( 'primary' ) ) {
 		$links['bizznis-nav-primary'] =  __( 'Skip to primary navigation', 'bizznis' );
@@ -360,14 +387,17 @@ function bizznis_skip_links() {
 	 * }
 	 */
 	$links = apply_filters( 'bizznis_skip_links_output', $links );
-	# write HTML, skiplinks in a list with a heading
+	
+	// write HTML, skiplinks in a list with a heading.
 	$skiplinks  =  '<section>';
 	$skiplinks .=  '<h2 class="screen-reader-text">'. __( 'Skip links', 'bizznis' ) .'</h2>';
 	$skiplinks .=  '<ul class="bizznis-skip-link">';
-	# Add markup for each skiplink
+	
+	// Add markup for each skiplink.
 	foreach ($links as $key => $value) {
 		$skiplinks .=  '<li><a href="' . esc_url( '#' . $key ) . '" class="screen-reader-shortcut"> ' . $value . '</a></li>';
 	}
+	
 	$skiplinks .=  '</ul>';
 	$skiplinks .=  '</section>' . "\n";
 

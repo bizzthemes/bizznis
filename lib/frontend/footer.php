@@ -18,19 +18,23 @@ function bizznis_footer_widget_areas() {
 		return;
 	}
 	$footer_widgets = (int) $footer_widgets[0];
-	# Check to see if first widget area has widgets. If not, do nothing. No need to check all footer widget areas.
+	
+	// Check to see if first widget area has widgets. If not, do nothing. No need to check all footer widget areas.
 	if ( ! is_active_sidebar( 'footer-1' ) ) {
 		return;
 	}
+	
 	$inside  = '';
 	$output  = '';
 	$counter = 1;
 	while ( $counter <= $footer_widgets ) {
-		# Darn you, WordPress! Gotta output buffer.
+		// Darn you, WordPress! Gotta output buffer.
 		ob_start();
 		dynamic_sidebar( 'footer-' . $counter );
 		$widgets = ob_get_clean();
-		$inside .= sprintf( '<div class="footer-widgets-%d widget-area">%s</div>', $counter, $widgets );
+		if ( $widgets ) {
+			$inside .= sprintf( '<div class="footer-widgets-%d widget-area">%s</div>', $counter, $widgets );
+		}
 		$counter++;
 	}
 	if ( $inside ) {
@@ -54,15 +58,17 @@ add_action( 'bizznis_footer_inner', 'bizznis_footer_credits' );
  */
 if ( ! function_exists( 'bizznis_footer_credits' ) ) :
 function bizznis_footer_credits() {
-	# Build the text strings. Includes shortcodes
+	// Build the text strings. Includes shortcodes.
 	$backtotop_text = '[footer_backtotop]';
 	$creds_text     = sprintf( '<p>[footer_copyright before="%s "] &#x000B7; [footer_childtheme_link before="" after=""] [footer_bizzthemes_link url="http://www.bizzthemes.com/" before="%s "] &#x000B7; [footer_wordpress_link] &#x000B7; [footer_loginout]</p>', __( 'Copyright', 'bizznis' ), __( 'by', 'bizznis' ) );
-	# Build output
+	
+	// Build output.
 	$output = sprintf( '<div %s>', bizznis_attr( 'footer-creds' ) );
 	$output .= bizznis_wrapper( 'footer-creds-wrapper', 'open', false ); #wrapper
 	$output .= $creds_text;
 	$output .= bizznis_wrapper( 'footer-creds-wrapper', 'close', false ); #wrapper
 	$output .= '</div>';
+	
 	echo apply_filters( 'bizznis_footer_output', $output, $backtotop_text, $creds_text );
 }
 endif;

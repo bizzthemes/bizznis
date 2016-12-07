@@ -14,15 +14,18 @@ function bizznis_nav_menu_supported( $menu ) {
 	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
 		return false;
 	}
+	
 	$menus = get_theme_support( 'bizznis-menus' );
+	
 	if ( array_key_exists( $menu, (array) $menus[0] ) ) {
 		return true;
 	}
+	
 	return false;
 }
 
 /**
- * Return the markup to display a menu consistent with the Genesis format.
+ * Return the markup to display a menu consistent with the Bizznis format.
  *
  * Applies the `bizznis_$location_nav` filter e.g. `bizznis_header_nav`. For primary and secondary menu locations, it
  * also applies the `bizznis_do_nav` and `bizznis_do_subnav` filters for backwards compatibility.
@@ -41,16 +44,19 @@ function bizznis_get_nav_menu( $args = array() ) {
 		'menu_class'     => 'menu menu-bizznis',
 		'echo'           => 0,
 	) );
-	# If a menu is not assigned to theme location, abort
+	
+	// If a menu is not assigned to theme location, abort.
 	if ( ! has_nav_menu( $args['theme_location'] ) ) {
 		return;
 	}
+	
 	$sanitized_location = sanitize_key( $args['theme_location'] );
 	
 	$nav  = apply_filters( "nav_{$sanitized_location}_before", '', $args );
 	$nav .= wp_nav_menu( $args );
 	$nav .= apply_filters( "nav_{$sanitized_location}_after", '', $args );
-	# Do nothing if there is nothing to show
+	
+	// Do nothing if there is nothing to show.
 	if ( ! $nav ) {
 		return;
 	}
@@ -60,12 +66,14 @@ function bizznis_get_nav_menu( $args = array() ) {
 	$nav_markup_close .= '</nav>';
 	$nav_output = $nav_markup_open . $nav . $nav_markup_close;
 	$filter_location = 'bizznis_' . $sanitized_location . '_nav';
-	# Handle back-compat for primary and secondary nav filters.
+	
+	// Handle back-compat for primary and secondary nav filters.
 	if ( 'primary' === $args['theme_location'] ) {
 		$filter_location = 'bizznis_do_nav';
 	} elseif ( 'secondary' === $args['theme_location'] ) {
 		$filter_location = 'bizznis_do_subnav';
 	}
+	
 	/**
 	 * Filter the navigation markup.
 	 *
@@ -90,7 +98,7 @@ function bizznis_get_nav_menu( $args = array() ) {
  *
  * @since 1.1.0
  *
- * @uses bizznis_get_nav_menu() Return the markup to display a menu consistent with the Genesis format.
+ * @uses bizznis_get_nav_menu() Return the markup to display a menu consistent with the Bizznis format.
  *
  * @param string $args Menu arguments.
  */

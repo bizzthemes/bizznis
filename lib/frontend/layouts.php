@@ -5,7 +5,7 @@
 	Please do all modifications in the form of a child theme.
 */
 
-add_action( 'bizznis_init', 'bizznis_create_initial_layouts', 0 );
+add_action( 'bizznis_init', 'bizznis_create_initial_layouts', 15 );
 /**
  * Register Bizznis default layouts.
  *
@@ -13,7 +13,7 @@ add_action( 'bizznis_init', 'bizznis_create_initial_layouts', 0 );
  */
 if ( ! function_exists( 'bizznis_create_initial_layouts' ) ) :
 function bizznis_create_initial_layouts() {
-	# Common path to default layout images
+	// Common path to default layout images.
 	$url = BIZZNIS_ASSETS_IMAGES_URL . '/layouts/';
 	$layouts = apply_filters( 'bizznis_initial_layouts', array(
 		'content-sidebar' => array(
@@ -43,6 +43,7 @@ function bizznis_create_initial_layouts() {
 			'img'   => $url . 'c.png',
 		),
 	), $url );
+	
 	foreach ( (array) $layouts as $layout_id => $layout_args ) {
 		bizznis_register_layout( $layout_id, $layout_args );
 	}
@@ -58,10 +59,12 @@ add_action( 'bizznis_after_content', 'bizznis_get_sidebar' );
 if ( ! function_exists( 'bizznis_get_sidebar' ) ) :
 function bizznis_get_sidebar() {
 	$site_layout = bizznis_site_layout();
-	# Don't load sidebar on pages that don't need it
+	
+	// Don't load sidebar on pages that don't need it.
 	if ( $site_layout == 'full-width-content' ) {
 		return;
 	}
+	
 	get_sidebar();
 }
 endif;
@@ -75,10 +78,12 @@ add_action( 'bizznis_after_content_sidebar_wrap', 'bizznis_get_sidebar_alt', 15 
 if ( ! function_exists( 'bizznis_get_sidebar_alt' ) ) :
 function bizznis_get_sidebar_alt() {
 	$site_layout = bizznis_site_layout();
-	# Don't load sidebar-alt on pages that don't need it
+	
+	// Don't load sidebar-alt on pages that don't need it.
 	if ( in_array( $site_layout, array( 'content-sidebar', 'sidebar-content', 'full-width-content' ) ) ) {
 		return;
 	}
+	
 	get_sidebar( 'alt' );
 }
 endif;
@@ -91,8 +96,9 @@ add_filter( 'body_class', 'bizznis_custom_body_class', 15 );
  */
 if ( ! function_exists( 'bizznis_custom_body_class' ) ) :
 function bizznis_custom_body_class( array $classes ) {
-	# It accepts values from a per-post or per-page custom field, and only outputs when viewing a singular page.
+	// It accepts values from a per-post or per-page custom field, and only outputs when viewing a singular page.
 	$new_class = is_singular() ? bizznis_get_custom_field( '_bizznis_custom_body_class' ) : null;
+	
 	if ( $new_class ) {
 		$classes[] = $new_class;
 	}
@@ -155,6 +161,7 @@ add_filter( 'body_class', 'bizznis_layout_body_classes' );
 if ( ! function_exists( 'bizznis_layout_body_classes' ) ) :
 function bizznis_layout_body_classes( array $classes ) {
 	$site_layout = bizznis_site_layout();
+	
 	if ( $site_layout ) {
 		$classes[] = $site_layout;
 	}
@@ -198,6 +205,7 @@ add_filter( 'body_class', 'bizznis_style_selector_body_classes' );
 if ( ! function_exists( 'bizznis_style_selector_body_classes' ) ) :
 function bizznis_style_selector_body_classes( array $classes ) {
 	$current = bizznis_get_option( 'style_selection' );
+	
 	if ( $current ) {
 		$classes[] = $current;
 	}

@@ -34,10 +34,10 @@ final class Bizznis_Init {
 	private function constants() {
 		# Theme Info
 		define( 'PARENT_THEME_NAME', 			'Bizznis' );
-		define( 'PARENT_THEME_VERSION', 		'1.3.5' );
-		define( 'PARENT_THEME_BRANCH', 			'1.3' );
-		define( 'PARENT_DB_VERSION', 			'1350' );
-		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1457524800' ) );
+		define( 'PARENT_THEME_VERSION', 		'1.4.0' );
+		define( 'PARENT_THEME_BRANCH', 			'1.4' );
+		define( 'PARENT_DB_VERSION', 			'1400' );
+		define( 'PARENT_THEME_RELEASE_DATE', 	date_i18n( 'F j, Y', '1481155200' ) );
 		# Directory Locations
 		define( 'PARENT_DIR', 					get_template_directory() );
 		define( 'CHILD_DIR', 					get_stylesheet_directory() );
@@ -89,6 +89,7 @@ final class Bizznis_Init {
 		add_theme_support( 'post-thumbnails' ); #wp
 		add_theme_support( 'automatic-feed-links' ); #wp
 		add_theme_support( 'title-tag' ); #wp
+		add_theme_support( 'customize-selective-refresh-widgets' ); #wp
 		add_theme_support( 'html5', array( #wp
 			'search-form',
 			'comment-form',
@@ -101,12 +102,21 @@ final class Bizznis_Init {
 		add_theme_support( 'bizznis-archive-layouts' );
 		add_theme_support( 'bizznis-breadcrumbs' );
 		add_theme_support( 'bizznis-responsive-viewport' ); #html5
+		// Maybe add support for Bizznis menus.
 	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
-		# Maybe add support for Bizznis menus
-		add_theme_support( 'bizznis-menus', array(
+		$menus = array(
 			'primary'   => __( 'Primary Navigation Menu', 'bizznis' ),
 			'secondary' => __( 'Secondary Navigation Menu', 'bizznis' ),
-		) );
+		);
+		/**
+		 * Filter for the menus that Bizznis supports by default.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param array $menus The array of supported menus.
+		 */
+		$menus = apply_filters( 'bizznis_theme_support_menus', $menus );
+		add_theme_support( 'bizznis-menus', $menus );
 	}
 	if ( ! is_child_theme() ) {
 		# Turn on responsive menus
@@ -161,6 +171,11 @@ final class Bizznis_Init {
 				add_post_type_support( $post_type, 'bizznis-entry-meta-after-content' );
 			}
 		}
+		
+		// For backward compatibility.
+		if ( current_theme_supports( 'bizznis-after-entry-widget-area' ) ) {
+			add_post_type_support( 'post', 'bizznis-after-entry-widget-area' );
+		}
 	}
 	
 	/**
@@ -212,6 +227,7 @@ final class Bizznis_Init {
 	if ( is_admin() ) {
 		load_template( BIZZNIS_ADMIN_DIR . '/admin.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/upgrade.php' );
+		#load_template( BIZZNIS_ADMIN_DIR . '/use-child-theme.php' );
 	}	
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-inpost.php' );
 		load_template( BIZZNIS_ADMIN_DIR . '/meta-term.php' );
@@ -264,5 +280,5 @@ function bizznis_launch() {
 	$bizznis->launch();
 }
 
-//* This is the hook to rule them all
+// This is the hook to rule them all.
 do_action( 'bizznis_init' );

@@ -19,7 +19,12 @@ function bizznis_post_date_shortcode( $atts ) {
 		'label'  => '',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_date' );
-	$display = ( 'relative' == $atts['format'] ) ? bizznis_human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'bizznis' ) : get_the_time( $atts['format'] );
+	if ( 'relative' === $atts['format'] ) {
+		$display = bizznis_human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ), $atts['relative_depth'] );
+		$display .= ' ' . __( 'ago', 'bizznis' );
+	} else {
+		$display = get_the_time( $atts['format'] );
+	}
 	$output = sprintf( '<time %s>', bizznis_attr( 'entry-time' ) ) . $atts['before'] . $atts['label'] . $display . $atts['after'] . '</time>';
 	return apply_filters( 'bizznis_post_date_shortcode', $output, $atts );
 }
@@ -67,7 +72,12 @@ function bizznis_post_modified_date_shortcode( $atts ) {
 		'label'  => '',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_modified_date' );
-	$display = ( 'relative' === $atts['format'] ) ? bizznis_human_time_diff( get_the_modified_time( 'U' ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'bizznis' ) : get_the_modified_time( $atts['format'] );
+	if ( 'relative' === $atts['format'] ) {
+		$display = bizznis_human_time_diff( get_the_modified_time( 'U' ), current_time( 'timestamp' ), $atts['relative_depth'] );
+		$display .= ' ' . __( 'ago', 'bizznis' );
+	} else {
+		$display = get_the_modified_time( $atts['format'] );
+	}
 	$output = sprintf( '<time %s>', bizznis_attr( 'entry-modified-time' ) ) . $atts['before'] . $atts['label'] . $display . $atts['after'] . '</time>';
 	/**
 	 * Change the output of the post_modified_date shortcode.
@@ -138,17 +148,31 @@ function bizznis_post_modified_time_shortcode( $atts ) {
  */
 add_bizzcode( 'post_author', 'bizznis_post_author_shortcode' );
 function bizznis_post_author_shortcode( $atts ) {
+	if ( ! post_type_supports( get_post_type(), 'author' ) ) {
+		return '';
+	}
+	
 	$defaults = array(
 		'after'  => '',
 		'before' => '',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_author' );
 	$author = get_the_author();
+	
+	if ( ! $author ) {
+		return '';
+	}
+	
 	$output  = sprintf( '<span %s>', bizznis_attr( 'entry-author' ) );
 	$output .= $atts['before'];
 	$output .= sprintf( '<span %s>', bizznis_attr( 'entry-author-name' ) ) . esc_html( $author ) . '</span>';
 	$output .= $atts['after'];
 	$output .= '</span>';
+	
+	if ( ! $author ) {
+		$output = '';
+	}
+	
 	return apply_filters( 'bizznis_post_author_shortcode', $output, $atts );
 }
 
@@ -159,6 +183,10 @@ function bizznis_post_author_shortcode( $atts ) {
  */
 add_bizzcode( 'post_author_link', 'bizznis_post_author_link_shortcode' );
 function bizznis_post_author_link_shortcode( $atts ) {
+	if ( ! post_type_supports( get_post_type(), 'author' ) ) {
+		return '';
+	}
+	
 	$defaults = array(
 		'after'    => '',
 		'before'   => '',
@@ -170,6 +198,11 @@ function bizznis_post_author_link_shortcode( $atts ) {
 		return bizznis_post_author_shortcode( $atts );
 	}
 	$author = get_the_author();
+	
+	if ( ! $author ) {
+		return '';
+	}
+	
 	$output  = sprintf( '<span %s>', bizznis_attr( 'entry-author' ) );
 	$output .= $atts['before'];
 	$output .= sprintf( '<a href="%s" %s>', $url, bizznis_attr( 'entry-author-link' ) );
@@ -186,19 +219,33 @@ function bizznis_post_author_link_shortcode( $atts ) {
  */
 add_bizzcode( 'post_author_posts_link', 'bizznis_post_author_posts_link_shortcode' );
 function bizznis_post_author_posts_link_shortcode( $atts ) {
+	if ( ! post_type_supports( get_post_type(), 'author' ) ) {
+		return '';
+	}
+	
 	$defaults = array(
 		'after'  => '',
 		'before' => '',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'post_author_posts_link' );
 	$author = get_the_author();
-	$url    = get_author_posts_url( get_the_author_meta( 'ID' ) );
+	
+	if ( ! $author ) {
+		return '';
+	}
+	
+	$url     = get_author_posts_url( get_the_author_meta( 'ID' ) );
 	$output  = sprintf( '<span %s>', bizznis_attr( 'entry-author' ) );
 	$output .= $atts['before'];
 	$output .= sprintf( '<a href="%s" %s>', $url, bizznis_attr( 'entry-author-link' ) );
 	$output .= sprintf( '<span %s>', bizznis_attr( 'entry-author-name' ) );
 	$output .= esc_html( $author );
 	$output .= '</span></a>' . $atts['after'] . '</span>';
+	
+	if ( ! $author ) {
+		$output = '';
+	}
+	
 	return apply_filters( 'bizznis_post_author_posts_link_shortcode', $output, $atts );
 }
 
@@ -209,6 +256,10 @@ function bizznis_post_author_posts_link_shortcode( $atts ) {
  */
 add_bizzcode( 'post_comments', 'bizznis_post_comments_shortcode' );
 function bizznis_post_comments_shortcode( $atts ) {
+	if ( ! post_type_supports( get_post_type(), 'comments' ) ) {
+		return '';
+	}
+	
 	$defaults = array(
 		'after'       => '',
 		'before'      => '',
@@ -432,6 +483,60 @@ function bizznis_footer_wordpress_link_shortcode( $atts ) {
 	$atts = shortcode_atts( $defaults, $atts, 'footer_wordpress_link' );
 	$output = sprintf( '%s<a href="%s">%s</a>%s', $atts['before'], 'http://wordpress.org/', 'WordPress', $atts['after'] );
 	return apply_filters( 'bizznis_footer_wordpress_link_shortcode', $output, $atts );
+}
+
+/**
+ * Produces the site title.
+ *
+ * Supported shortcode attributes are:
+ *   after (output after link, default is empty string),
+ *   before (output before link, default is empty string).
+ *
+ * Output passes through 'bizznis_footer_site_title_shortcode' filter before returning.
+ *
+ * @since 1.4.0
+ *
+ * @param array|string $atts Shortcode attributes. Empty string if no attributes.
+ * @return string Shortcode output
+ */
+add_bizzcode( 'footer_site_title', 'bizznis_footer_site_title_shortcode' );
+function bizznis_footer_site_title_shortcode( $atts ) {
+	$defaults = array(
+		'after'  => '',
+		'before' => '',
+	);
+	$atts = shortcode_atts( $defaults, $atts, 'footer_site_title' );
+	$output = $atts['before'] . get_bloginfo( 'name' ) . $atts['after'];
+
+	return apply_filters( 'bizznis_footer_site_title_shortcode', $output, $atts );
+}
+
+/**
+ * Produces a link to the home URL.
+ *
+ * Supported shortcode attributes are:
+ *   after (output after link, default is empty string),
+ *   before (output before link, default is empty string),
+ *   text (link text, default is site title).
+ *
+ * Output passes through 'bizznis_footer_home_link_shortcode' filter before returning.
+ *
+ * @since 1.4.0
+ *
+ * @param array|string $atts Shortcode attributes. Empty string if no attributes.
+ * @return string Shortcode output
+ */
+add_bizzcode( 'footer_home_link', 'bizznis_footer_home_link_shortcode' );
+function bizznis_footer_home_link_shortcode( $atts ) {
+	$defaults = array(
+		'after'  => '',
+		'before' => '',
+		'text'   => get_bloginfo( 'name' ),
+	);
+	$atts = shortcode_atts( $defaults, $atts, 'footer_home_link' );
+	$output = sprintf( '%s<a href="%s">%s</a>%s', $atts['before'], home_url(), $atts['text'], $atts['after'] );
+
+	return apply_filters( 'bizznis_footer_home_link_shortcode', $output, $atts );
 }
 
 /**

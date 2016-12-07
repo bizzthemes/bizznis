@@ -25,8 +25,8 @@
  *
  * @return array Maybe modified menu attributes array.
  */
-add_filter( 'nav_menu_link_attributes', 'bizznis_nav_menu_link_attributes', 10, 3 );
-function bizznis_nav_menu_link_attributes( $atts, $item, $args ) {
+add_filter( 'nav_menu_link_attributes', 'bizznis_nav_menu_link_attributes' );
+function bizznis_nav_menu_link_attributes( $atts ) {
 	return bizznis_parse_attr( 'nav-link', $atts );
 }
 
@@ -39,13 +39,16 @@ function bizznis_nav_menu_link_attributes( $atts, $item, $args ) {
  */
 add_action( 'after_setup_theme', 'bizznis_register_nav_menus' );
 function bizznis_register_nav_menus() {
-	# Stop here if menus not supported
+	// Stop here if menus not supported.
 	if ( ! current_theme_supports( 'bizznis-menus' ) ) {
 		return;
 	}
+	
 	$menus = get_theme_support( 'bizznis-menus' );
-	# Register supported menus
+	
+	// Register supported menus.
 	register_nav_menus( (array) $menus[0] );
+	
 	do_action( 'bizznis_register_nav_menus' );
 }
 
@@ -63,14 +66,17 @@ add_action( 'bizznis_header_top', 'bizznis_do_nav' );
  */
 if ( ! function_exists( 'bizznis_do_nav' ) ) :
 function bizznis_do_nav() {
-	# Do nothing if menu not supported
+	// Do nothing if menu not supported.
 	if ( ! bizznis_nav_menu_supported( 'primary' ) || ! has_nav_menu( 'primary' ) ) {
 		return;
 	}
+	
 	$class = 'menu menu-bizznis menu-primary';
+	
 	if ( bizznis_a11y( 'headings' ) ) {
 		printf( '<h2 class="screen-reader-text">%s</h2>', __( 'Main navigation', 'bizznis' ) );
 	}
+	
 	bizznis_nav_menu( array(
 		'theme_location' => 'primary',
 		'menu_class'     => $class,
@@ -91,11 +97,13 @@ add_action( 'bizznis_header_bottom', 'bizznis_do_subnav' );
  */
 if ( ! function_exists( 'bizznis_do_subnav' ) ) :
 function bizznis_do_subnav() {
-	# Do nothing if menu not supported
+	// Do nothing if menu not supported.
 	if ( ! bizznis_nav_menu_supported( 'secondary' ) || ! has_nav_menu( 'secondary' ) ) {
 		return;
 	}
+	
 	$class = 'menu menu-bizznis menu-secondary';
+	
 	bizznis_nav_menu( array(
 		'theme_location' => 'secondary',
 		'menu_class'     => $class,
@@ -111,14 +119,15 @@ add_filter( 'nav_primary_after', 'bizznis_nav_right', 10, 2 );
  */
 if ( ! function_exists( 'bizznis_nav_right' ) ) :
 function bizznis_nav_right( $menu = '', $args = '' ) {
-	# Stop here if extras not enabled
+	// Stop here if extras not enabled.
 	if ( ! bizznis_get_option( 'nav_extras_enable' ) ) {
 		return $menu;
 	}
-	# show selected option
+	
+	// show selected option.
 	switch ( bizznis_get_option( 'nav_extras' ) ) {
 		case 'search':
-			# I hate output buffering, but I have no choice
+			// I hate output buffering, but I have no choice.
 			ob_start();
 			get_search_form();
 			$search = ob_get_clean();
@@ -128,9 +137,10 @@ function bizznis_nav_right( $menu = '', $args = '' ) {
 			$menu .= sprintf( '<ul class="menu-bizznis-extra right twitter"><li><a href="%s">%s</a></li></ul>', esc_url( 'http://twitter.com/' . bizznis_get_option( 'nav_extras_twitter_id' ) ), esc_html( bizznis_get_option( 'nav_extras_twitter_text' ) ) );
 			break;
 		case 'date':
-			$menu .= '<div class="menu-bizznis-extra right date">' . date_i18n( get_option( 'date_format' ) ) . '</div>';
+			$menu .= '<div class="menu-bizznis-extra right date">' . date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) . '</div>';
 			break;
 	}
+	
 	return $menu;
 }
 endif;
@@ -146,6 +156,7 @@ function bizznis_header_menu_args( $args ) {
 	$args['link_before'] = $args['link_before'] ? $args['link_before'] : sprintf( '<span %s>', bizznis_attr( 'nav-link-wrap' ) );
 	$args['link_after']  = $args['link_after'] ? $args['link_after'] : '</span>';
 	$args['menu_class'] .= ' menu-bizznis';
+	
 	return $args;
 }
 endif;
@@ -171,10 +182,10 @@ endif;
 // add_filter( 'walker_nav_menu_start_el', 'bizznis_add_menu_description', 10, 2 );
 function bizznis_add_menu_description( $item_output, $item ) {
 	$description = $item->post_content;
+	
 	if ( ' ' !== $description ) {
 		return preg_replace( '/(<a.*?>[^<]*?)</', '$1' . '<span class="menu-description">' . $description . '</span><', $item_output);
-	}
-	 else {
+	} else {
 		return $item_output;
 	}
 }

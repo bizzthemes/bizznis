@@ -14,7 +14,7 @@
 <?php wp_head(); ?>
 </head>
 <?php
-printf( '<body %s>', bizznis_attr( 'body', array( 'class' => implode( ' ', get_body_class() ) ) ) );
+printf( '<body %s>', bizznis_attr( 'body' ) );
 do_action( 'bizznis_before' );
 printf( '<div %s>', bizznis_attr( 'site-container' ) );
 do_action( 'bizznis_header' );

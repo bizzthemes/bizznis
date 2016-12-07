@@ -110,8 +110,10 @@ function bizznis_attributes_head( $attributes ) {
  */
 add_filter( 'bizznis_attr_body', 'bizznis_attributes_body' );
 function bizznis_attributes_body( $attributes ) {
-	$attributes['itemscope']	= true;
-	$attributes['itemtype']		= 'http://schema.org/WebPage';
+	$attributes['class']     = join( ' ', get_body_class() );
+	$attributes['itemscope'] = true;
+	$attributes['itemtype']	 = 'http://schema.org/WebPage';
+	
 	# Search results pages
 	if ( is_search() ) {
 		$attributes['itemtype'] = 'http://schema.org/SearchResultsPage';
@@ -376,6 +378,25 @@ function bizznis_attributes_entry_image( $attributes ) {
 	$attributes['class']    	= bizznis_get_option( 'image_alignment' ) . ' post-image entry-image';
 	$attributes['itemprop'] 	= 'image';
 	
+	return $attributes;
+}
+
+/**
+ * Add attributes for entry image link element
+ *
+ * @since 1.4.0
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes
+ *
+ */
+add_filter( 'bizznis_attr_entry-image-link', 'bizznis_attributes_entry_image_link' );
+function bizznis_attributes_entry_image_link( $attributes ) {
+	$attributes['href']        = get_permalink();
+	$attributes['aria-hidden'] = 'true';
+	$attributes['class']       = 'entry-image-link';
+
 	return $attributes;
 }
 

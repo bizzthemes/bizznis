@@ -12,7 +12,7 @@
  */
 if ( ! function_exists( 'bizznis_reset_loops' ) ) :
 function bizznis_reset_loops() {
-	# HTML5 Hooks
+	// HTML5 Hooks.
 	add_action( 'bizznis_entry_header', 'bizznis_do_post_format_image', 5 );
 	add_action( 'bizznis_entry_header', 'bizznis_entry_header_markup_open', 5 );
 	add_action( 'bizznis_entry_header', 'bizznis_entry_header_markup_close', 15 );
@@ -26,10 +26,13 @@ function bizznis_reset_loops() {
 	add_action( 'bizznis_entry_footer', 'bizznis_entry_footer_markup_close', 15 );
 	add_action( 'bizznis_entry_footer', 'bizznis_post_meta' );
 	add_action( 'bizznis_after_entry', 'bizznis_do_author_box_single' );
-	# Other
+	add_action( 'bizznis_after_entry', 'bizznis_adjacent_entry_nav' );
+	
+	// Other.
 	add_action( 'bizznis_loop_else', 'bizznis_do_noposts' );
 	add_action( 'bizznis_after_endwhile', 'bizznis_posts_nav' );
-	# Reset loop args
+	
+	// Reset loop args.
 	global $_bizznis_loop_args;
 	$_bizznis_loop_args = array();
 	do_action( 'bizznis_reset_loops' );
@@ -41,13 +44,21 @@ add_filter( 'post_class', 'bizznis_entry_post_class' );
  * Add 'entry' post class, remove 'hentry' post class if HTML5.
  *
  * @since 1.0.0
+ *
+ * @param array $classes Existing post classes.
+ * @return array Amended post classes. Not modified if in WP admin, or doing Ajax request.
  */
 if ( ! function_exists( 'bizznis_entry_post_class' ) ) :
 function bizznis_entry_post_class( $classes ) {
-	# Add "entry" to the post class array
+	if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		return $classes;
+	}
+	// Add "entry" to the post class array.
 	$classes[] = 'entry';
-	# Remove "hentry" from post class array, if HTML5
+	
+	// Remove "hentry" from post class array, if HTML5.
 	$classes = array_diff( $classes, array( 'hentry' ) );
+	
 	return $classes;
 }
 endif;
@@ -57,13 +68,18 @@ add_filter( 'post_class', 'bizznis_custom_post_class', 15 );
  * Add a custom post class, saved as a custom field.
  *
  * @since 1.0.0
+ *
+ * @param array $classes Existing post classes.
+ * @return array Amended post classes. Not modified if in WP admin.
  */
 if ( ! function_exists( 'bizznis_custom_post_class' ) ) :
 function bizznis_custom_post_class( array $classes ) {
 	$new_class = bizznis_get_custom_field( '_bizznis_custom_post_class' );
+	
 	if ( $new_class ) {
 		$classes[] = esc_attr( $new_class );
 	}
+	
 	return $classes;
 }
 endif;
@@ -74,15 +90,14 @@ add_filter( 'post_class', 'bizznis_featured_image_post_class' );
  *
  * @since 1.2.0
  *
- * @uses bizznis_get_image() Bizznis featured image
  *
- * @param array $classes Existing post classes
- * @return array Amended post classes
- *
+ * @param array $classes Existing post classes.
+ * @return array Amended post classes. Not modified if in WP admin.
  */
 if ( ! function_exists( 'bizznis_featured_image_post_class' ) ) :
 function bizznis_featured_image_post_class( $classes ) {
     $image = bizznis_get_image();
+	
 	if ( $image && ! is_singular() && bizznis_get_option( 'content_archive_thumbnail' ) && ! in_array( 'has-post-thumbnail', $classes ) ) {
         $classes[] = 'has-post-thumbnail';
     }
@@ -96,20 +111,25 @@ add_action( 'bizznis_entry_header', 'bizznis_do_post_format_image', 5 );
  * Add a post format icon. Adds an image, corresponding to the post format, before the post title.
  *
  * @since 1.0.0
+ *
+ * @return null Return early if `post-formats` or `bizznis-post-format-images` are not supported.
  */
 if ( ! function_exists( 'bizznis_do_post_format_image' ) ) :
 function bizznis_do_post_format_image() {
-	# Stop here if post formats aren't supported
+	// Stop here if post formats aren't supported.
 	if ( ! current_theme_supports( 'post-formats' ) || ! current_theme_supports( 'bizznis-post-format-images' ) ) {
 		return;
 	}
-	# Get post format
+	
+	// Get post format.
 	$post_format = get_post_format();
-	# If post format is set, look for post format image
+	
+	// If post format is set, look for post format image.
 	if ( $post_format && file_exists( sprintf( '%s/images/post-formats/%s.png', CHILD_DIR, $post_format ) ) ) {
 		printf( '<a href="%s" rel="bookmark"><img src="%s" class="post-format-image" alt="%s" /></a>', get_permalink(), sprintf( '%s/images/post-formats/%s.png', CHILD_URL, $post_format ), $post_format );
 	}
-	# Else, look for the default post format image
+	
+	// Else, look for the default post format image.
 	elseif ( file_exists( sprintf( '%s/images/post-formats/default.png', CHILD_DIR ) ) ) {
 		printf( '<a href="%s" rel="bookmark"><img src="%s/images/post-formats/default.png" class="post-format-image" alt="%s" /></a>', get_permalink(), CHILD_URL, 'post' );
 	}
@@ -149,25 +169,29 @@ add_action( 'bizznis_entry_header', 'bizznis_do_post_title' );
 if ( ! function_exists( 'bizznis_do_post_title' ) ) :
 function bizznis_do_post_title() {
 	$title = apply_filters( 'bizznis_post_title_text', get_the_title() );
-	# Stop here if no title
+	
+	// Stop here if no title.
 	if ( 0 == strlen( $title ) ) {
 		return;
 	}
-	# Link it, if necessary
+	
+	// Link it, if necessary.
 	if ( ! is_singular() && apply_filters( 'bizznis_link_post_title', true ) ) {
 		$title = sprintf( '<a href="%s" rel="bookmark">%s</a>', get_permalink(), $title );
 	}
-	# Wrap in H1 on singular pages
+	
+	// Wrap in H1 on singular pages.
 	$wrap = is_singular() ? 'h1' : 'h2';
-	# Also, if HTML5 with semantic headings, wrap in H1
+	
+	// Also, if HTML5 with semantic headings, wrap in H1.
 	$wrap = apply_filters( 'bizznis_entry_header_wrap', $wrap );
 	
-	# Build the output
+	// Build the output.
 	$output = sprintf( "<{$wrap} %s>", bizznis_attr( 'entry-title' ) );
 	$output .= "{$title}";
 	$output .= "</{$wrap}>";
 	
-	echo apply_filters( 'bizznis_post_title_output', "$output \n" );
+	echo apply_filters( 'bizznis_post_title_output', "$output \n", $wrap, $title );
 }
 endif;
 
@@ -179,7 +203,7 @@ add_action( 'bizznis_entry_content', 'bizznis_do_post_image' );
  */
 if ( ! function_exists( 'bizznis_do_post_image' ) ) :
 function bizznis_do_post_image() {
-	# If this an archive page and the option is set to show thumbnail, then it gets the image size as per the theme setting, wraps it in the post permalink and echoes it.
+	// If this an archive page and the option is set to show thumbnail, then it gets the image size as per the theme setting, wraps it in the post permalink and echoes it.
 	if ( ! is_singular() && bizznis_get_option( 'content_archive_thumbnail' ) ) {
 		$img = bizznis_get_image( array(
 			'format'  => 'html',
@@ -187,9 +211,12 @@ function bizznis_do_post_image() {
 			'context' => 'archive',
 			'attr'    => bizznis_parse_attr( 'entry-image', array ( 'alt' => get_the_title() ) ),
 		) );
+		
 		if ( ! empty( $img ) ) {
-			printf( '<a href="%s" aria-hidden="true">%s</a>', get_permalink(), $img );
-		}
+			printf( '<a %s>', bizznis_attr( 'entry-image-link' ) );
+  			echo $img . '</a>';
+
+ 		}
 	}
 }
 endif;
@@ -202,30 +229,27 @@ add_action( 'bizznis_entry_content', 'bizznis_do_post_content' );
  */
 if ( ! function_exists( 'bizznis_do_post_content' ) ) :
 function bizznis_do_post_content() {
-	# On single posts or pages it echoes the full content
+	// On single posts or pages it echoes the full content.
 	if ( is_singular() ) {
 		the_content();
-		# optionally echoes the trackback string if enabled
+		
+		// optionally echoes the trackback string if enabled.
 		if ( is_single() && 'open' === get_option( 'default_ping_status' ) && post_type_supports( get_post_type(), 'trackbacks' ) ) {
 			echo '<!--';
 			trackback_rdf();
 			echo '-->' . "\n";
 		}
-		# On single pages, also adds the edit link after the content.
+		
+		// On single pages, also adds the edit link after the content.
 		if ( is_page() && apply_filters( 'bizznis_edit_post_link', true ) ) {
 			edit_post_link( __( '(Edit)', 'bizznis' ), '', '' );
 		}
-	}
-	elseif ( 'excerpts' == bizznis_get_option( 'content_archive' ) ) {
+	} elseif ( 'excerpts' == bizznis_get_option( 'content_archive' ) ) {
 		the_excerpt();
-	}
-	else {
-		if ( bizznis_get_option( 'content_archive_limit' ) ) {
-			the_content_limit( (int) bizznis_get_option( 'content_archive_limit' ), __( '[Read more...]', 'bizznis' ) );
-		}
-		else {
-			the_content( bizznis_a11y_more_link(__( '[Read more...]', 'bizznis' ) ) );
-		}
+	} elseif ( bizznis_get_option( 'content_archive_limit' ) ) {
+		the_content_limit( (int) bizznis_get_option( 'content_archive_limit' ), __( '[Read more...]', 'bizznis' ) );
+	} else {
+		the_content( bizznis_a11y_more_link(__( '[Read more...]', 'bizznis' ) ) );
 	}
 }
 endif;
@@ -238,11 +262,13 @@ add_action( 'bizznis_entry_content', 'bizznis_do_post_permalink' );
  */
 if ( ! function_exists( 'bizznis_do_post_permalink' ) ) :
 function bizznis_do_post_permalink() {
-	# Don't show on singular views, or if the entry has a title
+	// Don't show on singular views, or if the entry has a title.
 	if ( is_singular() || get_the_title() ) {
 		return;
 	}
+	
 	$permalink = get_permalink();
+	
 	echo apply_filters( 'bizznis_post_permalink', sprintf( '<p class="entry-permalink"><a href="%s" rel="bookmark">%s</a></p>', esc_url( $permalink ), esc_html( $permalink ) ) );
 }
 endif;
@@ -256,8 +282,9 @@ add_action( 'bizznis_entry_content', 'bizznis_do_post_content_nav' );
 if ( ! function_exists( 'bizznis_do_post_content_nav' ) ) :
 function bizznis_do_post_content_nav() {
 	wp_link_pages( array(
-		'before' => sprintf( '<nav %s>', bizznis_attr( 'entry-pagination' ) ) . __( 'Pages:', 'bizznis' ),
-		'after'  => '</nav>',
+		'before' 		=> sprintf( '<nav %s>', bizznis_attr( 'entry-pagination' ) ) . __( 'Pages:', 'bizznis' ),
+		'after'  		=> '</nav>',
+		'link_before' 	=> bizznis_a11y( 'screen-reader-text' ) ? '<span class="screen-reader-text">' . __( 'Page ', 'bizznis' ) .  '</span>' : '',
 	) );
 }
 endif;
@@ -285,19 +312,23 @@ add_action( 'bizznis_entry_header', 'bizznis_post_info' );
  * before echoing.
  *
  * @since 1.0.0
- * @uses bizznis_markup() Contextual markup.
+ *
+ * @uses bizznis_attr() Contextual markup.
  * @return null Return early if post type lacks support.
  */
 if ( ! function_exists( 'bizznis_post_info' ) ) :
 function bizznis_post_info() {
-	# Filter for each post type.
+	// Filter for each post type.
 	if ( ! post_type_supports( get_post_type(), 'bizznis-entry-meta-before-content' ) ) {
 		return;
 	}
+	
 	$filtered = apply_filters( 'bizznis_post_info', '[post_date] ' . __( 'by', 'bizznis' ) . ' [post_author_posts_link] [post_comments] [post_edit]' );
-	if ( empty( $filtered ) ) {
+	
+	if ( false == trim( $filtered ) ) {
 		return;
 	}
+	
 	printf( '<p %s>' . $filtered . '</p>', bizznis_attr( 'entry-meta' ) );
 }
 endif;
@@ -339,14 +370,17 @@ add_action( 'bizznis_entry_footer', 'bizznis_post_meta' );
  */
 if ( ! function_exists( 'bizznis_post_meta' ) ) :
 function bizznis_post_meta() {
-	# Filter for each post type.
+	// Filter for each post type.
 	if ( ! post_type_supports( get_post_type(), 'bizznis-entry-meta-after-content' ) ) {
 		return;
 	}
+	
 	$filtered = apply_filters( 'bizznis_post_meta', '[post_categories] [post_tags]' );
-	if ( empty( $filtered ) ) {
+	
+	if ( false == trim( $filtered ) ) {
 		return;
 	}
+	
 	printf( '<p %s>' . $filtered . '</p>', bizznis_attr( 'entry-meta' ) );
 }
 endif;
@@ -359,9 +393,10 @@ add_action( 'bizznis_after_entry', 'bizznis_do_author_box_single' );
  */
 if ( ! function_exists( 'bizznis_do_author_box_single' ) ) :
 function bizznis_do_author_box_single() {
-	if ( ! is_single() ) {
+	if ( ! is_single() || ! post_type_supports( get_post_type(), 'author' ) ) {
 		return;
 	}
+	
 	if ( get_the_author_meta( 'bizznis_author_box_single', get_the_author_meta( 'ID' ) ) ) {
 		bizznis_author_box( 'single' );
 	}
@@ -380,8 +415,10 @@ function bizznis_author_box( $context = '', $echo = true ) {
 	$gravatar_size = apply_filters( 'bizznis_author_box_gravatar_size', 70, $context );
 	$gravatar      = get_avatar( get_the_author_meta( 'email' ), $gravatar_size );
 	$description   = wpautop( get_the_author_meta( 'description' ) );
-	# The author box markup, contextual
+	
+	// The author box markup, contextual.
 	$title = __( 'About', 'bizznis' ) . ' <span itemprop="name">' . get_the_author() . '</span>';
+	
 	/**
 	 * Author box title filter.
 	 * 
@@ -393,6 +430,7 @@ function bizznis_author_box( $context = '', $echo = true ) {
 	 * @param string $context Context. 
 	 */
 	$title = apply_filters( 'bizznis_author_box_title', $title, $context );
+	
 	if ( 'single' === $context ) {
 		$heading_element = 'h4';
 	} elseif ( bizznis_a11y( 'headings' ) || get_the_author_meta( 'headline', (int) get_query_var( 'author' ) ) ) {
@@ -400,15 +438,17 @@ function bizznis_author_box( $context = '', $echo = true ) {
 	} else {
 		$heading_element = 'h1';
 	}
+	
 	$pattern  = sprintf( '<section %s>', bizznis_attr( 'author-box' ) );
 	$pattern .= '%s<' . $heading_element . ' class="author-box-title">%s</' . $heading_element . '>';
 	$pattern .= '<div class="author-box-content" itemprop="description">%s</div>';
 	$pattern .= '</section>';
+	
 	$output = apply_filters( 'bizznis_author_box', sprintf( $pattern, $gravatar, $title, $description ), $context, $pattern, $gravatar, $title, $description );
+	
 	if ( $echo ) {
 		echo $output;
-	}
-	else {
+	} else {
 		return $output;
 	}
 }
@@ -424,9 +464,10 @@ add_action( 'bizznis_after_entry', 'bizznis_after_entry_widget_area' );
  */
 if ( ! function_exists( 'bizznis_after_entry_widget_area' ) ) :
 function bizznis_after_entry_widget_area() {
-	if ( ! is_singular( 'post' ) ) {
+	if ( ! is_singular() || ! post_type_supports( get_post_type(), 'bizznis-after-entry-widget-area' ) ) {
 		return;
 	}
+	
 	bizznis_widget_area( 'after-entry', array(
 		'before' => '<div class="after-entry widget-area">',
 		'after'  => '</div>',
@@ -461,13 +502,15 @@ if ( ! function_exists( 'bizznis_prev_next_posts_nav' ) ) :
 function bizznis_prev_next_posts_nav() {
 	$prev_link = get_previous_posts_link( apply_filters( 'bizznis_prev_link_text', '&#x000AB; ' . __( 'Previous Page', 'bizznis' ) ) );
 	$next_link = get_next_posts_link( apply_filters( 'bizznis_next_link_text', __( 'Next Page', 'bizznis' ) . ' &#x000BB;' ) );
-	$prev = $prev_link ? '<div class="pagination-previous alignleft">' . $prev_link . '</div>' : '';
-	$next = $next_link ? '<div class="pagination-next alignright">' . $next_link . '</div>' : '';
-	$nav = sprintf( '<nav %s>', bizznis_attr( 'archive-pagination' ) );
-	$nav .= $prev;
-	$nav .= $next;
-	$nav .= '</nav>';
-	if ( $prev || $next ) {
+	
+	if ( $prev_link || $next_link ) {
+		$prev = $prev_link ? '<div class="pagination-previous alignleft">' . $prev_link . '</div>' : '';
+		$next = $next_link ? '<div class="pagination-next alignright">' . $next_link . '</div>' : '';
+		$nav = sprintf( '<nav %s>', bizznis_attr( 'archive-pagination' ) );
+		$nav .= $prev;
+		$nav .= $next;
+		$nav .= '</nav>';
+
 		echo $nav;
 	}
 }
@@ -480,22 +523,27 @@ endif;
  */
 if ( ! function_exists( 'bizznis_numeric_posts_nav' ) ) :
 function bizznis_numeric_posts_nav() {
-	# Stop on singular posts
+	// Stop on singular posts.
 	if( is_singular() ) {
 		return;
 	}
+	
 	global $wp_query;
-	# Stop execution if there's only 1 page
+	
+	// Stop execution if there's only 1 page.
 	if( $wp_query->max_num_pages <= 1 ) {
 		return;
 	}
+	
 	$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
 	$max   = intval( $wp_query->max_num_pages );
-	# Add current page to the array
+	
+	// Add current page to the array.
 	if ( $paged >= 1 ) {
 		$links[] = $paged;
 	}
-	# Add the pages around the current page to the array
+	
+	// Add the pages around the current page to the array.
 	if ( $paged >= 3 ) {
 		$links[] = $paged - 1;
 		$links[] = $paged - 2;
@@ -504,14 +552,17 @@ function bizznis_numeric_posts_nav() {
 		$links[] = $paged + 2;
 		$links[] = $paged + 1;
 	}
+	
 	printf( '<nav %s>', bizznis_attr( 'archive-pagination' ) );
 	$before_number = bizznis_a11y( 'screen-reader-text' ) ? '<span class="screen-reader-text">' . __( 'Page ', 'bizznis' ) .  '</span>' : '';
 	echo '<ul>';
-	# Previous Post Link
+	
+	// Previous Post Link.
 	if ( get_previous_posts_link() ) {
 		printf( '<li class="pagination-previous">%s</li>' . "\n", get_previous_posts_link( apply_filters( 'bizznis_prev_link_text', '&#x000AB; ' . __( 'Previous Page', 'bizznis' ) ) ) );
 	}
-	# Link to first page, plus ellipses if necessary
+	
+	// Link to first page, plus ellipses if necessary.
 	if ( ! in_array( 1, $links ) ) {
 		$class = 1 == $paged ? ' class="active"' : '';
 		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), $before_number . '1' );
@@ -519,13 +570,15 @@ function bizznis_numeric_posts_nav() {
 			echo '<li class="pagination-omission">&#x02026;</li>' . "\n";
 		}
 	}
-	# Link to current page, plus 2 pages in either direction if necessary
+	
+	// Link to current page, plus 2 pages in either direction if necessary.
 	sort( $links );
 	foreach ( (array) $links as $link ) {
 		$class = $paged == $link ? ' class="active"  aria-label="' . __( 'Current page', 'bizznis' ) . '"' : '';
 		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $link ) ), $before_number . $link );
 	}
-	# Link to last page, plus ellipses if necessary
+	
+	// Link to last page, plus ellipses if necessary.
 	if ( ! in_array( $max, $links ) ) {
 		if ( ! in_array( $max - 1, $links ) ) {
 			echo '<li class="pagination-omission">&#x02026;</li>' . "\n";
@@ -533,37 +586,52 @@ function bizznis_numeric_posts_nav() {
 		$class = $paged == $max ? ' class="active"' : '';
 		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $max ) ), $before_number . $max );
 	}
-	# Next Post Link
+	
+	// Next Post Link.
 	if ( get_next_posts_link() ) {
 		printf( '<li class="pagination-next">%s</li>' . "\n", get_next_posts_link( apply_filters( 'bizznis_next_link_text', __( 'Next Page', 'bizznis' ) . ' &#x000BB;' ) ) );
 	}
+	
 	echo '</ul></nav>' . "\n";
 }
 endif;
 
-// add_action( 'bizznis_after_entry', 'bizznis_prev_next_post_nav' );
+add_action( 'bizznis_after_entry', 'bizznis_adjacent_entry_nav' );
 /**
- * Display links to previous and next post, from a single post. 
- *
- * Optionally call it inside a child theme
+ * Display links to previous and next entry.
  *
  * @since 1.0.0
+ *
+ * @return null Return early if not singular or post type doesn't support feature.
  */
-if ( ! function_exists( 'bizznis_prev_next_post_nav' ) ) :
-function bizznis_prev_next_post_nav() {
-	if ( ! is_singular( 'post' ) ) {
+if ( ! function_exists( 'bizznis_adjacent_entry_nav' ) ) :
+function bizznis_adjacent_entry_nav() {
+	if ( ! is_singular() || ! post_type_supports( get_post_type(), 'bizznis-adjacent-entry-nav' ) ) {
 		return;
 	}
+
 	printf( '<nav %s>', bizznis_attr( 'adjacent-entry-pagination' ) );
 	echo '<div class="pagination-previous alignleft">';
-	previous_post_link();
+	previous_post_link( '%link', '&#x000AB; %title' );
 	echo '</div>';
 	echo '<div class="pagination-next alignright">';
-	next_post_link();
+	next_post_link( '%link', '%title &#x000BB;' );
 	echo '</div>';
 	echo '</nav>';
+
 }
 endif;
+
+/**
+ * Helper function to display adjacent entry navigation on single posts. Must be hooked `bizznis_after_entry` at priority 10 or earlier to work properly.
+ *
+ * @since 1.0.0
+ *
+ * @return null Return early if not a post.
+ */
+function bizznis_prev_next_post_nav() {
+	add_post_type_support( 'post', 'bizznis-adjacent-entry-nav' );
+}
 
 add_action( 'wp_head', 'bizznis_custom_post_header' );
 /**
@@ -576,7 +644,9 @@ function bizznis_custom_post_header() {
 	if ( ! is_singular() ) {
 		return;
 	}
+	
 	$hide_header = bizznis_get_custom_field( '_bizznis_hide_header' );
+	
 	if ( $hide_header ) {
 		remove_action( 'bizznis_entry_header', 'bizznis_do_post_format_image', 5 );
 		remove_action( 'bizznis_entry_header', 'bizznis_entry_header_markup_open', 5 );

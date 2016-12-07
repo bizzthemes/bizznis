@@ -11,21 +11,21 @@
  * @since 1.0.0
  */
 function bizznis_get_option( $key, $setting = null, $use_cache = true ) {	
-	# The default is set here, so it doesn't have to be repeated in the function arguments for bizznis_option() too.
+	// The default is set here, so it doesn't have to be repeated in the function arguments for bizznis_option() too.
 	$setting = $setting ? $setting : BIZZNIS_SETTINGS_FIELD;
 	
-	# Allow child theme to short-circuit this function
+	// Allow child theme to short-circuit this function.
 	$pre = apply_filters( "bizznis_pre_get_option_{$key}", null, $setting );
 	if ( null !== $pre ) {
 		return $pre;
 	}
 	
-	# Bypass cache if viewing site in customizer
+	// Bypass cache if viewing site in customizer.
 	if ( bizznis_is_customizer() ) {
 		$use_cache = false;
 	}
 	
-	# If we need to bypass the cache
+	// If we need to bypass the cache.
 	if ( ! $use_cache ) {
 		$options = get_option( $setting );
 		if ( ! is_array( $options ) || ! array_key_exists( $key, $options ) ) {
@@ -34,33 +34,31 @@ function bizznis_get_option( $key, $setting = null, $use_cache = true ) {
 		return is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
 	}
 	
-	# Setup caches
+	// Setup caches.
 	static $settings_cache = array();
 	static $options_cache  = array();
 	
-	# Check options cache
+	// Check options cache.
 	if ( isset( $options_cache[$setting][$key] ) ) {
-		# Option has been cached
+		// Option has been cached.
 		return $options_cache[$setting][$key];
 	}
 	
-	# Check settings cache
+	// Check settings cache.
 	if ( isset( $settings_cache[$setting] ) ) {
-		# Setting has been cached
+		// Setting has been cached.
 		$options = apply_filters( 'bizznis_options', $settings_cache[$setting], $setting );
-	}
-	else {
-		# Set value and cache setting
+	} else {
+		// Set value and cache setting.
 		$options = $settings_cache[$setting] = apply_filters( 'bizznis_options', get_option( $setting ), $setting );
 	}
 	
-	# Check for non-existent option
+	// Check for non-existent option.
 	if ( ! is_array( $options ) || ! array_key_exists( $key, (array) $options ) ) {
-		# Cache non-existent option
+		// Cache non-existent option.
 		$options_cache[$setting][$key] = '';
-	}
-	else {
-		# Option has not been previously been cached, so cache now
+	} else {
+		// Option has not been previously been cached, so cache now.
 		$options_cache[$setting][$key] = is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
 	}
 	
@@ -79,10 +77,22 @@ function bizznis_option( $key, $setting = null, $use_cache = true ) {
 /**
  * Echo data from a post or page custom field.
  *
+ * Echo only the first value of custom field.
+ *
+ * Pass in a `printf()` pattern as the second parameter and have that wrap around the value, if the value is not falsy.
+ *
  * @since 1.0.0
+ *
+ * @uses bizznis_get_custom_field() Return custom field post meta data.
+ *
+ * @param string $field          Custom field key.
+ * @param string $output_pattern printf() compatible output pattern.
+ * @param int    $post_id Optional. Post ID to use for Post Meta lookup, defaults to get_the_ID()
  */
-function bizznis_custom_field( $field, $output_pattern = '%s' ) {
-	printf( $output_pattern, bizznis_get_custom_field( $field ) );
+function bizznis_custom_field( $field, $output_pattern = '%s', $post_id = null ) {
+	if ( $value = bizznis_get_custom_field( $field, $post_id ) ) {
+		printf( $output_pattern, $value );
+	}
 }
 
 /**
@@ -98,7 +108,7 @@ function bizznis_custom_field( $field, $output_pattern = '%s' ) {
  */
 function bizznis_get_custom_field( $field ) {
 	
-	//* Use get_the_ID() if no $post_id is specified
+	//* Use get_the_ID() if no $post_id is specified.
 	$post_id = empty( $post_id ) ? get_the_ID() : $post_id;
 
 	if ( ! $post_id ) {
@@ -111,7 +121,7 @@ function bizznis_get_custom_field( $field ) {
 		return '';
 	}
 	
-	//* Return custom field, slashes stripped, sanitized if string
+	//* Return custom field, slashes stripped, sanitized if string.
 	return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
 }
 
@@ -127,17 +137,17 @@ function bizznis_get_custom_field( $field ) {
  *
  * @since 1.0.0
  */
-function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $post, $post_id ) {
+function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $post, $post_id, $deprecated = null ) {
 	if ( ! empty( $deprecated ) ) {
 		_deprecated_argument( __FUNCTION__, '1.1.0' );
 	}
 	
-	# Verify the nonce
+	// Verify the nonce.
 	if ( ! isset( $_POST[ $nonce_name ] ) || ! wp_verify_nonce( $_POST[ $nonce_name ], $nonce_action ) ) {
 		return;
 	}
 	
-	# Don't try to save the data under autosave, ajax, or future post.
+	// Don't try to save the data under autosave, ajax, or future post.
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
@@ -148,29 +158,29 @@ function bizznis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
 		return;
 	}
 	
-	# Grab the post object
+	// Grab the post object.
 	if ( ! is_null( $deprecated ) ) {
 		$post = get_post( $deprecated );
 	} else {
 		$post = get_post( $post );
 	}
 	
-	# Don't save if WP is creating a revision (same as DOING_AUTOSAVE?)
+	// Don't save if WP is creating a revision (same as DOING_AUTOSAVE?).
 	if ( 'revision' == get_post_type( $post ) ) {
 		return;
 	}
 	
-	# Check that the user is allowed to edit the post
+	// Check that the user is allowed to edit the post.
 	if ( ! current_user_can( 'edit_post', $post->ID ) ) {
 		return;
 	}
-	# Cycle through $data, insert value or delete field
+	
+	// Cycle through $data, insert value or delete field.
 	foreach ( (array) $data as $field => $value ) {
-		# Save $value, or delete if the $value is empty
+		// Save $value, or delete if the $value is empty.
 		if ( $value ) {
 			update_post_meta( $post_id, $field, $value );
-		}
-		else {
+		} else {
 			delete_post_meta( $post_id, $field );
 		}
 	}
@@ -190,7 +200,7 @@ function bizznis_update_settings( $new = '', $setting = BIZZNIS_SETTINGS_FIELD )
 	$old = get_option( $setting );
 	$settings = wp_parse_args( $new, $old );
 
-	//* Allow settings to be deleted
+	//* Allow settings to be deleted.
 	foreach ( $settings as $key => $value ) {
 		if ( 'unset' == $value ) {
 			unset( $settings[ $key ] );

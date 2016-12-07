@@ -14,12 +14,12 @@ add_action( 'bizznis_loop', 'bizznis_do_taxonomy_title_description', 5 );
  */
 if ( ! function_exists( 'bizznis_do_taxonomy_title_description' ) ) :
 function bizznis_do_taxonomy_title_description() {
-	# Stop here if the page is not a category, tag or taxonomy term archive
+	// Stop here if the page is not a category, tag or taxonomy term archive.
 	if ( ! is_category() && ! is_tag() && ! is_tax() ) {
 		return;
 	}
 	
-	# Stop here if there's no term, or no term meta set
+	// Stop here if there's no term, or no term meta set.
 	$term = is_tax() ? get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ) : get_queried_object();
 	if ( ! $term ) {
 		return;
@@ -54,12 +54,12 @@ add_action( 'bizznis_loop', 'bizznis_do_author_title_description', 5 );
  */
 if ( ! function_exists( 'bizznis_do_author_title_description' ) ) :
 function bizznis_do_author_title_description() {	
-	# Stop here if we're not on an author archive page
+	// Stop here if we're not on an author archive page.
 	if ( ! is_author() ) {
 		return;
 	}
 	
-	# If there's a custom headline to display, it is marked up as a level 1 heading.
+	// If there's a custom headline to display, it is marked up as a level 1 heading.
 	$headline = get_the_author_meta( 'headline', (int) get_query_var( 'author' ) );
 	
 	if ( '' == $headline && bizznis_a11y( 'headings' ) ) {
@@ -68,7 +68,7 @@ function bizznis_do_author_title_description() {
 	
 	$intro_text = get_the_author_meta( 'intro_text', (int) get_query_var( 'author' ) );
 	
-	# If there's a description (intro text) to display, it is run through 'wpautop()' before being added to a div.
+	// If there's a description (intro text) to display, it is run through 'wpautop()' before being added to a div.
 	$headline   = $headline ? sprintf( '<h1 %s>%s</h1>', bizznis_attr( 'archive-title' ), strip_tags( $headline ) ) : '';
 	$intro_text = $intro_text ? apply_filters( 'bizznis_author_intro_text_output', $intro_text ) : '';
 	

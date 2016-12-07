@@ -28,5 +28,5 @@ function bizznis_page_landing_hooks() {
 	remove_action( 'bizznis_footer', 'bizznis_do_footer' );
 }
 
-//* Run the Bizznis loop
+// Run the Bizznis loop.
 bizznis();

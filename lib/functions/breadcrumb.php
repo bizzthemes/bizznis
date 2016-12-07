@@ -12,7 +12,7 @@
  */
 class Bizznis_Breadcrumb {
 
-	# Settings array, a merge of provided values and defaults.
+	// Settings array, a merge of provided values and defaults.
 	protected $args = array();
 
 	/**
@@ -21,7 +21,7 @@ class Bizznis_Breadcrumb {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		# Default arguments
+		// Default arguments.
 		$this->args = array(
 			'home'                    => __( 'Home', 'bizznis' ),
 			'sep'                     => ' / ',
@@ -70,6 +70,7 @@ class Bizznis_Breadcrumb {
 		 * }
 		 */
 		$this->args = apply_filters( 'bizznis_breadcrumb_args', wp_parse_args( $args, $this->args ) );
+		
 		return $this->args['prefix'] . $this->args['labels']['prefix'] . $this->build_crumbs() . $this->args['suffix'];
 	}
 
@@ -91,22 +92,18 @@ class Bizznis_Breadcrumb {
 		$crumbs[] = $this->get_home_crumb();
 		if ( is_home() ) {
 			$crumbs[] = $this->get_blog_crumb();
-		}
-		elseif ( is_search() ) {
+		} elseif ( is_search() ) {
 			$crumbs[] = $this->get_search_crumb();
-		}
-		elseif ( is_404() ) {
+		} elseif ( is_404() ) {
 			$crumbs[] = $this->get_404_crumb();
-		}
-		elseif ( is_page() ) {
+		} elseif ( is_page() ) {
 			$crumbs[] = $this->get_page_crumb();
-		}
-		elseif ( is_archive() ) {
+		} elseif ( is_archive() ) {
 			$crumbs[] = $this->get_archive_crumb();
-		}
-		elseif ( is_singular() ) {
+		} elseif ( is_singular() ) {
 			$crumbs[] = $this->get_single_crumb();
 		}
+		
 		/**
 		 * Filter the Bizznis breadcrumbs.
 		 *
@@ -128,28 +125,22 @@ class Bizznis_Breadcrumb {
 	protected function get_archive_crumb() {
 		if ( is_category() ) {
 			$crumb = $this->get_category_crumb();
-		}
-		elseif ( is_tag() ) {
+		} elseif ( is_tag() ) {
 			$crumb = $this->get_tag_crumb();
-		}
-		elseif ( is_tax() ) {
+		} elseif ( is_tax() ) {
 			$crumb = $this->get_tax_crumb();
-		}
-		elseif ( is_year() ) {
+		} elseif ( is_year() ) {
 			$crumb = $this->get_year_crumb();
-		}
-		elseif ( is_month() ) {
+		} elseif ( is_month() ) {
 			$crumb = $this->get_month_crumb();
-		}
-		elseif ( is_day() ) {
+		} elseif ( is_day() ) {
 			$crumb = $this->get_day_crumb();
-		}
-		elseif ( is_author() ) {
+		} elseif ( is_author() ) {
 			$crumb = $this->get_author_crumb();
-		}
-		elseif ( is_post_type_archive() ) {
+		} elseif ( is_post_type_archive() ) {
 			$crumb = $this->get_post_type_crumb();
 		}
+		
 		/**
 		 * Filter the Bizznis archive breadcrumb.
 		 *
@@ -169,13 +160,12 @@ class Bizznis_Breadcrumb {
 	protected function get_single_crumb() {
 		if ( is_attachment() ) {
 			$crumb = $this->get_attachment_crumb();
-		}
-		elseif ( is_singular( 'post' ) ) {
+		} elseif ( is_singular( 'post' ) ) {
 			$crumb = $this->get_post_crumb();
-		}
-		else {
+		} else {
 			$crumb = $this->get_cpt_crumb();
 		}
+		
 		/**
 		 * Filter the Bizznis single breadcrumb.
 		 *
@@ -195,6 +185,7 @@ class Bizznis_Breadcrumb {
 	protected function get_home_crumb() {
 		$url   = $this->page_shown_on_front() ? get_permalink( get_option( 'page_on_front' ) ) : trailingslashit( home_url() );
 		$crumb = ( is_home() && is_front_page() ) ? $this->args['home'] : $this->get_breadcrumb_link( $url, '', $this->args['home'] );
+		
 		/**
 		 * Filter the Bizznis home breadcrumb.
 		 *
@@ -216,6 +207,7 @@ class Bizznis_Breadcrumb {
 		if ( $this->page_shown_on_front() ) {
 			$crumb = get_the_title( get_option( 'page_for_posts' ) );
 		}
+		
 		/**
 		 * Filter the Bizznis blog posts breadcrumb.
 		 *
@@ -234,6 +226,7 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_search_crumb() {
 		$crumb = $this->args['labels']['search'] . '"' . esc_html( apply_filters( 'the_search_query', get_search_query() ) ) . '"';
+		
 		/**
 		 * Filter the Search page breadcrumb.
 		 *
@@ -252,6 +245,7 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_404_crumb() {
 		$crumb = $this->args['labels']['404'];
+		
 		/**
 		 * Filter the 404 page breadcrumb.
 		 *
@@ -270,19 +264,18 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_page_crumb() {
 		if ( $this->page_shown_on_front() && is_front_page() ) {
-			 # Don't do anything - we're on the front page and we've already dealt with that elsewhere
+			// Don't do anything - we're on the front page and we've already dealt with that elsewhere.
 			$crumb = $this->get_home_crumb(); 
 		} else {
 			$post = get_queried_object();
-			# If this is a top level Page, it's simple to output the breadcrumb
+			// If this is a top level Page, it's simple to output the breadcrumb.
 			if ( 0 == $post->post_parent ) {
 				$crumb = get_the_title();
 			} else {
 				if ( isset( $post->ancestors ) ) {
 					if ( is_array( $post->ancestors ) ) {
 						$ancestors = array_values( $post->ancestors );
-					}
-					else {
+					} else {
 						$ancestors = array( $post->ancestors );
 					}
 				} else {
@@ -299,11 +292,13 @@ class Bizznis_Breadcrumb {
 						)
 					);
 				}
-				# Add the current page title
+				
+				// Add the current page title.
 				$crumbs[] = get_the_title( $post->ID );
 				$crumb = join( $this->args['sep'], $crumbs );
 			}
 		}
+		
 		/**
 		 * Filter the content page breadcrumb.
 		 *
@@ -324,7 +319,7 @@ class Bizznis_Breadcrumb {
 		$post = get_post();
 		$crumb = '';
 		if ( $this->args['heirarchial_attachments'] ) {
-			# If showing attachment parent
+			// If showing attachment parent.
 			$attachment_parent = get_post( $post->post_parent );
 			$crumb = $this->get_breadcrumb_link(
 				get_permalink( $post->post_parent ),
@@ -334,6 +329,7 @@ class Bizznis_Breadcrumb {
 			);
 		}
 		$crumb .= single_post_title( '', false );
+		
 		return $crumb;
 	}
 
@@ -345,12 +341,12 @@ class Bizznis_Breadcrumb {
 	protected function get_post_crumb() {
 		$categories = get_the_category();
 		if ( 1 == count( $categories ) ) {
-			# If in single category, show it, and any parent categories
+			// If in single category, show it, and any parent categories.
 			$crumb = $this->get_term_parents( $categories[0]->cat_ID, 'category', true ) . $this->args['sep'];
 		}
 		if ( count( $categories ) > 1 ) {
 			if ( ! $this->args['heirarchial_categories'] ) {
-				# Don't show parent categories (unless the post happen to be explicitly in them)
+				// Don't show parent categories (unless the post happen to be explicitly in them).
 				foreach ( $categories as $category ) {
 					$crumbs[] = $this->get_breadcrumb_link(
 						get_category_link( $category->term_id ),
@@ -360,7 +356,7 @@ class Bizznis_Breadcrumb {
 				}
 				$crumb = join( $this->args['list_sep'], $crumbs ) . $this->args['sep'];
 			} else {
-				# Show parent categories - see if one is marked as primary and try to use that
+				// Show parent categories - see if one is marked as primary and try to use that.
 				$primary_category_id = get_post_meta( get_the_ID(), '_category_permalink', true ); # support for sCategory Permalink plugin
 				if ( $primary_category_id ) {
 					$crumb = $this->get_term_parents( $primary_category_id, 'category', true ) . $this->args['sep'];
@@ -370,6 +366,7 @@ class Bizznis_Breadcrumb {
 			}
 		}
 		$crumb .= single_post_title( '', false );
+		
 		return $crumb;
 	}
 
@@ -391,6 +388,7 @@ class Bizznis_Breadcrumb {
 			$crumb = $post_type_object->labels->name;
 		}
 		$crumb .= $this->args['sep'] . single_post_title( '', false );
+		
 		return $crumb;
 	}
 
@@ -401,6 +399,7 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_category_crumb() {
 		$crumb = $this->args['labels']['category'] . $this->get_term_parents( get_query_var( 'cat' ), 'category' );
+		
 		/**
 		 * Filter the category archive breadcrumb.
 		 *
@@ -419,6 +418,7 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_tag_crumb() {
 		$crumb = $this->args['labels']['tag'] . single_term_title( '', false );
+		
 		/**
 		 * Filter the tag archive breadcrumb.
 		 *
@@ -438,6 +438,7 @@ class Bizznis_Breadcrumb {
 	protected function get_tax_crumb() {
 		$term  = get_queried_object();
 		$crumb = $this->args['labels']['tax'] . $this->get_term_parents( $term->term_id, $term->taxonomy );
+		
 		/**
 		 * Filter the taxonomy archive breadcrumb.
 		 *
@@ -457,6 +458,7 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_year_crumb() {
 		$crumb = $this->args['labels']['date'] . get_query_var( 'year' );
+		
 		/**
 		 * Filter the year archive breadcrumb.
 		 *
@@ -482,6 +484,7 @@ class Bizznis_Breadcrumb {
 			$this->args['sep']
 		);
 		$crumb .= $this->args['labels']['date'] . single_month_title( ' ', false );
+		
 		/**
 		 * Filter the month archive breadcrumb.
 		 *
@@ -500,6 +503,7 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_day_crumb() {
 		global $wp_locale;
+		
 		$year  = get_query_var( 'm' ) ? mb_substr( get_query_var( 'm' ), 0, 4 ) : get_query_var( 'year' );
 		$month = get_query_var( 'm' ) ? mb_substr( get_query_var( 'm' ), 4, 2 ) : get_query_var( 'monthnum' );
 		$day   = get_query_var( 'm' ) ? mb_substr( get_query_var( 'm' ), 6, 2 ) : get_query_var( 'day' );
@@ -516,6 +520,7 @@ class Bizznis_Breadcrumb {
 			$this->args['sep']
 		);
 		$crumb .= $this->args['labels']['date'] . get_query_var( 'day' ) . date( 'S', mktime( 0, 0, 0, 1, get_query_var( 'day' ) ) );
+		
 		/**
 		 * Filter the day archive breadcrumb.
 		 *
@@ -534,7 +539,9 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_author_crumb() {
 		global $wp_query;
+		
 		$crumb = $this->args['labels']['author'] . esc_html( $wp_query->queried_object->display_name );
+		
 		/**
 		 * Filter the author archive breadcrumb.
 		 *
@@ -553,6 +560,7 @@ class Bizznis_Breadcrumb {
 	 */
 	protected function get_post_type_crumb() {
 		$crumb = $this->args['labels']['post_type'] . esc_html( post_type_archive_title( '', false ) );
+		
 		/**
 		 * Filter the post type archive breadcrumb.
 		 *
@@ -587,6 +595,7 @@ class Bizznis_Breadcrumb {
 		} else {
 			$chain[] = $parent->name;
 		}
+		
 		return join( $this->args['sep'], $chain );
 	}
 
@@ -602,7 +611,7 @@ class Bizznis_Breadcrumb {
 	 * @return string HTML markup for anchor link and optional separator.
 	 */
 	protected function get_breadcrumb_link( $url, $title, $content, $sep = false ) {		
-		//* Empty title, for backward compatibility
+		//* Empty title, for backward compatibility.
 		$title = '';
 		$itemprop_item = ' itemprop="item"';
 		$itemprop_name = ' itemprop="name"';
@@ -647,6 +656,7 @@ class Bizznis_Breadcrumb {
  */
 function bizznis_breadcrumb( $args = array() ) {
 	global $_bizznis_breadcrumb;
+	
 	if ( ! $_bizznis_breadcrumb ) {
 		$_bizznis_breadcrumb = new Bizznis_Breadcrumb;
 	}
@@ -673,25 +683,21 @@ function bizznis_do_breadcrumbs() {
 	) {
 		return;
 	}
-	# plugins
+	
+	// Plugins.
 	$breadcrumb_markup_open = sprintf( '<div %s>', bizznis_attr( 'breadcrumb' ) );
 	
 	if ( function_exists( 'bcn_display' ) ) {
 		echo $breadcrumb_markup_open . bcn_display() . '</div>';
-	}
-	elseif ( class_exists( 'WPSEO_Breadcrumbs' ) && bizznis_get_option( 'breadcrumbs-enable', 'wpseo_internallinks' ) ) {
+	} elseif ( class_exists( 'WPSEO_Breadcrumbs' ) && bizznis_get_option( 'breadcrumbs-enable', 'wpseo_internallinks' ) ) {
 		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
-	}
-	elseif( function_exists( 'yoast_breadcrumb' ) && ! class_exists( 'WPSEO_Breadcrumbs' ) ) {
+	} elseif( function_exists( 'yoast_breadcrumb' ) && ! class_exists( 'WPSEO_Breadcrumbs' ) ) {
 		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
-	}
-	elseif ( function_exists( 'breadcrumbs' ) ) {
+	} elseif ( function_exists( 'breadcrumbs' ) ) {
 		breadcrumbs();
-	}
-	elseif ( function_exists( 'crumbs' ) ) {
+	} elseif ( function_exists( 'crumbs' ) ) {
 		crumbs();
-	}
-	else {
+	} else {
 		bizznis_breadcrumb(); # native breadcrumbs
 	}
 }

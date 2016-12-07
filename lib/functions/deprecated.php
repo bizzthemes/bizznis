@@ -11,7 +11,7 @@
  * @since 1.0.0
  * @deprecated 1.3.0
  */
-add_action( 'bizznis_init', 'deprecated_constants' );
+add_action( 'bizznis_init', 'deprecated_constants', 15 );
 function deprecated_constants() {
 	define( 'BIZZNIS_ADMIN_IMAGES_DIR', 	BIZZNIS_ASSETS_IMAGES_DIR );
 	define( 'BIZZNIS_ADMIN_CSS_DIR', 		BIZZNIS_ASSETS_CSS_DIR );

@@ -14,12 +14,15 @@ add_action( 'bizznis_loop', 'bizznis_do_loop' );
 if ( ! function_exists( 'bizznis_do_loop' ) ) :
 function bizznis_do_loop() {
 	global $wp_query, $more;
+	
 	$args = apply_filters( 'bizznis_loop_args', wp_parse_args( bizznis_get_custom_field( 'query_args' ), array() ) ); # Filtered args in custom fields
 	if ( $args ) {
 		$wp_query = new WP_Query( $args );
 	}
+	
 	$more = is_singular() ? $more : 0; # Only set $more to 0 if we're on an archive
-	# Loop entry markup
+	
+	// Loop entry markup.
 	bizznis_loop_entry();
 	wp_reset_query();
 }
@@ -62,9 +65,9 @@ endif;
  */
 if ( ! function_exists( 'bizznis_loop_grid' ) ) :
 function bizznis_loop_grid( $args = array() ) {
-	# Global vars
 	global $_bizznis_loop_args;
-	# Parse args
+	
+	// Parse args.
 	$args = apply_filters(
 		'bizznis_loop_grid_args',
 		wp_parse_args(
@@ -82,29 +85,37 @@ function bizznis_loop_grid( $args = array() ) {
 			)
 		)
 	);
-	# If user chose more features than posts per page, adjust features
+	
+	// If user chose more features than posts per page, adjust features.
 	if ( get_option( 'posts_per_page' ) < $args['features'] ) {
 		$args['features'] = get_option( 'posts_per_page' );
 	}
-	# What page are we on?
+	
+	// What page are we on?
 	$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-	# Potentially remove features on page 2+
+	
+	// Potentially remove features on page 2+.
 	if ( ! $args['features_on_all'] && $paged > 1 ) {
 		$args['features'] = 0;
 	}
-	# Set global loop args
+	
+	// Set global loop args.
 	$_bizznis_loop_args = $args;
-	# Remove some unnecessary stuff from the grid loop
+	
+	// Remove some unnecessary stuff from the grid loop.
 	remove_action( 'bizznis_entry_content', 'bizznis_do_post_image' );
 	remove_action( 'bizznis_entry_content', 'bizznis_do_post_content' );
 	remove_action( 'bizznis_entry_content', 'bizznis_do_post_permalink' );
 	remove_action( 'bizznis_entry_content', 'bizznis_do_post_content_nav' );
-	# Custom loop output
+	
+	// Custom loop output.
 	add_filter( 'post_class', 'bizznis_loop_grid_post_class' );
 	add_action( 'bizznis_entry_content', 'bizznis_loop_grid_content' );
-	# The loop
+	
+	// The loop.
 	bizznis_loop_entry();
-	# Reset loops
+	
+	// Reset loops.
 	bizznis_reset_loops();
 	remove_filter( 'post_class', 'bizznis_loop_grid_post_class' );
 	remove_action( 'bizznis_entry_content', 'bizznis_loop_grid_content' );
@@ -119,7 +130,9 @@ endif;
 if ( ! function_exists( 'bizznis_loop_grid_post_class' ) ) :
 function bizznis_loop_grid_post_class( array $classes ) {
 	global $_bizznis_loop_args, $wp_query;
+	
 	$grid_classes = array();
+	
 	if ( $_bizznis_loop_args['features'] && $wp_query->current_post < $_bizznis_loop_args['features'] ) {
 		$grid_classes[] = 'bizznis-feature';
 		$grid_classes[] = sprintf( 'bizznis-feature-%s', $wp_query->current_post + 1 );
@@ -135,6 +148,7 @@ function bizznis_loop_grid_post_class( array $classes ) {
 		$grid_classes[] = sprintf( 'bizznis-grid-%s', $wp_query->current_post - $_bizznis_loop_args['features'] + 1 );
 		$grid_classes[] = $wp_query->current_post&1 ? 'bizznis-grid-even' : 'bizznis-grid-odd';
 	}
+	
 	return array_merge( $classes, apply_filters( 'bizznis_loop_grid_post_class', $grid_classes ) );
 }
 endif;
@@ -158,12 +172,10 @@ function bizznis_loop_grid_content() {
 		}
 		if ( $_bizznis_loop_args['feature_content_limit'] )  {
 			the_content_limit( (int) $_bizznis_loop_args['feature_content_limit'], bizznis_a11y_more_link( esc_html( $_bizznis_loop_args['more'] ) ) );
-		}
-		else {
+		} else {
 			the_content( bizznis_a11y_more_link( esc_html( $_bizznis_loop_args['more'] ) ) );
 		}
-	}
-	else {
+	} else {
 		if ( $_bizznis_loop_args['grid_image_size'] ) {
 			$image = bizznis_get_image( array(
 				'size'    => $_bizznis_loop_args['grid_image_size'],
@@ -192,7 +204,8 @@ add_action( 'bizznis_after_entry', 'bizznis_add_id_to_global_exclude' );
 if ( ! function_exists( 'bizznis_add_id_to_global_exclude' ) ) :
 function bizznis_add_id_to_global_exclude() {
 	global $_bizznis_displayed_ids;
-	# Add each ID to a global array, which can be used any time by other loops to prevent posts from being displayed twice on a page.
+	
+	// Add each ID to a global array, which can be used any time by other loops to prevent posts from being displayed twice on a page.
 	$_bizznis_displayed_ids[] = get_the_ID();
 }
 endif;

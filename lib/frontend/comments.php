@@ -13,7 +13,7 @@ add_action( 'bizznis_after_entry', 'bizznis_get_comments_template' );
  */
 if ( ! function_exists( 'bizznis_get_comments_template' ) ) :
 function bizznis_get_comments_template() {
-	# Stop here if comments are off for this post type
+	// Stop here if comments are off for this post type.
 	if ( ! post_type_supports( get_post_type(), 'comments' ) ) {
 		return;
 	}
@@ -40,7 +40,8 @@ function bizznis_do_comments() {
 		printf( '<ol %s>', bizznis_attr( 'comment-list' ) );
 			do_action( 'bizznis_list_comments' );
 		echo '</ol>';
-		# Comment Navigation
+		
+		// Comment Navigation.
 		$prev_link = get_previous_comments_link( apply_filters( 'bizznis_prev_comments_link_text', '' ) );
 		$next_link = get_next_comments_link( apply_filters( 'bizznis_next_comments_link_text', '' ) );
 		if ( $prev_link || $next_link ) {
@@ -50,12 +51,10 @@ function bizznis_do_comments() {
 			echo '</nav>';
 		}
 		echo '</div>';
-	}
-	# No comments so far
-	elseif ( 'open' == get_post()->comment_status && $no_comments_text = apply_filters( 'bizznis_no_comments_text', '' ) ) {
+	// No comments so far.
+	} elseif ( 'open' == get_post()->comment_status && $no_comments_text = apply_filters( 'bizznis_no_comments_text', '' ) ) {
 		echo sprintf( '<div %s>', bizznis_attr( 'entry-comments' ) ) . $no_comments_text . '</div>';
-	}
-	elseif ( $comments_closed_text = apply_filters( 'bizznis_comments_closed_text', '' ) ) {
+	} elseif ( $comments_closed_text = apply_filters( 'bizznis_comments_closed_text', '' ) ) {
 		echo sprintf( '<div %s>', bizznis_attr( 'entry-comments' ) ) . $comments_closed_text . '</div>';
 	}
 }
@@ -71,12 +70,12 @@ if ( ! function_exists( 'bizznis_do_pings' ) ) :
 function bizznis_do_pings() {
 	global $wp_query;
 		
-	# Stop here if pings are off
+	// Stop here if pings are off.
 	if ( get_option( 'default_ping_status' ) === 'closed' ) {
 		return;
 	}
 	
-	# If have pings
+	// If have pings.
 	if ( have_comments() && !empty( $wp_query->comments_by_type['pings'] ) ) {
 		printf( '<div %s>', bizznis_attr( 'entry-pings' ) );
 		echo apply_filters( 'bizznis_title_pings', __( '<h3>Trackbacks</h3>', 'bizznis' ) );
@@ -84,8 +83,7 @@ function bizznis_do_pings() {
 			do_action( 'bizznis_list_pings' );
 		echo '</ol>';
 		echo '</div>';
-	}
-	else {
+	} else {
 		echo apply_filters( 'bizznis_no_pings_text', '' );
 	}
 }
@@ -275,10 +273,10 @@ function bizznis_comment_form_args( array $defaults ) {
 		),
 	);
 	
-	# Merge $args with $defaults
+	// Merge $args with $defaults.
 	$args = wp_parse_args( $args, $defaults );
 	
-	# Return filterable array of $args, along with other optional variables
+	// Return filterable array of $args, along with other optional variables.
 	return apply_filters( 'bizznis_comment_form_args', $args, $user_identity, get_the_ID(), $commenter, $req, $aria_req );
 }
 endif;

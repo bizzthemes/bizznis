@@ -17,7 +17,7 @@ function bizznis_search_form() {
 	$button_text = apply_filters( 'bizznis_search_button_text', esc_attr__( 'Search', 'bizznis' ) );
 	$onfocus = "onfocus=\"if (this.value == '$search_text') {this.value = '';}\"";
 	$onblur  = "onblur=\"if (this.value == '') {this.value = '$search_text';}\"";
-	# Empty label, by default. Filterable.
+	// Empty label, by default. Filterable.
 	$label = apply_filters( 'bizznis_search_form_label', '' );
 	$value_or_placeholder = ( get_search_query() == '' ) ? 'placeholder' : 'value';
 	$form  = sprintf( '<form %s>', bizznis_attr( 'search-form' ) );

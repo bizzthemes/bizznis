@@ -5,7 +5,7 @@
 	Please do all modifications in the form of a child theme.
 */
 
-//* Handles the primary sidebar structure.
+// Handles the primary sidebar structure.
 printf( '<aside %s>', bizznis_attr( 'sidebar-primary' ) );
 echo bizznis_sidebar_title( 'sidebar' );
 do_action( 'bizznis_sidebar' );

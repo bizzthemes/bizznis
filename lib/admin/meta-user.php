@@ -107,6 +107,11 @@ function bizznis_user_layout_fields( $user ) {
 	if ( ! current_user_can( 'edit_users', $user->ID ) ) {
 		return false;
 	}
+	
+	if ( ! bizznis_has_multiple_layouts() ) {
+		return;
+	}
+	
 	$layout = get_the_author_meta( 'layout', $user->ID );
 	$layout = $layout ? $layout : '';
 	$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), wp_customize_url() );
@@ -141,9 +146,11 @@ function bizznis_user_meta_save( $user_id ) {
 	if ( ! current_user_can( 'edit_users', $user_id ) ) {
 		return;
 	}
+	
 	if ( ! isset( $_POST['bizznis-meta'] ) || ! is_array( $_POST['bizznis-meta'] ) ) {
 		return;
 	}
+	
 	$defaults = array(
 		'bizznis_admin_menu'         	=> '',
 		'bizznis_settings_menu'  	 	=> '',
@@ -158,6 +165,7 @@ function bizznis_user_meta_save( $user_id ) {
 		'noarchive'                  	=> '',
 		'layout'                     	=> '',
 	);
+	
 	/**
 	 * Filter the user meta defaults array.
 	 *
@@ -169,9 +177,11 @@ function bizznis_user_meta_save( $user_id ) {
 	 */
 	$defaults = apply_filters( 'bizznis_user_meta_defaults', $defaults );
 	$meta = wp_parse_args( $_POST['bizznis-meta'], $defaults );
-	# Sanitize 
+	
+	// Sanitize.
 	$meta['headline']   = strip_tags( $meta['headline'] );
 	$meta['intro_text'] = current_user_can( 'unfiltered_html' ) ? $meta['intro_text'] : bizznis_formatting_kses( $meta['intro_text'] );
+	
 	foreach ( $meta as $key => $value ) {
 		update_user_meta( $user_id, $key, $value );
 	}
@@ -182,31 +192,35 @@ function bizznis_user_meta_save( $user_id ) {
  *
  * @since 1.0.0
  */
-add_filter( 'get_the_author_bizznis_admin_menu',         	'bizznis_user_meta_default_on', 10, 2 );
+add_filter( 'get_the_author_bizznis_admin_menu', 'bizznis_user_meta_default_on', 10, 2 );
 function bizznis_user_meta_default_on( $value, $user_id ) {
-	# Get the name of the field by removing the prefix from the active filter
+	// Get the name of the field by removing the prefix from the active filter.
 	$field = str_replace( 'get_the_author_', '', current_filter() );
-	# If a real value exists, simply return it
+	
+	// If a real value exists, simply return it.
 	if ( $value ) {
 		return $value;
 	}
-	# Setup user data
+	
+	// Setup user data.
 	if ( ! $user_id ) {
 		global $authordata;
-	}
-	else {
+	} else {
 		$authordata = get_userdata( $user_id );
 	}
-	# Just in case
+	
+	// Just in case.
 	$user_field = "user_$field";
 	if ( isset( $authordata->$user_field ) ) {
 		return $authordata->user_field;
 	}
-	# If an empty or false value exists, return it
+	
+	// If an empty or false value exists, return it.
 	if ( isset( $authordata->$field ) ) {
 		return $value;
 	}
-	# If all that fails, default to true
+	
+	// If all that fails, default to true.
 	return 1;
 }
 
@@ -219,8 +233,7 @@ add_filter( 'get_the_author_bizznis_author_box_single',	'bizznis_author_box_sing
 function bizznis_author_box_single_default_on( $value, $user_id ) {
 	if ( bizznis_get_option( 'author_box_single' ) ) {
 		return bizznis_user_meta_default_on( $value, $user_id );
-	}
-	else {
+	} else {
 		return $value;
 	}
 }

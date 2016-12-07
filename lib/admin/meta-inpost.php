@@ -16,6 +16,7 @@ function bizznis_add_inpost_layout_box() {
 	if ( ! current_theme_supports( 'bizznis-inpost-layouts' ) ) {
 		return;
 	}
+	
 	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
 		if ( post_type_supports( $type, 'bizznis-layouts' ) ) {
 			add_meta_box( 'bizznis_inpost_layout_box', __( 'Layout Settings', 'bizznis' ), 'bizznis_inpost_layout_box', $type, 'normal', 'core' );
@@ -35,6 +36,7 @@ function bizznis_inpost_layout_box() {
 	?>	
 	<table class="form-table">
 	<tbody>
+	<?php if ( bizznis_has_multiple_layouts() ) : ?>
 		<tr valign="top">
 			<th scope="row"><?php _e( 'Select Layout', 'bizznis' ); ?></th>
 			<td>
@@ -46,6 +48,7 @@ function bizznis_inpost_layout_box() {
 				</fieldset>
 			</td>
 		</tr>
+	<?php endif; ?>
 		<tr valign="top">
 			<th scope="row"><label for="bizznis_custom_body_class"><?php _e( 'Custom Body Class', 'bizznis' ); ?></label></th>
 			<td><p><input class="large-text" type="text" name="bizznis_layout[_bizznis_custom_body_class]" id="bizznis_custom_body_class" value="<?php echo esc_attr( bizznis_get_custom_field( '_bizznis_custom_body_class' ) ); ?>" /></p></td>
@@ -78,6 +81,7 @@ function bizznis_inpost_layout_save( $post_id, $post ) {
 	if ( ! isset( $_POST['bizznis_layout'] ) ) {
 		return;
 	}
+	
 	$data = wp_parse_args( $_POST['bizznis_layout'], array(
 		'_bizznis_layout'            => '',
 		'_bizznis_custom_body_class' => '',
@@ -85,6 +89,7 @@ function bizznis_inpost_layout_save( $post_id, $post ) {
 		'_bizznis_hide_header'   	 => '',
 	) );
 	$data = array_map( 'bizznis_sanitize_html_classes', $data );
+	
 	bizznis_save_custom_fields( $data, 'bizznis_inpost_layout_save', 'bizznis_inpost_layout_nonce', $post, $post_id );
 }
 
@@ -96,10 +101,11 @@ function bizznis_inpost_layout_save( $post_id, $post ) {
  */
 add_action( 'admin_menu', 'bizznis_add_inpost_scripts_box' );
 function bizznis_add_inpost_scripts_box() {
-	# If user doesn't have unfiltered html capability, don't show this box
+	// If user doesn't have unfiltered html capability, don't show this box.
 	if ( ! current_user_can( 'unfiltered_html' ) ) {
 		return;
 	}
+	
 	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
 		if ( post_type_supports( $type, 'bizznis-scripts' ) ) {
 			add_meta_box( 'bizznis_inpost_scripts_box', __( 'Scripts', 'bizznis' ), 'bizznis_inpost_scripts_box', $type, 'normal', 'low' );
@@ -139,12 +145,15 @@ function bizznis_inpost_scripts_save( $post_id, $post ) {
 	if ( ! isset( $_POST['bizznis_scripts'] ) ) {
 		return;
 	}
-	# If user doesn't have unfiltered html capability, don't try to save
+	
+	// If user doesn't have unfiltered html capability, don't try to save.
 	if ( ! current_user_can( 'unfiltered_html' ) ) {
 		return;
 	}
+	
 	$data = wp_parse_args( $_POST['bizznis_scripts'], array(
 		'_bizznis_scripts' => '',
 	) );
+	
 	bizznis_save_custom_fields( $data, 'bizznis_inpost_scripts_save', 'bizznis_inpost_scripts_nonce', $post, $post_id );
 }

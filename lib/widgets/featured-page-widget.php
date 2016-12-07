@@ -53,20 +53,21 @@ class Bizznis_Featured_Page extends WP_Widget {
 	 * @since 1.0.0
 	 *
 	 * @global WP_Query $wp_query Query object.
-	 * @global integer  $more
+	 * @global int      $more
 	 *
-	 * @param array $args Display arguments including before_title, after_title, before_widget, and after_widget.
-	 * @param array $instance The settings for the particular instance of the widget
+	 * @param array $args     Display arguments including `before_title`, `after_title`,
+	 *                        `before_widget`, and `after_widget`.
+	 * @param array $instance The settings for the particular instance of the widget.
 	 */
 	function widget( $args, $instance ) {
 		global $wp_query;
 		
-		# Merge with defaults
+		// Merge with defaults.
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		
 		echo $args['before_widget'];
 		
-		# Set up the title
+		// Set up the title.
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
 		}
@@ -80,10 +81,12 @@ class Bizznis_Featured_Page extends WP_Widget {
 				'context' => 'featured-page-widget',
 				'attr'    => bizznis_parse_attr( 'entry-image-widget', array ( 'alt' => get_the_title() ) ),
 			) );
+			
 			if ( $instance['show_image'] && $image ) {
 				$role = empty( $instance['show_title'] ) ? '' : 'aria-hidden="true"';
-				printf( '<a href="%s" class="%s" %s>%s</a>', get_permalink(), esc_attr( $instance['image_alignment'] ), $role, $image );
+				printf( '<a href="%s" class="%s" %s>%s</a>', get_permalink(), esc_attr( $instance['image_alignment'] ), $role, wp_make_content_images_responsive( $image ) );
 			}
+			
 			if ( ! empty( $instance['show_title'] ) ) {
 				$title = get_the_title() ? get_the_title() : __( '(no title)', 'bizznis' );
 				/**
@@ -139,7 +142,7 @@ class Bizznis_Featured_Page extends WP_Widget {
 			endwhile;
 		endif;
 		
-		# Restore original query
+		// Restore original query.
 		wp_reset_query();
 		
 		echo $args['after_widget'];
@@ -148,11 +151,15 @@ class Bizznis_Featured_Page extends WP_Widget {
 	/**
 	 * Update a particular instance.
 	 *
-	 * This function should check that $new_instance is set correctly.
+	 * This function should check that `$new_instance` is set correctly.
 	 * The newly calculated value of $instance should be returned.
 	 * If "false" is returned, the instance won't be saved/updated.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param array $new_instance New settings for this instance as input by the user via `form()`.
+	 * @param array $old_instance Old settings for this instance.
+	 * @return array Settings to save or bool false to cancel saving.
 	 */
 	function update( $new_instance, $old_instance ) {
 		$new_instance['title']     = strip_tags( $new_instance['title'] );
@@ -164,9 +171,12 @@ class Bizznis_Featured_Page extends WP_Widget {
 	 * Echo the settings update form.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param array $instance Current settings.
+	 * @return void
 	 */
 	function form( $instance ) {
-		# Merge with defaults
+		// Merge with defaults.
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		?>
 		<p>
@@ -187,11 +197,10 @@ class Bizznis_Featured_Page extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'image_size' ) ); ?>"><?php _e( 'Image Size', 'bizznis' ); ?>:</label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'image_size' ) ); ?>" class="bizznis-image-size-selector" name="<?php echo esc_attr( $this->get_field_name( 'image_size' ) ); ?>">
-				<option value="thumbnail">thumbnail (<?php echo absint( get_option( 'thumbnail_size_w' ) ); ?>x<?php echo absint( get_option( 'thumbnail_size_h' ) ); ?>)</option>
 				<?php
-				$sizes = bizznis_get_additional_image_sizes();
-				foreach ( (array) $sizes as $name => $size )
-					echo '<option value="' . esc_attr( $name ) . '" ' . selected( $name, $instance['image_size'], FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . 'x' . absint( $size['height'] ) . ')</option>';
+				$sizes = bizznis_get_image_sizes();
+				foreach( (array) $sizes as $name => $size )
+					printf( '<option value="%s" %s>%s (%sx%s)</option>', esc_attr( $name ), selected( $name, $instance['image_size'], false ), esc_html( $name ), esc_html( $size['width'] ), esc_html( $size['height'] ) );
 				?>
 			</select>
 		</p>

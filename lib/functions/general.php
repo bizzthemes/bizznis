@@ -12,10 +12,10 @@
  */
 function bizznis_enable_author_box( $args = array() ) {
 	$args = wp_parse_args( $args, array( 'type' => 'single' ) );
+	
 	if ( 'single' === $args['type'] ) {
 		add_filter( 'get_the_author_bizznis_author_box_single', '__return_true' );
-	}
-	elseif ( 'archive' === $args['type'] ) {
+	} elseif ( 'archive' === $args['type'] ) {
 		add_filter( 'get_the_author_bizznis_author_box_archive', '__return_true' );
 	}
 }
@@ -29,13 +29,17 @@ function bizznis_admin_redirect( $page, array $query_args = array() ) {
 	if ( ! $page ) {
 		return;
 	}
+	
 	$url = html_entity_decode( menu_page_url( $page, 0 ) );
+	
 	foreach ( (array) $query_args as $key => $value ) {
 		if ( empty( $key ) && empty( $value ) ) {
 			unset( $query_args[$key] );
 		}
 	}
+	
 	$url = add_query_arg( $query_args, $url );
+	
 	wp_redirect( esc_url_raw( $url ) );
 }
 
@@ -49,6 +53,7 @@ function bizznis_custom_field_redirect() {
 	if ( ! is_singular() ) {
 		return;
 	}
+	
 	if ( $url = bizznis_get_custom_field( 'redirect' ) ) {
 		wp_redirect( esc_url_raw( $url ), 301 );
 		exit;
@@ -92,7 +97,7 @@ function bizznis_get_theme_support_arg( $feature, $arg, $default = '' ) {
  * @since 1.0.0
  */
 function bizznis_detect_plugin( array $plugins ) {
-	# Check for classes
+	// Check for classes.
 	if ( isset( $plugins['classes'] ) ) {
 		foreach ( $plugins['classes'] as $name ) {
 			if ( class_exists( $name ) ) {
@@ -100,7 +105,8 @@ function bizznis_detect_plugin( array $plugins ) {
 			}
 		}
 	}
-	# Check for functions
+	
+	// Check for functions.
 	if ( isset( $plugins['functions'] ) ) {
 		foreach ( $plugins['functions'] as $name ) {
 			if ( function_exists( $name ) ) {
@@ -108,7 +114,8 @@ function bizznis_detect_plugin( array $plugins ) {
 			}
 		}
 	}
-	# Check for constants
+	
+	// Check for constants.
 	if ( isset( $plugins['constants'] ) ) {
 		foreach ( $plugins['constants'] as $name ) {
 			if ( defined( $name ) ) {
@@ -117,7 +124,7 @@ function bizznis_detect_plugin( array $plugins ) {
 		}
 	}
 	
-	# No class, function or constant found to exist
+	// No class, function or constant found to exist.
 	return false;
 }
 
@@ -128,18 +135,22 @@ function bizznis_detect_plugin( array $plugins ) {
  */
 function bizznis_is_menu_page( $pagehook = '' ) {
 	global $page_hook;
+	
 	if ( isset( $page_hook ) && $page_hook == $pagehook ) {
 		return true;
 	}
-	# May be too early for $page_hook
+	
+	// May be too early for $page_hook.
 	if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == $pagehook ) {
 		return true;
 	}
-	# May be too early for $page_hook
+	
+	// May be too early for $page_hook.
 	if ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == $pagehook ) {
 		return true;
 	}
-	# May be too early for $page_hook
+	
+	// May be too early for $page_hook.
 	if ( isset( $_REQUEST['section'] ) && $_REQUEST['section'] == $pagehook ) {
 		return true;
 	}
@@ -191,22 +202,26 @@ function bizznis_get_global_post_type_name( $post_type_name = '' ) {
  */
 function bizznis_a11y( $arg = 'screen-reader-text' ) {
 	$feature = 'bizznis-accessibility';
-	# No args
+	
+	// No args.
 	if ( 'screen-reader-text' === $arg ) {
 		return current_theme_supports( $feature );
 	}
-	# Get accessibility theme support
+	
+	// Get accessibility theme support.
 	$support = get_theme_support( $feature );
-	# No support for feature.
+	
+	// No support for feature.
 	if ( ! $support ) {
 		return false;
 	}
-	# No args passed in to add_theme_support(), so accept none.
+	
+	// No args passed in to add_theme_support(), so accept none.
 	if ( ! isset( $support[0] ) ) {
 		return false;
 	}
 	
-	# Support for specific arg found.
+	// Support for specific arg found.
 	if ( in_array( $arg, $support[0] ) ) {
 		return true;
 	}
@@ -220,8 +235,7 @@ function bizznis_a11y( $arg = 'screen-reader-text' ) {
 function bizznis_plugin_install_link( $plugin_slug = '', $text = '' ) {
 	if ( is_main_site() ) {
 		$url = network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
-	}
-	else {
+	} else {
 		$url = admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
 	}
 	

@@ -5,7 +5,7 @@
 	Please do all modifications in the form of a child theme.
 */
 
-//* Include widget class files
+// Include widget class files.
 load_template( BIZZNIS_WIDGETS_DIR . '/featured-page-widget.php' );
 load_template( BIZZNIS_WIDGETS_DIR . '/page-list-widget.php' );
 
