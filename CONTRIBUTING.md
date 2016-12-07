@@ -8,7 +8,7 @@ When contributing please ensure you follow the guidelines below so that we can k
 __Note:__ 
 
 GitHub is for *bug reports and contributions only* - if you have a support question or a request for a customization don't post here.
-Use [Bizznis Support](http://bizzthemes.com/support/) for customer support, [WordPress.org](http://wordpress.org/support/theme/bizznis) for community support,
+Use [Bizznis Support](https://bizzthemes.com/support/) for customer support, [WordPress.org](http://wordpress.org/support/theme/bizznis) for community support,
 and for customisations we recommend one of the following services:
 
 - Codeable: http://codeable.io/
@@ -37,4 +37,4 @@ At this point you're waiting on us to merge your pull request. We'll review all 
 * [General GitHub documentation](http://help.github.com/)
 * [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
 * [Bizznis Docs](http://demo.bizzthemes.com/bizznis/documentation/)
-* [BizzThemes Support](http://bizzthemes.com/support/bizznis)
+* [BizzThemes Support](https://bizzthemes.com/support/bizznis)

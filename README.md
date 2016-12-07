@@ -10,4 +10,4 @@ Install
 Support
 ----
 
-Please visit http://bizzthemes.com/forums/ for theme support.
+Please visit https://bizzthemes.com/forums/ for theme support.
